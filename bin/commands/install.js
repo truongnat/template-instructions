@@ -7,7 +7,7 @@ import { log } from '../utils/colors.js';
  */
 export async function install(templatePath, options = {}) {
   const startTime = Date.now();
-  const targetPath = path.join(process.cwd(), '.gemini');
+  const targetPath = path.join(process.cwd(), '.agent');
 
   try {
     if (!options.quiet) log.header('🚀 Installing Template Instructions');
@@ -22,7 +22,7 @@ export async function install(templatePath, options = {}) {
     if (!options.quiet) log.step('Checking for existing installation...');
     if (await fs.pathExists(targetPath)) {
       if (!options.force) {
-        log.warning('.gemini directory already exists');
+        log.warning('.agent directory already exists');
         log.info('Use --force to overwrite existing files');
         process.exit(0);
       } else {
@@ -51,7 +51,7 @@ export async function install(templatePath, options = {}) {
       console.log(`Location: ${targetPath}`);
       console.log(`\nNext Steps:`);
       console.log('  • Setup IDE: create-instructions ide cursor');
-      console.log('  • Review: .gemini/instructions/usage.md');
+      console.log('  • Review: .agent/usage.md');
       console.log('  • Start: /pm Build your project\n');
 
       const duration = ((Date.now() - startTime) / 1000).toFixed(2);

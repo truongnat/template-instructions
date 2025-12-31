@@ -38,11 +38,11 @@ You have access to specialized SDLC roles. When user types a slash command, inte
 
 ## Instructions Location
 
-All role definitions and templates are in `.gemini/instructions/`:
-- Roles: `.gemini/instructions/roles/`
-- Templates: `.gemini/instructions/templates/`
-- Knowledge Base: `.gemini/instructions/knowledge-base/`
-- Global Rules: `.gemini/instructions/global.md`
-- Usage Guide: `.gemini/instructions/usage.md`
+All role definitions and templates are in `.agent/`:
+- Roles: `.agent/workflows/`
+- Templates: `.agent/templates/`
+- Knowledge Base: `.agent/knowledge-base/`
+- Global Rules: `.agent/rules/global.md`
+- Usage Guide: `.agent/usage.md`
 
 When a slash command is used, load the corresponding role file and execute according to TeamLifecycle workflow.

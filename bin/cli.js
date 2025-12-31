@@ -13,7 +13,7 @@ import { setupIDE } from './commands/ide.js';
 import { initKnowledgeBase } from './commands/init-kb.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const templatePath = path.join(__dirname, '../.gemini/instructions');
+const templatePath = path.join(__dirname, '../.agent');
 
 // Package info
 const packageJson = JSON.parse(

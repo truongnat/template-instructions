@@ -130,6 +130,6 @@ MIT
 
 ## 🔗 Links
 
-- **Repository:** https://github.com/yourusername/template-instructions
-- **Issues:** https://github.com/yourusername/template-instructions/issues
+- **Repository:** https://github.com/truongnat/template-instructions
+- **Issues:** https://github.com/truongnat/template-instructions/issues
 - **NPM:** https://www.npmjs.com/package/template-instructions
