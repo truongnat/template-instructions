@@ -25,7 +25,7 @@ class GitHubNeo4jBridge:
         self.driver.close()
 
     def sync_issues(self):
-        print(f"🚀 Syncing issues from {GITHUB_REPO}...")
+        print(f"Syncing issues from {GITHUB_REPO}...")
         issues = self.repo.get_issues(state='all')
         
         with self.driver.session() as session:
