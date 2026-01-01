@@ -123,6 +123,10 @@
       },
       "disabled": false,
       "autoApprove": []
+    },
+    "figma": {
+      "url": "https://mcp.figma.com/mcp",
+      "type": "http"
     }
   }
 }

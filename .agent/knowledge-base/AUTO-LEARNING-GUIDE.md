@@ -33,13 +33,31 @@ cp .agent/templates/Knowledge-Entry-Template.md \
 # Set "Source Task: [Your Task ID]"
 ```
 
-### Step 3: Update Index
-Add entry to `.agent/knowledge-base/index.md`:
+### Step 3: Sync to Neo4j Knowledge Graph
+```bash
+# Automatically sync your entry to Neo4j
+python tools/neo4j/sync_skills_to_neo4j.py
+
+# Verify sync and explore relationships
+python tools/neo4j/query_skills_neo4j.py --all-skills
+```
+
+**What Neo4j Extracts:**
+- Skills mentioned in your entry
+- Technologies used
+- Relationships between skills
+- Learning paths and prerequisites
+- Author expertise mapping
+
+### Step 4: Update Index
+Add entry to `.agent/knowledge-base/INDEX.md`:
 - Update statistics
 - Add to recent entries
 - Add to category table
 - Add to technology search
 - Add to tag search
+
+**Note:** Neo4j sync is automatic - no manual indexing needed for graph queries!
 
 ---
 
@@ -103,6 +121,31 @@ Add entry to `.agent/knowledge-base/index.md`:
 
 **ALWAYS search knowledge base before starting work:**
 
+### Option 1: Automated Research Agent (Recommended)
+```bash
+# Searches both file system AND Neo4j automatically
+python tools/research/research_agent.py --task "your task" --type feature
+
+# Output includes:
+# - File-based KB entries
+# - Neo4j graph relationships
+# - Related technologies and skills
+# - Confidence level
+```
+
+### Option 2: Neo4j Graph Query
+```bash
+# Find skills for technology
+python tools/neo4j/query_skills_neo4j.py --tech "React"
+
+# Find related skills
+python tools/neo4j/query_skills_neo4j.py --skill "Authentication"
+
+# Search by keyword
+python tools/neo4j/query_skills_neo4j.py --search "performance"
+```
+
+### Option 3: Manual File Search
 ```markdown
 ### KB Search
 **Keywords:** [error message, technology, component]
@@ -118,6 +161,8 @@ Add entry to `.agent/knowledge-base/index.md`:
    - **Solution:** [Brief summary]
    - **Applicable:** [yes/no]
 ```
+
+**See [Research Agent Documentation](../../tools/research/README.md) for complete guide.**
 
 ---
 
