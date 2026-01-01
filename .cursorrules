@@ -24,8 +24,9 @@ You have access to specialized SDLC roles. When user types a slash command, inte
 
 ## Knowledge Base Commands
 
-- `/kb-search [query]` → Search knowledge base for solutions
-- `/kb-add [topic]` → Add entry to knowledge base
+- `/brain [query]` → Semantic search using LEANN (Automated Project Memory)
+- `/kb-search [query]` → Search project knowledge base
+- `/kb-add [topic]` → Add entry to manual knowledge base
 
 ## Usage Examples
 
