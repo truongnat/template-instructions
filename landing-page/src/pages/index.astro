@@ -1,8 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/Hero.astro';
+import StickyHeaderCTA from '../components/StickyHeaderCTA.astro';
 import Features from '../components/Features.astro';
 import UseCases from '../components/UseCases.astro';
+import TrustBadges from '../components/TrustBadges.astro';
 import GitHubStats from '../components/GitHubStats.astro';
 import QuickStart from '../components/QuickStart.astro';
 import Testimonials from '../components/Testimonials.astro';
@@ -11,10 +13,12 @@ import Footer from '../components/Footer.astro';
 ---
 
 <Layout 
-  title="Agentic SDLC - Transform Your IDE Into a Full SDLC Team"
-  description="12 specialized AI roles, automated workflows, and knowledge management. Build faster with Agentic SDLC for web, mobile, desktop, CLI, API, and embedded projects."
+  title="Agentic SDLC - Ship Production-Ready Apps in Days, Not Months"
+  description="Watch AI handle planning, design, development, testing, and deployment. 12 specialized AI roles, automated workflows, and knowledge management for web, mobile, desktop, CLI, API, and embedded projects."
 >
+  <StickyHeaderCTA />
   <Hero />
+  <TrustBadges />
   <Features />
   <UseCases />
   <GitHubStats />

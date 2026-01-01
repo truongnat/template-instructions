@@ -2,7 +2,9 @@
   "mcpServers": {
     "github": {
       "command": "uvx",
-      "args": ["mcp-server-github"],
+      "args": [
+        "mcp-server-github"
+      ],
       "env": {
         "GITHUB_PERSONAL_ACCESS_TOKEN": "${GITHUB_TOKEN}",
         "FASTMCP_LOG_LEVEL": "ERROR",
@@ -13,7 +15,9 @@
     },
     "tavily-search": {
       "command": "uvx",
-      "args": ["mcp-server-tavily"],
+      "args": [
+        "mcp-server-tavily"
+      ],
       "env": {
         "TAVILY_API_KEY": "${TAVILY_API_KEY}",
         "FASTMCP_LOG_LEVEL": "ERROR"
@@ -23,16 +27,24 @@
     },
     "playwright": {
       "command": "uvx",
-      "args": ["mcp-playwright"],
+      "args": [
+        "mcp-playwright"
+      ],
       "env": {
         "FASTMCP_LOG_LEVEL": "ERROR"
       },
       "disabled": false,
-      "autoApprove": []
+      "autoApprove": [
+        "create_browser_session"
+      ]
     },
     "filesystem": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-filesystem", "${WORKSPACE_ROOT}"],
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "${WORKSPACE_ROOT}"
+      ],
       "env": {
         "FASTMCP_LOG_LEVEL": "ERROR"
       },
@@ -41,7 +53,11 @@
     },
     "git": {
       "command": "uvx",
-      "args": ["mcp-server-git", "--repository", "${WORKSPACE_ROOT}"],
+      "args": [
+        "mcp-server-git",
+        "--repository",
+        "${WORKSPACE_ROOT}"
+      ],
       "env": {
         "FASTMCP_LOG_LEVEL": "ERROR"
       },
@@ -50,7 +66,10 @@
     },
     "puppeteer": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-puppeteer"],
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-puppeteer"
+      ],
       "env": {
         "FASTMCP_LOG_LEVEL": "ERROR"
       },
@@ -59,7 +78,11 @@
     },
     "postgresql": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-postgresql", "${POSTGRES_CONNECTION_STRING}"],
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-postgresql",
+        "${POSTGRES_CONNECTION_STRING}"
+      ],
       "env": {
         "FASTMCP_LOG_LEVEL": "ERROR"
       },
@@ -68,17 +91,22 @@
     },
     "sqlite": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-sqlite"],
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sqlite"
+      ],
       "env": {
         "FASTMCP_LOG_LEVEL": "ERROR"
       },
       "disabled": false,
       "autoApprove": []
     },
-
     "memory": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-memory"],
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-memory"
+      ],
       "env": {
         "FASTMCP_LOG_LEVEL": "ERROR"
       },
@@ -87,7 +115,9 @@
     },
     "fetch": {
       "command": "uvx",
-      "args": ["mcp-server-fetch"],
+      "args": [
+        "mcp-server-fetch"
+      ],
       "env": {
         "FASTMCP_LOG_LEVEL": "ERROR"
       },

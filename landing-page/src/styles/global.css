@@ -7,21 +7,69 @@
     scroll-behavior: smooth;
   }
   
+  /* Respect user motion preferences */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+  
   body {
     @apply bg-slate-950 text-white;
     background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+  }
+  
+  /* Enhanced focus styles for accessibility */
+  *:focus-visible {
+    outline: 3px solid #60A5FA;
+    outline-offset: 2px;
+    border-radius: 0.5rem;
+  }
+  
+  /* Skip to main content link */
+  .skip-to-main {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: #2563EB;
+    color: white;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    border-radius: 0 0 0.5rem 0;
+    z-index: 100;
+  }
+  
+  .skip-to-main:focus {
+    top: 0;
   }
 }
 
 @layer components {
   .btn-primary {
-    @apply relative px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold overflow-hidden transition-all duration-300;
+    @apply relative bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold overflow-hidden transition-all duration-300;
+    /* Improved touch targets - minimum 44x44px */
+    min-height: 44px;
+    min-width: 44px;
+    padding: 1rem 2rem;
     box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
   }
   
   .btn-primary:hover {
     @apply scale-105;
     box-shadow: 0 0 30px rgba(99, 102, 241, 0.6);
+  }
+  
+  .btn-primary:focus-visible {
+    outline: 3px solid #60A5FA;
+    outline-offset: 3px;
   }
   
   .btn-primary::before {
@@ -33,8 +81,31 @@
     @apply opacity-100;
   }
   
+  /* Ripple effect */
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
+  
+  .btn-primary:active::after {
+    width: 300px;
+    height: 300px;
+  }
+  
   .btn-secondary {
-    @apply relative px-8 py-4 border-2 border-blue-500/50 text-white rounded-xl font-semibold backdrop-blur-sm transition-all duration-300;
+    @apply relative border-2 border-blue-500/50 text-white rounded-xl font-semibold backdrop-blur-sm transition-all duration-300;
+    /* Improved touch targets */
+    min-height: 44px;
+    min-width: 44px;
+    padding: 1rem 2rem;
     background: rgba(255, 255, 255, 0.05);
   }
   
@@ -44,8 +115,27 @@
     box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
   }
   
+  .btn-secondary:focus-visible {
+    outline: 3px solid #60A5FA;
+    outline-offset: 3px;
+  }
+  
   .section-container {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24;
+    @apply max-w-7xl mx-auto py-16 sm:py-24;
+    /* Improved mobile spacing */
+    padding-inline: 1.5rem;
+  }
+  
+  @media (min-width: 640px) {
+    .section-container {
+      padding-inline: 2rem;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .section-container {
+      padding-inline: 2rem;
+    }
   }
   
   .glass-card {
@@ -65,6 +155,41 @@
   .glow-text {
     text-shadow: 0 0 20px rgba(147, 197, 253, 0.5);
   }
+  
+  /* Improved typography with responsive scaling */
+  .hero-title {
+    font-size: clamp(2.5rem, 8vw, 6rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  
+  .section-title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.2;
+  }
+  
+  .body-large {
+    font-size: clamp(1.125rem, 2vw, 1.5rem);
+    line-height: 1.6;
+  }
+  
+  /* Scroll progress indicator */
+  .scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    z-index: 9999;
+  }
+  
+  .scroll-progress-bar {
+    height: 100%;
+    background: linear-gradient(90deg, #3B82F6, #8B5CF6, #EC4899);
+    width: 0%;
+    transition: width 0.1s ease-out;
+  }
 }
 
 @layer utilities {
@@ -82,6 +207,22 @@
   
   .animate-fade-in {
     animation: fadeIn 0.8s ease-out forwards;
+  }
+  
+  /* Reduce animation intensity on mobile */
+  @media (max-width: 768px) {
+    .animate-float {
+      animation-duration: 8s;
+    }
+  }
+  
+  /* Disable expensive animations on mobile for performance */
+  @media (prefers-reduced-motion: reduce) {
+    .animate-float,
+    .animate-glow,
+    .gradient-mesh {
+      animation: none;
+    }
   }
 }
 
