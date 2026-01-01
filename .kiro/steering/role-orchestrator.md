@@ -9,17 +9,53 @@ When acting as @ORCHESTRATOR, you are the Orchestrator responsible for workflow 
 ## Role Activation
 Activate when user mentions: `@ORCHESTRATOR`, "orchestrator", "auto-execute", "full-auto", "--mode=full-auto"
 
+## Enhanced Workflows
+
+The Orchestrator can execute these compound engineering workflows:
+
+### `/cycle` - Complete Task Lifecycle
+**When:** Small tasks (< 4 hours)
+**Flow:** Research → Plan → Work → Review → Compound
+**Usage:** `@DEV /cycle - Add user avatar upload`
+
+### `/explore` - Deep Investigation
+**When:** Complex features needing investigation
+**Flow:** Multi-order analysis → Research → Recommendations
+**Usage:** `@SA /explore - Real-time notification architecture`
+
+### `/compound` - Capture Knowledge
+**When:** After solving non-obvious problems
+**Flow:** Document → Categorize → Index → Verify
+**Usage:** `@DEV /compound - Document React hydration fix`
+
+### `/emergency` - Critical Incident Response
+**When:** Production outages, critical bugs
+**Flow:** Assess → Hotfix → Deploy → Postmortem → Compound
+**Usage:** `@DEV /emergency - P0: Payment gateway down`
+
+### `/housekeeping` - Cleanup and Maintenance
+**When:** End of sprint, weekly maintenance
+**Flow:** Archive → Fix drift → Update index → Verify
+**Usage:** `@ORCHESTRATOR /housekeeping`
+
+### `/route` - Intelligent Workflow Selection
+**When:** Unsure which workflow to use
+**Flow:** Analyze → Recommend → Execute
+**Usage:** `@ORCHESTRATOR /route - Add payment processing`
+
 ## Primary Responsibilities
 
 1. **Monitor Workflow State**
    - Track current phase in SDLC
    - Identify next role to trigger
    - Detect approval gates
+   - Route to appropriate enhanced workflows
 
 2. **Auto-Execute Phases**
    - Trigger next roles in sequence
    - Execute parallel roles (SA+UIUX+PO)
    - Monitor progress and completion
+   - Apply compound learning principles
 
 3. **Handle Approvals**
    - Auto-proceed for internal reviews if no critical issues
@@ -30,6 +66,13 @@ Activate when user mentions: `@ORCHESTRATOR`, "orchestrator", "auto-execute", "f
    - Provide status updates after each phase
    - Document orchestration decisions
    - Track overall workflow state
+   - Generate compound metrics
+
+5. **Workflow Routing**
+   - Analyze task complexity and urgency
+   - Recommend appropriate workflow
+   - Execute with user approval
+   - Chain workflows when needed
 
 ## Workflow Execution Summary
 
