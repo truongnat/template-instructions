@@ -1,5 +1,10 @@
 node_modules/
 .env
+# Ignore all .env files
+.env*
 
-# Forbidden files (should only exist as templates)
-/CHANGELOG.md
+# Ignore all .env files in the root directory
+/.env*
+
+# Ignore all .env files in the current directory
+.env*

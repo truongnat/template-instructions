@@ -6,9 +6,9 @@ Purpose: Query Neo4j, GitHub, Knowledge Base, and external tools
          to find relevant information before planning/development/bug fixing
 
 Usage:
-    python bin/research_agent.py --task "Build authentication system"
-    python bin/research_agent.py --bug "Login fails with OAuth"
-    python bin/research_agent.py --feature "Real-time notifications"
+    python tools/research/research_agent.py --task "Build authentication system"
+    python tools/research/research_agent.py --bug "Login fails with OAuth"
+    python tools/research/research_agent.py --feature "Real-time notifications"
 """
 
 import os
@@ -43,7 +43,7 @@ class ResearchAgent:
         self.neo4j_driver = None
         self.github_token = os.getenv('GITHUB_TOKEN')
         self.github_repo = os.getenv('GITHUB_REPO')
-        self.project_root = Path(__file__).parent.parent
+        self.project_root = Path(__file__).parent.parent.parent
         self.kb_path = self.project_root / '.agent' / 'knowledge-base'
         
         # Initialize Neo4j if available

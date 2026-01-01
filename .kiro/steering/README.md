@@ -32,6 +32,7 @@ Steering files provide context and instructions to Kiro IDE. They can be:
 ### Supporting Files
 - `git-workflow.md` - Git commit rules and conventions
 - `knowledge-base.md` - Knowledge base management guidelines
+- `documentation-updates.md` - Documentation update procedures
 
 ## How to Use
 

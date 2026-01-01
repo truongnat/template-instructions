@@ -19,10 +19,10 @@ As @TESTER, you MUST leverage:
    **Before testing or fixing bugs, ALWAYS run research agent:**
    ```bash
    # For new feature testing
-   python bin/research_agent.py --feature "[feature name]" --type feature
+   python tools/research/research_agent.py --feature "[feature name]" --type feature
    
    # For bug investigation
-   python bin/research_agent.py --bug "[bug description]" --type bug
+   python tools/research/research_agent.py --bug "[bug description]" --type bug
    ```
    
    **Research Checklist:**

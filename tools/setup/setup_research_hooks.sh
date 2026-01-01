@@ -38,8 +38,8 @@ fi
 
 # Make research scripts executable
 echo "🔐 Making research scripts executable..."
-chmod +x bin/research_agent.py 2>/dev/null || echo -e "${YELLOW}⚠️  bin/research_agent.py not found${NC}"
-chmod +x bin/research_mcp.py 2>/dev/null || echo -e "${YELLOW}⚠️  bin/research_mcp.py not found${NC}"
+chmod +x tools/research/research_agent.py 2>/dev/null || echo -e "${YELLOW}⚠️  tools/research/research_agent.py not found${NC}"
+chmod +x tools/research/research_mcp.py 2>/dev/null || echo -e "${YELLOW}⚠️  tools/research/research_mcp.py not found${NC}"
 
 # Check Python dependencies
 echo "🐍 Checking Python dependencies..."
@@ -53,7 +53,7 @@ echo -e "${GREEN}✓ Created docs/research-reports/${NC}"
 
 # Test research agent
 echo "🧪 Testing research agent..."
-if python3 bin/research_agent.py --task "test" --type general > /dev/null 2>&1; then
+if python3 tools/research/research_agent.py --task "test" --type general > /dev/null 2>&1; then
     echo -e "${GREEN}✓ Research agent working${NC}"
 else
     echo -e "${YELLOW}⚠️  Research agent test failed (may need dependencies)${NC}"

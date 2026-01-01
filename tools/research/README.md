@@ -17,7 +17,7 @@ Research Agent System là một hệ thống tự động tìm kiếm và phân 
 
 ## 🎯 Components
 
-### 1. Core Research Agent (`bin/research_agent.py`)
+### 1. Core Research Agent (`tools/research/research_agent.py`)
 
 **Chức năng chính:**
 - Search Knowledge Base (file system)
@@ -29,16 +29,16 @@ Research Agent System là một hệ thống tự động tìm kiếm và phân 
 **Usage:**
 ```bash
 # General task
-python bin/research_agent.py --task "Build authentication system"
+python tools/research/research_agent.py --task "Build authentication system"
 
 # Bug research
-python bin/research_agent.py --bug "Login fails with OAuth"
+python tools/research/research_agent.py --bug "Login fails with OAuth"
 
 # Feature research
-python bin/research_agent.py --feature "Real-time notifications"
+python tools/research/research_agent.py --feature "Real-time notifications"
 
 # With specific type
-python bin/research_agent.py --task "API design" --type architecture
+python tools/research/research_agent.py --task "API design" --type architecture
 ```
 
 **Output:**
@@ -46,7 +46,7 @@ python bin/research_agent.py --task "API design" --type architecture
 - JSON report: `docs/research-reports/research-YYYYMMDD-HHMMSS.json`
 - Markdown summary: `docs/research-reports/research-YYYYMMDD-HHMMSS.md`
 
-### 2. MCP Integration (`bin/research_mcp.py`)
+### 2. MCP Integration (`tools/research/research_mcp.py`)
 
 **Extends research_agent.py với MCP tools:**
 - Web search placeholder
@@ -56,10 +56,10 @@ python bin/research_agent.py --task "API design" --type architecture
 
 **Usage:**
 ```bash
-python bin/research_mcp.py --task "Build authentication" --type feature
+python tools/research/research_mcp.py --task "Build authentication" --type feature
 ```
 
-### 3. Extended MCP (`bin/research_mcp_extended.py`)
+### 3. Extended MCP (`tools/research/research_mcp_extended.py`)
 
 **Full MCP integration với real API calls:**
 - ✅ Tavily AI Search API
@@ -79,7 +79,7 @@ GITHUB_TOKEN=your_token
 
 **Usage:**
 ```bash
-python bin/research_mcp_extended.py --task "OAuth implementation" --type feature
+python tools/research/research_mcp_extended.py --task "OAuth implementation" --type feature
 ```
 
 ### 4. Workflow Integration
@@ -109,7 +109,7 @@ python bin/research_mcp_extended.py --task "OAuth implementation" --type feature
 
 **Setup:**
 ```bash
-bash bin/setup_research_hooks.sh
+bash tools/setup/setup_research_hooks.sh
 ```
 
 ---
@@ -123,10 +123,10 @@ bash bin/setup_research_hooks.sh
 pip install neo4j requests
 
 # Make scripts executable
-chmod +x bin/research_agent.py
-chmod +x bin/research_mcp.py
-chmod +x bin/research_mcp_extended.py
-chmod +x bin/setup_research_hooks.sh
+chmod +x tools/research/research_agent.py
+chmod +x tools/research/research_mcp.py
+chmod +x tools/research/research_mcp_extended.py
+chmod +x tools/setup/setup_research_hooks.sh
 ```
 
 ### 2. Configure Environment
@@ -148,14 +148,14 @@ BRAVE_API_KEY=your_brave_key            # Optional
 ### 3. Setup Hooks (Optional)
 
 ```bash
-bash bin/setup_research_hooks.sh
+bash tools/setup/setup_research_hooks.sh
 ```
 
 ### 4. Test Research Agent
 
 ```bash
 # Basic test
-python bin/research_agent.py --task "test authentication" --type feature
+python tools/research/research_agent.py --task "test authentication" --type feature
 
 # Check output
 ls -la docs/research-reports/
@@ -173,7 +173,7 @@ ls -la docs/research-reports/
 1. User provides requirements
 2. **RESEARCH FIRST:**
    ```bash
-   python bin/research_agent.py --task "[project description]" --type general
+   python tools/research/research_agent.py --task "[project description]" --type general
    ```
 3. Review research report
 4. Check confidence level
@@ -189,7 +189,7 @@ ls -la docs/research-reports/
 1. Receive feature assignment
 2. **RESEARCH FIRST:**
    ```bash
-   python bin/research_agent.py --feature "[feature description]" --type feature
+   python tools/research/research_agent.py --feature "[feature description]" --type feature
    ```
 3. Review similar implementations
 4. Identify proven patterns
@@ -206,7 +206,7 @@ ls -la docs/research-reports/
 1. Bug discovered
 2. **RESEARCH FIRST:**
    ```bash
-   python bin/research_agent.py --bug "[bug description]" --type bug
+   python tools/research/research_agent.py --bug "[bug description]" --type bug
    ```
 3. Review similar bugs
 4. Check known solutions
@@ -518,7 +518,7 @@ Solution: Verify API key and quota
 # User: @PM Build a todo app with authentication
 
 # PM runs research:
-python bin/research_agent.py --task "todo app with authentication" --type general
+python tools/research/research_agent.py --task "todo app with authentication" --type general
 
 # Output:
 # Confidence: HIGH
@@ -536,7 +536,7 @@ python bin/research_agent.py --task "todo app with authentication" --type genera
 # User: @DEV Implement OAuth login
 
 # DEV runs research:
-python bin/research_agent.py --feature "OAuth login" --type feature
+python tools/research/research_agent.py --feature "OAuth login" --type feature
 
 # Output:
 # Confidence: HIGH
@@ -554,7 +554,7 @@ python bin/research_agent.py --feature "OAuth login" --type feature
 # User: @TESTER Login fails with "Token expired" error
 
 # TESTER runs research:
-python bin/research_agent.py --bug "Token expired error" --type bug
+python tools/research/research_agent.py --bug "Token expired error" --type bug
 
 # Output:
 # Confidence: HIGH
@@ -592,7 +592,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Run Research
         run: |
-          python bin/research_agent.py --task "${{ github.event.pull_request.title }}"
+          python tools/research/research_agent.py --task "${{ github.event.pull_request.title }}"
 ```
 
 ### Slack/Discord Notifications
@@ -609,13 +609,13 @@ def _send_notification(self, results: Dict):
 
 ### Questions?
 - Check: `.agent/workflows/research.md`
-- Review: `bin/research_agent.py` comments
+- Review: `tools/research/research_agent.py` comments
 - Ask: @REPORTER for help
 
 ### Issues?
 - Check logs in `docs/research-reports/`
 - Verify API keys in `.env`
-- Test with: `python bin/research_agent.py --task "test"`
+- Test with: `python tools/research/research_agent.py --task "test"`
 
 ### Contributions?
 - Add new search sources

@@ -14,7 +14,7 @@
       },
       "action": {
         "type": "command",
-        "command": "python bin/research_agent.py --task \"${message}\" --type general",
+        "command": "python tools/research/research_agent.py --task \"${message}\" --type general",
         "workingDirectory": "${workspaceRoot}",
         "showOutput": true
       },
@@ -31,7 +31,7 @@
       },
       "action": {
         "type": "command",
-        "command": "python bin/research_agent.py --feature \"${message}\" --type feature",
+        "command": "python tools/research/research_agent.py --feature \"${message}\" --type feature",
         "workingDirectory": "${workspaceRoot}",
         "showOutput": true
       },
@@ -48,7 +48,7 @@
       },
       "action": {
         "type": "command",
-        "command": "python bin/research_agent.py --bug \"${message}\" --type bug",
+        "command": "python tools/research/research_agent.py --bug \"${message}\" --type bug",
         "workingDirectory": "${workspaceRoot}",
         "showOutput": true
       },
@@ -65,7 +65,7 @@
       },
       "action": {
         "type": "command",
-        "command": "python bin/research_agent.py --task \"${message}\" --type architecture",
+        "command": "python tools/research/research_agent.py --task \"${message}\" --type architecture",
         "workingDirectory": "${workspaceRoot}",
         "showOutput": true
       },
@@ -82,7 +82,7 @@
       },
       "action": {
         "type": "command",
-        "command": "python bin/research_agent.py --task \"${message}\" --type general",
+        "command": "python tools/research/research_agent.py --task \"${message}\" --type general",
         "workingDirectory": "${workspaceRoot}",
         "showOutput": true
       },

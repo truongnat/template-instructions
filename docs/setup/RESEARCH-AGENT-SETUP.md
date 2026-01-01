@@ -16,12 +16,14 @@ Research Agent System đã được tích hợp hoàn chỉnh vào Agentic SDLC 
 
 ### Core Scripts
 ```
-bin/
+tools/research/
 ├── research_agent.py              # Core research agent
 ├── research_mcp.py                # MCP integration (placeholder)
 ├── research_mcp_extended.py       # Full MCP with real APIs
-├── setup_research_hooks.sh        # Hook setup script
-└── README-research-agent.md       # Complete documentation
+└── README.md                      # Complete documentation
+
+tools/setup/
+└── setup_research_hooks.sh        # Hook setup script
 ```
 
 ### Workflows Updated
@@ -93,17 +95,17 @@ STACKOVERFLOW_KEY=your_stackoverflow_key
 ### Step 3: Make Scripts Executable
 
 ```bash
-chmod +x bin/research_agent.py
-chmod +x bin/research_mcp.py
-chmod +x bin/research_mcp_extended.py
-chmod +x bin/setup_research_hooks.sh
+chmod +x tools/research/research_agent.py
+chmod +x tools/research/research_mcp.py
+chmod +x tools/research/research_mcp_extended.py
+chmod +x tools/setup/setup_research_hooks.sh
 ```
 
 ### Step 4: Setup Automated Hooks
 
 ```bash
 # Run setup script
-bash bin/setup_research_hooks.sh
+bash tools/setup/setup_research_hooks.sh
 
 # Verify hooks installed
 cat .kiro/hooks/auto-research-hook.json
@@ -119,7 +121,7 @@ mkdir -p docs/research-reports
 
 ```bash
 # Basic test
-python bin/research_agent.py --task "test authentication" --type feature
+python tools/research/research_agent.py --task "test authentication" --type feature
 
 # Check output
 ls -la docs/research-reports/
@@ -137,28 +139,28 @@ ls -la docs/research-reports/
 
 #### For Planning (@PM)
 ```bash
-python bin/research_agent.py \
+python tools/research/research_agent.py \
   --task "Build todo app with authentication" \
   --type general
 ```
 
 #### For Development (@DEV)
 ```bash
-python bin/research_agent.py \
+python tools/research/research_agent.py \
   --feature "OAuth authentication" \
   --type feature
 ```
 
 #### For Bug Fixing (@TESTER)
 ```bash
-python bin/research_agent.py \
+python tools/research/research_agent.py \
   --bug "Login timeout error" \
   --type bug
 ```
 
 #### For Architecture (@SA)
 ```bash
-python bin/research_agent.py \
+python tools/research/research_agent.py \
   --task "Microservices architecture" \
   --type architecture
 ```
@@ -169,20 +171,20 @@ Hooks tự động trigger khi bạn mention roles trong IDE:
 
 ```
 User: @PM Build a todo app
-→ Hook triggers: python bin/research_agent.py --task "Build a todo app"
+→ Hook triggers: python tools/research/research_agent.py --task "Build a todo app"
 
 User: @DEV Implement OAuth login
-→ Hook triggers: python bin/research_agent.py --feature "Implement OAuth login"
+→ Hook triggers: python tools/research/research_agent.py --feature "Implement OAuth login"
 
 User: @TESTER Bug: Login fails
-→ Hook triggers: python bin/research_agent.py --bug "Login fails"
+→ Hook triggers: python tools/research/research_agent.py --bug "Login fails"
 ```
 
 ### 3. MCP Extended (with External APIs)
 
 ```bash
 # Use extended version for external API calls
-python bin/research_mcp_extended.py \
+python tools/research/research_mcp_extended.py \
   --task "OAuth implementation best practices" \
   --type feature
 
@@ -284,7 +286,7 @@ Recommendations:
 1. User provides requirements
 2. **RESEARCH FIRST (MANDATORY):**
    ```bash
-   python bin/research_agent.py --task "[project description]" --type general
+   python tools/research/research_agent.py --task "[project description]" --type general
    ```
 3. Review research report in `docs/research-reports/`
 4. Check confidence level
@@ -311,7 +313,7 @@ Recommendations:
 1. Receive feature assignment
 2. **RESEARCH FIRST (MANDATORY):**
    ```bash
-   python bin/research_agent.py --feature "[feature description]" --type feature
+   python tools/research/research_agent.py --feature "[feature description]" --type feature
    ```
 3. Review similar implementations
 4. Identify proven code patterns
@@ -337,7 +339,7 @@ Recommendations:
 1. Bug discovered
 2. **RESEARCH FIRST (MANDATORY):**
    ```bash
-   python bin/research_agent.py --bug "[bug description]" --type bug
+   python tools/research/research_agent.py --bug "[bug description]" --type bug
    ```
 3. Review similar bugs and their solutions
 4. Verify if root cause matches known patterns
@@ -390,7 +392,7 @@ Edit `.kiro/hooks/auto-research-hook.json`:
 
 ### Research Agent Configuration
 
-Edit `bin/research_agent.py` to customize:
+Edit `tools/research/research_agent.py` to customize:
 
 ```python
 # Relevance threshold
@@ -476,7 +478,7 @@ If you find better solution:
 Solution:
 1. Check Neo4j is running: systemctl status neo4j
 2. Verify credentials in .env
-3. Test connection: python bin/test_neo4j_connection.py
+3. Test connection: python tools/neo4j/test_neo4j_connection.py
 4. Or use file-based KB only (works without Neo4j)
 ```
 
@@ -517,17 +519,17 @@ Solution:
 ## 📚 Additional Resources
 
 ### Documentation
-- **Complete Guide:** `bin/README-research-agent.md`
+- **Complete Guide:** `tools/research/README.md`
 - **Workflow Details:** `.agent/workflows/research.md`
 - **PM Integration:** `.agent/workflows/pm.md`
 - **DEV Integration:** `.agent/workflows/dev.md`
 - **TESTER Integration:** `.agent/workflows/tester.md`
 
 ### Scripts
-- **Core Agent:** `bin/research_agent.py`
-- **MCP Basic:** `bin/research_mcp.py`
-- **MCP Extended:** `bin/research_mcp_extended.py`
-- **Setup Hooks:** `bin/setup_research_hooks.sh`
+- **Core Agent:** `tools/research/research_agent.py`
+- **MCP Basic:** `tools/research/research_mcp.py`
+- **MCP Extended:** `tools/research/research_mcp_extended.py`
+- **Setup Hooks:** `tools/setup/setup_research_hooks.sh`
 
 ### Configuration
 - **Hooks:** `.kiro/hooks/auto-research-hook.json`
@@ -545,7 +547,7 @@ After setup, verify everything works:
 - [ ] `.env` configured with API keys
 - [ ] Hooks installed (`.kiro/hooks/auto-research-hook.json`)
 - [ ] Research reports directory created (`docs/research-reports/`)
-- [ ] Test run successful (`python bin/research_agent.py --task "test"`)
+- [ ] Test run successful (`python tools/research/research_agent.py --task "test"`)
 - [ ] Workflows updated (PM, DEV, TESTER have research steps)
 - [ ] Hooks trigger correctly (test with @PM, @DEV, @TESTER)
 
@@ -557,7 +559,7 @@ Research Agent System is now fully integrated. Start using it:
 
 ```bash
 # Test it
-python bin/research_agent.py --task "Build authentication system" --type feature
+python tools/research/research_agent.py --task "Build authentication system" --type feature
 
 # Or use in IDE
 @PM Build a todo app with authentication

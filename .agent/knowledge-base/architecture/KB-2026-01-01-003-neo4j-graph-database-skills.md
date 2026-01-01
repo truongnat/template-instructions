@@ -1038,10 +1038,94 @@ MATCH p=shortestPath((a)-[*]-(b)) RETURN p
 ---
 
 ## Related Knowledge Base Entries
-- KB-[ID]: Graph Database Fundamentals
-- KB-[ID]: Cypher Query Optimization Patterns
-- KB-[ID]: Neo4j vs Other Graph Databases
-- KB-[ID]: Graph Data Science Algorithms
+- See: `.agent/knowledge-base/architecture/` for architecture patterns
+- See: `tools/neo4j/README.md` for Neo4j tools documentation
+- See: `docs/architecture/NEO4J-LEARNING-QUERIES.md` for query examples
+- See: `docs/architecture/BRAIN.md` for brain architecture integration
+- See: `docs/sprints/SPRINT-NEO4J-BRAIN.md` for Neo4j brain sprint details
+
+## Integration with Agentic SDLC
+
+### Auto-Sync Knowledge Base to Neo4j
+
+**Location:** `tools/neo4j/sync_skills_to_neo4j.py`
+
+Automatically sync knowledge base entries to Neo4j Cloud:
+
+```bash
+# Sync all KB entries
+python tools/neo4j/sync_skills_to_neo4j.py
+
+# Dry run (preview without syncing)
+python tools/neo4j/sync_skills_to_neo4j.py --dry-run
+
+# Show statistics only
+python tools/neo4j/sync_skills_to_neo4j.py --stats-only
+```
+
+### Query Skills from Neo4j
+
+**Location:** `tools/neo4j/query_skills_neo4j.py`
+
+Query and explore the skills knowledge graph:
+
+```bash
+# List all skills
+python tools/neo4j/query_skills_neo4j.py --all-skills
+
+# Skills for specific technology
+python tools/neo4j/query_skills_neo4j.py --tech "Neo4j"
+
+# Related skills
+python tools/neo4j/query_skills_neo4j.py --skill "Graph Databases"
+
+# Learning path for category
+python tools/neo4j/query_skills_neo4j.py --learning-path "Architecture"
+```
+
+### Automated Workflow
+
+**Hook Configuration:** `.kiro/hooks/auto-research-hook.json`
+
+Set up automatic Neo4j sync when KB entries are created:
+
+```json
+{
+  "name": "kb-auto-sync-neo4j",
+  "trigger": "on_file_save",
+  "condition": "file_path contains '.agent/knowledge-base/KB-'",
+  "action": {
+    "type": "command",
+    "command": "python tools/neo4j/sync_skills_to_neo4j.py"
+  }
+}
+```
+
+### Research Agent Integration
+
+**Location:** `tools/research/research_agent.py`
+
+The research agent can query Neo4j for related knowledge:
+
+```bash
+# Research with Neo4j integration
+python tools/research/research_agent.py --task "Neo4j optimization" --type architecture
+```
+
+The agent will:
+1. Search file-based knowledge base
+2. Query Neo4j knowledge graph (if configured)
+3. Find related technologies and skills
+4. Generate comprehensive research report
+
+**Configuration:** Add Neo4j credentials to `.env`:
+
+```bash
+NEO4J_URI=neo4j+s://xxxxx.databases.neo4j.io
+NEO4J_USERNAME=neo4j
+NEO4J_PASSWORD=your-password
+NEO4J_DATABASE=neo4j
+```
 
 ---
 

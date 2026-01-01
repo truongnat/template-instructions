@@ -25,7 +25,7 @@ leann search "your query"
 ### 2. Reasoning Update
 To sync the latest project structure and relationships to the Cloud Brain:
 ```bash
-python bin/graph_brain.py
+python tools/github/graph_brain.py
 ```
 
 ## 📋 Best Practices

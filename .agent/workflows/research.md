@@ -36,16 +36,16 @@ priority: CRITICAL - Run BEFORE any planning/development/bug fixing
 
 ```bash
 # For general tasks
-python bin/research_agent.py --task "Build authentication system"
+python tools/research/research_agent.py --task "Build authentication system"
 
 # For bugs
-python bin/research_agent.py --bug "Login fails with OAuth"
+python tools/research/research_agent.py --bug "Login fails with OAuth"
 
 # For features
-python bin/research_agent.py --feature "Real-time notifications"
+python tools/research/research_agent.py --feature "Real-time notifications"
 
 # With specific type
-python bin/research_agent.py --task "API design" --type architecture
+python tools/research/research_agent.py --task "API design" --type architecture
 ```
 
 ### Step 3: Analyze Results
@@ -155,7 +155,7 @@ Proceed with: Exploratory implementation
 ## Before Creating Project Plan
 
 1. Run research:
-   python bin/research_agent.py --task "[project description]"
+   python tools/research/research_agent.py --task "[project description]"
 
 2. Review findings:
    - Similar projects in KB
@@ -173,7 +173,7 @@ Proceed with: Exploratory implementation
 ## Before Implementation
 
 1. Run research:
-   python bin/research_agent.py --feature "[feature description]"
+   python tools/research/research_agent.py --feature "[feature description]"
 
 2. Review findings:
    - Similar implementations
@@ -191,7 +191,7 @@ Proceed with: Exploratory implementation
 ## Before Bug Fixing
 
 1. Run research:
-   python bin/research_agent.py --bug "[bug description]"
+   python tools/research/research_agent.py --bug "[bug description]"
 
 2. Review findings:
    - Similar bugs
@@ -209,7 +209,7 @@ Proceed with: Exploratory implementation
 ## Before Architecture Design
 
 1. Run research:
-   python bin/research_agent.py --task "[architecture need]" --type architecture
+   python tools/research/research_agent.py --task "[architecture need]" --type architecture
 
 2. Review findings:
    - Similar architectures

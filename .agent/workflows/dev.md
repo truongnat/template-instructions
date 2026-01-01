@@ -22,7 +22,7 @@ As @DEV, you MUST leverage the following MCP tools:
 ### 0. **RESEARCH BEFORE IMPLEMENTATION (MANDATORY):**
    **Before coding any feature, ALWAYS run research agent:**
    ```bash
-   python bin/research_agent.py --feature "[feature description]" --type feature
+   python tools/research/research_agent.py --feature "[feature description]" --type feature
    ```
    
    **Research Checklist:**

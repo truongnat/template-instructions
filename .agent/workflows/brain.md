@@ -32,10 +32,10 @@ This workflow manages the automated project memory using the LEANN (Lean and Eff
    Run this to sync project structure and GitHub issues to the cloud:
    ```bash
    # Sync file structure
-   python bin/graph_brain.py
+   python tools/github/graph_brain.py
    
    # Sync GitHub issues
-   python bin/sync_github.py
+   python tools/github/sync_github.py
    ```
 
 5. **Search Project Brain**

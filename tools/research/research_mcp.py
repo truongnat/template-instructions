@@ -18,10 +18,16 @@ from pathlib import Path
 
 # Import base research agent
 try:
+    # Try relative import first (when in same directory)
     from research_agent import ResearchAgent
 except ImportError:
-    print("⚠️  Cannot import research_agent.py")
-    sys.exit(1)
+    # Try absolute import from tools.research
+    try:
+        from tools.research.research_agent import ResearchAgent
+    except ImportError:
+        print("⚠️  Cannot import research_agent.py")
+        print("    Make sure you're running from project root or tools/research/ directory")
+        sys.exit(1)
 
 
 class ResearchAgentMCP(ResearchAgent):

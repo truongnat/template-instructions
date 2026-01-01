@@ -27,16 +27,16 @@ Automatically syncs knowledge base entries to Neo4j, creating nodes and relation
 **Usage:**
 ```bash
 # Sync all KB entries
-python bin/sync_skills_to_neo4j.py
+python tools/neo4j/sync_skills_to_neo4j.py
 
 # Dry run (preview without syncing)
-python bin/sync_skills_to_neo4j.py --dry-run
+python tools/neo4j/sync_skills_to_neo4j.py --dry-run
 
 # Show statistics only
-python bin/sync_skills_to_neo4j.py --stats-only
+python tools/neo4j/sync_skills_to_neo4j.py --stats-only
 
 # Custom KB path
-python bin/sync_skills_to_neo4j.py --kb-path .agent/knowledge-base
+python tools/neo4j/sync_skills_to_neo4j.py --kb-path .agent/knowledge-base
 ```
 
 **What it creates:**
@@ -66,29 +66,29 @@ Query and explore the skills knowledge graph.
 
 ```bash
 # List all skills
-python bin/query_skills_neo4j.py --all-skills
+python tools/neo4j/query_skills_neo4j.py --all-skills
 
 # Skills for specific technology
-python bin/query_skills_neo4j.py --tech "Neo4j"
-python bin/query_skills_neo4j.py --tech "Figma"
+python tools/neo4j/query_skills_neo4j.py --tech "Neo4j"
+python tools/neo4j/query_skills_neo4j.py --tech "Figma"
 
 # Related skills
-python bin/query_skills_neo4j.py --skill "User Research"
+python tools/neo4j/query_skills_neo4j.py --skill "User Research"
 
 # Learning path for category
-python bin/query_skills_neo4j.py --learning-path "UI/UX Design"
+python tools/neo4j/query_skills_neo4j.py --learning-path "UI/UX Design"
 
 # List all technologies
-python bin/query_skills_neo4j.py --technologies
+python tools/neo4j/query_skills_neo4j.py --technologies
 
 # Search skills
-python bin/query_skills_neo4j.py --search "design"
+python tools/neo4j/query_skills_neo4j.py --search "design"
 
 # Skills by author
-python bin/query_skills_neo4j.py --author "@UIUX"
+python tools/neo4j/query_skills_neo4j.py --author "@UIUX"
 
 # Prerequisites for a skill
-python bin/query_skills_neo4j.py --prerequisites "Advanced Prototyping"
+python tools/neo4j/query_skills_neo4j.py --prerequisites "Advanced Prototyping"
 ```
 
 ---
@@ -105,16 +105,16 @@ When you add new knowledge base entries:
 ### Step 2: Auto-Sync to Neo4j
 ```bash
 # Sync new entries
-python bin/sync_skills_to_neo4j.py
+python tools/neo4j/sync_skills_to_neo4j.py
 ```
 
 ### Step 3: Query Your Skills
 ```bash
 # See all your skills
-python bin/query_skills_neo4j.py --all-skills
+python tools/neo4j/query_skills_neo4j.py --all-skills
 
 # Find related skills
-python bin/query_skills_neo4j.py --skill "Your New Skill"
+python tools/neo4j/query_skills_neo4j.py --skill "Your New Skill"
 ```
 
 ---
@@ -178,7 +178,7 @@ Create a Kiro hook to auto-sync after KB updates:
   "condition": "file_path contains '.agent/knowledge-base/KB-'",
   "action": {
     "type": "command",
-    "command": "python bin/sync_skills_to_neo4j.py"
+    "command": "python tools/neo4j/sync_skills_to_neo4j.py"
   }
 }
 ```
@@ -264,8 +264,8 @@ SHOW INDEXES
 
 ## Next Steps
 
-1. **Run initial sync**: `python bin/sync_skills_to_neo4j.py`
-2. **Explore your skills**: `python bin/query_skills_neo4j.py --all-skills`
+1. **Run initial sync**: `python tools/neo4j/sync_skills_to_neo4j.py`
+2. **Explore your skills**: `python tools/neo4j/query_skills_neo4j.py --all-skills`
 3. **Set up auto-sync hook** (optional)
 4. **Query in Neo4j Browser** for visual exploration
 5. **Add more KB entries** and watch your knowledge graph grow!
@@ -275,7 +275,7 @@ SHOW INDEXES
 ## Example Output
 
 ```bash
-$ python bin/sync_skills_to_neo4j.py
+$ python tools/neo4j/sync_skills_to_neo4j.py
 
 ✅ Connected to Neo4j Cloud: neo4j+s://5994f6db.databases.neo4j.io
 🔧 Setting up database schema...
