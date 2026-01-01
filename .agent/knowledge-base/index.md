@@ -204,11 +204,37 @@
 
 ## 📝 How to Add Entry
 
-1. Copy template: `.gemini/instructions/templates/Knowledge-Entry-Template.md`
-2. Fill in all sections
-3. Save to appropriate folder
-4. Update this index
-5. Tag @REPORTER for review
+1. Copy template: `.agent/templates/Knowledge-Entry-Template.md`
+2. Fill in all sections with YAML frontmatter
+3. Save to appropriate category folder
+4. **Sync to Neo4j:** `python tools/neo4j/sync_skills_to_neo4j.py`
+5. Update this index (or let auto-sync handle it)
+6. Tag @REPORTER for review (optional)
+
+### Neo4j Knowledge Graph
+
+All knowledge base entries are automatically synced to Neo4j for:
+- **Visual exploration** of skills and relationships
+- **Learning path discovery** across categories
+- **Technology mapping** to understand skill requirements
+- **Team expertise tracking** via author relationships
+
+**Quick Commands:**
+```bash
+# Sync all KB entries to Neo4j
+python tools/neo4j/sync_skills_to_neo4j.py
+
+# Query all skills
+python tools/neo4j/query_skills_neo4j.py --all-skills
+
+# Find related skills
+python tools/neo4j/query_skills_neo4j.py --skill "Your Skill Name"
+
+# Get learning path
+python tools/neo4j/query_skills_neo4j.py --learning-path "Category"
+```
+
+**See [Neo4j Tools Documentation](../../tools/neo4j/README.md) for complete guide.**
 
 ---
 

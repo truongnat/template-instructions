@@ -52,8 +52,9 @@ agentic-sdlc ide cursor
 - **[MCP Setup](docs/guides/MCP-SETUP.md)** - MCP configuration
 
 ### Tools & Utilities
-- **[Research Agent](tools/research/README.md)** - Automated research system
-- **[Neo4j Tools](tools/neo4j/README.md)** - Knowledge graph integration
+- **[Research Agent](tools/research/README.md)** - Automated research system with Neo4j integration
+- **[Neo4j Tools](tools/neo4j/README.md)** - Knowledge graph database for skills and relationships
+- **[GitHub Tools](tools/github/)** - GitHub integration and synchronization
 - **[Setup Scripts](tools/setup/)** - Installation and configuration scripts
 
 ## 🎯 Use Cases
@@ -88,6 +89,62 @@ agentic-sdlc init-kb              # Initialize knowledge base
 agentic-sdlc list                 # List templates & roles
 agentic-sdlc --help               # Show help
 ```
+
+## 🧠 Neo4j Knowledge Graph Integration
+
+The project includes powerful Neo4j integration for managing skills and knowledge relationships:
+
+### Quick Start with Neo4j
+
+```bash
+# 1. Sync all knowledge base entries to Neo4j
+python tools/neo4j/sync_skills_to_neo4j.py
+
+# 2. Query your skills
+python tools/neo4j/query_skills_neo4j.py --all-skills
+
+# 3. Find related skills
+python tools/neo4j/query_skills_neo4j.py --skill "Graph Databases"
+
+# 4. Get learning path
+python tools/neo4j/query_skills_neo4j.py --learning-path "Architecture"
+```
+
+### What Neo4j Provides
+
+- **Skills Graph** - Visual representation of all skills and relationships
+- **Technology Mapping** - Connect skills to technologies used
+- **Learning Paths** - Discover skill progression routes
+- **Knowledge Discovery** - Find related knowledge automatically
+- **Team Expertise** - Track who knows what across the team
+
+### Research Agent Integration
+
+The Research Agent automatically queries Neo4j when researching tasks:
+
+```bash
+# Research with Neo4j knowledge graph
+python tools/research/research_agent.py --task "authentication" --type feature
+
+# Output includes:
+# - File-based knowledge base results
+# - Neo4j graph relationships
+# - Related technologies and skills
+# - Confidence level based on available knowledge
+```
+
+### Configuration
+
+Add Neo4j credentials to `.env`:
+
+```bash
+NEO4J_URI=neo4j+s://xxxxx.databases.neo4j.io
+NEO4J_USERNAME=neo4j
+NEO4J_PASSWORD=your-password
+NEO4J_DATABASE=neo4j
+```
+
+**See [Neo4j Tools Documentation](tools/neo4j/README.md) for complete guide.**
 
 ## 🎨 IDE Slash Commands
 
@@ -124,15 +181,21 @@ agentic-sdlc/
 │
 ├── 🔧 Tools & Scripts (tools/)
 │   ├── research/                    # Research agent system
-│   │   ├── research_agent.py
-│   │   ├── research_mcp.py
+│   │   ├── research_agent.py        # Core research with KB + Neo4j
+│   │   ├── research_mcp.py          # MCP integration
+│   │   ├── research_mcp_extended.py # Extended MCP with APIs
 │   │   └── README.md
-│   ├── neo4j/                       # Neo4j integration
-│   │   ├── sync_skills_to_neo4j.py
-│   │   ├── query_skills_neo4j.py
+│   ├── neo4j/                       # Neo4j knowledge graph
+│   │   ├── sync_skills_to_neo4j.py  # Sync KB to Neo4j
+│   │   ├── query_skills_neo4j.py    # Query skills graph
+│   │   ├── graph_brain.py           # Graph brain logic
+│   │   ├── verify_neo4j.py          # Connection verification
 │   │   └── README.md
 │   ├── github/                      # GitHub integration
+│   │   └── sync_github.py           # GitHub sync
 │   └── setup/                       # Setup scripts
+│       ├── setup_research_hooks.sh  # Research hooks
+│       └── standardize_filenames.ps1 # File naming
 │
 ├── 📚 Documentation (docs/)
 │   ├── PROJECT-DOCUMENTATION-INDEX.md  # Complete index

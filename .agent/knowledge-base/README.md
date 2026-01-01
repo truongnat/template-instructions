@@ -56,17 +56,45 @@ Search the knowledge base when:
 - 🔍 Reviewing security concerns
 
 ### How to Search
-1. **By Category:** Browse folders by type (bugs, features, etc.)
-2. **By Severity:** Check critical/high priority entries first
-3. **By Keywords:** Search for error messages, technology names, component names
-4. **By Index:** Check `index.md` for quick reference
+
+**1. File-Based Search:**
+- **By Category:** Browse folders by type (bugs, features, etc.)
+- **By Severity:** Check critical/high priority entries first
+- **By Keywords:** Search for error messages, technology names, component names
+- **By Index:** Check `INDEX.md` for quick reference
+
+**2. Neo4j Knowledge Graph:**
+```bash
+# Search all skills
+python tools/neo4j/query_skills_neo4j.py --all-skills
+
+# Find skills for specific technology
+python tools/neo4j/query_skills_neo4j.py --tech "React"
+
+# Find related skills
+python tools/neo4j/query_skills_neo4j.py --skill "Authentication"
+
+# Get learning path
+python tools/neo4j/query_skills_neo4j.py --learning-path "Architecture"
+
+# Search by keyword
+python tools/neo4j/query_skills_neo4j.py --search "performance"
+```
+
+**3. Research Agent (Automated):**
+```bash
+# Automatically searches both file system and Neo4j
+python tools/research/research_agent.py --task "authentication" --type feature
+```
+
+**See [Neo4j Tools Documentation](../../tools/neo4j/README.md) for complete guide.**
 
 ---
 
 ## 📝 Creating an Entry
 
 ### Step 1: Use the Template
-Copy `.gemini/instructions/templates/Knowledge-Entry-Template.md`
+Copy `.agent/templates/Knowledge-Entry-Template.md`
 
 ### Step 2: Fill in Details
 - Provide clear problem description
@@ -74,6 +102,7 @@ Copy `.gemini/instructions/templates/Knowledge-Entry-Template.md`
 - Document root cause
 - Explain solution step-by-step
 - Add prevention measures
+- **Use YAML frontmatter** for metadata (required for Neo4j sync)
 
 ### Step 3: Choose Location
 Place entry in appropriate folder:
@@ -84,9 +113,20 @@ Place entry in appropriate folder:
 - **Performance:** `knowledge-base/performance/KB-[date]-[id].md`
 - **Platform:** `knowledge-base/platform-specific/[platform]/KB-[date]-[id].md`
 
-### Step 4: Update Index
-Add entry to `index.md` with:
+### Step 4: Sync to Neo4j
+```bash
+# Sync your new entry to Neo4j knowledge graph
+python tools/neo4j/sync_skills_to_neo4j.py
+
+# Verify it was synced
+python tools/neo4j/query_skills_neo4j.py --all-skills
+```
+
+### Step 5: Update Index
+Add entry to `INDEX.md` with:
 - ID, Title, Category, Tags, Date
+
+**Note:** Neo4j sync automatically extracts skills, technologies, and relationships from your entry.
 
 ---
 
