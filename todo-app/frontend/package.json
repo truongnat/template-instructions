@@ -8,7 +8,9 @@
     "preview": "vite preview",
     "test": "vitest --run",
     "test:watch": "vitest",
-    "test:coverage": "vitest --coverage"
+    "test:coverage": "vitest --coverage",
+    "test:ci": "vitest --run --coverage",
+    "test:report": "vitest --coverage && node ../scripts/test-report.js"
   },
   "dependencies": {
     "react": "^18.2.0",
