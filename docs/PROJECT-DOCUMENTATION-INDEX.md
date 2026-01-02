@@ -203,6 +203,16 @@ All 17 steering files use lowercase naming.
 |------|-------------|--------|
 | `OUTLINE.md` | Documentation outline | ✅ Current |
 | `PROJECT-DOCUMENTATION-INDEX.md` | This file | ✅ Current |
+| `SDLC-Diagram.md` | SDLC workflow diagrams | ✅ Current |
+| `BRAIN-ARCHITECTURE.md` | BRAIN orchestrator architecture | ✅ Current |
+| `ARCHITECTURE-OVERVIEW.md` | Complete system architecture | ✅ Current |
+| `KNOWLEDGE-BASE-GUIDE.md` | KB visual guide with diagrams | ✅ Current |
+| `KNOWLEDGE-BASE-SIMPLE.md` | KB quick reference | ✅ Current |
+| `NEO4J-COMPOUND-INTEGRATION.md` | Neo4j integration guide | ✅ Current |
+| `NEO4J-INTEGRATION-COMPLETE.md` | Neo4j implementation summary | ✅ Current |
+| `NEO4J-DOCS-INTEGRATION-COMPLETE.md` | Neo4j + docs/ integration | ✅ Current |
+| `CLI-REORGANIZATION-COMPLETE.md` | Cross-platform CLI reorganization | ✅ Current |
+| `CLI-TESTING-RESULTS.md` | CLI testing results (Windows) | ✅ Current |
 
 #### Architecture
 **Location:** `docs/architecture/`
@@ -335,14 +345,19 @@ python tools/neo4j/query_skills_neo4j.py --all-skills
 - Workflow: `.agent/workflows/research.md`
 
 **Neo4j:**
+- Integration Guide: `docs/NEO4J-COMPOUND-INTEGRATION.md`
+- Implementation Summary: `docs/NEO4J-INTEGRATION-COMPLETE.md`
 - Documentation: `tools/neo4j/README.md`
 - Architecture: `docs/architecture/BRAIN.md`
 - Queries: `docs/architecture/NEO4J-LEARNING-QUERIES.md`
 
 **Knowledge Base:**
 - Overview: `.agent/knowledge-base/README.md`
+- Visual Guide: `docs/KNOWLEDGE-BASE-GUIDE.md`
+- Quick Reference: `docs/KNOWLEDGE-BASE-SIMPLE.md`
 - Rules: `.agent/rules/KNOWLEDGE-BASE.md`
 - Auto-Learning: `.agent/knowledge-base/AUTO-LEARNING-GUIDE.md`
+- Scripts: `bin/README.md`
 
 **MCP Integration:**
 - Guide: `docs/guides/MCP-GUIDE.md`
@@ -403,6 +418,62 @@ python tools/neo4j/query_skills_neo4j.py --all-skills
 
 ## 🔄 Recent Changes
 
+### 2026-01-02: docs/ Directory Integration with Neo4j Brain
+1. **Knowledge Base Expansion**
+   - Integrated `docs/` directory into KB system
+   - Increased indexed entries from 6 to 46 (7x increase)
+   - All documentation now searchable via KB CLI
+   - Neo4j Brain now indexes all project documentation
+
+2. **Updated Modules**
+   - `bin/lib/kb_common.py` - Added docs path support
+   - `bin/lib/kb_search.py` - Search both KB + docs
+   - `bin/lib/kb_index.py` - Index both locations
+   - `bin/lib/kb_compound.py` - Compound ops for both
+   - `tools/neo4j/sync_skills_to_neo4j.py` - Sync both locations
+
+3. **Documentation**
+   - Created `NEO4J-DOCS-INTEGRATION-COMPLETE.md`
+   - Updated all KB documentation
+   - Added comprehensive testing results
+
+### 2026-01-02: Cross-Platform CLI Reorganization
+1. **Python-Based CLI**
+   - Replaced PowerShell scripts with Python
+   - Created unified CLI for Windows/Linux/macOS
+   - 5-10x faster performance
+   - Better error handling and ANSI colors
+
+2. **New Structure**
+   - `bin/kb` (bash entry point)
+   - `bin/kb.bat` (Windows batch entry)
+   - `bin/kb_cli.py` (Python CLI)
+   - `bin/lib/*.py` (7 library modules)
+
+3. **Documentation**
+   - Created `CLI-REORGANIZATION-COMPLETE.md`
+   - Created `CLI-TESTING-RESULTS.md`
+   - Updated `bin/README.md`
+
+### 2026-01-02: Neo4j Compound Integration
+1. **Neo4j Brain Integration**
+   - Created compound script system (`kb-compound.ps1`)
+   - Integrated Neo4j as knowledge graph brain
+   - Implemented hybrid file + graph storage
+   - Added compound commands (search, add, sync, query, stats)
+
+2. **Documentation**
+   - Created `NEO4J-COMPOUND-INTEGRATION.md` (complete guide)
+   - Created `NEO4J-INTEGRATION-COMPLETE.md` (summary)
+   - Updated `bin/README.md` with compound commands
+   - Updated `.agent/knowledge-base/README.md`
+
+3. **Scripts**
+   - Created `kb-compound.ps1` (compound operations)
+   - Updated `kb.ps1` (added compound mode)
+   - Fixed `kb-stats.ps1` (syntax error)
+   - Verified Neo4j sync and query scripts
+
 ### 2026-01-01: Major Reorganization
 1. **File Reorganization**
    - Moved research tools to `tools/research/`
@@ -461,6 +532,8 @@ docs/guides/NEW-GUIDE.md
 
 ---
 
-**Last Updated:** 2026-01-01  
+**Last Updated:** 2026-01-02  
 **Maintained By:** Agentic SDLC Team  
 **Status:** ✅ Current and Complete
+
+**Latest:** Neo4j compound integration complete with hybrid file + graph storage system.

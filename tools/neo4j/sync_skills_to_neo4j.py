@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 """
 Auto-sync Knowledge Base Skills to Neo4j Cloud (AuraDB)
 
@@ -14,12 +15,21 @@ Usage:
 import os
 import re
 import json
+import sys
 from pathlib import Path
 from datetime import datetime
 from typing import Dict, List, Optional
 from dotenv import load_dotenv
 from neo4j import GraphDatabase
 import argparse
+
+# Set UTF-8 encoding for Windows console
+if sys.platform == 'win32':
+    try:
+        sys.stdout.reconfigure(encoding='utf-8')
+        sys.stderr.reconfigure(encoding='utf-8')
+    except:
+        pass
 
 # Load environment variables
 load_dotenv()
@@ -85,20 +95,28 @@ class Neo4jSkillSync:
             
             # Extract metadata
             entry_id = file_path.stem
-            title_match = re.search(r'^#\s+(.+)$', content, re.MULTILINE)
-            title = title_match.group(1) if title_match else file_path.stem
             
-            # Extract date
-            date_match = re.search(r'\*\*Date:\*\*\s+(\d{4}-\d{2}-\d{2})', content)
-            date = date_match.group(1) if date_match else datetime.now().strftime('%Y-%m-%d')
-            
-            # Extract category
-            category_match = re.search(r'\*\*Category:\*\*\s+(.+)', content)
-            category = category_match.group(1).strip() if category_match else "General"
-            
-            # Extract prepared by
-            author_match = re.search(r'\*\*Prepared By:\*\*\s+(@\w+)', content)
-            author = author_match.group(1) if author_match else "@UNKNOWN"
+            # Try to extract from YAML frontmatter first
+            frontmatter_match = re.search(r'^---\s*\n(.*?)\n---\s*\n', content, re.DOTALL)
+            if frontmatter_match:
+                frontmatter = frontmatter_match.group(1)
+                title = self._extract_yaml_field(frontmatter, 'title') or file_path.stem
+                date = self._extract_yaml_field(frontmatter, 'date') or datetime.now().strftime('%Y-%m-%d')
+                category = self._extract_yaml_field(frontmatter, 'category') or "Documentation"
+                author = self._extract_yaml_field(frontmatter, 'author') or "@SYSTEM"
+            else:
+                # Fallback to content parsing
+                title_match = re.search(r'^#\s+(.+)$', content, re.MULTILINE)
+                title = title_match.group(1) if title_match else file_path.stem
+                
+                date_match = re.search(r'\*\*Date:\*\*\s+(\d{4}-\d{2}-\d{2})', content)
+                date = date_match.group(1) if date_match else datetime.now().strftime('%Y-%m-%d')
+                
+                category_match = re.search(r'\*\*Category:\*\*\s+(.+)', content)
+                category = category_match.group(1).strip() if category_match else "Documentation"
+                
+                author_match = re.search(r'\*\*Prepared By:\*\*\s+(@\w+)', content)
+                author = author_match.group(1) if author_match else "@SYSTEM"
             
             # Extract tags
             tags_match = re.findall(r'#([\w-]+)', content)
@@ -123,6 +141,14 @@ class Neo4jSkillSync:
         except Exception as e:
             print(f"❌ Error parsing {file_path}: {e}")
             return None
+    
+    def _extract_yaml_field(self, frontmatter: str, field: str) -> Optional[str]:
+        """Extract field from YAML frontmatter"""
+        match = re.search(rf'^{field}:\s*(.+)$', frontmatter, re.MULTILINE)
+        if match:
+            value = match.group(1).strip().strip('"\'')
+            return value
+        return None
     
     def _extract_technologies(self, content: str) -> List[str]:
         """Extract technology names from content"""
@@ -283,6 +309,7 @@ def main():
     """Main execution function"""
     parser = argparse.ArgumentParser(description='Sync Knowledge Base to Neo4j')
     parser.add_argument('--kb-path', default='.agent/knowledge-base', help='Path to knowledge base')
+    parser.add_argument('--docs-path', default='docs', help='Path to docs directory')
     parser.add_argument('--dry-run', action='store_true', help='Dry run without syncing')
     parser.add_argument('--stats-only', action='store_true', help='Show stats only')
     args = parser.parse_args()
@@ -318,11 +345,31 @@ def main():
             sync.create_constraints()
             sync.create_indexes()
         
-        # Find all KB markdown files
+        # Find all KB markdown files from both locations
         kb_path = Path(args.kb_path)
-        kb_files = list(kb_path.rglob('KB-*.md'))
+        docs_path = Path(args.docs_path)
+        
+        kb_files = []
+        kb_count = 0
+        docs_count = 0
+        
+        # Get KB-*.md files from knowledge base
+        kb_entries = list(kb_path.rglob('KB-*.md'))
+        kb_files.extend(kb_entries)
+        kb_count = len(kb_entries)
+        
+        # Get all markdown files from docs/ (excluding sprints)
+        if docs_path.exists():
+            for md_file in docs_path.rglob('*.md'):
+                # Skip sprint artifacts
+                if 'sprints' in str(md_file):
+                    continue
+                kb_files.append(md_file)
+                docs_count += 1
         
         print(f"\n📚 Found {len(kb_files)} knowledge base entries")
+        print(f"   - From {kb_path}: {kb_count} entries")
+        print(f"   - From {docs_path}: {docs_count} entries")
         
         # Parse and sync each entry
         synced_count = 0

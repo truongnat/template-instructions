@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# Knowledge Base CLI - Cross-platform entry point
+# Works on Linux, macOS, and Windows (Git Bash/WSL)
+
+# Detect OS
+if [[ "$OSTYPE" == "msys" ]] || [[ "$OSTYPE" == "win32" ]]; then
+    # Windows (Git Bash)
+    SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    PLATFORM="windows"
+elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    # Linux
+    SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    PLATFORM="linux"
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    # macOS
+    SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    PLATFORM="macos"
+else
+    echo "Unsupported OS: $OSTYPE"
+    exit 1
+fi
+
+# Check if Python is available
+if command -v python3 &> /dev/null; then
+    PYTHON_CMD="python3"
+elif command -v python &> /dev/null; then
+    PYTHON_CMD="python"
+else
+    echo "Error: Python not found. Please install Python 3.7+"
+    exit 1
+fi
+
+# Run the Python CLI
+exec "$PYTHON_CMD" "$SCRIPT_DIR/kb_cli.py" "$@"
