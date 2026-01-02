@@ -8,7 +8,7 @@ tags: [ui-design, landing-page, awwwards, 3d-effects, bento-grid]
 related_files: [landing-page/src/components/Features.astro]
 attempts: 1
 time_saved: "3 hours (future reuse)"
-author: @DEV + @UIUX
+author: "DEV + UIUX"
 research_source: "Awwwards.com landing page winners"
 ---
 

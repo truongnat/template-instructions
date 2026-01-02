@@ -7,7 +7,11 @@ Get started with `agentic-sdlc` in 5 minutes.
 ## 🚀 Installation
 
 ```bash
+# Install CLI globally
 npm install -g agentic-sdlc
+
+# Install Python tools (required for KB, Research Agent, Health Check)
+pip install -r tools/requirements.txt
 ```
 
 ---

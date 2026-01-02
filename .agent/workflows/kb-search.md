@@ -14,8 +14,8 @@ If LEANN is installed, use the automated brain index for semantic and AST-aware 
 2. Summarize the results with deep code context.
 
 ### Method 2: Manual Knowledge Base (Legacy)
-1. Read `d:\dev\template-intructions\.agent\knowledge-base\index.md` if it exists.
-2. Search through `d:\dev\template-intructions\.agent\knowledge-base\` for relevant markdown files.
+1. Read `.agent/knowledge-base/INDEX.md` if it exists.
+2. Search through `.agent/knowledge-base/` for relevant markdown files.
 3. Summarize findings.
 
 ## User Query

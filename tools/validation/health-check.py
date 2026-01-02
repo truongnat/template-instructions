@@ -7,6 +7,14 @@ Validates project structure and configuration
 import sys
 from pathlib import Path
 
+# Fix Windows console encoding for Unicode characters
+if sys.platform == 'win32':
+    try:
+        sys.stdout.reconfigure(encoding='utf-8')
+        sys.stderr.reconfigure(encoding='utf-8')
+    except:
+        pass
+
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from utils.common import (

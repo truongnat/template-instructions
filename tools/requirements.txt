@@ -26,10 +26,11 @@ python-dotenv>=1.0.0         # Environment variable management
 
 # ============================================================
 # Common Dependencies
+# Pinned versions for reproducibility (last verified: 2026-01-02)
 # ============================================================
-pyyaml>=6.0.1                # YAML parsing (KB entries)
-pathlib>=1.0.1               # Path manipulation
-argparse>=1.4.0              # Command-line argument parsing
+pyyaml==6.0.2                # YAML parsing (KB entries)
+# pathlib is built-in in Python 3.4+
+# argparse is built-in in Python 3.2+
 
 # ============================================================
 # Development Dependencies (Optional)

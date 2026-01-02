@@ -1,6 +1,13 @@
-# Neo4j Skills Auto-Sync Scripts
+# Neo4j Brain - Universal Document Storage & Self-Learning
 
-Automatically sync knowledge base entries to Neo4j Cloud (AuraDB) and create a knowledge graph of skills, technologies, and relationships.
+Sync ALL project documents to Neo4j Cloud (AuraDB) and enable AI self-learning through pattern recognition.
+
+## Overview
+
+This module provides:
+1. **Knowledge Base Sync** - Sync KB entries with skills extraction
+2. **Document Sync** - Sync ALL documents (plans, reports, artifacts)
+3. **Learning Engine** - Error tracking, pattern recognition, recommendations
 
 ## Prerequisites
 
@@ -10,299 +17,203 @@ pip install neo4j python-dotenv
 
 ## Configuration
 
-Your `.env` file already contains the Neo4j connection details:
+Your `.env` file should contain:
 ```
-NEO4J_URI=neo4j+s://5994f6db.databases.neo4j.io
+NEO4J_URI=neo4j+s://your-instance.databases.neo4j.io
 NEO4J_USERNAME=neo4j
-NEO4J_PASSWORD=mmWKltHRIEaEM8PSDNdve9z3lwc8_frsLRMVjvh2NMY
+NEO4J_PASSWORD=your-password
 NEO4J_DATABASE=neo4j
 ```
+
+---
 
 ## Scripts
 
 ### 1. sync_skills_to_neo4j.py
+Syncs knowledge base entries with skills and technology extraction.
 
-Automatically syncs knowledge base entries to Neo4j, creating nodes and relationships.
-
-**Usage:**
 ```bash
-# Sync all KB entries
 python tools/neo4j/sync_skills_to_neo4j.py
-
-# Dry run (preview without syncing)
 python tools/neo4j/sync_skills_to_neo4j.py --dry-run
-
-# Show statistics only
 python tools/neo4j/sync_skills_to_neo4j.py --stats-only
-
-# Custom KB path
-python tools/neo4j/sync_skills_to_neo4j.py --kb-path .agent/knowledge-base
 ```
 
-**What it creates:**
-- `KBEntry` nodes (knowledge base entries)
-- `Skill` nodes (extracted skills)
-- `Technology` nodes (technologies mentioned)
-- `Category` nodes (entry categories)
-- `Person` nodes (authors)
-- Relationships between all nodes
-
-**Graph Structure:**
-```
-(Person)-[:CREATED]->(KBEntry)-[:TEACHES]->(Skill)
-(KBEntry)-[:BELONGS_TO]->(Category)
-(KBEntry)-[:USES_TECHNOLOGY]->(Technology)
-(Technology)-[:REQUIRES_SKILL]->(Skill)
-(Skill)-[:RELATED_TO]-(Skill)
-```
-
----
-
-### 2. query_skills_neo4j.py
-
-Query and explore the skills knowledge graph.
-
-**Usage:**
+### 2. document_sync.py
+Syncs ALL document types to Neo4j.
 
 ```bash
-# List all skills
-python tools/neo4j/query_skills_neo4j.py --all-skills
+# Sync all documents
+python tools/neo4j/document_sync.py --all
 
-# Skills for specific technology
-python tools/neo4j/query_skills_neo4j.py --tech "Neo4j"
-python tools/neo4j/query_skills_neo4j.py --tech "Figma"
+# Sync specific types
+python tools/neo4j/document_sync.py --type plans
+python tools/neo4j/document_sync.py --type reports
+python tools/neo4j/document_sync.py --type artifacts
+python tools/neo4j/document_sync.py --type workflows
 
-# Related skills
-python tools/neo4j/query_skills_neo4j.py --skill "User Research"
+# Preview without syncing
+python tools/neo4j/document_sync.py --dry-run
 
-# Learning path for category
-python tools/neo4j/query_skills_neo4j.py --learning-path "UI/UX Design"
-
-# List all technologies
-python tools/neo4j/query_skills_neo4j.py --technologies
-
-# Search skills
-python tools/neo4j/query_skills_neo4j.py --search "design"
-
-# Skills by author
-python tools/neo4j/query_skills_neo4j.py --author "@UIUX"
-
-# Prerequisites for a skill
-python tools/neo4j/query_skills_neo4j.py --prerequisites "Advanced Prototyping"
+# View statistics
+python tools/neo4j/document_sync.py --stats-only
 ```
 
----
+**Document Types:**
+- `plans` - Project plans, sprint plans
+- `reports` - Phase reports, test reports, metrics
+- `artifacts` - Specs, designs, architecture docs
+- `workflows` - Workflow definitions
+- `knowledge` - Knowledge base entries
+- `conversations` - Chat logs
 
-## Workflow: Auto-Update After Learning
+### 3. learning_engine.py
+Self-learning engine for pattern recognition and recommendations.
 
-### Step 1: Learn New Skills
-When you add new knowledge base entries:
 ```bash
-# New KB entry created at:
-.agent/knowledge-base/features/KB-2026-01-01-005-new-skill.md
-```
+# Setup learning schema
+python tools/neo4j/learning_engine.py --setup
 
-### Step 2: Auto-Sync to Neo4j
-```bash
-# Sync new entries
-python tools/neo4j/sync_skills_to_neo4j.py
-```
+# Record error patterns
+python tools/neo4j/learning_engine.py --record-error "TypeError" "Cannot read X of undefined" \
+    --resolution "Added null check" --approach "defensive_coding"
 
-### Step 3: Query Your Skills
-```bash
-# See all your skills
-python tools/neo4j/query_skills_neo4j.py --all-skills
+# Record success patterns
+python tools/neo4j/learning_engine.py --record-success "task-123" \
+    --task-type "auth_feature" --success-approach "JWT with refresh tokens"
 
-# Find related skills
-python tools/neo4j/query_skills_neo4j.py --skill "Your New Skill"
-```
+# Get recommendations
+python tools/neo4j/learning_engine.py --recommend "implement user authentication"
 
----
+# Find similar errors
+python tools/neo4j/learning_engine.py --similar-errors "ConnectionError"
 
-## Example Queries in Neo4j Browser
+# Find reasoning paths
+python tools/neo4j/learning_engine.py --reasoning-path "TypeError" "null check"
 
-Access your Neo4j Browser at: https://workspace-preview.neo4j.io/workspace/query
-
-### View All Skills
-```cypher
-MATCH (s:Skill)<-[:TEACHES]-(k:KBEntry)
-RETURN s, k
-LIMIT 50
-```
-
-### Skills by Technology
-```cypher
-MATCH (t:Technology {name: "Neo4j"})<-[:USES_TECHNOLOGY]-(k:KBEntry)-[:TEACHES]->(s:Skill)
-RETURN t, k, s
-```
-
-### Learning Path
-```cypher
-MATCH path = (p:Person)-[:CREATED]->(k:KBEntry)-[:TEACHES]->(s:Skill)
-WHERE p.name = "@UIUX"
-RETURN path
-```
-
-### Skill Relationships
-```cypher
-MATCH (s1:Skill)-[r:RELATED_TO]-(s2:Skill)
-WHERE r.strength > 2
-RETURN s1, r, s2
-```
-
-### Technology Stack
-```cypher
-MATCH (t:Technology)<-[:USES_TECHNOLOGY]-(k:KBEntry)
-RETURN t.name as technology, count(k) as usage_count
-ORDER BY usage_count DESC
-```
-
-### Find Skill Prerequisites
-```cypher
-MATCH (s1:Skill {name: "Advanced UI Design"})<-[:TEACHES]-(k:KBEntry)-[:TEACHES]->(s2:Skill)
-WHERE s2.level = 'beginner'
-RETURN DISTINCT s2.name as prerequisite
-```
-
----
-
-## Automation with Hooks
-
-Create a Kiro hook to auto-sync after KB updates:
-
-**Hook Configuration:**
-```json
-{
-  "name": "kb-auto-sync-neo4j",
-  "trigger": "on_file_save",
-  "condition": "file_path contains '.agent/knowledge-base/KB-'",
-  "action": {
-    "type": "command",
-    "command": "python tools/neo4j/sync_skills_to_neo4j.py"
-  }
-}
+# View statistics
+python tools/neo4j/learning_engine.py --stats
+python tools/neo4j/learning_engine.py --patterns
 ```
 
 ---
 
 ## Graph Schema
 
-### Nodes
+### Node Types
 
-**KBEntry**
-- `id`: Unique identifier (KB-YYYY-MM-DD-NNN)
-- `title`: Entry title
-- `date`: Creation date
-- `category`: Category name
-- `author`: Author name
-- `file_path`: File location
-- `content_length`: Content size
-- `updated_at`: Last update timestamp
-
-**Skill**
-- `name`: Skill name
-- `level`: beginner | intermediate | advanced
-- `source`: header | bullet | content
-
-**Technology**
-- `name`: Technology name
-
-**Category**
-- `name`: Category name
-
-**Person**
-- `name`: Author name (e.g., @UIUX)
+| Node | Properties | Description |
+|------|------------|-------------|
+| `Document` | id, title, type, author, version | Base document node |
+| `Plan` | + sprint, approved_by | Project/sprint plans |
+| `Report` | + phase, findings | Reports and metrics |
+| `Artifact` | + status | Design specs |
+| `KBEntry` | + category, skills | Knowledge base |
+| `Error` | type, message, occurrence_count | Tracked errors |
+| `Resolution` | description, approach, success_count | Error solutions |
+| `Pattern` | type, approach, success_count | Success patterns |
+| `Learning` | title, insight, confidence | Captured learnings |
 
 ### Relationships
 
-- `(Person)-[:CREATED]->(KBEntry)` - Author created entry
-- `(KBEntry)-[:BELONGS_TO]->(Category)` - Entry belongs to category
-- `(KBEntry)-[:TEACHES]->(Skill)` - Entry teaches skill
-- `(KBEntry)-[:USES_TECHNOLOGY]->(Technology)` - Entry uses technology
-- `(Technology)-[:REQUIRES_SKILL]->(Skill)` - Technology requires skill
-- `(Skill)-[:RELATED_TO]-(Skill)` - Skills are related (with strength property)
+```
+(Document)-[:CREATED_BY]->(Role)
+(Document)-[:BELONGS_TO]->(Sprint)
+(Document)-[:REFERENCES]->(Document)
+(Document)-[:SUPERCEDES]->(Document)
+(Document)-[:HAS_CHUNK]->(ContentChunk)
+
+(Error)-[:RESOLVED_BY]->(Resolution)
+(Task)-[:USED_PATTERN]->(Pattern)
+(Learning)-[:DERIVED_FROM]->(Error|Pattern)
+```
 
 ---
 
-## Troubleshooting
+## Cypher Queries
 
-### Connection Issues
+### Find Related Documents
+```cypher
+MATCH (d:Document {title: "Project Plan"})
+-[:REFERENCES]->(related)
+RETURN d, related
+```
+
+### View Error Resolution History
+```cypher
+MATCH (e:Error)-[r:RESOLVED_BY]->(res:Resolution)
+RETURN e.type, e.message, res.description, r.use_count
+ORDER BY r.use_count DESC
+```
+
+### Get Success Patterns
+```cypher
+MATCH (p:Pattern)
+RETURN p.type, p.approach, p.success_count
+ORDER BY p.success_count DESC
+LIMIT 10
+```
+
+### Find Learning Path
+```cypher
+MATCH path = (e:Error)-[:RESOLVED_BY*..3]->(r:Resolution)
+RETURN path
+```
+
+---
+
+## Workflow Integration
+
+### Before Starting Task
 ```bash
-# Test connection
-python -c "from neo4j import GraphDatabase; driver = GraphDatabase.driver('neo4j+s://5994f6db.databases.neo4j.io', auth=('neo4j', 'your-password')); driver.verify_connectivity(); print('✅ Connected')"
+# Get recommendations
+python tools/neo4j/learning_engine.py --recommend "your task description"
 ```
 
-### Clear All Data (Reset)
-```cypher
-// In Neo4j Browser
-MATCH (n) DETACH DELETE n
+### After Bug Fix
+```bash
+# Record error pattern
+python tools/neo4j/learning_engine.py --record-error "ErrorType" "Error message" \
+    --resolution "What fixed it" --approach "approach_name"
 ```
 
-### View Constraints
-```cypher
-SHOW CONSTRAINTS
+### After Task Completion
+```bash
+# Record success pattern
+python tools/neo4j/learning_engine.py --record-success "task-id" \
+    --task-type "task_category" --success-approach "what worked"
 ```
 
-### View Indexes
-```cypher
-SHOW INDEXES
+### Weekly Sync
+```bash
+# Sync all documents
+python tools/neo4j/document_sync.py --all
+python tools/neo4j/sync_skills_to_neo4j.py
 ```
 
 ---
 
-## Benefits of Skills in Neo4j
-
-1. **Skill Discovery**: Find related skills you should learn
-2. **Learning Paths**: See progression from beginner to advanced
-3. **Technology Mapping**: Understand which skills are needed for technologies
-4. **Knowledge Gaps**: Identify missing skills in your knowledge base
-5. **Team Expertise**: Track who knows what
-6. **Skill Relationships**: Discover connections between skills
-7. **Query Flexibility**: Ask complex questions about your knowledge
-
----
-
-## Next Steps
-
-1. **Run initial sync**: `python tools/neo4j/sync_skills_to_neo4j.py`
-2. **Explore your skills**: `python tools/neo4j/query_skills_neo4j.py --all-skills`
-3. **Set up auto-sync hook** (optional)
-4. **Query in Neo4j Browser** for visual exploration
-5. **Add more KB entries** and watch your knowledge graph grow!
-
----
-
-## Example Output
+## Testing
 
 ```bash
-$ python tools/neo4j/sync_skills_to_neo4j.py
+# Run all Neo4j tests
+pytest tests/test_document_sync.py tests/test_learning_engine.py -v
 
-✅ Connected to Neo4j Cloud: neo4j+s://5994f6db.databases.neo4j.io
-🔧 Setting up database schema...
-✅ Created constraint: (s:Skill)
-✅ Created constraint: (k:KBEntry)
-✅ Created index: (s:Skill)
-✅ Created index: (k:KBEntry)
-
-📚 Found 4 knowledge base entries
-
-✅ Synced: React Hydration Mismatch in Astro
-✅ Synced: Landing Page Design Trends 2026
-✅ Synced: Neo4j Graph Database Skills
-✅ Synced: Essential UI/UX Design Skills 2026
-
-🔗 Creating skill relationships...
-✅ Created skill relationships
-
-📊 Final Statistics:
-   KB Entries: 4
-   Skills: 127
-   Technologies: 23
-   Categories: 3
-
-✅ Successfully synced 4 KB entries!
+# Run integration tests (requires Neo4j connection)
+pytest tests/test_document_sync.py tests/test_learning_engine.py -v -m integration
 ```
 
 ---
 
-#neo4j #knowledge-graph #skills #automation #learning
+## Benefits
+
+1. **Full Traceability** - All documents linked with relationships
+2. **Version History** - Track document evolution
+3. **Error Learning** - Never solve the same problem twice
+4. **Pattern Recognition** - Know what approaches work best
+5. **Smart Recommendations** - Get context-aware suggestions
+6. **Sprint Context** - Documents organized by sprint
+
+---
+
+#neo4j #knowledge-graph #self-learning #documents
+

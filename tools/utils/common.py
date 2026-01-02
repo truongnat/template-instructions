@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Common utility functions for agent scripts
-Cross-platform compatible
+Cross-platform compatible with Windows encoding support
 """
 
 import os
@@ -9,6 +9,32 @@ import sys
 import json
 from pathlib import Path
 from datetime import datetime
+
+# Fix Windows console encoding - must be done before any print statements
+if sys.platform == 'win32':
+    try:
+        # Try to set UTF-8 mode for Windows console
+        sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+        sys.stderr.reconfigure(encoding='utf-8', errors='replace')
+    except (AttributeError, OSError):
+        # Python < 3.7 or reconfigure not available
+        pass
+
+# Symbols with ASCII fallback for Windows compatibility
+def _get_symbol(unicode_char, ascii_fallback):
+    """Get symbol with fallback for encoding issues"""
+    try:
+        # Test if we can encode the character
+        unicode_char.encode(sys.stdout.encoding or 'utf-8')
+        return unicode_char
+    except (UnicodeEncodeError, LookupError):
+        return ascii_fallback
+
+# Define symbols with fallbacks
+SYM_CHECK = _get_symbol('✓', '[OK]')
+SYM_CROSS = _get_symbol('✗', '[ERR]')
+SYM_WARN = _get_symbol('⚠', '[WARN]')
+SYM_INFO = _get_symbol('ℹ', '[INFO]')
 
 
 # ANSI color codes (work on Windows 10+, macOS, Linux)
@@ -43,22 +69,22 @@ def print_header(message):
 
 def print_success(message):
     """Print success message"""
-    print(f"{Colors.GREEN}✓ {message}{Colors.ENDC}")
+    print(f"{Colors.GREEN}{SYM_CHECK} {message}{Colors.ENDC}")
 
 
 def print_error(message):
     """Print error message"""
-    print(f"{Colors.RED}✗ {message}{Colors.ENDC}", file=sys.stderr)
+    print(f"{Colors.RED}{SYM_CROSS} {message}{Colors.ENDC}", file=sys.stderr)
 
 
 def print_warning(message):
     """Print warning message"""
-    print(f"{Colors.YELLOW}⚠ {message}{Colors.ENDC}")
+    print(f"{Colors.YELLOW}{SYM_WARN} {message}{Colors.ENDC}")
 
 
 def print_info(message):
     """Print info message"""
-    print(f"{Colors.BLUE}ℹ {message}{Colors.ENDC}")
+    print(f"{Colors.BLUE}{SYM_INFO} {message}{Colors.ENDC}")
 
 
 def get_project_root():

@@ -1,0 +1,15 @@
+{
+    "ignorePatterns": [
+        {
+            "pattern": "^file:///"
+        },
+        {
+            "pattern": "^#"
+        }
+    ],
+    "replacementPatterns": [],
+    "httpHeaders": [],
+    "timeout": "10s",
+    "retryOn429": true,
+    "retryCount": 3
+}

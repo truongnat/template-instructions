@@ -276,7 +276,8 @@ agentic-sdlc/                           # 🧠 BRAIN (Root)
 │       ├── public/
 │       └── README.md
 │
-├── 📁 bin/                             # Legacy CLI (deprecated)
+├── 📁 bin/                             # KB CLI tools (Python)
+├── 📁 tests/                           # Test suite
 ├── 📁 trash/                           # Archived files
 │
 ├── 📄 README.md                        # This file

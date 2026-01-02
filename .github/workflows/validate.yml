@@ -1,0 +1,60 @@
+name: Validation
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install Node dependencies
+        run: npm ci || npm install
+
+      - name: Install Python dependencies
+        run: pip install -r tools/requirements.txt
+
+      - name: Validate project structure
+        run: |
+          echo "Checking required directories..."
+          test -d ".agent" || (echo "Missing .agent directory" && exit 1)
+          test -d ".agent/workflows" || (echo "Missing workflows" && exit 1)
+          test -d ".agent/knowledge-base" || (echo "Missing KB" && exit 1)
+          test -d "tools" || (echo "Missing tools" && exit 1)
+          echo "✅ All required directories present"
+
+      - name: Validate configuration files
+        run: |
+          echo "Checking config files..."
+          test -f ".agent/CONFIG.md" || (echo "Missing CONFIG.md" && exit 1)
+          test -f ".agent/USAGE.md" || (echo "Missing USAGE.md" && exit 1)
+          test -f "package.json" || (echo "Missing package.json" && exit 1)
+          echo "✅ All config files present"
+
+      - name: Run health check
+        run: python tools/validation/health-check.py
+        continue-on-error: true
+
+      - name: Lint Python files
+        run: |
+          pip install flake8
+          flake8 tools/ --count --select=E9,F63,F7,F82 --show-source --statistics || true
+        continue-on-error: true

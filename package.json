@@ -7,7 +7,8 @@
     "agentic-sdlc": "./bin/cli.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "pytest tests/ -v",
+    "test:cov": "pytest tests/ -v --cov=tools --cov-report=html",
     "workflow:cycle": "python tools/workflows/cycle.py",
     "workflow:housekeeping": "python tools/workflows/housekeeping.py",
     "kb:search": "python tools/kb/search.py",
@@ -18,7 +19,8 @@
     "agent:list": "python tools/agent/manage.py list",
     "agent:create": "python tools/agent/manage.py create",
     "agent:validate": "python tools/agent/manage.py validate",
-    "agent:info": "python tools/agent/manage.py info"
+    "agent:info": "python tools/agent/manage.py info",
+    "setup": "python tools/setup/init.py"
   },
   "keywords": [
     "sdlc",

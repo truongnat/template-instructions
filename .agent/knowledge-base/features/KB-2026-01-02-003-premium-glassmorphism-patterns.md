@@ -2,7 +2,7 @@
 title: Premium Glassmorphism & Framer Motion Patterns
 date: 2026-01-02
 category: Features
-author: @DEV
+author: "DEV"
 tags: [uiux, glassmorphism, framer-motion, react, animations]
 ---
 

@@ -8,7 +8,7 @@ tags: [ui-design, landing-page, ai-aesthetic, glassmorphism, astro]
 related_files: [landing-page/src/components/Hero.astro, landing-page/src/styles/global.css]
 attempts: 1
 time_saved: "2 hours (future reuse)"
-author: @DEV + @UIUX
+author: "DEV + UIUX"
 ---
 
 ## Problem

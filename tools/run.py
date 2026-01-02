@@ -32,7 +32,12 @@ def main():
         'housekeeping': 'workflows/housekeeping.py',
         'kb-search': 'kb/search.py',
         'kb-stats': 'kb/stats.py',
-        'health-check': 'validation/health-check.py'
+        'kb-update': 'kb/update-index.py',
+        'health-check': 'validation/health-check.py',
+        'agent-list': 'agent/manage.py list',
+        'agent-create': 'agent/manage.py create',
+        'agent-validate': 'agent/manage.py validate',
+        'agent-info': 'agent/manage.py info'
     }
     
     if script_name not in script_map:
