@@ -1,10 +1,29 @@
 node_modules/
-.env
-# Ignore all .env files
-.env*
 
-# Ignore all .env files in the root directory
+# Environment files
+.env
+.env*
 /.env*
 
-# Ignore all .env files in the current directory
-.env*
+# Turborepo
+.turbo/
+
+# Build outputs
+dist/
+.next/
+.astro/
+coverage/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+htmlcov/

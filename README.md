@@ -1,323 +1,216 @@
 # Agentic SDLC
 
-> Simulating a complete Software Development Lifecycle (SDLC) with specialized AI Agents.
+> Transform your IDE into a complete Software Development Lifecycle team with AI-powered agents, automated workflows, and intelligent knowledge management.
 
-Transform your IDE into a full SDLC team with 13 specialized AI roles, automated workflows, and knowledge management.
+## 🎯 What is Agentic SDLC?
 
-## 🧠 Monorepo Architecture
+**Agentic SDLC** is an AI-powered development framework that simulates a complete software development team within your IDE. It provides:
 
-This is a **monorepo** where the root contains the **Brain** (AI Agent System) and all sub-projects share and use it:
+- **13+ Specialized AI Roles** - PM, SA, UI/UX, QA, Security, Dev, DevOps, Tester, Reporter, and more
+- **32+ Automated Workflows** - From planning to deployment with `/slash` commands
+- **Intelligent Brain System** - LEANN + Neo4j for compound learning and knowledge graphs
+- **Cross-IDE Compatibility** - Works with Cursor, Windsurf, Cline, Aider, and any AI-powered IDE
+- **Monorepo Architecture** - Shared brain system across multiple projects
 
-```mermaid
-graph TB
-    subgraph ROOT["🧠 BRAIN (Root)"]
-        AGENT[".agent/<br/>Workflows, KB, Roles"]
-        KIRO[".kiro/<br/>Steering, Settings"]
-        TOOLS["tools/<br/>Neo4j, Research, Utils"]
-        DOCS["docs/<br/>Documentation"]
-    end
+## 🧠 The Brain System
 
-    subgraph PROJECTS["📦 PROJECTS"]
-        TODO["todo-app/<br/>Task Management"]
-        LANDING["landing-page/<br/>Astro Site"]
-        FUTURE["[your-project]/<br/>Add More..."]
-    end
+At the core of Agentic SDLC is the **Brain** - an intelligent knowledge management system that:
 
-    AGENT -.->|"Shared Workflows"| TODO
-    AGENT -.->|"Shared Workflows"| LANDING
-    AGENT -.->|"Shared Workflows"| FUTURE
-    
-    KIRO -.->|"Shared Settings"| TODO
-    KIRO -.->|"Shared Settings"| LANDING
-    KIRO -.->|"Shared Settings"| FUTURE
-    
-    TOOLS -.->|"Shared Tools"| TODO
-    TOOLS -.->|"Shared Tools"| LANDING
-    TOOLS -.->|"Shared Tools"| FUTURE
+- **Learns from every task** - Automatically captures patterns from bugs, features, and solutions
+- **Provides recommendations** - Suggests approaches based on past successes
+- **Builds knowledge graphs** - Maps relationships between skills, technologies, and solutions
+- **Enables compound intelligence** - Each project's knowledge benefits all others
 
-    style ROOT fill:#e1f5ff,stroke:#01579b,stroke-width:3px
-    style PROJECTS fill:#f3e5f5,stroke:#4a148c,stroke-width:2px
-```
+→ See **[GEMINI.md](GEMINI.md)** for complete Brain documentation
 
-```
-agentic-sdlc/                    # 🧠 BRAIN (Root)
-├── .agent/                      # ✅ Shared AI workflows, KB, roles
-├── .kiro/                       # ✅ Shared Kiro IDE settings  
-├── tools/                       # ✅ Shared tools (Neo4j, research, etc.)
-├── docs/                        # Brain documentation
-│
-└── projects/                    # 📦 SUB-PROJECTS (use Brain)
-    ├── todo-app/               # Todo application
-    ├── landing-page/           # Landing page site
-    └── [add-yours]/            # Your projects here
-```
+## ✨ Quick Start
 
-**Key Concepts:**
-- **Brain (Root):** Contains all AI infrastructure, tools, and knowledge
-- **Projects:** Individual applications that use Brain's capabilities
-- **Shared Everything:** Workflows, KB, tools are shared across all projects
-- **Compound Learning:** Solutions from one project benefit all others
-
-**See:** 
-- [`projects/README.md`](projects/README.md) - How to use Brain in projects
-- [`docs/MONOREPO-ARCHITECTURE.md`](docs/MONOREPO-ARCHITECTURE.md) - Complete architecture guide
-
-## ✨ Features
-
-- �� **13+ AI Roles** - PM, SA, UI/UX, QA, Security, Dev, DevOps, Tester, Reporter, Stakeholder, PO, Orchestrator
-- ⚡ **Slash Commands** - `/pm`, `/dev`, `/auto` in your IDE
-- 🔄 **Auto Workflow** - Full automation or manual control
-- 🧠 **Knowledge Base** - Learn from past challenges
-- 🎨 **IDE Integration** - Cursor, Copilot, Windsurf, Cline, Aider
-- 📚 **17 Templates** - Plans, designs, reports, documentation
-- 🌐 **All Platforms** - Web, Mobile, Desktop, CLI, API, Embedded
-
-## 🚀 Quick Start
+### Installation
 
 ```bash
-# Install
+# Install globally
 npm install -g agentic-sdlc
 
-# Create project
+# Or with bun
+bun install -g agentic-sdlc
+```
+
+### Create New Project
+
+```bash
+# Create project with brain system
 agentic-sdlc create my-project
 cd my-project
 
-# Setup IDE
-agentic-sdlc ide cursor
+# Setup your IDE
+agentic-sdlc ide cursor  # or windsurf, cline, etc.
 
-# Start building (in IDE)
+# Start building
 /pm Build a todo app with authentication
 ```
 
-**That's it!** See [Quick Start](docs/guides/QUICK-START.md) for details.
+### Add to Existing Project
+
+```bash
+# Install brain system in current directory
+agentic-sdlc install
+
+# Setup IDE integration
+agentic-sdlc ide cursor
+
+# Initialize knowledge base
+agentic-sdlc init-kb
+```
+
+## 🚀 Core Features
+
+### 1. AI Role System (13+ Roles)
+
+Specialized AI agents for every SDLC phase:
+
+```
+Planning    → @PM, @BA, @PO
+Design      → @SA, @UIUX
+Review      → @QA, @SECA
+Development → @DEV, @DEVOPS
+Testing     → @TESTER
+Delivery    → @REPORTER, @STAKEHOLDER
+Automation  → @ORCHESTRATOR, @AUTO
+```
+
+### 2. Slash Commands (32+ Workflows)
+
+Execute complete workflows with simple commands:
+
+```bash
+/pm              # Project planning
+/auto            # Full automation
+/cycle           # Complete task lifecycle
+/dev             # Development workflow
+/qa              # Quality assurance
+/brain           # Brain system management
+/kb-search       # Search knowledge base
+```
+
+### 3. Monorepo Architecture
+
+```
+agentic-sdlc/              # 🧠 Brain (Root)
+├── .agent/                # AI workflows, roles, KB
+├── tools/                 # Neo4j, research, utilities
+├── docs/                  # Documentation
+└── projects/              # Your projects
+    ├── project-1/
+    ├── project-2/
+    └── [add-yours]/
+```
+
+**Benefits:**
+- ✅ Shared brain across all projects
+- ✅ Compound learning from every solution
+- ✅ Consistent workflows and quality
+- ✅ Centralized knowledge management
+
+### 4. Knowledge Management
+
+**Automated Learning:**
+- Records error patterns and solutions
+- Captures successful implementation approaches
+- Builds skill and technology graphs
+- Provides context-aware recommendations
+
+**Three-Layer System:**
+1. **LEANN** - Vector-based semantic search
+2. **Neo4j** - Knowledge graph with relationships
+3. **File-based KB** - Categorized markdown entries
 
 ## 📖 Documentation
 
-### Quick Links
-- **[Complete Documentation Index](docs/PROJECT-DOCUMENTATION-INDEX.md)** - Full documentation catalog
-- **[Documentation Outline](docs/OUTLINE.md)** - Central hub for all guides
-- **[Quick Start Guide](docs/guides/QUICK-START.md)** - Get started in 5 minutes
-- **[CLI Examples](docs/guides/CLI-EXAMPLES.md)** - Complete usage examples
+### Getting Started
+- **[GEMINI.md](GEMINI.md)** - Complete brain system guide (IDE-agnostic)
+- **[Quick Start](docs/guides/QUICK-START.md)** - 5-minute setup guide
+- **[CLI Examples](docs/guides/CLI-EXAMPLES.md)** - Command usage examples
 
-### Core Documentation
-- **[Project Structure](PROJECT-STRUCTURE.md)** - Detailed project organization
-- **[File Naming Standards](FILE-NAMING-STANDARDS.md)** - Naming conventions
-- **[Standardization Summary](STANDARDIZATION-SUMMARY.md)** - Recent updates
+### Architecture
+- **[Monorepo Architecture](docs/MONOREPO-ARCHITECTURE.md)** - System design
+- **[Project Structure](PROJECT-STRUCTURE.md)** - Directory organization
+- **[Documentation Index](docs/PROJECT-DOCUMENTATION-INDEX.md)** - All docs
 
-### Setup & Configuration
-- **[Research Agent Setup](docs/setup/RESEARCH-AGENT-SETUP.md)** - Research system setup
-- **[GitHub Management](docs/setup/GITHUB-MANAGEMENT.md)** - GitHub integration
-- **[MCP Setup](docs/guides/MCP-SETUP.md)** - MCP configuration
-
-### Tools & Utilities
-- **[Research Agent](tools/research/README.md)** - Automated research system with Neo4j integration
-- **[Neo4j Tools](tools/neo4j/README.md)** - Knowledge graph database for skills and relationships
-- **[GitHub Tools](tools/github/)** - GitHub integration and synchronization
-- **[Setup Scripts](tools/setup/)** - Installation and configuration scripts
-- **[Role Communication System](docs/guides/ROLE-COMMUNICATION-SYSTEM.md)** - Internal chat system for agent roles
+### Tools & Setup
+- **[Neo4j Tools](tools/neo4j/README.md)** - Knowledge graph system
+- **[Research Agent](tools/research/README.md)** - Automated research
+- **[MCP Setup](docs/guides/MCP-SETUP.md)** - Model Context Protocol
 
 ## 🎯 Use Cases
 
 ### Solo Developer
 ```bash
-/auto Create a SaaS platform for project management
-# Automated workflow, complete in days
+/auto Create a SaaS platform with authentication and billing
+# Complete automation from planning to deployment
 ```
 
-### Team Project
+### Team Development
 ```bash
+# Each team member uses the same brain
 agentic-sdlc ide all
-agentic-sdlc init-kb
-# Shared workflow, consistent quality
+git pull  # Share knowledge base
+/pm Start Sprint 3
 ```
 
-### Existing Project
+### Existing Large Project
 ```bash
 agentic-sdlc install
-agentic-sdlc ide cursor
-# Add SDLC to any project
+/brain  # Index and analyze codebase
+/pm Migrate authentication to OAuth2
 ```
 
-## 🔧 CLI Commands
+## 🔧 Available Commands
 
 ```bash
-agentic-sdlc install              # Install in current directory
-agentic-sdlc create <name>        # Create new project
-agentic-sdlc ide <cursor|all>     # Setup IDE integration
-agentic-sdlc init-kb              # Initialize knowledge base
-agentic-sdlc list                 # List templates & roles
-agentic-sdlc --help               # Show help
+# Project Management
+agentic-sdlc create <name>      # Create new project
+agentic-sdlc install            # Add to existing project
+
+# IDE Integration
+agentic-sdlc ide cursor         # Setup Cursor IDE
+agentic-sdlc ide all            # Setup all supported IDEs
+
+# Knowledge Base
+agentic-sdlc init-kb            # Initialize KB
+agentic-sdlc list               # List roles & workflows
+
+# Brain System (see GEMINI.md)
+python tools/neo4j/brain_parallel.py --sync      # Sync brain
+python tools/neo4j/brain_parallel.py --recommend  # Get recommendations
 ```
 
-## 🧠 Neo4j Knowledge Graph Integration
+## 🌟 Why Agentic SDLC?
 
-The project includes powerful Neo4j integration for managing skills and knowledge relationships:
-
-### Quick Start with Neo4j
-
-```bash
-# 1. Sync all knowledge base entries to Neo4j
-python tools/neo4j/sync_skills_to_neo4j.py
-
-# 2. Query your skills
-python tools/neo4j/query_skills_neo4j.py --all-skills
-
-# 3. Find related skills
-python tools/neo4j/query_skills_neo4j.py --skill "Graph Databases"
-
-# 4. Get learning path
-python tools/neo4j/query_skills_neo4j.py --learning-path "Architecture"
-```
-
-### What Neo4j Provides
-
-- **Skills Graph** - Visual representation of all skills and relationships
-- **Technology Mapping** - Connect skills to technologies used
-- **Learning Paths** - Discover skill progression routes
-- **Knowledge Discovery** - Find related knowledge automatically
-- **Team Expertise** - Track who knows what across the team
-
-### Research Agent Integration
-
-The Research Agent automatically queries Neo4j when researching tasks:
-
-```bash
-# Research with Neo4j knowledge graph
-python tools/research/research_agent.py --task "authentication" --type feature
-
-# Output includes:
-# - File-based knowledge base results
-# - Neo4j graph relationships
-# - Related technologies and skills
-# - Confidence level based on available knowledge
-```
-
-### Configuration
-
-Add Neo4j credentials to `.env`:
-
-```bash
-NEO4J_URI=neo4j+s://xxxxx.databases.neo4j.io
-NEO4J_USERNAME=neo4j
-NEO4J_PASSWORD=your-password
-NEO4J_DATABASE=neo4j
-```
-
-**See [Neo4j Tools Documentation](tools/neo4j/README.md) for complete guide.**
-
-## 🎨 IDE Slash Commands
-
-After setup, use these in your IDE:
-
-```bash
-/pm              # Project Manager
-/auto            # Full automation
-/sa              # System Analyst
-/uiux            # UI/UX Designer
-/dev             # Developer
-/devops          # DevOps Engineer
-/tester          # Tester
-/kb-search       # Search knowledge base
-```
-
-## 📊 Project Structure
-
-```
-agentic-sdlc/                           # 🧠 BRAIN (Root)
-│
-├── 📁 .agent/                          # ✅ SHARED - AI Agent System
-│   ├── workflows/                      # 32 workflow definitions
-│   ├── knowledge-base/                 # Compound learning KB
-│   ├── roles/                          # AI role definitions
-│   ├── templates/                      # 16 document templates
-│   ├── rules/                          # Global rules
-│   └── ide-integration/                # IDE configurations
-│
-├── 📁 .kiro/                           # ✅ SHARED - Kiro IDE Settings
-│   ├── steering/                       # 17 steering files
-│   │   ├── global-rules.md
-│   │   ├── compound-learning.md
-│   │   ├── workflow-enhancements.md
-│   │   └── ...
-│   └── settings/                       # IDE settings
-│       └── mcp.json
-│
-├── 📁 tools/                           # ✅ SHARED - Utilities
-│   ├── neo4j/                          # Knowledge graph
-│   │   ├── sync_skills_to_neo4j.py
-│   │   ├── query_skills_neo4j.py
-│   │   ├── graph_brain.py
-│   │   └── README.md
-│   ├── research/                       # Research agent
-│   │   ├── research_agent.py
-│   │   ├── research_mcp.py
-│   │   └── README.md
-│   ├── kb/                             # KB management
-│   ├── github/                         # GitHub integration
-│   ├── setup/                          # Setup scripts
-│   └── README.md
-│
-├── 📁 docs/                            # Documentation
-│   ├── PROJECT-DOCUMENTATION-INDEX.md  # Complete index
-│   ├── MONOREPO-ARCHITECTURE.md        # Architecture guide
-│   ├── guides/                         # User guides
-│   ├── architecture/                   # Architecture docs
-│   ├── setup/                          # Setup guides
-│   └── sprints/                        # Sprint artifacts
-│
-├── 📁 projects/                        # 📦 SUB-PROJECTS
-│   ├── README.md                       # Monorepo guide
-│   ├── todo-app/                       # Todo application
-│   │   ├── frontend/
-│   │   ├── backend/
-│   │   └── README.md
-│   └── landing-page/                   # Landing page site
-│       ├── src/
-│       ├── public/
-│       └── README.md
-│
-├── 📁 bin/                             # KB CLI tools (Python)
-├── 📁 tests/                           # Test suite
-├── 📁 trash/                           # Archived files
-│
-├── 📄 README.md                        # This file
-├── 📄 PROJECT-STRUCTURE.md             # Detailed structure
-├── 📄 package.json                     # Root package.json
-└── 📄 .gitignore
-```
-
-**See:** 
-- [PROJECT-DOCUMENTATION-INDEX.md](docs/PROJECT-DOCUMENTATION-INDEX.md) - Complete file listing
-- [MONOREPO-ARCHITECTURE.md](docs/MONOREPO-ARCHITECTURE.md) - Architecture details
-
-## 🌟 Examples
-
-See [CLI-EXAMPLES.md](docs/guides/CLI-EXAMPLES.md) for:
-- Real-world workflows
-- Team collaboration
-- Automation scripts
-- Troubleshooting
-- Pro tips
-
-## 📦 What's Included
-
-- **12 Roles:** Complete SDLC team
-- **17 Templates:** All documentation needs
-- **Knowledge Base:** Learn and improve
-- **IDE Integration:** 5+ IDEs supported
-- **Automation:** Full-auto or manual modes
-- **Multi-platform:** Web, mobile, desktop, CLI, API
-
-## 🤝 Contributing
-
-Contributions welcome! See issues for ideas.
-
-## 📄 License
-
-MIT
+| Traditional Development | With Agentic SDLC |
+|------------------------|-------------------|
+| Manual planning | Automated with @PM |
+| Ad-hoc architecture | Structured with @SA, @UIUX |
+| Inconsistent code quality | Enforced by @QA, @SECA |
+| Lost knowledge | Compound learning brain |
+| Repetitive tasks | Automated with @AUTO |
+| Solo problem-solving | 13+ AI experts available |
 
 ## 🔗 Links
 
 - **Repository:** https://github.com/truongnat/agentic-sdlc
+- **NPM Package:** https://www.npmjs.com/package/agentic-sdlc
 - **Issues:** https://github.com/truongnat/agentic-sdlc/issues
-- **NPM:** https://www.npmjs.com/package/agentic-sdlc
+- **Documentation:** [docs/](docs/)
+
+## 📄 License
+
+MIT License - See [LICENSE](LICENSE) for details
+
+---
+
+**Next Steps:**
+1. Read [GEMINI.md](GEMINI.md) to understand the brain system
+2. Follow [Quick Start](docs/guides/QUICK-START.md) to get started
+3. Explore [workflows](.agent/workflows/) to see available automations
+
+**Questions?** Check the [documentation](docs/) or [open an issue](https://github.com/truongnat/agentic-sdlc/issues).

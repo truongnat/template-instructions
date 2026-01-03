@@ -10,12 +10,19 @@
     "test": "jest --coverage",
     "test:watch": "jest --watch",
     "test:ci": "jest --coverage --ci --maxWorkers=2",
-    "test:report": "jest --coverage && node ../scripts/test-report.js",
+    "typecheck": "tsc --noEmit",
+    "lint": "echo 'No linter configured'",
+    "clean": "rimraf dist coverage",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
     "prisma:studio": "prisma studio"
   },
-  "keywords": ["todo", "api", "express", "typescript"],
+  "keywords": [
+    "todo",
+    "api",
+    "express",
+    "typescript"
+  ],
   "author": "",
   "license": "MIT",
   "dependencies": {

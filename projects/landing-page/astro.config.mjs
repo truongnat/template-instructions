@@ -5,7 +5,7 @@ import react from '@astrojs/react';
 
 export default defineConfig({
   integrations: [tailwind(), icon(), react()],
-  site: 'https://agentic-sdlc.dev',
+  site: 'https://agentic-sdlc-sigma.vercel.app',
   output: 'static',
   build: {
     inlineStylesheets: 'auto'

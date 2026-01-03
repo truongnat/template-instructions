@@ -4,29 +4,25 @@ You have access to specialized SDLC roles. When user types a slash command, inte
 
 ## Role Commands
 
-- `/pm` → @PM - Project Manager (planning, scope management)
-- `/orchestrator` → @ORCHESTRATOR - Workflow automation
-- `/po` → @PO - Product Owner (backlog, prioritization)
+- `/pm` → @PM - Project Manager (planning, backlog, reporting, stakeholder liaison)
+- `/ba` → @BA - Business Analyst (requirements, user stories)
 - `/sa` → @SA - System Analyst (architecture, API design)
 - `/uiux` → @UIUX - UI/UX Designer (interface, user experience)
-- `/qa` → @QA - Quality Assurance (design review, testing strategy)
 - `/seca` → @SECA - Security Analyst (security assessment)
 - `/dev` → @DEV - Developer (implementation)
 - `/devops` → @DEVOPS - DevOps Engineer (CI/CD, deployment)
-- `/tester` → @TESTER - Tester (functional testing, bug detection)
-- `/reporter` → @REPORTER - Reporter (documentation, progress reports)
-- `/stakeholder` → @STAKEHOLDER - Stakeholder (final approval)
+- `/tester` → @TESTER - Tester (QA, design review, testing execution)
+- `/orchestrator` → @ORCHESTRATOR - Workflow automation
 
-## Quick Start Commands
+## Special Commands
 
-- `/auto [requirements]` → Start project with full automation (@PM --mode=full-auto)
-- `/semi-auto [requirements]` → Start project with semi-automation (@PM --mode=semi-auto)
-
-## Knowledge Base Commands
-
-- `/brain [query]` → Semantic search using LEANN (Automated Project Memory)
-- `/kb-search [query]` → Search project knowledge base
-- `/kb-add [topic]` → Add entry to manual knowledge base
+- `/auto [task]` → Start project with full automation (@ORCHESTRATOR --mode=full-auto)
+- `/semi-auto [task]` → Start project with semi-automation (@ORCHESTRATOR --mode=semi-auto)
+- `/cycle [task]` → Complete small task Lifecycle
+- `/explore [topic]` → Deep Investigation
+- `/brain [query]` → LEANN AI Brain Search
+- `/release` → Release Management
+- `/housekeeping` → Cleanup and Maintenance
 
 ## Usage Examples
 
@@ -34,16 +30,18 @@ You have access to specialized SDLC roles. When user types a slash command, inte
 /pm Build a todo app with authentication and real-time sync
 /auto Create a mobile fitness tracking app for iOS and Android
 /dev Implement OAuth2 authentication flow
-/kb-search React hydration error
+/brain React hydration error
 ```
 
 ## Instructions Location
 
 All role definitions and templates are in `.agent/`:
-- Roles: `.agent/workflows/`
+- Roles: `.agent/workflows/core/`
+- Processes: `.agent/workflows/process/`
+- Support: `.agent/workflows/support/`
+- Utilities: `.agent/workflows/utilities/`
 - Templates: `.agent/templates/`
 - Knowledge Base: `.agent/knowledge-base/`
 - Global Rules: `.agent/rules/global.md`
-- Usage Guide: `.agent/usage.md`
 
-When a slash command is used, load the corresponding role file and execute according to TeamLifecycle workflow.
+When a role or command is used, load the corresponding file from `.agent/workflows/` tiers and execute according to TeamLifecycle workflow.

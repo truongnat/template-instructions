@@ -3,9 +3,12 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "astro dev",
+    "dev": "astro dev --port 4321",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "typecheck": "astro check && tsc --noEmit",
+    "lint": "echo 'No linter configured'",
+    "clean": "rimraf dist .astro node_modules/.cache"
   },
   "dependencies": {
     "astro": "^4.16.18",

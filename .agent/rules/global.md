@@ -17,25 +17,25 @@ This document defines the mandatory rules, conventions, and lifecycle flow that 
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────────────┐
 │ 1. Planning     │───▶│ 2. Plan Approval│───▶│ 3. Designing            │
-│    (PM)         │    │    (User)       │    │    (SA + UIUX + PO)     │
+│    (PM)         │    │    (User)       │    │    (SA + UIUX)          │
 └─────────────────┘    └─────────────────┘    └───────────┬─────────────┘
                                                           │
                                                           ▼
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────────────┐
 │ 6. Testing      │◀───│ 5. Development  │◀───│ 4. Design Verification  │
-│    (TESTER)     │    │   (DEV + Ops)   │    │    (QA + SecA)          │
+│    (TESTER)     │    │   (DEV + Ops)   │    │    (TESTER + SecA)      │
 └────────┬────────┘    └─────────────────┘    └─────────────────────────┘
          │
          ▼
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────────────┐
 │ 7. Bug Fixing   │───▶│ 8. Deployment   │───▶│ 9. Reporting            │
-│   (DEV + Ops)   │    │    (DevOps)     │    │    (REPORTER)           │
+│   (DEV + Ops)   │    │    (DevOps)     │    │    (PM)                 │
 └─────────────────┘    └─────────────────┘    └───────────┬─────────────┘
                                                           │
                                                           ▼
                        ┌─────────────────┐    ┌─────────────────────────┐
                        │ ↩ Cycle Repeat  │◀───│ 10. Final Review        │
-                       │   (if rejected) │    │    (STAKEHOLDER)        │
+                       │   (if rejected) │    │    (PM)                 │
                        └─────────────────┘    └───────────┬─────────────┘
                                                           │ ✅ Approved
                                                           ▼
@@ -47,14 +47,14 @@ This document defines the mandatory rules, conventions, and lifecycle flow that 
 ### Phase Details:
 1. **Planning** (PM + BA) – Gather requirements, create project plan
 2. **Plan Approval** (User) – Explicit user sign-off required
-3. **Designing** (SA + UIUX + PO + BA in parallel) – Architecture, UI/UX, backlog prioritization
-4. **Design Verification** (QA + SecA in parallel) – Quality and security review
+3. **Designing** (SA + UIUX + BA in parallel) – Architecture, UI/UX, backlog prioritization
+4. **Design Verification** (TESTER + SecA in parallel) – Quality and security review
 5. **Development** (DEV + DevOps in parallel) – Implementation
 6. **Testing** (TESTER) – Functional, integration, E2E testing
 7. **Bug Fixing** (DEVs + DevOps) – Address identified issues
 8. **Deployment Prep** (DevOps) – CI/CD, staging, production readiness
-9. **Reporting & Documentation** (REPORTER) – Update CHANGELOG.md and create comprehensive reports
-10. **Final Review** (STAKEHOLDER) – Business approval
+9. **Reporting & Documentation** (PM) – Update CHANGELOG.md and create comprehensive reports
+10. **Final Review** (PM) – Business approval
 11. **Repeat Cycle** (if needed) or **Completion**
 
 ---
@@ -87,12 +87,13 @@ Critical phases require explicit approval:
 | Gate | Approver | Artifact |
 |------|----------|----------|
 | Project Plan | User | Project-Plan-v*.md |
-| Design | QA + SecA | Design-Verification-Report, Security-Review-Report |
-| Final Delivery | STAKEHOLDER | Final-Approval-Report.md |
+| Design | TESTER + SecA | Design-Verification-Report, Security-Review-Report |
+| Final Delivery | PM | Final-Approval-Report.md |
 
 ### 2. Auto-Communication via @Tags
 Always use @role tags to notify next agents.
-- **Available roles:** @ORCHESTRATOR, @PM, @PO, @BA, @SA, @UIUX, @QA, @SECA, @DEV, @DEVOPS, @TESTER, @REPORTER, @STAKEHOLDER
+- **Available roles:** @ORCHESTRATOR, @PM, @BA, @SA, @UIUX, @SECA, @DEV, @DEVOPS, @TESTER
+  - *Note:* @PO, @REPORTER, @STAKEHOLDER → merged into @PM. @QA → merged into @TESTER.
 - Example: `### Next Step: @SA - Start designing` or `@TESTER - Please test`
 - **Orchestrator mode:** Add `--mode=full-auto` or `--mode=semi-auto` to enable automation
 
@@ -109,7 +110,7 @@ Always use @role tags to notify next agents.
 | **Low** | `#fixbug-low` | Cosmetic, minor inconsistency |
 
 ### 5. Cycle Repeat Triggers
-Handled by REPORTER or STAKEHOLDER when:
+Handled by PM when:
 - ❌ Unresolved critical/high bugs
 - ❌ Rejected design or security review
 - ❌ Stakeholder rejection
@@ -154,3 +155,4 @@ Use this at the end of **every artifact**:
 | 1.2 | 2026-01-01 | Migrated to Native Agent structure (.agent/). Updated paths. |
 | 1.1 | 2025-12-23 | Added PO role, new tags (#product-owner, #backlog, #blocked, #hotfix, #rollback, #deployed-*), Definition of Done, Cross-Role Dependencies diagram, Incident/Hotfix workflow, Changelog |
 | 1.0 | Initial | Initial release with 10 roles and core SDLC flow |
+

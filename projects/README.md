@@ -1,21 +1,47 @@
 # Projects - Monorepo Structure
 
-This directory contains all sub-projects that use the **Brain** (AI Agent System) located at the root.
+This directory contains all sub-projects managed by **Turborepo** with **Bun Workspaces**.
+
+## 🚀 Quick Commands
+
+```bash
+# From root directory
+bun run dev:all          # Start ALL dev servers (parallel)
+bun run dev:landing      # Start only landing-page
+bun run dev:todo         # Start todo-app (frontend + backend)
+bun run build:all        # Build all projects (with caching)
+bun run test:projects    # Test all projects
+```
 
 ## Architecture
 
 ```
-agentic-sdlc/                    # ROOT = BRAIN
+agentic-sdlc/                    # ROOT = BRAIN + MONOREPO
+├── package.json                 # Bun workspaces + Turbo scripts
+├── turbo.json                   # Turborepo pipeline config
+├── bun.lockb                    # Shared lockfile
 ├── .agent/                      # ✅ Shared AI workflows, KB, roles
 ├── .kiro/                       # ✅ Shared Kiro IDE settings
 ├── tools/                       # ✅ Shared tools (Neo4j, research, etc.)
 ├── docs/                        # Brain documentation
 │
-└── projects/                    # SUB-PROJECTS
+└── projects/                    # SUB-PROJECTS (WORKSPACES)
+    ├── landing-page/           # Astro landing page
     ├── todo-app/               # Todo application
-    ├── landing-page/           # Landing page site
+    │   ├── frontend/          # Vite + React
+    │   └── backend/           # Express + Prisma
     └── [your-project]/         # Add more projects here
 ```
+
+## 🛠️ Turborepo Features
+
+| Feature | Description |
+|---------|-------------|
+| **Smart Caching** | Only rebuild what changed |
+| **Parallel Execution** | Run tasks across packages simultaneously |
+| **Dependency Graph** | Automatic task ordering |
+| **Remote Caching** | Share cache across CI/team (optional) |
+
 
 ## How Sub-Projects Use Brain
 

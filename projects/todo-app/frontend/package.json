@@ -3,14 +3,16 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --port 5173",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "test": "vitest --run",
     "test:watch": "vitest",
     "test:coverage": "vitest --coverage",
     "test:ci": "vitest --run --coverage",
-    "test:report": "vitest --coverage && node ../scripts/test-report.js"
+    "typecheck": "tsc --noEmit",
+    "lint": "echo 'No linter configured'",
+    "clean": "rimraf dist coverage node_modules/.cache"
   },
   "dependencies": {
     "framer-motion": "^12.23.26",
