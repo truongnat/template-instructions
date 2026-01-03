@@ -1,267 +1,140 @@
 ---
-description: Deep Investigation - Multi-order analysis before planning
+description: Deep Investigation Workflow
 ---
 
-# /explore - Deep Investigation
+# /explore - Multi-Order Analysis
 
-**When to Use:** Before planning complex features
-**Flow:** Multi-order analysis → Research → Recommendations
-**Output:** Investigation Report
+## ⚠️ STRICT EXECUTION PROTOCOL (MANDATORY)
+1. **USE BEFORE PLANNING:** Run before major architectural decisions.
+2. **MULTI-ORDER THINKING:** Go beyond surface-level analysis.
+3. **EVIDENCE-BASED:** All findings must have supporting evidence.
+4. **DOCUMENT FINDINGS:** Create exploration report.
 
-## Overview
-The `/explore` workflow is designed for deep investigation of complex features before committing to a plan. It uses multi-order thinking to uncover hidden dependencies, edge cases, and architectural implications.
+## When to Use
+
+- **Complex Features:** Before implementing features with many dependencies
+- **Architecture Decisions:** Before major structural changes
+- **Unknown Territory:** When entering unfamiliar domains
+- **Risk Assessment:** Before high-impact changes
 
 ## Workflow Steps
 
-### 1. First-Order Analysis
-**Question:** What is the immediate requirement?
+### 1. First-Order Analysis (Surface Level)
+**Question:** What does the user want?
 
-- Define the feature at face value
-- List obvious requirements
-- Identify primary stakeholders
-- Document initial assumptions
-
-**Output:** Feature definition document
-
-### 2. Second-Order Analysis
-**Question:** What are the consequences of implementing this?
-
-- Identify system dependencies
-- Map data flow changes
-- Assess performance impact
-- Consider security implications
-- Evaluate UX changes
-
-**Output:** Impact analysis
-
-### 3. Third-Order Analysis
-**Question:** What are the long-term implications?
-
-- Scalability considerations
-- Maintenance burden
-- Technical debt implications
-- Future feature enablement
-- Migration paths
-
-**Output:** Strategic assessment
-
-### 4. Knowledge Base Research
 ```bash
-# Search for related implementations
-python tools/research/research_agent.py --feature "[feature]" --type architecture
+# Basic research
+python tools/research/research_agent.py --task "[feature]" --type general
 ```
 
-**Research Areas:**
-- [ ] Similar features in KB
-- [ ] Related architecture patterns
-- [ ] Known challenges and solutions
-- [ ] Performance benchmarks
-- [ ] Security considerations
+- [ ] Understand explicit requirements
+- [ ] Identify immediate stakeholders
+- [ ] List obvious technical needs
 
-### 5. Technology Evaluation
-- Research available libraries/frameworks
-- Compare implementation approaches
-- Evaluate trade-offs
-- Prototype critical paths
-- Benchmark performance
+### 2. Second-Order Analysis (Dependencies)
+**Question:** What does this depend on?
 
-### 6. Risk Assessment
-**Identify Risks:**
-- Technical risks (complexity, unknowns)
-- Security risks (vulnerabilities, data exposure)
-- Performance risks (bottlenecks, scaling)
-- UX risks (usability, accessibility)
-- Timeline risks (dependencies, blockers)
+- [ ] Identify technical dependencies
+- [ ] Map affected components
+- [ ] Find related existing implementations
 
-**Risk Matrix:**
-| Risk | Probability | Impact | Mitigation |
-|------|-------------|--------|------------|
-| ... | High/Med/Low | High/Med/Low | Strategy |
-
-### 7. Recommendations
-Based on analysis, provide:
-- **Recommended Approach:** Best implementation strategy
-- **Alternative Approaches:** Other viable options
-- **Proof of Concept:** If needed, create prototype
-- **Timeline Estimate:** Realistic effort estimate
-- **Resource Requirements:** Team, tools, infrastructure
-
-## Usage Examples
-
-### Example 1: Real-time Notifications
-```
-@SA /explore - Real-time notification system architecture
+```bash
+# Search KB for related entries
+python bin/kb_cli.py search "[related topic]"
 ```
 
-**Investigation Flow:**
-1. **First-Order:** WebSocket vs SSE vs Polling
-2. **Second-Order:** Connection management, message queuing, offline handling
-3. **Third-Order:** Scaling to 10k+ concurrent users, cost implications
-4. **Research:** Check KB for messaging patterns
-5. **Tech Eval:** Socket.io vs native WebSocket vs Pusher
-6. **Risks:** Connection drops, message ordering, security
-7. **Recommendation:** Socket.io + Redis pub/sub with fallback
+### 3. Third-Order Analysis (Implications)
+**Question:** What are the ripple effects?
 
-### Example 2: Payment Integration
-```
-@SA /explore - Multi-currency payment processing with Stripe
-```
+- [ ] Performance implications
+- [ ] Security implications
+- [ ] Scalability considerations
+- [ ] Maintenance burden
 
-**Investigation Flow:**
-1. **First-Order:** Accept payments in USD, EUR, GBP
-2. **Second-Order:** Currency conversion, tax calculation, refunds
-3. **Third-Order:** Compliance (PCI-DSS), fraud detection, reporting
-4. **Research:** Check KB for payment implementations
-5. **Tech Eval:** Stripe vs PayPal vs custom
-6. **Risks:** Payment failures, webhook reliability, data security
-7. **Recommendation:** Stripe with webhook queue and idempotency
+### 4. Fourth-Order Analysis (Hidden Risks)
+**Question:** What could go wrong that we haven't considered?
 
-### Example 3: Search Functionality
-```
-@SA /explore - Full-text search with filters and facets
+- [ ] Edge cases
+- [ ] Failure modes
+- [ ] Integration conflicts
+- [ ] Future constraints
+
+```bash
+# Check for similar issues in KB
+python bin/kb_cli.py search "bug" --category bugs
 ```
 
-**Investigation Flow:**
-1. **First-Order:** Search products by name, description
-2. **Second-Order:** Filters (category, price), sorting, pagination
-3. **Third-Order:** Search analytics, personalization, multi-language
-4. **Research:** Check KB for search implementations
-5. **Tech Eval:** Elasticsearch vs Algolia vs PostgreSQL FTS
-6. **Risks:** Index size, query performance, relevance tuning
-7. **Recommendation:** PostgreSQL FTS for MVP, Elasticsearch for scale
+### 5. Synthesis
+**Question:** What's the recommended approach?
 
-## Investigation Report Template
+Create exploration report with:
+- Key findings per order of analysis
+- Risk assessment matrix
+- Recommended approach with rationale
+- Alternative approaches considered
+- Open questions requiring stakeholder input
+
+## Output Template
 
 ```markdown
-# Investigation Report: [Feature Name]
+# Exploration Report: [Feature/Decision]
 
-**Date:** YYYY-MM-DD
-**Investigator:** @SA
-**Sprint:** Sprint-[N]
+**Date:** YYYY-MM-DD  
+**Author:** @[ROLE]
 
 ## Executive Summary
-[2-3 sentence overview of findings and recommendation]
+[1-2 paragraph summary]
 
 ## First-Order Analysis
-### Feature Definition
-[What is being requested]
-
-### Primary Requirements
-- Requirement 1
-- Requirement 2
+### User Requirements
+- ...
 
 ## Second-Order Analysis
-### System Impact
-- **Dependencies:** [List affected systems]
-- **Data Flow:** [Describe changes]
-- **Performance:** [Expected impact]
-- **Security:** [Considerations]
+### Dependencies
+- ...
 
 ## Third-Order Analysis
-### Strategic Implications
-- **Scalability:** [Long-term considerations]
-- **Maintenance:** [Ongoing effort]
-- **Technical Debt:** [Potential issues]
-- **Future Enablement:** [What this unlocks]
+### Implications
+- ...
 
-## Knowledge Base Research
-### Related Implementations
-- KB-YYYY-MM-DD-###: [Title] - [Key learnings]
-- KB-YYYY-MM-DD-###: [Title] - [Key learnings]
+## Fourth-Order Analysis
+### Hidden Risks
+- ...
 
-### Confidence Level
-[High/Medium/Low] - [Explanation]
-
-## Technology Evaluation
-### Approach 1: [Name]
-**Pros:** ...
-**Cons:** ...
-**Effort:** [X weeks]
-
-### Approach 2: [Name]
-**Pros:** ...
-**Cons:** ...
-**Effort:** [X weeks]
-
-## Risk Assessment
+## Risk Matrix
 | Risk | Probability | Impact | Mitigation |
-|------|-------------|--------|------------|
+|------|------------|--------|------------|
 | ... | ... | ... | ... |
 
-## Recommendations
-### Primary Recommendation
-[Detailed recommendation with rationale]
+## Recommendation
+[Recommended approach with rationale]
 
-### Implementation Plan
-1. Phase 1: [Description]
-2. Phase 2: [Description]
-3. Phase 3: [Description]
+## Alternatives Considered
+1. ...
+2. ...
 
-### Timeline Estimate
-- **MVP:** [X weeks]
-- **Full Feature:** [Y weeks]
-- **Confidence:** [High/Medium/Low]
-
-### Next Steps
-- @PM - Review and approve approach
-- @UIUX - Design user interface
-- @SECA - Security review of approach
-
-#explore #investigation #architecture
+## Open Questions
+- [ ] ...
 ```
 
-## Integration with Roles
+## Integration
 
-### @SA
-- Primary user of /explore
-- Conducts technical investigation
-- Provides architecture recommendations
+- **@PM** triggers before major planning
+- **@SA** uses for architecture decisions
+- **@SECA** incorporates in security review
+- **/cycle** may trigger for complex tasks
 
-### @PM
-- Requests /explore for complex features
-- Reviews investigation reports
-- Makes go/no-go decisions
+## Example Usage
 
-### @UIUX
-- Uses /explore findings for design
-- Contributes UX considerations
-- Validates feasibility
+```
+User: "We need to add OAuth authentication"
 
-### @SECA
-- Reviews security implications
-- Contributes threat modeling
-- Validates security approach
+/explore OAuth implementation
 
-## Success Criteria
-
-**Investigation Complete When:**
-- [ ] All three orders analyzed
-- [ ] KB research completed
-- [ ] Technology options evaluated
-- [ ] Risks identified and mitigated
-- [ ] Clear recommendation provided
-- [ ] Timeline estimated
-- [ ] Report documented
-
-## Metrics
-
-Track exploration effectiveness:
-- **Investigation Time:** Average time per /explore
-- **Decision Quality:** % of recommendations accepted
-- **Risk Prediction:** % of identified risks that materialized
-- **Timeline Accuracy:** Actual vs estimated effort
-
-## Handoff Template
-
-```markdown
-### /explore Complete: [Feature Name]
-- **Duration:** [X hours]
-- **Confidence:** [High/Medium/Low]
-- **Recommendation:** [Brief summary]
-- **Report:** docs/sprints/sprint-[N]/designs/Investigation-Report-[Feature].md
-- **Next Step:** @PM - Review and decide on approach
-
-#explore #investigation #architecture
+First-Order: User wants social login
+Second-Order: Depends on token storage, session management, user model
+Third-Order: Affects all API endpoints, session timeout, refresh logic
+Fourth-Order: Token revocation, multi-device sessions, privacy compliance
 ```
 
-#workflow #explore #compound-engineering
+#explore #analysis #research #architecture #risk-assessment

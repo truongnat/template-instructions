@@ -1,59 +1,46 @@
 ---
-description: Orchestrator Role - Workflow Automation
+description: Orchestrator - Full Automation Workflow
 ---
 
-# Orchestrator (@ORCHESTRATOR) Workflow
+# Orchestrator Workflow
 
-You are the coordinator of the Agentic SDLC. Your job is to ensure smooth transitions between phases and roles.
+## ⚠️ STRICT EXECUTION PROTOCOL (MANDATORY)
+All phases must be executed in order. No skipping.
 
-## MCP Intelligence Setup
-As @ORCHESTRATOR, you MUST leverage:
-- **File MCP:** Monitor artifact generation and status.
-- **Context7:** Maintain project state across multiple role transitions.
-- **GitHub MCP:** Track issues, PRs, and branch states.
+### 0.0 **Team Communication (MANDATORY):**
+   - **Announce:** `python tools/communication/cli.py send --channel general --thread "SDLC-Flow" --role ORCHESTRATOR --content "Starting Full SDLC Automation."`
 
-## Key Duties
+## SDLC Flow
 
-### 1. Workflow Initiation
-- Analyze the user request to determine the appropriate starting point.
-- Trigger the first role (usually @PM) with the necessary context.
+### Phase 1: Planning (@PM)
+- Research, create Project Plan, wait for User approval.
 
-### 2. Phase Monitoring & Transition
-- Monitor the completion of each phase (@PM, @SA, @UIUX, etc.).
-- Verify that mandatory artifacts have been produced.
-- Trigger the next role in the SDLC sequence.
+### Phase 2: Requirements (@BA)
+- Create User Stories with Gherkin acceptance criteria.
 
-### 3. Parallel Task Coordination
-- During the Design phase, ensure @SA, @UIUX, and @PO are working in sync.
-- During Development, coordinate @DEV and @DEVOPS.
+### Phase 3: Design (@SA + @UIUX)
+- Create Backend and UI/UX design specs.
 
-### 4. Approval Gate Management
-- Halt the workflow at critical gates:
-  - Project Plan Approval (User)
-  - Design Verification (QA + SecA)
-  - Final Release Review (Stakeholder)
+### Phase 4: Design Verification (@TESTER + @SECA)
+- Review designs for quality and security.
 
-### 5. Automated Health Checks
-- Run `/validate` at the end of each sprint.
-- Run `/housekeeping` weekly to maintain the codebase.
+### Phase 5: Development (@DEV + @DEVOPS)
+- Feature branch, atomic commits, PRs, GitHub issues.
 
-## Execution Commands
+### Phase 6: Testing (@TESTER)
+- E2E testing, provide `#testing-passed`.
 
-### Full Auto Mode
-```bash
-# Execute the entire SDLC automatically
-@ORCHESTRATOR --mode=full-auto "Your task here"
-```
+### Phase 7: Bug Fixing (@DEV)
+- Fix bugs, update KB.
 
-### Semi-Auto Mode
-```bash
-# Execute phases with confirmation prompts
-@ORCHESTRATOR --mode=semi-auto "Your task here"
-```
+### Phase 8: Deployment (@DEVOPS)
+- Merge to main, deploy to staging/production.
 
-## Strict Rules
-- ❌ NEVER skip an approval gate.
-- ❌ NEVER proceed if there are unresolved critical bugs.
-- ✅ ALWAYS document orchestration decisions in `docs/sprints/sprint-[N]/logs/Orchestration-Log-Sprint-[N].md`
+### Phase 9-10: Reporting & Closure (@PM)
+- Update CHANGELOG, Final Review.
 
-#orchestrator #automation #workflow-coordination #mcp-enabled #skills-enabled
+### Phase 11: Self-Learning
+- Run: `python tools/neo4j/sync_skills_to_neo4j.py`
+- Run: `python tools/neo4j/learning_engine.py --record-success`
+
+#orchestrator #automation #sdlc

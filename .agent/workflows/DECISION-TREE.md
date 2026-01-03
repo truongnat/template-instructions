@@ -1,66 +1,70 @@
-# Which Workflow Should I Use?
+# Workflow Decision Tree
 
-## Quick Decision Tree
+> **Logic for selecting the correct Agentic SDLC workflow.**
 
-1. **Is this a production emergency?**
-   - YES → `/emergency`
-   - NO → Continue to 2
+**Last Updated:** 2026-01-03
 
-2. **Are you unsure which workflow to use?**
-   - YES → `/route` (it will analyze and recommend)
-   - NO → Continue to 3
+## 🌳 Interactive Decision Path
 
-3. **What are you trying to do?**
+Start at **Node 1** and follow the usage patterns.
 
-   **Start a new project:**
-   - Complex/unknown → `/explore` first, then `@PM`
-   - Clear requirements → `@PM` directly
+### 1. Is this a production emergency?
+- **YES** (System down, critical bug) → [`/emergency`](process/emergency.md)
+- **NO** → Go to **2**
 
-   **Execute a small task (<4 hours):**
-   - `/cycle`
+### 2. Is this a full project or major feature?
+- **YES** (Requires planning, design, dev, test) → [`/orchestrator`](process/orchestrator.md)
+- **NO** → Go to **3**
 
-   **Document a solution:**
-   - `/compound`
+### 3. Is this a single, well-defined task?
+- **YES** (e.g. "Add login button") → [`/cycle`](process/cycle.md)
+- **NO** → Go to **4**
 
-   **Investigate a complex feature:**
-   - `/explore`
+### 4. Are you performing a specific role's duty?
+- **Project Manager** (Planning, Reporting) → [`/pm`](core/pm.md)
+- **Business Analyst** (Requirements) → [`/ba`](core/ba.md)
+- **System Analyst** (Architecture) → [`/sa`](core/sa.md)
+- **UI/UX Designer** (Design) → [`/uiux`](core/uiux.md)
+- **Developer** (Code) → [`/dev`](core/dev.md)
+- **Tester** (QA) → [`/tester`](core/tester.md)
+- **Security** (Audit) → [`/seca`](core/seca.md)
+- **DevOps** (Deploy) → [`/devops`](core/devops.md)
+- **NO** → Go to **5**
 
-   **Handle a production incident:**
-   - `/emergency`
+### 5. Are you performing maintenance or support?
+- **Brain Sync** (Update AI memory) → [`/brain`](support/brain.md)
+- **Knowledge Capture** (After task) → [`/compound`](support/compound.md)
+- **Cleanup** (Files/Folders) → [`/housekeeping`](support/housekeeping.md)
+- **Validation** (Check sanity) → [`/validate`](utilities/validate.md)
+- **Metrics** (Check stats) → [`/metrics`](utilities/metrics.md)
+- **Release** (Versioning) → [`/release`](support/release.md)
+- **NO** → Go to **6**
 
-   **Manage sprints:**
-   - Start: `/sprint start [N]`
-   - Review: `/sprint review`
-   - Retro: `/sprint retro`
-   - Close: `/sprint close [N]`
-
-   **Release a version:**
-   - `/release`
-
-   **Clean up project:**
-   - `/housekeeping`
-
-   **Check system health:**
-   - `/validate`
-
-   **View analytics:**
-   - `/metrics`
-
-   **Run full SDLC:**
-   - `@PM` → `@BA` → `@SA` + `@UIUX` → `@TESTER` + `@SECA` → `@DEV` + `@DEVOPS` → `@TESTER` → `@DEVOPS` → `@PM`
-
-## Role-Specific
-
-**I need to:**
-- Plan a project → `@PM`
-- Gather requirements → `@BA`
-- Design architecture → `@SA`
-- Design UI/UX → `@UIUX`
-- Implement code → `@DEV`
-- Setup infrastructure → `@DEVOPS`
-- Test/verify → `@TESTER`
-- Security review → `@SECA`
+### 6. Do you need to investigate or decide?
+- **Deep Analysis** → [`/explore`](process/explore.md)
+- **Routing Help** → [`/route`](support/route.md)
 
 ---
 
-Still confused? Use `/route` - it's smart! 🧠
+## 📊 Visual Matrix
+
+| Objective | High Urgency | Normal Urgency | Low Urgency |
+|-----------|--------------|----------------|-------------|
+| **Fix Bug** | `/emergency` | `/dev` | `/cycle` |
+| **New Feature** | - | `/orchestrator` | `/cycle` |
+| **Question** | - | `/explore` | `/brain` |
+| **Maintenance** | - | `/housekeeping` | `/validate` |
+
+---
+
+## 🔄 Lifecycle Hooks
+
+Workflows often call each other. Here is the standard flow:
+
+1. **Planning:** `/pm` → `/ba` → `/sa`
+2. **Execution:** `/dev` ↔ `/tester`
+3. **Closure:** `/devops` → `/compound` → `/brain`
+
+## Tags
+
+`#decision-tree` `#guide` `#workflows`

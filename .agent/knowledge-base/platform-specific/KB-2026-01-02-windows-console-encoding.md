@@ -2,7 +2,7 @@
 title: "Windows Console Encoding Fix for Unicode Characters"
 category: platform-specific
 priority: medium
-sprint: sprint-current
+sprint: sprint-[N]
 date: 2026-01-02
 tags: [windows, encoding, python, unicode, console]
 related_files: [tools/utils/common.py, bin/kb_cli.py]

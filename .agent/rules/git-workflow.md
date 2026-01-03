@@ -1,65 +1,53 @@
 ---
-description: Unified Git and Task Workflow
+description: Unified Git and Task Workflow (Branching, Committing, Merging)
 ---
 
 # Git & Task Management Workflow
 
-**Requirement:** All tasks must be tracked with Jira-like precision and committed atomically.
+**Requirement:** All tasks must follow the **Feature Branch Workflow** with atomic commits and explicit merge gates.
 
-## A. Task Board Logic
-- All `Product-Backlog` items (User Stories) must be broken down into **Tasks** in the `Development-Log`.
-- **Status Columns:** `Todo` | `In Progress` | `Review` | `Done`.
-- **Assignal:** Every task must have an owner (e.g., `@DEV`, `@SA`).
-- **Tracing:** Every completed task must link to a **Git Commit Hash**.
+## A. Branching Strategy (MANDATORY)
+- ❌ **NEVER** commit directly to `main` or `master`.
+- **Naming Convention:**
+  - Feature: `feat/TASK-ID-short-name`
+  - Bugfix: `fix/TASK-ID-short-name`
+  - Hotfix: `hotfix/short-name`
+- **Workflow:**
+  1. Pick task from `Development-Log`.
+  2. Create branch: `git checkout -b feat/TASK-ID-name`.
+  3. Push branch immediately: `git push -u origin feat/TASK-ID-name`.
 
 ## B. Atomic Commit Rule
-- ⚠️ **DO NOT** commit all changes at once at the end of a sprint.
-- **Workflow:**
-  1. Pick a task from `Development-Log` (Mark as `In Progress`)
-  2. Implement the code
-  3. Verify locally
-  4. **COMMIT IMMEDIATELY:** `git commit -m "[Task-ID] <Description>"`
-  5. Update `Development-Log` (Mark as `Done` and add Commit Hash)
-- This ensures a clean, traceable history and prevents "big bang" integration issues.
+- **Frequency:** Commit for every logical sub-task or unit of work.
+- **Message Format:** `[TASK-ID] <type>: <description>`
+  - Types: `feat`, `fix`, `refactor`, `docs`, `test`, `chore`.
+  - Example: `[T-101] feat: implement oauth2 login flow`.
+- **Update Log:** Link every commit hash to the corresponding task in `Development-Log`.
 
-## C. Definition of Done (DoD)
-A feature/task is "Done" when ALL of the following are true:
+## C. Pull Request & Merging (The Quality Gate)
+- **Initiation:** After completing a feature/fix building and local testing.
+- **PR Description:** Must list changes, link to issues, and provide evidence (screenshots/logs).
+- **Review Gate:** 
+  - **Code Review:** Must be reviewed by another `@DEV` or `@SA`.
+  - **QA Review:** Must be verified by `@TESTER` (Phase 6).
+- **Merging Rule:**
+  - ❌ **NEVER** self-merge without approval.
+  - Merging is done by `@DEVOPS` or `@SA` only after `@TESTER` provides `#testing-passed` tag.
+  - Use `Squash and Merge` to keep `main` history clean.
 
-### For Development Tasks:
-- [ ] Code implemented according to approved design specs
-- [ ] Code follows project coding standards
-- [ ] Local testing passed
-- [ ] Evidence captured (screenshots/logs)
-- [ ] Tagged with `#development`
-- [ ] **Git Commit created and linked in Log**
-- [ ] Handoff to TESTER completed
+## D. Definition of Done (DoD)
+A task is "Done" ONLY when:
+1. [ ] Code implemented and branch created.
+2. [ ] Atomic commits linked in `Development-Log`.
+3. [ ] Pull Request created and reviewed.
+4. [ ] **TESTER verified** on the feature branch.
+5. [ ] Merged into `main`.
+6. [ ] CHANGELOG.md updated.
 
-### For Testing:
-- [ ] All test cases executed
-- [ ] No critical/high bugs open
-- [ ] Evidence documented in Test-Report
-- [ ] Tagged with `#testing`
+## E. Automated Changelog Updates
+- **Requirement:** Every merge to `main` MUST trigger a `CHANGELOG.md` update.
+- **Format:** `[YYYY-MM-DD] [Version] [Type]: [Summary] (@Author)`
 
-### For Deployment:
-- [ ] CI/CD pipeline passing
-- [ ] Staging environment verified
-- [ ] Security checklist completed
-- [ ] Tagged with `#deployed-staging` or `#deployed-production`
+---
 
-### For Project Completion:
-- [ ] All Must-Have features verified
-- [ ] STAKEHOLDER approved
-- [ ] Final documentation complete
-- [ ] User notified
-
-## D. Automated Changelog Updates
-- **Requirement:** Every commit MUST be followed by an update to CHANGELOG.md.
-- **Format:**
-  ```markdown
-  - [YYYY-MM-DD] [Commit-Hash] [Type]: [Description] (@Author)
-  ```
-- **Types:** Feature, Fix, Refactor, Docs, Chore, Test.
-
-## E. Release Summary Generation
-- **Requirement:** After a feature is marked as 'Done' in the board or a 'Release' is triggered, the @REPORTER or @DEV MUST update the CHANGELOG.md with a summary of the version release.
-- **Action:** Consolidate all atomic commits into a cohesive release entry.
+#git-workflow #branching #atomic-commits #merging #dod

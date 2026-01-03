@@ -376,7 +376,7 @@ Move-Item .agent\workflows\*.md .agent\archive\workflows-consolidated-20260103\
 ### Files Ready for Review:
 - `docs/analysis/Work flows-Deep-Analysis-2026-01-03.md`
 - `docs/analysis/Workflow-Optimization-Diagram.md`
-- `docs/sprints/sprint-current/plans/Workflow-Optimization-Implementation-Plan.md`
+- `docs/sprints/sprint-1/plans/Workflow-Optimization-Implementation-Plan.md`
 - `.agent/workflows/core/pm.md` ✅ MERGED
 - `.agent/workflows/core/tester.md` ✅ MERGED
 

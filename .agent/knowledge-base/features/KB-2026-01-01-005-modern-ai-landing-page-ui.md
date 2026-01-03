@@ -2,7 +2,7 @@
 title: "Modern AI-Style Landing Page UI Enhancement"
 category: feature
 priority: medium
-sprint: sprint-current
+sprint: sprint-[N]
 date: 2026-01-01
 tags: [ui-design, landing-page, ai-aesthetic, glassmorphism, astro]
 related_files: [landing-page/src/components/Hero.astro, landing-page/src/styles/global.css]

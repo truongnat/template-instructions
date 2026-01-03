@@ -1,164 +1,143 @@
 ---
-description: Release Management - Changelog generation and version control
+description: Release Management Workflow
 ---
 
-# Release Workflow
+# /release - Changelog and Version Management
 
-Automates changelog generation, version bumping, and release tagging for the project.
+## ⚠️ STRICT EXECUTION PROTOCOL (MANDATORY)
+1. **CONVENTIONAL COMMITS:** All commits must follow conventional commit format.
+2. **SEMVER:** Version bumps follow semantic versioning.
+3. **CHANGELOG:** Update CHANGELOG.md before releasing.
 
-## Quick Reference
+## Quick Commands
 
 ```bash
-# Preview what will be released
-// turbo
+# Preview changes (dry run)
 python tools/release/release.py preview
 
 # Generate changelog only
-python tools/release/release.py changelog --sprint [N]
+python tools/release/release.py changelog --sprint 6
 
-# Bump version (auto-detect)
+# Bump version only
 python tools/release/release.py version --auto
 
 # Full release cycle
-python tools/release/release.py release --bump [major|minor|patch] --tag
+python tools/release/release.py release --tag
 ```
+
+## Conventional Commit Format
+
+```
+type(scope): description
+
+feat(landing): add hero section animation
+fix(api): resolve timeout issue
+docs(kb): update authentication guide
+refactor(core): extract utility functions
+```
+
+### Types and Changelog Categories
+
+| Type | Changelog Category | Version Bump |
+|------|-------------------|--------------|
+| `feat` | Added | Minor |
+| `fix` | Fixed | Patch |
+| `docs` | Documentation | Patch |
+| `refactor` | Changed | Patch |
+| `perf` | Performance | Patch |
+| `test` | Testing | - |
+| `chore` | Maintenance | - |
+| `BREAKING CHANGE` | Breaking | Major |
+
+### Scopes (Optional)
+
+| Scope | Tag in Changelog |
+|-------|------------------|
+| `landing` | [Landing Page] |
+| `agent` | [Agent System] |
+| `workflow` | [Workflows] |
+| `kb` | [Knowledge Base] |
+| `tools` | [Tools] |
+| `ui` | [UI] |
+| `api` | [API] |
 
 ## Workflow Steps
 
-### 1. Pre-Release Check
-Before creating a release:
-- [ ] All tests passing
-- [ ] Documentation updated
-- [ ] No uncommitted changes
-- [ ] On correct branch (main/develop)
-
+### 1. Preview Changes
 ```bash
-// turbo
-git status
-python tools/validation/health-check.py
+python tools/release/release.py preview --sprint 6
 ```
-
-### 2. Preview Release
-Check what will be included in the release:
-```bash
-// turbo
-python tools/release/release.py preview
-```
-
-Review the output:
+Shows:
+- Last git tag
+- Current version
 - Commits since last release
-- Auto-detected version bump type
-- Changelog preview
+- Auto-detected bump type
+- Preview changelog entry
 
-### 3. Generate Changelog
-Create changelog entries from commits:
+### 2. Generate Changelog
 ```bash
-# With sprint number
-python tools/release/release.py changelog --sprint 5
-
-# Preview only (dry run)
-// turbo
-python tools/release/release.py changelog --dry-run
+python tools/release/release.py changelog --sprint 6 --dry-run
 ```
+- Parses commits since last tag
+- Categorizes by type
+- Generates markdown section
+- Inserts into CHANGELOG.md
 
-### 4. Bump Version
-Update version in package.json:
+### 3. Bump Version
 ```bash
 # Auto-detect based on commits
 python tools/release/release.py version --auto
 
-# Specific bump
+# Explicit bump type
 python tools/release/release.py version --bump minor
 ```
+Updates `package.json` version.
 
-### 5. Full Release (Recommended)
-Combine all steps into one command:
+### 4. Full Release
 ```bash
-# Standard release
-python tools/release/release.py release --bump minor --sprint 5
-
-# Release with git tag
-python tools/release/release.py release --bump minor --tag
-
-# Preview full release
-// turbo
-python tools/release/release.py release --dry-run
+python tools/release/release.py release --sprint 6 --tag
 ```
+Executes:
+1. Parse commits
+2. Detect bump type
+3. Generate changelog
+4. Update version
+5. Create git tag (optional)
 
-### 6. Push Release
-After release is complete:
+### 5. Push Release
 ```bash
 git add CHANGELOG.md package.json
-git commit -m "chore: release v[VERSION]"
-git push
-git push --tags  # If tags were created
-```
-
-## Conventional Commits
-
-For best results, use conventional commit format:
-
-```
-feat(scope): add new feature
-fix(scope): fix bug
-docs: update documentation
-refactor: code cleanup
-chore: maintenance task
-```
-
-### Scopes
-- `landing` - Landing page
-- `agent` - Agent system
-- `workflow` - Workflows
-- `kb` - Knowledge base
-- `tools` - Tools/scripts
-- `ui` - User interface
-- `api` - API changes
-
-### Breaking Changes
-Add `!` after type for breaking changes:
-```
-feat!: remove deprecated API
-```
-
-## Version Bump Rules
-
-| Commit Type | Bump |
-|-------------|------|
-| `feat!` (breaking) | major |
-| `feat` | minor |
-| `fix`, `docs`, etc. | patch |
-
-## NPM/Bun Scripts
-
-```bash
-bun run release:preview    # Preview changes
-bun run release:changelog  # Generate changelog
-bun run release:version    # Bump version
-bun run release            # Full release
-```
-
-## Examples
-
-### Typical Sprint Release
-```bash
-# 1. Preview changes
-python tools/release/release.py preview
-
-# 2. Create release for Sprint 5
-python tools/release/release.py release --bump minor --sprint 5 --tag
-
-# 3. Push
-git add . && git commit -m "chore: release v1.2.0"
+git commit -m "chore(release): v1.2.0"
 git push && git push --tags
 ```
 
-### Hotfix Release
-```bash
-# Quick patch release
-python tools/release/release.py release --bump patch
-git add . && git commit -m "chore: release v1.1.1"
-git push
+## Example Changelog Output
+
+```markdown
+## [1.2.0] - 2026-01-03 (Sprint 6)
+
+### Added
+- [Landing Page] Hero section with animations
+- [Agent System] New orchestrator workflow
+
+### Fixed
+- [API] Timeout issue in authentication
+- [KB] Index update race condition
+
+### Documentation
+- Updated quick start guide
+- Added MCP integration docs
 ```
 
-#release #changelog #version #automation
+## Integration
+
+- **Package Scripts:**
+  ```bash
+  bun run release:preview    # Preview changes
+  bun run release:changelog  # Generate changelog
+  bun run release            # Full release
+  ```
+
+- **CI/CD:** Can be triggered in GitHub Actions
+
+#release #versioning #changelog #semver #git-tags

@@ -2,7 +2,7 @@
 title: "Input Validation and Sanitization Best Practices"
 category: security
 priority: high
-sprint: sprint-current
+sprint: sprint-[N]
 date: 2026-01-02
 tags: [security, validation, sanitization, xss, injection]
 related_files: []

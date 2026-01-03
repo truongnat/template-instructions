@@ -2,7 +2,7 @@
 title: "Award-Winning Landing Page Patterns from Awwwards Research"
 category: feature
 priority: medium
-sprint: sprint-current
+sprint: sprint-[N]
 date: 2026-01-01
 tags: [ui-design, landing-page, awwwards, 3d-effects, bento-grid]
 related_files: [landing-page/src/components/Features.astro]

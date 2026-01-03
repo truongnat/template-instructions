@@ -1,87 +1,118 @@
 ---
-description: Sprint Management - Start → Review → Retro
+description: Sprint Management Workflow
 ---
 
-# /sprint - Sprint Lifecycle Workflow
+# /sprint - Sprint Lifecycle Management
 
-**When to Use:** Start/End of Sprint, Weekly Review
-**Flow:** Start → Daily → Review → Retro
-**Output:** Sprint Artifacts, Plans, Reports
+## ⚠️ STRICT EXECUTION PROTOCOL (MANDATORY)
+1. **SPRINT START:** Create folder structure and archive previous sprint.
+2. **SPRINT STATUS:** Monitor progress during sprint.
+3. **SPRINT CLOSE:** Generate review and retrospective templates.
 
-## Overview
-The `/sprint` workflow manages the lifecycle of a development sprint, ensuring structure, consistency, and continuous improvement.
-
-## Workflow Steps
-
-### 1. Sprint Start (`/sprint start [N]`)
-**Timing:** Day 1 of Sprint
-**Owner:** @PM
-
-**Actions:**
-1. **Archive Previous:** Move old sprint artifacts to `docs/archive/`
-2. **Create Structure:** Generate `docs/sprints/sprint-[N]/` folders
-   - `/plans`, `/designs`, `/logs`, `/reviews`, `/reports`
-3. **Initialize Backlog:** Sync with GitHub Issues
-4. **Planning Meeting:** Trigger `/planning` workflow
-5. **Team Notify:** Announce sprint start
+## Quick Commands
 
 ```bash
-# Example initialization
-mkdir -p docs/sprints/sprint-[N]/{plans,designs,logs,reviews,reports}
+# Start a new sprint
+python tools/workflows/sprint.py start 6
+
+# Check current sprint status
+python tools/workflows/sprint.py status
+
+# Close a sprint
+python tools/workflows/sprint.py close 5
 ```
 
-### 2. Sprint Review (`/sprint review`)
-**Timing:** Last Day of Sprint
-**Owner:** @PM / @STAKEHOLDER
+## Sprint Start
 
-**Actions:**
-1. **Compile Metrics:** Velocity, bugs fixed, features delivered
-2. **Demo Prep:** Gather screenshots/recordings
-3. **Generate Report:** `docs/sprints/sprint-[N]/reports/Sprint-Review.md`
-4. **Stakeholder Approval:** Request sign-off
+### What It Does
+1. **Archives previous sprint** (copies to `docs/archive/sprint-[N-1]/`)
+2. **Creates new sprint folder structure:**
+   ```
+   docs/sprints/sprint-[N]/
+   ├── plans/        # Sprint planning docs
+   ├── designs/      # Technical designs
+   ├── logs/         # Daily logs and notes
+   ├── reviews/      # Code review records
+   └── reports/      # Sprint reports
+   ```
+3. **Creates sprint README.md** with goals template
+4. **Updates current sprint** in project config
 
-### 3. Sprint Retrospective (`/sprint retro`)
-**Timing:** After Review
-**Owner:** @ORCHESTRATOR
-
-**Actions:**
-1. **Collect Learnings:**
-   - What went well?
-   - What didn't go well?
-   - Knowledge Base growth?
-2. **Generate Retro:** `docs/sprints/sprint-[N]/reports/Retrospective.md`
-3. **Action Items:** Create tasks for improvements (e.g., "Fix workflow gap")
-4. **Update KB:** Capture process improvements
-
-## Usage Examples
-
-### Start Sprint 5
-```
-@PM /sprint start 5
+### Usage
+```bash
+python tools/workflows/sprint.py start 6
 ```
 
-### Mid-Sprint Status
+### Next Steps After Start
+1. Run `@PM /planning` to create sprint plan
+2. Sync backlog with GitHub Issues
+3. Announce sprint start to team
+
+## Sprint Status
+
+### What It Shows
+- Current sprint name
+- Sprint directory existence
+- File counts per folder
+- README presence
+
+### Usage
+```bash
+python tools/workflows/sprint.py status
 ```
-@PM /sprint status
+
+## Sprint Close
+
+### What It Does
+1. **Generates Sprint Review template** (`reports/Sprint-Review-[N].md`)
+   - Accomplishments section
+   - Metrics placeholders
+   - Demo highlights
+   - Stakeholder feedback
+
+2. **Generates Retrospective template** (`reports/Retrospective-[N].md`)
+   - What went well
+   - What didn't go well
+   - What we learned
+   - Action items for next sprint
+
+### Usage
+```bash
+python tools/workflows/sprint.py close 5
 ```
-*Output: Burndown chart, blocking issues, next milestones*
 
-### Close Sprint
+### Next Steps After Close
+1. Fill in Sprint Review with accomplishments
+2. Complete Retrospective with team
+3. Start next sprint: `python tools/workflows/sprint.py start 6`
+
+## Sprint Folder Structure
+
 ```
-@PM /sprint close 5
+docs/sprints/sprint-[N]/
+├── README.md           # Sprint overview and goals
+├── plans/
+│   ├── Project-Plan-Sprint-[N]-v*.md
+│   └── Product-Backlog-Sprint-[N]-v*.md
+├── designs/
+│   ├── Backend-Design-Spec-Sprint-[N]-v*.md
+│   └── UIUX-Design-Spec-Sprint-[N]-v*.md
+├── logs/
+│   ├── Development-Log-Sprint-[N]-v*.md
+│   └── Incident-Report-*.json
+├── reviews/
+│   ├── Design-Verification-Report-Sprint-[N].md
+│   └── Security-Review-Report-Sprint-[N].md
+└── reports/
+    ├── Sprint-Review-[N].md
+    └── Retrospective-[N].md
 ```
-*Triggers Review + Retro + Archival*
 
-## Integration with Roles
+## Integration with Other Workflows
 
-### @PM
-- Sprint Manager
-- Runs Start/Review/Close
+- **@PM** uses sprint folders for planning artifacts
+- **@DEV** logs progress in `Development-Log.md`
+- **/emergency** creates incident reports in `logs/`
+- **/release** references sprint in changelog
 
-### @STAKEHOLDER
-- Approves Review results
-
-### @ORCHESTRATOR
-- Automates folder creation and archival
-
-#workflow #sprint #agile #lifecycle
+#sprint #agile #lifecycle #planning #retrospective

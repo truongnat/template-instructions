@@ -199,7 +199,7 @@
 - Tester: `.agent/workflows/core/tester.md` (336 lines) ⭐⭐⭐⭐⭐
 - Analysis: `docs/analysis/Workflows-Deep-Analysis-2026-01-03.md`
 - Diagram: `docs/analysis/Workflow-Optimization-Diagram.md`
-- Plan: `docs/sprints/sprint-current/plans/Workflow-Optimization-Implementation-Plan.md`
+- Plan: `docs/sprints/sprint-1/plans/Workflow-Optimization-Implementation-Plan.md`
 
 ---
 

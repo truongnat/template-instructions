@@ -2,7 +2,7 @@
 title: "Lazy Loading and Code Splitting Optimization"
 category: performance
 priority: medium
-sprint: sprint-current
+sprint: sprint-[N]
 date: 2026-01-02
 tags: [performance, lazy-loading, code-splitting, optimization, web]
 related_files: []

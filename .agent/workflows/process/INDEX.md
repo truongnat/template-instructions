@@ -1,20 +1,75 @@
-# Core Process Workflows
+# Process Workflows Index
 
-**Purpose:** Key SDLC processes and automation  
-**Count:** 5 workflows
+> **End-to-end process automation workflows.**
 
-## Orchestration & Automation
-1. **orchestrator.md** - Workflow Automation (full-auto, semi-auto modes)
+**Last Updated:** 2026-01-03
 
-## Development Processes
-2. **cycle.md** - Task Lifecycle (Plan → Work → Review → Compound)
-3. **explore.md** - Deep Investigation (Multi-order analysis before planning)
+## Overview
 
-## Incident & Sprint Management
-4. **emergency.md** - Incident Response (P0/P1/P2 handling)
-5. **sprint.md** - Sprint Management (Start → Daily → Review → Retro)
+Process workflows orchestrate multi-phase operations, coordinating between roles to complete complex SDLC processes from start to finish.
 
----
+## Workflows
 
-**Usage:** `/workflow-name` in prompts
-**Standard:** All workflows 200+ lines, clear step-by-step instructions
+| Command | Description | Status |
+|---------|-------------|--------|
+| `/cycle` | Complete Task Lifecycle - Plan → Work → Review → Compound | ✅ Active |
+| `/orchestrator` | Full Automation Workflow - All SDLC Phases | ✅ Active |
+| `/explore` | Deep Investigation - Multi-order analysis before planning | ⚠️ Stub |
+| `/emergency` | Hotfix Response - Critical incidents & production fixes | ⚠️ Stub |
+| `/sprint` | Sprint Management - Planning, tracking, retrospective | ⚠️ Stub |
+
+## Workflow Details
+
+### `/cycle` - Complete Task Lifecycle
+- **File:** `cycle.md`
+- **Purpose:** Single task from research to completion
+- **Flow:** Research → Planning → Feature Branch → Implementation → Verification → Merge → Self-Learning
+- **Git Convention:** Feature branch, atomic commits, PR workflow
+- **Outputs:** Updated `Development-Log.md`, `CHANGELOG.md`
+
+### `/orchestrator` - Full SDLC Automation
+- **File:** `orchestrator.md`
+- **Purpose:** Complete project from requirements to deployment
+- **Flow:** 
+  1. Phase 1: Planning (@PM)
+  2. Phase 2: Requirements (@BA)
+  3. Phase 3: Design (@SA + @UIUX)
+  4. Phase 4: Design Verification (@TESTER + @SECA)
+  5. Phase 5: Development (@DEV + @DEVOPS)
+  6. Phase 6: Testing (@TESTER)
+  7. Phase 7: Bug Fixing (@DEV)
+  8. Phase 8: Deployment (@DEVOPS)
+  9. Phase 9-10: Reporting & Closure (@PM)
+  10. Phase 11: Self-Learning
+
+### `/explore` - Deep Investigation ⚠️
+- **File:** `explore.md`
+- **Status:** Stub - needs implementation
+- **Purpose:** 4th-order analysis before major planning decisions
+- **Use Case:** Complex features, architectural decisions
+
+### `/emergency` - Hotfix Response ⚠️
+- **File:** `emergency.md`
+- **Status:** Stub - needs implementation
+- **Purpose:** Critical production incident response
+- **Use Case:** P0 bugs, security incidents
+
+### `/sprint` - Sprint Management ⚠️
+- **File:** `sprint.md`
+- **Status:** Stub - needs implementation
+- **Purpose:** Agile sprint lifecycle management
+- **Use Case:** Sprint planning, daily standups, retrospectives
+
+## Usage Examples
+
+```bash
+# Complete a single task
+/cycle Implement user authentication
+
+# Full project automation
+/orchestrator Build a REST API for user management
+```
+
+## Tags
+
+`#process` `#automation` `#lifecycle` `#sdlc`

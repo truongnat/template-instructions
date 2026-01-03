@@ -2,7 +2,7 @@
 title: "Cleanup Workflow Implementation - Legacy File Management"
 category: feature
 priority: high
-sprint: sprint-current
+sprint: sprint-[N]
 date: 2026-01-02
 tags: [cleanup, workflow, maintenance, trash, legacy-files, housekeeping]
 related_files: 

@@ -2,7 +2,7 @@
 title: "YAML Frontmatter Special Character Escaping"
 category: bug
 priority: medium
-sprint: sprint-current
+sprint: sprint-[N]
 date: 2026-01-02
 tags: [yaml, parsing, frontmatter, knowledge-base, escaping]
 related_files: [tools/utils/kb_manager.py]

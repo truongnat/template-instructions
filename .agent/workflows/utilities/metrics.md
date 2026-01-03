@@ -1,91 +1,172 @@
 ---
-description: Analytics & Metrics - Measure System Health and Performance
+description: Metrics - Project Statistics
 ---
 
-# /metrics - Analytics & Metrics Workflow
+# /metrics - Metrics Dashboard Generator
 
-**When to Use:** Weekly, End of Sprint, On Demand
-**Flow:** Collect → Analyze → Visualize → Report
-**Output:** Metrics Dashboard
+## ⚠️ PURPOSE
+Analyzes KB entries, workflow usage, and project health to generate a metrics dashboard showing learning velocity, quality indicators, and system health.
 
-## Overview
-The `/metrics` workflow gathers data from the project workflow, Knowledge Base, and Git history to provide insights into team performance, code quality, and learning velocity.
-
-## Workflow Steps
-
-### 1. Knowledge Base Metrics
-**Source:** `.agent/knowledge-base/`
-**Metrics:**
-- Total Entries (Growth trend)
-- Category Breakdown (Bugs vs Features)
-- Reuse Rate (References in code/commits)
-- "Gold" Entries (Highly referenced)
+## Quick Commands
 
 ```bash
-# Example: Count KB entries
-find .agent/knowledge-base -name "*.md" | wc -l
+# Generate dashboard
+python tools/kb/metrics-dashboard.py
+
+# Weekly report focus
+python tools/kb/metrics-dashboard.py --weekly
+
+# Sprint-specific metrics
+python tools/kb/metrics-dashboard.py --sprint 6
+
+# Custom output path
+python tools/kb/metrics-dashboard.py --output ./my-report.md
 ```
 
-### 2. Workflow Metrics
-**Source:** `docs/sprints/*/logs/`
-**Metrics:**
-- Cycle Time (Start to Finish)
-- Workflow Frequency (Most used workflows)
-- Error Rate (Failed workflows)
-- Approval Time (Time in review)
+## What It Measures
 
-### 3. Code & Quality Metrics
-**Source:** Git & CI/CD
-**Metrics:**
-- Bug Rate (Bugs per sprint)
-- Test Coverage
-- Documentation Coverage
-- Technical Debt Ratio
+### 1. Knowledge Base Metrics
+- **Total KB Entries:** Count of all knowledge entries
+- **This Week:** Entries added in last 7 days
+- **This Month:** Entries added in last 30 days
+- **Category Breakdown:** Distribution across categories
 
-### 4. Generate Report
-**Output:** `docs/reports/Metrics-Dashboard-YYYY-MM-DD.md`
+### 2. Learning Velocity
+- Entries per week trend
+- Strong (3+), Moderate (1-2), Low (0)
 
-**Dashboard Sections:**
-1. **Executive Summary:** High-level health (Green/Yellow/Red)
-2. **Learning Velocity:** Are we getting smarter? (KB growth)
-3. **Delivery Velocity:** Are we faster? (Cycle time)
-4. **Quality Index:** Are we breaking less? (Bug rate)
+### 3. Time Saved
+- Estimated hours saved per entry
+- Total accumulated time saved
+- Average time per entry
 
-## Usage Examples
+### 4. Quality Indicators
+- Priority distribution (critical, high, medium, low)
+- Category diversity
+- Contributor activity
 
-### Weekly Health Check
+## Console Output
+
 ```
-@REPORTER /metrics --period weekly
+============================================================
+Metrics Dashboard Generator
+============================================================
+[INFO] Analyzing knowledge base...
+[OK] Analyzed 12 entries
+
+============================================================
+Quick Stats
+============================================================
+  Total Entries:      12
+  This Week:          +3
+  This Month:         +8
+  Total Time Saved:   24 hours
+
+  Health Status: Good
 ```
 
-### Sprint Analysis
+## Dashboard Report
+
+Generates `docs/reports/Metrics-Dashboard-YYYY-MM-DD.md`:
+
+```markdown
+# 📊 Metrics Dashboard
+
+**Generated:** 2026-01-03 18:30  
+**Overall Health:** 🟢 Excellent
+
+---
+
+## Executive Summary
+
+| Metric | Value |
+|--------|-------|
+| Total KB Entries | 12 |
+| This Week | +3 |
+| This Month | +8 |
+| Total Time Saved | 24 hours |
+| Avg Time per Entry | 2.0 hours |
+
+---
+
+## 📈 Learning Velocity
+
+✅ **Strong learning velocity** - Team is actively documenting solutions
+
+---
+
+## 📁 Category Breakdown
+
+| Category | Count | % |
+|----------|-------|---|
+| feature | 7 | 58% |
+| bug | 3 | 25% |
+| security | 2 | 17% |
+
+---
+
+## ⚠️ Priority Distribution
+
+| Priority | Count |
+|----------|-------|
+| 🟠 High | 4 |
+| 🟡 Medium | 6 |
+| 🟢 Low | 2 |
+
+---
+
+## 👥 Top Contributors
+
+| Author | Entries |
+|--------|---------|
+| @DEV | 5 |
+| @SA | 3 |
+| @TESTER | 2 |
+
+---
+
+## 🎯 Recommendations
+
+- ✅ Keep up the great work!
 ```
-@REPORTER /metrics --sprint 5
-```
 
-### Deep Dive: Quality
-```
-@REPORTER /metrics --type quality --period monthly
-```
+## Health Score Calculation
 
-## Integration with Roles
+| Points | Criteria |
+|--------|----------|
+| +30 | 20+ total entries |
+| +20 | 10-19 total entries |
+| +30 | 3+ entries this week |
+| +15 | 1-2 entries this week |
+| +20 | 5+ categories |
+| +20 | 10+ hours time saved |
 
-### @REPORTER
-- Owns metrics generation
-- Distributes reports
+| Score | Status |
+|-------|--------|
+| 80-100 | 🟢 Excellent |
+| 50-79 | 🟡 Good |
+| 0-49 | 🔴 Needs Attention |
 
-### @PM
-- Uses metrics for planning and adjustments
+## Recommendations Engine
 
-### @ORCHESTRATOR
-- Auto-generates weekly dashboard
+Auto-generates recommendations based on:
+- Low documentation velocity
+- Missing bug documentation
+- Missing architecture decisions
+- Unbalanced category distribution
 
-## Metric Definitions
+## When to Run
 
-| Metric | Definition | Good | Bad |
-|--------|------------|------|-----|
-| **KB Reuse** | % of tasks referencing KB | > 50% | < 10% |
-| **Cycle Time** | Avg hours per task | < 4h | > 8h |
-| **First-Time Fix** | % bugs fixed in 1 attempt | > 80% | < 50% |
+- **Weekly:** Track learning velocity
+- **End of Sprint:** Generate sprint metrics
+- **Monthly:** Long-term trend analysis
+- **Stakeholder Reports:** Project health overview
 
-#workflow #metrics #analytics #reporting
+## Integration
+
+- **/brain** - Uses KB data for recommendations
+- **/compound** - Creates entries that affect metrics
+- **/housekeeping** - References health status
+- **/sprint close** - Include metrics in retrospective
+
+#metrics #dashboard #analytics #health #knowledge-base
