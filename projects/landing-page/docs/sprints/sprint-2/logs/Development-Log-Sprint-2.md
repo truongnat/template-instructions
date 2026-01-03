@@ -9,3 +9,4 @@
 | LP-202 | Implement Strict Mode Section | @DEV | Todo | |
 | LP-203 | Update Brain Diagram | @DEV | Todo | |
 | LP-204 | Content for 20 Workflows | @PM | Todo | |
+| LP-205 | Fix Broken Links | @DEV | Done | [Hero.astro, Features.astro] |
