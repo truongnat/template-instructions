@@ -6,6 +6,17 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [1.4.0] - 2026-01-04
+
+### Added
+- [Tools] add full release automation including auto-commit
+
+### Maintenance
+- [Release] v1.3.0 finalization
+
+
+---
+
 ## [1.3.0] - 2026-01-04 (Sprint 6)
 
 ### Added
