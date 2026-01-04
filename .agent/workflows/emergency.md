@@ -1,5 +1,5 @@
 ---
-description: [Process] Emergency/Hotfix Response Workflow
+description: Process - Emergency/Hotfix Response Workflow
 ---
 
 # /emergency - Critical Incident Response
@@ -111,4 +111,3 @@ python tools/workflows/emergency.py -s P1 -i "API timeout" --non-interactive
 
 ## ENFORCEMENT REMINDER
 Before executing, complete /preflight checks.
-

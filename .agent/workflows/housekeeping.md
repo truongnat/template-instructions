@@ -1,5 +1,5 @@
 ---
-description: [Support] Housekeeping - Cleanup and Maintenance
+description: Support - Housekeeping - Cleanup and Maintenance
 ---
 
 # /housekeeping - System Maintenance Workflow
@@ -102,4 +102,3 @@ Step 4: Verify System Health
 
 ## ENFORCEMENT REMINDER
 Before executing, complete /preflight checks.
-

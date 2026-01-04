@@ -1,5 +1,5 @@
 ---
-description: [Utility] Metrics - Project Statistics
+description: Utility - Metrics - Project Statistics
 ---
 
 # /metrics - Metrics Dashboard Generator
@@ -176,4 +176,3 @@ Auto-generates recommendations based on:
 
 ## ENFORCEMENT REMINDER
 Before executing, complete /preflight checks.
-

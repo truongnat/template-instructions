@@ -1,5 +1,5 @@
 ---
-description: [Utility] Validate - Workflow Compliance Checker
+description: Utility - Validate - Workflow Compliance Checker
 ---
 
 # /validate - Tool Reference Validator
@@ -143,4 +143,3 @@ Works with:
 
 ## ENFORCEMENT REMINDER
 Before executing, complete /preflight checks.
-

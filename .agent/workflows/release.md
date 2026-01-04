@@ -1,5 +1,5 @@
 ---
-description: [Support] Release Management Workflow
+description: Support - Release Management Workflow
 ---
 
 # /release - Changelog and Version Management
@@ -150,4 +150,3 @@ git push && git push --tags
 
 ## ENFORCEMENT REMINDER
 Before executing, complete /preflight checks.
-

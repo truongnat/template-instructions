@@ -1,5 +1,5 @@
 ---
-description: [Process] Deep Investigation Workflow
+description: Process - Deep Investigation Workflow
 ---
 
 # /explore - Multi-Order Analysis
@@ -144,4 +144,3 @@ Fourth-Order: Token revocation, multi-device sessions, privacy compliance
 
 ## ENFORCEMENT REMINDER
 Before executing, complete /preflight checks.
-

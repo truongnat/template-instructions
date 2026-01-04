@@ -1,5 +1,5 @@
 ---
-description: [Process] Sprint Management Workflow
+description: Process - Sprint Management Workflow
 ---
 
 # /sprint - Sprint Lifecycle Management
@@ -122,4 +122,3 @@ docs/sprints/sprint-[N]/
 
 ## ENFORCEMENT REMINDER
 Before executing, complete /preflight checks.
-

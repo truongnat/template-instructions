@@ -1,6 +1,7 @@
 ---
-description: [Support] Pre-flight workflow checker - Run BEFORE any task
+description: Support - Pre-flight workflow checker - Run BEFORE any task
 ---
+
 # Pre-Flight Workflow
 > **MANDATORY:** This workflow MUST be executed conceptually before ANY task.
 ## Step 1: Identify Task Type

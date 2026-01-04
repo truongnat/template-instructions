@@ -1,14 +1,17 @@
 ---
-description: [Process] Complete Task Lifecycle - Plan → Work → Review → Compound
+description: Process - Complete Task Lifecycle - Plan, Work, Review, Compound
 ---
 
 # /cycle - Complete Task Lifecycle
+
+Complete Task Lifecycle workflow for small to medium tasks. This workflow guides you through planning, implementation, testing, and knowledge capture.
 
 ## ⚠️ STRICT EXECUTION PROTOCOL (MANDATORY)
 1. **NO SKIPPING:** Every step is MANDATORY.
 2. **TEAM COMMUNICATION FIRST:** Announce start and check history.
 3. **GIT FLOW:** Feature branch, atomic commits, PR.
 4. **SELF-LEARNING:** After completion, update Neo4j.
+
 
 ### 0.0 **Team Communication (MANDATORY):**
    - **Check History:** `agentic-sdlc run tools/communication/cli.py history --channel general --limit 10`

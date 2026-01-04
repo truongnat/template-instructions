@@ -1,5 +1,5 @@
 ---
-description: [Support] Compound Knowledge Capture - After Tasks
+description: Support - Compound Knowledge Capture - After Tasks
 ---
 
 # Compound Learning Workflow
@@ -48,4 +48,3 @@ python tools/neo4j/learning_engine.py --record-success "TASK-ID" --task-type "fe
 
 ## ENFORCEMENT REMINDER
 Before executing, complete /preflight checks.
-

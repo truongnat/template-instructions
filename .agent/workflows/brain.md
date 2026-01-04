@@ -1,5 +1,5 @@
 ---
-description: [Support] @BRAIN Meta-Level System Controller
+description: Support - BRAIN Meta-Level System Controller
 ---
 
 # Brain Workflow

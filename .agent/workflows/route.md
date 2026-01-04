@@ -1,5 +1,5 @@
 ---
-description: [Support] Route - Workflow Selection Helper
+description: Support - Route - Workflow Selection Helper
 ---
 
 # /route - Intelligent Request Routing
@@ -157,4 +157,3 @@ Major: /emergency → /dev → /tester → /devops → /compound
 
 ## ENFORCEMENT REMINDER
 Before executing, complete /preflight checks.
-
