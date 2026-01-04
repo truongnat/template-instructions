@@ -1,5 +1,74 @@
 # GEMINI.md - Brain System Documentation
 
+> **⚠️ MANDATORY COMPLIANCE:** This document contains RULES that MUST be followed for ALL tasks. Non-compliance is NOT acceptable.
+
+---
+
+## 🚨 MANDATORY ENFORCEMENT RULES
+
+> [!CAUTION]
+> **THESE RULES ARE NON-NEGOTIABLE.** Before executing ANY task, you MUST complete the pre-flight checklist below.
+
+### Pre-Flight Checklist (REQUIRED for ALL Tasks)
+
+Before starting ANY work, complete these steps IN ORDER:
+
+1. **READ THE WORKFLOW FILE** - If user mentions `/slash`, read `.agent/workflows/[slash].md` FIRST
+2. **SEARCH KNOWLEDGE BASE** - Check `.agent/knowledge-base/INDEX.md` for relevant prior solutions
+3. **IDENTIFY ROLES** - Determine which `@ROLE` agents should be activated
+4. **INITIALIZE STATE** - Run `python tools/brain/brain_cli.py status` to check current state
+5. **ANNOUNCE START** - Log the task start (conceptually, no actual command needed)
+
+### Slash Command Interpretation
+
+When user types a slash command, you MUST:
+
+| User Input | REQUIRED Action |
+|------------|-----------------|
+| `/auto` or `/orchestrator` | Read `.agent/workflows/orchestrator.md` and follow ALL phases |
+| `/cycle` | Read `.agent/workflows/cycle.md` and follow ALL steps |
+| `/brain` | Read `.agent/workflows/brain.md` and execute commands |
+| `/explore` | Read `.agent/workflows/explore.md` for deep investigation |
+| `/sprint` | Read `.agent/workflows/sprint.md` for sprint management |
+| `/emergency` | Read `.agent/workflows/emergency.md` for hotfix |
+| Any `/command` | Read `.agent/workflows/[command].md` BEFORE doing anything |
+
+### Role Activation Matrix
+
+For ANY task, activate the appropriate roles based on task type:
+
+| Task Type | Required Roles | Workflow |
+|-----------|---------------|----------|
+| New Feature/Project | @PM → @SA → @UIUX → @DEV → @TESTER | `/orchestrator` |
+| Bug Fix | @DEV → @TESTER | `/cycle` |
+| Investigation | @SA → @DEV | `/explore` |
+| Hotfix/Emergency | @DEV → @DEVOPS | `/emergency` |
+| Documentation | @PM → @REPORTER | `/cycle` |
+
+### Compliance Gates (MANDATORY)
+
+1. **Planning Gate** - For features/projects, create Project Plan BEFORE implementing
+2. **Design Gate** - For complex tasks, create design spec BEFORE coding
+3. **Review Gate** - All code must have conceptual @TESTER review
+4. **Learning Gate** - After completion, document learnings to KB
+
+### Self-Learning Protocol (REQUIRED After Every Task)
+
+After completing ANY task:
+
+```bash
+# Record success pattern (conceptual - describe what was learned)
+# Update knowledge base if solution was non-obvious
+# Consider what should be documented for future reference
+```
+
+---
+
+> [!IMPORTANT]
+> **FAILURE TO FOLLOW THESE RULES** means the brain system is not being used correctly. If you find yourself implementing without reading workflows, STOP and restart with the pre-flight checklist.
+
+---
+
 > **Universal Guide:** This document describes the `.agent/` brain system in an IDE-agnostic way. Use this guide with **any AI-powered IDE** (Cursor, Windsurf, Cline, Aider, etc.) or CLI tools.
 
 ---

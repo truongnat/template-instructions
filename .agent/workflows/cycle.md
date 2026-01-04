@@ -52,4 +52,10 @@ python tools/neo4j/learning_engine.py --record-success "TASK-ID" --task-type "fe
 ```
 - Update `CHANGELOG.md`.
 
-#cycle #workflow #git-flow #self-learning
+#cycle #workflow #git-flow #self-learning---
+## ⚠️ ENFORCEMENT REMINDER
+Before executing this workflow, agent MUST:
+1. Have completed /preflight checks
+2. Searched knowledge base for similar tasks
+3. Checked current brain state
+Failure to complete pre-flight = workflow violation.

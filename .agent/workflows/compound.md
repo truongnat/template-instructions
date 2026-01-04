@@ -42,3 +42,10 @@ python tools/neo4j/learning_engine.py --record-success "TASK-ID" --task-type "fe
 ```
 
 #compound #learning #knowledge-base
+
+
+---
+
+## ENFORCEMENT REMINDER
+Before executing, complete /preflight checks.
+

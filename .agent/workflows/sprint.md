@@ -116,3 +116,10 @@ docs/sprints/sprint-[N]/
 - **/release** references sprint in changelog
 
 #sprint #agile #lifecycle #planning #retrospective
+
+
+---
+
+## ENFORCEMENT REMINDER
+Before executing, complete /preflight checks.
+

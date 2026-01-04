@@ -170,3 +170,10 @@ Auto-generates recommendations based on:
 - **/sprint close** - Include metrics in retrospective
 
 #metrics #dashboard #analytics #health #knowledge-base
+
+
+---
+
+## ENFORCEMENT REMINDER
+Before executing, complete /preflight checks.
+

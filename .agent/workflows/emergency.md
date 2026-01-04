@@ -105,3 +105,10 @@ python tools/workflows/emergency.py -s P1 -i "API timeout" --non-interactive
 - KB entry in `.agent/knowledge-base/bugs/`
 
 #emergency #hotfix #incident #production #p0
+
+
+---
+
+## ENFORCEMENT REMINDER
+Before executing, complete /preflight checks.
+

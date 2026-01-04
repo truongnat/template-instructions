@@ -141,3 +141,10 @@ git push && git push --tags
 - **CI/CD:** Can be triggered in GitHub Actions
 
 #release #versioning #changelog #semver #git-tags
+
+
+---
+
+## ENFORCEMENT REMINDER
+Before executing, complete /preflight checks.
+

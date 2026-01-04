@@ -151,3 +151,10 @@ Major: /emergency → /dev → /tester → /devops → /compound
 ```
 
 #route #routing #decision-tree #workflow-selection
+
+
+---
+
+## ENFORCEMENT REMINDER
+Before executing, complete /preflight checks.
+

@@ -78,3 +78,10 @@ python tools/neo4j/brain_parallel.py --full  # Full sync
 ```
 
 #brain #root-layer #meta-controller
+
+
+---
+
+## ENFORCEMENT REMINDER
+Before executing, complete /preflight checks.
+

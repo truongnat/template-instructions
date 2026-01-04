@@ -137,3 +137,10 @@ Works with:
 - CI/CD pipelines
 
 #validate #health-check #workflow-audit #compliance
+
+
+---
+
+## ENFORCEMENT REMINDER
+Before executing, complete /preflight checks.
+

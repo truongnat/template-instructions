@@ -96,3 +96,10 @@ Step 4: Verify System Health
 - **/sprint close** - Triggers housekeeping automatically
 
 #housekeeping #maintenance #cleanup #health-check
+
+
+---
+
+## ENFORCEMENT REMINDER
+Before executing, complete /preflight checks.
+

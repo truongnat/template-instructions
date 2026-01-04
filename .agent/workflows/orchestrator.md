@@ -59,3 +59,10 @@ python tools/brain/brain_cli.py init <SPRINT_NUMBER>
 - Run: `python tools/neo4j/learning_engine.py --record-success`
 
 #orchestrator #automation #sdlc
+---
+## ⚠️ ENFORCEMENT REMINDER
+Before executing this workflow, agent MUST:
+1. Have completed /preflight checks
+2. Searched knowledge base for similar tasks
+3. Checked current brain state
+Failure to complete pre-flight = workflow violation.
