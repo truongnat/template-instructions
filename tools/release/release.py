@@ -411,9 +411,6 @@ class ReleaseManager:
                 return False
             
             cmd = ['npm', 'publish']
-            # Try to use bun if packageManager is set or available
-            if 'bun' in data.get('packageManager', ''):
-                cmd = ['bun', 'publish']
                 
             print_info(f"Publishing with {' '.join(cmd)}...")
             subprocess.run(cmd, check=True, cwd=self.root)
