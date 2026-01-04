@@ -427,6 +427,10 @@ Documentation:
 ### Option 4: CLI / Command Line
 
 ```bash
+# Universal JS CLI (Bridge to Python tools)
+agentic-sdlc release --help
+agentic-sdlc workflow cycle
+
 # View workflows
 ls .agent/workflows/
 

@@ -183,10 +183,15 @@ agentic-sdlc ide all            # Setup all supported IDEs
 # Knowledge Base
 agentic-sdlc init-kb            # Initialize KB
 agentic-sdlc list               # List roles & workflows
+agentic-sdlc kb search "query"  # Search KB
 
-# Brain System (see GEMINI.md)
+# Release Management
+agentic-sdlc release preview    # Preview changes
+agentic-sdlc release release    # Full release cycle
+
+# Brain System
+agentic-sdlc agent              # Run default agent
 python tools/neo4j/brain_parallel.py --sync      # Sync brain
-python tools/neo4j/brain_parallel.py --recommend  # Get recommendations
 ```
 
 ## 🌟 Why Agentic SDLC?
