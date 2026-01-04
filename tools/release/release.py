@@ -353,6 +353,29 @@ class ReleaseManager:
             print_error(f"Failed to create tag: {e}")
             return False
 
+    def commit_changes(self, version: str, dry_run: bool = False) -> bool:
+        """Commit release files."""
+        if dry_run:
+            print_info(f"DRY RUN - Would commit changes as: chore(release): v{version}")
+            return True
+            
+        try:
+            print_info("Committing release changes...")
+            # Configure git user if needed? Assuming env is set.
+            
+            # Add files
+            subprocess.run(['git', 'add', 'package.json', 'CHANGELOG.md'], check=True, cwd=self.root)
+            
+            # Commit
+            msg = f"chore(release): v{version}"
+            subprocess.run(['git', 'commit', '-m', msg], check=True, cwd=self.root)
+            
+            print_success("Changes committed successfully!")
+            return True
+        except Exception as e:
+            print_error(f"Failed to commit: {e}")
+            return False
+
     def push_changes(self, dry_run: bool = False) -> bool:
         """Push changes and tags to remote."""
         if dry_run:
@@ -529,15 +552,23 @@ def cmd_release(manager: ReleaseManager, args):
         print_error("Failed to update version. Aborting.")
         return
     
-    # 5. Create tag (optional)
+    # 5. Commit changes (optional but recommended before tagging)
+    if args.commit:
+        if not manager.commit_changes(new_version, dry_run=args.dry_run):
+            print_error("Failed to commit changes.")
+            # Continue? Or abort? Aborting seems safer for tagging.
+            if not args.dry_run:
+                return
+
+    # 6. Create tag (optional)
     if args.tag and not args.dry_run:
         manager.create_tag(new_version, dry_run=args.dry_run)
     
-    # 6. Push changes (optional)
+    # 7. Push changes (optional)
     if args.push:
         manager.push_changes(dry_run=args.dry_run)
         
-    # 7. Publish package (optional)
+    # 8. Publish package (optional)
     if args.publish:
         manager.publish_package(dry_run=args.dry_run)
     
@@ -586,6 +617,7 @@ Examples:
     release_parser.add_argument('--sprint', type=int, help='Sprint number')
     release_parser.add_argument('--version', help='Explicit version')
     release_parser.add_argument('--bump', choices=['major', 'minor', 'patch'])
+    release_parser.add_argument('--commit', action='store_true', help='Commit release files')
     release_parser.add_argument('--tag', action='store_true', help='Create git tag')
     release_parser.add_argument('--push', action='store_true', help='Push changes and tags')
     release_parser.add_argument('--publish', action='store_true', help='Publish to npm/bun registry')
