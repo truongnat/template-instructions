@@ -6,6 +6,17 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [1.5.1] - 2026-01-04 (Sprint 6)
+
+### Documentation
+- update CLI documentation and landing page
+
+### Maintenance
+- add chat.db and research artifacts
+
+
+---
+
 ## [1.5.0] - 2026-01-04 (Sprint 6)
 
 ### Added
