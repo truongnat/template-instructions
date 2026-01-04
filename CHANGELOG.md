@@ -6,6 +6,14 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [1.5.0] - 2026-01-04 (Sprint 6)
+
+### Added
+- [Cli] add js bridge for python tools
+
+
+---
+
 ## [1.4.0] - 2026-01-04
 
 ### Added
