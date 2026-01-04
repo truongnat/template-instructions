@@ -4,13 +4,28 @@ description: [Process] Orchestrator - Full Automation Workflow
 
 # Orchestrator Workflow
 
+> **Master Controller:** [View @BRAIN Skill](../../skills/role-brain.md)
+> 
+> **⚠️ Supervised by @BRAIN.** Report status on each phase transition.
+
 ## ⚠️ STRICT EXECUTION PROTOCOL (MANDATORY)
 All phases must be executed in order. No skipping.
+
+## State Machine Integration
+This workflow follows the state machine defined in `@BRAIN`. Before each phase transition:
+1. Run `python tools/brain/brain_cli.py validate` to check prerequisites
+2. Run `python tools/brain/brain_cli.py transition <NEW_STATE>` to update state
+3. Artifacts required per state are validated automatically
 
 ### 0.0 **Team Communication (MANDATORY):**
    - **Announce:** `python tools/communication/cli.py send --channel general --thread "SDLC-Flow" --role ORCHESTRATOR --content "Starting Full SDLC Automation."`
 
-## SDLC Flow
+### 0.1 **Initialize State (If New Sprint):**
+```bash
+python tools/brain/brain_cli.py init <SPRINT_NUMBER>
+```
+
+## SDLC Flow (State Transitions)
 
 ### Phase 1: Planning (@PM)
 - Research, create Project Plan, wait for User approval.

@@ -1,5 +1,5 @@
 ---
-description: [Support] Compound Knowledge Capture Workflowter Tasks
+description: [Support] Compound Knowledge Capture - After Tasks
 ---
 
 # Compound Learning Workflow
