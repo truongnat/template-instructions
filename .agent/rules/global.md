@@ -1,7 +1,7 @@
 # TeamLifecycle Global Rules & Conventions
-(Version 1.4 – Strict IT SDLC Simulation for Google Antigravity)
+(Version 1.5 – Strict IT SDLC Simulation for Google Antigravity)
 
-**Last Updated:** 2026-01-01  
+**Last Updated:** 2026-01-04
 **Maintainer:** Project Team
 
 ---
@@ -134,6 +134,11 @@ Use this at the end of **every artifact**:
 #[appropriate-tags]
 ```
 
+### 8. Tooling Standards (New)
+- **Polyglot Support:** Tools should run in environment-agnostic ways (e.g. CLI bridges).
+- **Testing:** All tools MUST be covered by integration tests in `tests/`.
+- **CLI Interface:** All tools MUST support `--help` for discoverability.
+
 ---
 
 ## Final Note
@@ -150,10 +155,9 @@ Use this at the end of **every artifact**:
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 1.5 | 2026-01-04 | Added Tooling Standards, Polyglot Support. |
 | 1.4 | 2026-01-01 | Split large rules into artifacts.md, git-workflow.md, knowledge-base.md |
 | 1.3 | 2026-01-01 | Added Task Management & Atomic Git Commit Rules |
 | 1.2 | 2026-01-01 | Migrated to Native Agent structure (.agent/). Updated paths. |
 | 1.1 | 2025-12-23 | Added PO role, new tags (#product-owner, #backlog, #blocked, #hotfix, #rollback, #deployed-*), Definition of Done, Cross-Role Dependencies diagram, Incident/Hotfix workflow, Changelog |
 | 1.0 | Initial | Initial release with 10 roles and core SDLC flow |
-
-

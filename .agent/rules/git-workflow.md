@@ -10,8 +10,8 @@ description: Unified Git and Task Workflow (Branching, Committing, Merging)
 |------|--------|----------|
 | **Planning** | plan/ | Project plans, product backlogs |
 | **Design** | design/ | Architecture schematics, UI specs |
-| **Feature** | eat/ | New functionality |
-| **Fix** | ix/ | Bug fixes |
+| **Feature** | feat/ | New functionality |
+| **Fix** | fix/ | Bug fixes |
 | **Docs** | docs/ | General documentation |
 **Format:** prefix/TASK-ID-short-name (e.g., plan/SPRINT-2-setup)
 ### Workflow
@@ -23,3 +23,23 @@ description: Unified Git and Task Workflow (Branching, Committing, Merging)
 1. Branch created.
 2. Artifacts implemented.
 3. Pull Request created & merged.
+## C. Release Workflow (AUTOMATED)
+Releases are managed by the Release Agent (`release.py`).
+1. **Trigger:** Human or CI runs `/release`.
+2. **Commit:** Agent creates `chore(release): vX.Y.Z` commit.
+3. **Tag:** Agent creates `vX.Y.Z` tag.
+4. **Push:** Agent pushes commit and tags.
+## D. Commit Conventions (MANDATORY)
+We follow [Conventional Commits](https://www.conventionalcommits.org/) to enable automated semantic versioning.
+**Format:** `type(scope): description`
+**Types:**
+- `feat`: New feature (MINOR bump)
+- `fix`: Bug fix (PATCH bump)
+- `docs`: Documentation only
+- `style`: Formatting, missing semi-colons, etc.
+- `refactor`: Code change that neither fixes a bug nor adds a feature
+- `perf`: Code change that improves performance
+- `test`: Adding missing tests or correcting existing tests
+- `chore`: Build process, auxiliary tools, libraries updates
+**Breaking Changes:**
+Append `!` after type/scope (e.g., `feat!: drop support for Node 12`) for MAJOR bump.

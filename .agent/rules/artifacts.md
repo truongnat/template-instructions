@@ -54,12 +54,14 @@ ALL project artifacts MUST be created in the **PROJECT'S** workspace with organi
 **FORBIDDEN LOCATIONS:**
 - .agent/ directory (reserved for instructions only)
 - Global docs/ folder for project-specific artifacts.
-## ⚠️ CHANGELOG RULE
-**CRITICAL:** Do NOT create or update CHANGELOG.md in the project root.
-- CHANGELOG.md exists ONLY as a template in .agent/templates/
-- All project changes are documented in sprint-specific reports
-- Use Phase-Report-Sprint-[N]-v*.md for sprint summaries
-- Use Final-Project-Report.md for overall project changelog
+## ⚠️ CHANGELOG RULE (UPDATED 2026-01-04)
+**Repository vs Project:**
+1. **Root CHANGELOG.md:** ALLOWED for **Repository versioning only**.
+   - MUST be managed AUTOMATICALLY by `release.py`.
+   - Manual edits are FORBIDDEN except for fixing formatting.
+2. **Project Reports:**
+   - Detailed project changes must still be documented in sprint reports.
+   - Use Phase-Report-Sprint-[N]-v*.md for detailed tracking.
 ## Mandatory Documentation Tags
 Every action must be tagged with appropriate hashtags:
 | Category | Tags |
