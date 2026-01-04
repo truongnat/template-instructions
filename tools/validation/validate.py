@@ -114,6 +114,10 @@ def scan_workflows(root):
         return issues, stats
     
     for workflow_file in workflows_dir.glob('*.md'):
+        # Skip validate.md to avoid false positives from its documentation examples
+        if workflow_file.name == 'validate.md':
+            continue
+            
         stats['total_files'] += 1
         
         try:
@@ -156,6 +160,9 @@ def scan_hardcoded_paths(root):
     ]
     
     for workflow_file in workflows_dir.glob('*.md'):
+        if workflow_file.name == 'validate.md':
+            continue
+            
         try:
             content = workflow_file.read_text(encoding='utf-8')
         except:
