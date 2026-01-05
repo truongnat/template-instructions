@@ -200,66 +200,76 @@ def calculate_health_score(stats, issues):
 def generate_report(issues, stats, root):
     """Generate a validation report."""
     health_score = calculate_health_score(stats, issues)
+    date_str = datetime.now().strftime('%Y-%m-%d')
+    time_str = datetime.now().strftime('%H:%M')
     
+    # Brain Protocol Compliant Report Format
     lines = [
-        "# Validation Report",
-        "",
-        f"**Generated:** {datetime.now().strftime('%Y-%m-%d %H:%M')}  ",
-        f"**Health Score:** {health_score}/100",
-        "",
+        "---",
+        "category: report",
+        "tags: [validation, health-check, workflow-audit]",
+        f"date: {date_str}",
+        "author: @VALIDATOR",
+        "status: automated",
+        "related: [validate.md](../../.agent/workflows/validate.md)",
         "---",
         "",
-        "## Summary",
+        f"# Validation Report: {date_str}",
         "",
-        f"- **Workflows Scanned:** {stats['total_files']}",
-        f"- **Total References:** {stats['total_refs']}",
-        f"- **Valid References:** {stats['valid_refs']}",
-        f"- **Broken References:** {stats['broken_refs']}",
+        "## Problem/Challenge",
+        "Need to ensure integrity of workflow tool references and file paths to prevent runtime errors.",
+        "",
+        "## Solution/Implementation",
+        f"Executed automated validation scan on **{stats['total_files']} workflow files**.",
+        "",
+        "### Scan Results",
+        "```yaml",
+        f"Workflows Scanned: {stats['total_files']}",
+        f"Total References:  {stats['total_refs']}",
+        f"Valid References:  {stats['valid_refs']}",
+        f"Broken References: {stats['broken_refs']}",
+        f"Generated At:      {time_str}",
+        "```",
+        "",
+        "## Artifacts/Output",
+        "",
+        f"- **Health Score:** {health_score}/100",
+        f"- **Status:** {'✅ PASS' if health_score == 100 else '❌ FAIL' if health_score < 70 else '⚠️ WARN'}",
         "",
     ]
     
     if stats['broken_refs'] > 0:
         lines.extend([
-            "---",
-            "",
-            "## ❌ Broken Tool References",
+            "### ❌ Broken Tool References",
             "",
             "| Workflow | Line | Reference | Issue |",
             "|----------|------|-----------|-------|",
         ])
-        
         for issue in issues:
             if issue['type'] == 'broken_tool':
                 lines.append(f"| {issue['workflow']} | {issue['line']} | `{issue['reference']}` | {issue['issue']} |")
-        
         lines.append("")
-    
+        
     hardcoded = [i for i in issues if i['type'] == 'hardcoded_path']
     if hardcoded:
         lines.extend([
-            "---",
-            "",
-            "## ⚠️ Hardcoded Paths",
+            "### ⚠️ Hardcoded Paths",
             "",
         ])
-        
         for issue in hardcoded:
             lines.append(f"- **{issue['workflow']}** (line {issue['line']}): {issue['issue']}")
-        
         lines.append("")
     
     if not issues:
-        lines.extend([
-            "---",
-            "",
-            "## ✅ All Clear!",
-            "",
-            "No issues found. All tool references are valid.",
-            ""
-        ])
+        lines.append("✅ **All Clear:** No issues found. All tool references are valid.")
     
     lines.extend([
-        "---",
+        "",
+        "## Next Steps/Actions",
+        "",
+        "1. Fix any broken references immediately",
+        "2. Replace hardcoded paths with relative paths",
+        "3. Run validation again to verify fixes",
         "",
         "#validation #health-check #workflow-audit"
     ])

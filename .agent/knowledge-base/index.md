@@ -1,7 +1,7 @@
 # Knowledge Base Index
 
-**Last Updated:** 2026-01-05 09:45:51  
-**Total Entries:** 11
+**Last Updated:** 2026-01-05 11:38:09  
+**Total Entries:** 15
 
 This index provides a searchable overview of all knowledge base entries.
 
@@ -9,8 +9,8 @@ This index provides a searchable overview of all knowledge base entries.
 
 ## 📊 Quick Stats
 
-- **Total Entries:** 11
-- **Categories:** 8
+- **Total Entries:** 15
+- **Categories:** 10
 - **Priorities:** 3
 
 ---
@@ -81,6 +81,14 @@ This index provides a searchable overview of all knowledge base entries.
   - Tags: windows, encoding, python, unicode, console
 
 
+### 📄 Report (1 entries)
+
+- ⚪ **Unknown**
+  - File: `Validation-Report-2026-01-05.md`
+  - Date: 2026-01-05 | Priority: unknown
+  - Tags: validation, health-check, workflow-audit
+
+
 ### 🔒 Security (1 entries)
 
 - 🟠 **Input Validation and Sanitization Best Practices**
@@ -89,12 +97,29 @@ This index provides a searchable overview of all knowledge base entries.
   - Tags: security, validation, sanitization, xss, injection
 
 
-### 📄 Walkthrough (1 entries)
+### 📄 Unknown (1 entries)
+
+- ⚪ **Workflow Audit and Next Steps Implementation**
+  - File: `2026-01-05-workflow-audit.md`
+  - Date: 2026-01-05 | Priority: unknown
+
+
+### 📄 Walkthrough (3 entries)
+
+- ⚪ **Unknown**
+  - File: `2026-01-05-judge-enhancement.md`
+  - Date: 2026-01-05 | Priority: unknown
+  - Tags: judge, code-scoring, brain
 
 - ⚪ **Unknown**
   - File: `2026-01-05-landing-page-orchestrator.md`
   - Date: 2026-01-05 | Priority: unknown
   - Tags: landing-page, orchestrator, enforcement-gates
+
+- ⚪ **Unknown**
+  - File: `2026-01-05-validation.md`
+  - Date: 2026-01-05 | Priority: unknown
+  - Tags: validation, workflow, self-improvement, judge
 
 
 ---
@@ -129,8 +154,24 @@ This index provides a searchable overview of all knowledge base entries.
 ## 📅 Recent Entries (Last 20)
 
 - ⚪ **Unknown**
+  - `Validation-Report-2026-01-05.md`
+  - 2026-01-05 | report | unknown
+
+- ⚪ **Unknown**
+  - `2026-01-05-judge-enhancement.md`
+  - 2026-01-05 | walkthrough | unknown
+
+- ⚪ **Unknown**
   - `2026-01-05-landing-page-orchestrator.md`
   - 2026-01-05 | walkthrough | unknown
+
+- ⚪ **Unknown**
+  - `2026-01-05-validation.md`
+  - 2026-01-05 | walkthrough | unknown
+
+- ⚪ **Workflow Audit and Next Steps Implementation**
+  - `2026-01-05-workflow-audit.md`
+  - 2026-01-05 | unknown | unknown
 
 - ⚪ **Unknown**
   - `KB-2026-01-04-ai-agent-enforcement.md`

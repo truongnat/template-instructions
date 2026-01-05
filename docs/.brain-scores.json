@@ -103,11 +103,113 @@
       "passed": true,
       "threshold": 6,
       "timestamp": "2026-01-05T10:22:55.679975"
+    },
+    {
+      "file": "docs\\reports\\Validation-Report-2026-01-05.md",
+      "type": "report",
+      "scores": {
+        "completeness": 0,
+        "quality": 6.5,
+        "compliance": 5
+      },
+      "improvements": [
+        "Add '## Problem' or '## Challenge' section → +2.5 completeness",
+        "Add '## Solution' or '## Implementation' section → +2.5 completeness",
+        "Add '## Artifacts' or '## Output' section → +2.5 completeness",
+        "Add '## Next Steps' or '## Actions' section → +2.5 completeness",
+        "Add more content (>500 chars) → +2 quality",
+        "Add code blocks with ``` → +1.5 quality",
+        "Add YAML frontmatter (---) at top → +2 compliance",
+        "Add links to related .md files → +3 compliance"
+      ],
+      "finalScore": 4.0,
+      "passed": false,
+      "threshold": 6,
+      "timestamp": "2026-01-05T10:36:59.243527"
+    },
+    {
+      "file": "docs\\reports\\Validation-Report-2026-01-05.md",
+      "type": "report",
+      "scores": {
+        "completeness": 10.0,
+        "quality": 10.0,
+        "compliance": 7
+      },
+      "improvements": [
+        "Add links to related .md files → +3 compliance"
+      ],
+      "finalScore": 8.8,
+      "passed": true,
+      "threshold": 6,
+      "timestamp": "2026-01-05T10:38:47.659767"
+    },
+    {
+      "file": "docs\\reports\\Validation-Report-2026-01-05.md",
+      "type": "report",
+      "scores": {
+        "completeness": 10.0,
+        "quality": 10.0,
+        "compliance": 10
+      },
+      "improvements": [],
+      "finalScore": 10.0,
+      "passed": true,
+      "threshold": 6,
+      "timestamp": "2026-01-05T10:39:15.430011"
+    },
+    {
+      "file": "docs\\walkthroughs\\2026-01-05-validation.md",
+      "type": "report",
+      "scores": {
+        "completeness": 10.0,
+        "quality": 8.5,
+        "compliance": 10
+      },
+      "improvements": [
+        "Add code blocks with ``` → +1.5 quality"
+      ],
+      "finalScore": 9.5,
+      "passed": true,
+      "threshold": 6,
+      "timestamp": "2026-01-05T10:39:42.013040"
+    },
+    {
+      "file": "docs\\walkthroughs\\2026-01-05-validation.md",
+      "type": "report",
+      "scores": {
+        "completeness": 10.0,
+        "quality": 8.5,
+        "compliance": 10
+      },
+      "improvements": [
+        "Add code blocks with ``` → +1.5 quality"
+      ],
+      "finalScore": 9.5,
+      "passed": true,
+      "threshold": 6,
+      "timestamp": "2026-01-05T10:41:11.057977"
+    },
+    {
+      "file": "docs\\walkthroughs\\2026-01-05-workflow-audit.md",
+      "type": "report",
+      "scores": {
+        "completeness": 10.0,
+        "quality": 10.0,
+        "compliance": 5
+      },
+      "improvements": [
+        "Add hashtag tags like #walkthrough → +2 compliance",
+        "Add links to related .md files → +3 compliance"
+      ],
+      "finalScore": 8.0,
+      "passed": true,
+      "threshold": 6,
+      "timestamp": "2026-01-05T11:37:48.912264"
     }
   ],
   "averageScore": 0.0,
-  "totalReviews": 8,
+  "totalReviews": 14,
   "passThreshold": 6,
   "createdAt": "2026-01-05T09:28:25.776862",
-  "lastUpdated": "2026-01-05T10:22:55.682274"
+  "lastUpdated": "2026-01-05T11:37:48.913820"
 }
