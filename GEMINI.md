@@ -31,6 +31,7 @@ When user types a slash command, you MUST:
 | `/explore` | Read `.agent/workflows/explore.md` for deep investigation |
 | `/sprint` | Read `.agent/workflows/sprint.md` for sprint management |
 | `/emergency` | Read `.agent/workflows/emergency.md` for hotfix |
+| `/commit` | Read `.agent/workflows/commit.md` for git commit |
 | Any `/command` | Read `.agent/workflows/[command].md` BEFORE doing anything |
 
 ### Role Activation Matrix
@@ -300,6 +301,7 @@ The **Brain** is the core of Agentic SDLC - an intelligent, self-learning knowle
 | `/route` | Workflow Routing | Intelligently route requests to workflows |
 | `/compound` | Knowledge Capture | Document solutions for future reuse |
 | `/housekeeping` | Maintenance | Cleanup and file organization |
+| `/commit` | Smart Commit | Review, message generation, commit, and push |
 
 **Workflow Structure:**
 

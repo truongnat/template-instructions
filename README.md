@@ -98,6 +98,7 @@ Execute complete workflows with simple commands:
 /refactor        # Safe refactoring (NEW)
 /onboarding      # Agent ramp-up (NEW)
 /docs            # Documentation creation (NEW)
+/commit          # Smart git commit (NEW)
 ```
 
 ### 3. Monorepo Architecture
