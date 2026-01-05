@@ -8,11 +8,11 @@ graph TD
     Learner[Learner]
     
     %% Workflows
-    Cycle[/cycle]
-    Explore[/explore]
-    Emergency[/emergency]
-    Sprint[/sprint]
-    Metrics[/metrics]
+    Cycle["/cycle"]
+    Explore["/explore"]
+    Emergency["/emergency"]
+    Sprint["/sprint"]
+    Metrics["/metrics"]
     
     %% Roles
     PM[Project Manager]
@@ -51,7 +51,7 @@ graph TD
     SecA -->|Verify| Dev
     
     Dev -->|Code| DevOps
-    DevOps -->|Deploy| Tester[Tester/QA]
+    DevOps -->|Deploy| Tester["Tester/QA"]
     
     Tester -->|Pass| Reporter
     Tester -->|Fail| Dev
