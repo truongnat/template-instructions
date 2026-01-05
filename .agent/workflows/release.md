@@ -149,4 +149,4 @@ git push && git push --tags
 ---
 
 ## ENFORCEMENT REMINDER
-Before executing, complete /preflight checks.
+Ensure all tests pass before releasing.

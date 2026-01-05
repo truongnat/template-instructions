@@ -101,4 +101,4 @@ Step 4: Verify System Health
 ---
 
 ## ENFORCEMENT REMINDER
-Before executing, complete /preflight checks.
+Run at least once per sprint.

@@ -142,4 +142,4 @@ Works with:
 ---
 
 ## ENFORCEMENT REMINDER
-Before executing, complete /preflight checks.
+Ensure all workflow references are valid before committing.

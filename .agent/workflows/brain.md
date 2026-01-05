@@ -83,4 +83,4 @@ agentic-sdlc kb compound sync --full
 ---
 
 ## ENFORCEMENT REMINDER
-Before executing, complete /preflight checks.
+Ensure KB is synced before major operations.

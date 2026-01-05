@@ -15,7 +15,9 @@ const commands = {
     'health': 'tools/validation/health-check.py',
     'setup': 'tools/setup/init.py',
     'brain': 'tools/brain/brain_cli.py',
-    'research': 'tools/research/research_agent.py'
+    'research': 'tools/research/research_agent.py',
+    'learn': 'tools/neo4j/learning_engine.py',
+    'metrics': 'tools/kb/metrics-dashboard.py'
 };
 
 const args = process.argv.slice(2);
@@ -25,7 +27,7 @@ function printUsage() {
     console.log("Usage: agentic-sdlc <command> [args]");
     console.log("Commands:");
     console.log("  release   Manage releases (args: release, preview, changelog, version)");
-    console.log("  workflow  Run workflows (args: cycle, housekeeping, etc.)");
+    console.log("  workflow  Run workflows (args: cycle, orchestrator, debug, etc.)");
     console.log("  kb        Knowledge Base tools");
     console.log("  agent     Run default agent");
     console.log("  validate  Validate system");
@@ -33,6 +35,8 @@ function printUsage() {
     console.log("  setup     Initialize project");
     console.log("  brain     Brain system management");
     console.log("  research  Research agent");
+    console.log("  learn     Self-learning engine");
+    console.log("  metrics   Project metrics dashboard");
 }
 
 if (!command || command === '--help' || command === '-h') {

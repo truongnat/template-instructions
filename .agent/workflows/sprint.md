@@ -121,4 +121,4 @@ docs/sprints/sprint-[N]/
 ---
 
 ## ENFORCEMENT REMINDER
-Before executing, complete /preflight checks.
+Run /onboarding if new to project.

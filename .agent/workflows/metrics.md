@@ -175,4 +175,4 @@ Auto-generates recommendations based on:
 ---
 
 ## ENFORCEMENT REMINDER
-Before executing, complete /preflight checks.
+Run periodically to track project health.

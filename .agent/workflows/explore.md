@@ -143,4 +143,4 @@ Fourth-Order: Token revocation, multi-device sessions, privacy compliance
 ---
 
 ## ENFORCEMENT REMINDER
-Before executing, complete /preflight checks.
+Search KB for related entries before deep investigation.

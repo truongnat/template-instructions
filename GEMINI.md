@@ -67,6 +67,46 @@ After completing ANY task:
 > [!IMPORTANT]
 > **FAILURE TO FOLLOW THESE RULES** means the brain system is not being used correctly. If you find yourself implementing without reading workflows, STOP and restart with the pre-flight checklist.
 
+### 📦 Artifact Persistence Rule (MANDATORY)
+
+> [!CAUTION]
+> **ALL task results, reports, and IDE-generated artifacts MUST be persisted to docs and synced to Neo4j.**
+
+After completing ANY task:
+
+1. **Save artifacts to project docs:**
+   ```bash
+   # Implementation plans → docs/sprints/sprint-[N]/plans/
+   # Walkthroughs → docs/walkthroughs/
+   # Reports → docs/reports/
+   # Analysis → docs/artifacts/
+   ```
+
+2. **Sync to Neo4j:**
+   ```bash
+   agentic-sdlc kb compound sync
+   ```
+
+3. **Record in learning engine:**
+   ```bash
+   agentic-sdlc learn --record-success "[task-id]" --task-type "[type]"
+   ```
+
+| Artifact Type | Save Location | Neo4j Sync |
+|---------------|---------------|------------|
+| Implementation plans | `docs/sprints/sprint-[N]/plans/` | ✅ |
+| Walkthroughs | `docs/walkthroughs/` | ✅ |
+| Analysis reports | `docs/reports/` | ✅ |
+| IDE artifacts | `docs/artifacts/` | ✅ |
+| **Solutions** | `docs/solutions/` | ✅ |
+| Bug fixes | `.agent/knowledge-base/bugs/` | ✅ |
+| Feature docs | `.agent/knowledge-base/features/` | ✅ |
+
+**Enforcement:**
+- ❌ No silent completion - every task produces a persisted artifact
+- ❌ No orphan artifacts - IDE artifacts MUST be copied to project docs
+- ❌ No unsynced knowledge - all learnings MUST sync to Neo4j
+
 ---
 
 > **Universal Guide:** This document describes the `.agent/` brain system in an IDE-agnostic way. Use this guide with **any AI-powered IDE** (Cursor, Windsurf, Cline, Aider, etc.) or CLI tools.
