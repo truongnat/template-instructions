@@ -215,14 +215,14 @@ The **Brain** is the core of Agentic SDLC - an intelligent, self-learning knowle
             │   │   │                                                       │   │  │
             │   │   │   ╔═══════════════════════════════════════════════╗  │   │  │
             │   │   │   ║  GEMINI.md   ║  skills/  ║  rules/  ║ templates  │   │  │
-            │   │   │   ║  (SoT)       ║ (13 roles)║(6 files) ║ (17 files) │   │  │
+            │   │   │   ║  (SoT)       ║ (13 roles)║(5 files) ║ (17 files) │   │  │
             │   │   │   ╚═══════════════════════════════════════════════╝  │   │  │
             │   │   │                                                       │   │  │
             │   │   └───────────────────────────────────────────────────────┘   │  │
             │   │                              ↑                                │  │
             │   │   ╔═══════════════════════════════════════════════════════╗  │  │
             │   │   ║ scorer │ ab_test │ self_learning │ artifact_gen      ║  │  │
-            │   │   ║ router │ proxy   │ task_manager  │ monitor           ║  │  │
+            │   │   ║ router │ proxy   │ task_manager  │ monitor   │ judge ║  │  │
             │   │   ║ performance                                           ║  │  │
             │   │   ╚═══════════════════════════════════════════════════════╝  │  │
             │   │                                                               │  │
@@ -240,7 +240,7 @@ The **Brain** is the core of Agentic SDLC - an intelligent, self-learning knowle
 | Layer | Content | Purpose |
 |-------|---------|---------|
 | **Layer 1: Core** | GEMINI.md, skills/, rules/, templates/ | Stable foundation, rarely changes |
-| **Layer 2: Intelligence** | scorer, ab_test, self_learning, artifact_gen, router, proxy, task_manager, monitor, performance | Brain intelligence, self-improvement |
+| **Layer 2: Intelligence** | scorer, ab_test, self_learning, artifact_gen, router, proxy, task_manager, monitor, performance, judge | Brain intelligence, self-improvement |
 | **Layer 3: Infrastructure** | tools/, docs/, workflows/, projects/, mcp/, cli/ | External interfaces, storage |
 
 ### Dependency Rule
@@ -260,7 +260,7 @@ Layer 3 → Layer 2 → Layer 1 (dependencies flow inward only)
 │   ├── role-dev.md             # Developer
 │   └── ...                     # + 11 more roles
 │
-├── rules/                       # 6 rule files
+├── rules/                       # 5 rule files
 │   ├── global.md               # Core SDLC flow
 │   └── ...
 │
