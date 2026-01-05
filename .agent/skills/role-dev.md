@@ -23,7 +23,6 @@ kb search "feature-name"
 kb compound search "architecture-pattern"
 ```
 
-- Check `.agent/knowledge-base/` for similar implementations
 - Review `docs/` for architecture decisions
 - Search Neo4j Brain for related patterns
 - Reuse proven solutions to save time

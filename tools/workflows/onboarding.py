@@ -22,7 +22,7 @@ CORE_DOCS = [
 DIRECTORIES = [
     (".agent/workflows/", "Workflow definitions"),
     (".agent/skills/", "Role definitions"),
-    (".agent/knowledge-base/", "Project knowledge"),
+
     ("tools/", "Executable tools"),
     ("docs/", "Documentation"),
 ]

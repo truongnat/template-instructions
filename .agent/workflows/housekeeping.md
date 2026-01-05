@@ -32,7 +32,6 @@ python tools/workflows/housekeeping.py
 # Updates KB index
 python bin/kb_cli.py update-index
 ```
-- Regenerates `.agent/knowledge-base/INDEX.md`
 - Ensures all entries are indexed
 - Updates statistics
 

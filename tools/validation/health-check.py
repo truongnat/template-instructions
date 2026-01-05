@@ -35,7 +35,7 @@ def check_directory_structure():
         '.agent/roles',
         '.agent/workflows',
         '.agent/templates',
-        '.agent/knowledge-base',
+
         'tools',
         'docs/sprints'
     ]

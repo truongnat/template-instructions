@@ -15,7 +15,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 from tools.utils.console import print_header, print_step, print_success, print_info, print_warning
 
 DOC_TYPES = {
-    "kb": (".agent/knowledge-base/", "Knowledge-Entry-Template.md"),
+
     "api": ("docs/api/", "API-Design-Template.md"),
     "guide": ("docs/guides/", "User-Guide-Template.md"),
     "architecture": ("docs/architecture/", "Architecture-Spec-Template.md"),

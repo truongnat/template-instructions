@@ -44,7 +44,7 @@ class ResearchAgent:
         self.github_token = os.getenv('GITHUB_TOKEN')
         self.github_repo = os.getenv('GITHUB_REPO')
         self.project_root = Path(__file__).parent.parent.parent
-        self.kb_path = self.project_root / '.agent' / 'knowledge-base'
+
         
         # Initialize Neo4j if available
         if NEO4J_AVAILABLE:

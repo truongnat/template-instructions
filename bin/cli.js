@@ -29,12 +29,12 @@ const commands = {
 
     // Layer 3: Infrastructure
     'release': 'tools/release/release.py',
-    'kb': 'bin/kb_cli.py',
+
     'agent': 'tools/run.py',
     'validate': 'tools/validation/validate.py',
     'health': 'tools/validation/health-check.py',
     'setup': 'tools/setup/init.py',
-    'metrics': 'tools/kb/metrics-dashboard.py',
+
 
     // MCP
     'mcp': 'mcp/protocol.py',
@@ -98,11 +98,11 @@ Usage: agentic-sdlc <command> [args]
 ├─────────────────────────────────────────────────────────────────┤
 │  release     Manage releases & version bumping                  │
 │  workflow    Run workflows (cycle, orchestrator, debug, etc.)   │
-│  kb          Knowledge Base tools                               │
+
 │  validate    Validate system configuration                      │
 │  health      Check system health                                │
 │  setup       Initialize project                                 │
-│  metrics     Project metrics dashboard                          │
+
 │  mcp         MCP (Model Context Protocol) management            │
 │  run         Run arbitrary Python script                        │
 ╰─────────────────────────────────────────────────────────────────╯

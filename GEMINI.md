@@ -14,10 +14,9 @@
 Before starting ANY work, complete these steps IN ORDER:
 
 1. **READ THE WORKFLOW FILE** - If user mentions `/slash`, read `.agent/workflows/[slash].md` FIRST
-2. **SEARCH KNOWLEDGE BASE** - Check `.agent/knowledge-base/INDEX.md` for relevant prior solutions
-3. **IDENTIFY ROLES** - Determine which `@ROLE` agents should be activated
-4. **INITIALIZE STATE** - Run `python tools/brain/brain_cli.py status` to check current state
-5. **ANNOUNCE START** - Log the task start (conceptually, no actual command needed)
+2. **IDENTIFY ROLES** - Determine which `@ROLE` agents should be activated
+3. **INITIALIZE STATE** - Run `python tools/brain/brain_cli.py status` to check current state
+4. **ANNOUNCE START** - Log the task start (conceptually, no actual command needed)
 
 ### Slash Command Interpretation
 
@@ -96,7 +95,7 @@ python tools/brain/self_improver.py --analyze
 python tools/brain/self_improver.py --plan
 
 # 5. Sync to Neo4j
-python bin/kb_cli.py compound sync
+python tools/neo4j/brain_parallel.py --sync
 ```
 
 #### Gate 5: REPORTING (Mandatory Artifacts)
@@ -134,7 +133,7 @@ python tools/brain/learner.py --learn "[task description]"
 python tools/brain/judge.py --score "[artifact path]"
 
 # 3. Sync to Neo4j
-python bin/kb_cli.py compound sync
+python tools/neo4j/brain_parallel.py --sync
 ```
 
 **Periodically (per sprint or weekly):**
@@ -181,8 +180,6 @@ After completing ANY task:
 | Analysis reports | `docs/reports/` | ✅ |
 | IDE artifacts | `docs/artifacts/` | ✅ |
 | **Solutions** | `docs/solutions/` | ✅ |
-| Bug fixes | `.agent/knowledge-base/bugs/` | ✅ |
-| Feature docs | `.agent/knowledge-base/features/` | ✅ |
 
 **Enforcement:**
 - ❌ No silent completion - every task produces a persisted artifact
@@ -269,10 +266,8 @@ Layer 3 → Layer 2 → Layer 1 (dependencies flow inward only)
 │
 ├── templates/                   # 17 document templates
 │
-├── workflows/                   # 16 workflow definitions
-│   ├── brain.md, cycle.md, orchestrator.md, etc.
-│
-└── knowledge-base/              # Compound learning system
+└── workflows/                   # 16 workflow definitions
+    ├── brain.md, cycle.md, orchestrator.md, etc.
 
 tools/layer2/                    # 🧠 LAYER 2: INTELLIGENCE
 ├── scorer/                      # Input/output quality scoring
@@ -388,74 +383,7 @@ description: Brief workflow description
 #role-tag #skills-enabled
 ```
 
-### 3. Knowledge Base (`.agent/knowledge-base/`)
 
-**What:** Self-learning system that captures and organizes project knowledge
-**How it works:** Automatically or manually create entries as you solve problems
-
-**Categories:**
-
-```
-knowledge-base/
-├── INDEX.md              # Searchable index (auto-generated)
-├── bugs/                 # Bug patterns & solutions
-│   └── [category]-[slug].md
-├── features/             # Feature implementations
-│   └── [category]-[slug].md
-├── architecture/         # Architecture decisions
-│   └── [topic]-[slug].md
-├── security/             # Security vulnerabilities & fixes
-│   └── [category]-[slug].md
-├── performance/          # Performance optimizations
-│   └── [optimization]-[slug].md
-├── tools/               # Tool usage & integration
-│   └── [tool]-[slug].md
-└── workflows/           # Custom workflow modifications
-    └── [workflow]-[slug].md
-```
-
-**Entry Structure (YAML Frontmatter):**
-
-```markdown
----
-category: feature-implementation
-subcategory: authentication
-tags: [jwt, oauth, security]
-difficulty: medium
-date: 2026-01-03
-author: @DEV
-related: [security-jwt-best-practices, bugs-jwt-expiration]
-sprint: sprint-5
----
-
-# JWT Authentication Implementation
-
-## Problem/Challenge
-[What was needed]
-
-## Solution
-[How it was solved]
-
-## Implementation
-[Code/config details]
-
-## Learnings
-[Key takeaways]
-
-## Related Issues
-- [Link to issues/PRs]
-
-#feature #authentication #jwt
-```
-
-**When to Create KB Entries:**
-
-- ✅ Bug fixed (priority medium+)
-- ✅ New feature implemented
-- ✅ Architecture decision made
-- ✅ Security vulnerability fixed
-- ✅ Performance optimization applied
-- ✅ Complex problem solved (3+ hours)
 
 ### 4. Templates (`.agent/templates/`)
 
@@ -504,7 +432,6 @@ Documentation:
 | `global.md` | Core SDLC flow, role dependencies, approval gates |
 | `artifacts.md` | File naming, folder structure, sprint-based organization |
 | `git-workflow.md` | Task tracking, atomic commits, branching strategy |
-| `knowledge-base.md` | KB entry creation, YAML metadata, indexing |
 | `auto-learning.md` | Automatic knowledge capture triggers |
 
 ---
@@ -575,9 +502,6 @@ ls .agent/workflows/
 # Read a workflow
 cat .agent/workflows/pm.md
 
-# Search knowledge base
-python bin/kb_cli.py search "authentication"
-
 # Use brain system
 python tools/neo4j/brain_parallel.py --recommend "OAuth implementation"
 ```
@@ -641,16 +565,7 @@ python tools/neo4j/query_skills_neo4j.py --all-skills
 python tools/neo4j/query_skills_neo4j.py --learning-path "Authentication"
 ```
 
-### Layer 3: File-based KB
 
-**What:** Human-readable markdown files with YAML metadata
-**Location:** `.agent/knowledge-base/`
-
-**Advantages:**
-- Git-trackable
-- Easily editable
-- No database required
-- Works offline
 
 ### Brain Workflows (Parallel Execution)
 
@@ -732,11 +647,9 @@ The brain **automatically learns** when these events occur:
    - Code patterns
    - Related technologies
 3. **Storage** - Saves to:
-   - File-based KB (`.agent/knowledge-base/`)
    - Neo4j graph (relationships)
    - LEANN index (semantic search)
 4. **Indexing** - Updates:
-   - KB INDEX.md
    - Neo4j relationships
    - LEANN vectors
 5. **Future Use** - Available for:
@@ -771,12 +684,6 @@ python tools/neo4j/learning_engine.py --stats
 ```bash
 # Full brain sync
 python tools/neo4j/brain_parallel.py --full
-
-# Review knowledge base
-python bin/kb_cli.py list --recent
-
-# Update KB index
-python bin/kb_cli.py update-index
 
 # Check learning patterns
 python tools/neo4j/learning_engine.py --patterns

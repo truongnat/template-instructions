@@ -8,7 +8,7 @@ creating a knowledge graph of skills, technologies, and relationships.
 
 Usage:
     python bin/sync_skills_to_neo4j.py
-    python bin/sync_skills_to_neo4j.py --kb-path .agent/knowledge-base
+
     python bin/sync_skills_to_neo4j.py --dry-run
 """
 
@@ -308,7 +308,7 @@ class Neo4jSkillSync:
 def main():
     """Main execution function"""
     parser = argparse.ArgumentParser(description='Sync Knowledge Base to Neo4j')
-    parser.add_argument('--kb-path', default='.agent/knowledge-base', help='Path to knowledge base')
+
     parser.add_argument('--docs-path', default='docs', help='Path to docs directory')
     parser.add_argument('--dry-run', action='store_true', help='Dry run without syncing')
     parser.add_argument('--stats-only', action='store_true', help='Show stats only')

@@ -615,7 +615,7 @@ NEO4J_PASSWORD=...
 - **CLI Guide:** `../docs/CLI-GUIDE.md`
 - **Architecture:** `../docs/ARCHITECTURE.md`
 - **Workflows:** `../.agent/workflows/README.md`
-- **Knowledge Base:** `../.agent/knowledge-base/README.md`
+
 
 ## Support
 

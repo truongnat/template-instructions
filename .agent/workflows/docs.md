@@ -21,7 +21,6 @@ Systematic approach to creating and maintaining project documentation.
 
 | Type | Template | Location |
 |------|----------|----------|
-| KB Entry | `Knowledge-Entry-Template.md` | `.agent/knowledge-base/` |
 | API Docs | Inline/OpenAPI | `docs/api/` |
 | User Guide | `User-Guide-Template.md` | `docs/guides/` |
 | Architecture | `Architecture-Spec-Template.md` | `docs/architecture/` |
@@ -133,7 +132,7 @@ Example: Architecture-Auth-Sprint-6-v1.md
 - **@REPORTER** - Reports and summaries
 - **/release** - Changelog updates
 
-#docs #documentation #writing #knowledge-base
+#docs #documentation #writing 
 
 ## ⏭️ Next Steps
 - **If Docs Created:** Trigger `/review` for feedback

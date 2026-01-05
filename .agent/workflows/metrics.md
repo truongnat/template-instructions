@@ -169,7 +169,7 @@ Auto-generates recommendations based on:
 - **/housekeeping** - References health status
 - **/sprint close** - Include metrics in retrospective
 
-#metrics #dashboard #analytics #health #knowledge-base
+#metrics #dashboard #analytics #health 
 
 ## ⏭️ Next Steps
 - **If Trends Negative:** Trigger `/sprint` retrospective

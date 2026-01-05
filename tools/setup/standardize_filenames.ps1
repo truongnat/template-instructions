@@ -78,15 +78,12 @@ if (Rename-CaseSensitive ".agent/ide-integration/cursor-rules.md" "CURSOR-RULES.
 if (Rename-CaseSensitive ".agent/ide-integration/github-copilot-instructions.md" "GITHUB-COPILOT-INSTRUCTIONS.md") { $renamedCount++ } else { $errorCount++ }
 if (Rename-CaseSensitive ".agent/ide-integration/windsurf-cascade.md" "WINDSURF-CASCADE.md") { $renamedCount++ } else { $errorCount++ }
 
-# .agent/knowledge-base/
-if (Rename-CaseSensitive ".agent/knowledge-base/index.md" "INDEX.md") { $renamedCount++ } else { $errorCount++ }
 
 # .agent/rules/
 if (Rename-CaseSensitive ".agent/rules/artifacts.md" "ARTIFACTS.md") { $renamedCount++ } else { $errorCount++ }
 if (Rename-CaseSensitive ".agent/rules/auto-learning.md" "AUTO-LEARNING.md") { $renamedCount++ } else { $errorCount++ }
 if (Rename-CaseSensitive ".agent/rules/git-workflow.md" "GIT-WORKFLOW.md") { $renamedCount++ } else { $errorCount++ }
 if (Rename-CaseSensitive ".agent/rules/global.md" "GLOBAL.md") { $renamedCount++ } else { $errorCount++ }
-if (Rename-CaseSensitive ".agent/rules/knowledge-base.md" "KNOWLEDGE-BASE.md") { $renamedCount++ } else { $errorCount++ }
 
 Write-Host ""
 Write-Host "Phase 3: Renaming .github/ files..." -ForegroundColor Yellow

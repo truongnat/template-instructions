@@ -102,7 +102,6 @@ python tools/workflows/emergency.py -s P1 -i "API timeout" --non-interactive
 
 ## Output Artifacts
 - `docs/sprints/sprint-[N]/logs/Incident-Report-[ID].json`
-- KB entry in `.agent/knowledge-base/bugs/`
 
 #emergency #hotfix #incident #production #p0
 

@@ -264,7 +264,7 @@ Timeline: Extended (new challenge)
 ## 🔍 Search Sources
 
 ### 1. Knowledge Base (File System)
-**Location:** `.agent/knowledge-base/`
+
 
 **Categories:**
 - `bugs/` - Bug patterns and fixes
@@ -638,4 +638,4 @@ Research Agent System giúp team:
 
 ---
 
-#research-agent #knowledge-base #automation #best-practices
+#research-agent #automation #best-practices

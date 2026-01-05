@@ -84,4 +84,4 @@ pip install -r tools/requirements.txt
 
 - **Workflow Documentation:** `.agent/workflows/`
 - **Tools Overview:** `tools/README.md`
-- **Knowledge Base:** `.agent/knowledge-base/`
+

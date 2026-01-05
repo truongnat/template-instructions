@@ -108,7 +108,6 @@ By end of onboarding, you should know:
 | Project overview | `README.md` |
 | Workflows | `.agent/workflows/` |
 | Roles | `.agent/skills/` |
-| Knowledge base | `.agent/knowledge-base/` |
 | Templates | `.agent/templates/` |
 | Tools | `tools/` |
 | Sprint docs | `docs/sprints/sprint-[N]/` |

@@ -76,4 +76,4 @@ Every action must be tagged with appropriate hashtags:
 | **Deployment** | #deployed-staging, #deployed-production |
 | **Research** | #searching |
 | **Reporting** | #reporting, #stakeholder-review |
-| **Knowledge** | #knowledge-base, #lessons-learned |
+

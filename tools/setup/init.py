@@ -99,7 +99,7 @@ def check_directories():
     required = [
         ".agent",
         ".agent/workflows",
-        ".agent/knowledge-base",
+
         "tools",
         "docs"
     ]

@@ -65,11 +65,7 @@ DOCUMENT_TYPES = {
         'label': 'Workflow',
         'directories': ['.agent/workflows']
     },
-    'knowledge': {
-        'patterns': ['**/KB-*.md'],
-        'label': 'KBEntry',
-        'directories': ['.agent/knowledge-base']
-    },
+
     'conversations': {
         'patterns': ['**/chat-log*.md', '**/conversation*.md'],
         'label': 'Conversation',
