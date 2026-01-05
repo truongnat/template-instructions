@@ -1,0 +1,53 @@
+{
+  "plans": [
+    {
+      "id": "PLAN-20260105-0931",
+      "createdAt": "2026-01-05T09:31:37.457263",
+      "status": "CREATED",
+      "insights": [
+        {
+          "source": "Judge",
+          "finding": "Average score is low (3.4/10)",
+          "suggestion": "Improve report quality - add more detail, follow templates"
+        },
+        {
+          "source": "Judge",
+          "finding": "Reports consistently fail in 'completeness'",
+          "suggestion": "Focus on improving completeness in reports"
+        }
+      ],
+      "actions": [
+        {
+          "id": "ACTION-1",
+          "source": "Judge",
+          "action": "Improve report quality - add more detail, follow templates",
+          "priority": "medium",
+          "status": "PENDING"
+        },
+        {
+          "id": "ACTION-2",
+          "source": "Judge",
+          "action": "Focus on improving completeness in reports",
+          "priority": "high",
+          "status": "PENDING"
+        }
+      ],
+      "summary": "2 improvement actions identified"
+    }
+  ],
+  "insights": [
+    {
+      "source": "Judge",
+      "finding": "Average score is low (3.4/10)",
+      "suggestion": "Improve report quality - add more detail, follow templates"
+    },
+    {
+      "source": "Judge",
+      "finding": "Reports consistently fail in 'completeness'",
+      "suggestion": "Focus on improving completeness in reports"
+    }
+  ],
+  "appliedImprovements": 0,
+  "createdAt": "2026-01-05T09:31:37.457374",
+  "lastUpdated": "2026-01-05T09:31:37.457582"
+}

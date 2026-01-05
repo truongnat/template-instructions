@@ -75,8 +75,8 @@ def save_scores(data: Dict[str, Any]) -> None:
         json.dump(data, f, indent=2, ensure_ascii=False)
 
 
-# Scoring Rubric
-RUBRIC = {
+# Scoring Rubric for REPORTS (.md files)
+REPORT_RUBRIC = {
     "completeness": {
         "weight": 3,
         "criteria": [
@@ -106,6 +106,156 @@ RUBRIC = {
     }
 }
 
+# Scoring Rubric for CODE files (.py, .js, .ts, .astro, etc.)
+CODE_RUBRIC = {
+    "structure": {
+        "weight": 3,
+        "criteria": [
+            "Has imports/dependencies",
+            "Has comments/docstrings",
+            "Organized sections",
+            "Proper indentation"
+        ]
+    },
+    "quality": {
+        "weight": 4,
+        "criteria": [
+            "No TODO/FIXME left",
+            "Proper naming conventions",
+            "No hardcoded values",
+            "Error handling present"
+        ]
+    },
+    "completeness": {
+        "weight": 3,
+        "criteria": [
+            "All functions implemented",
+            "No placeholder code",
+            "Has exports/entry point",
+            "Feature complete"
+        ]
+    }
+}
+
+# File extensions for code vs report
+CODE_EXTENSIONS = {'.py', '.js', '.ts', '.jsx', '.tsx', '.astro', '.vue', '.svelte', '.css', '.scss'}
+REPORT_EXTENSIONS = {'.md', '.txt', '.rst'}
+
+# Keep old name for backwards compatibility
+RUBRIC = REPORT_RUBRIC
+
+
+def score_code(file_path: str) -> Dict[str, Any]:
+    """
+    Score a code file based on the CODE_RUBRIC.
+    Returns score breakdown and total.
+    """
+    path = Path(file_path)
+    if not path.exists():
+        return {
+            "error": f"File not found: {file_path}",
+            "score": 0,
+            "passed": False
+        }
+    
+    content = path.read_text(encoding='utf-8')
+    
+    scores = {}
+    improvements = []  # Track what's missing
+    
+    # Score structure
+    structure_score = 2  # Base score
+    if re.search(r'^import |^from |^const |^let |^var ', content, re.M):
+        structure_score += 2.5  # Has imports
+    else:
+        improvements.append("Add imports/dependencies at top → +2.5 structure")
+    if re.search(r'""".*"""|\'\'\'.*\'\'\'|/\*\*.*\*/|//.*$', content, re.M | re.S):
+        structure_score += 2.5  # Has comments/docstrings
+    else:
+        improvements.append("Add docstrings or comments → +2.5 structure")
+    if re.search(r'^(def |class |function |const \w+ = |export )', content, re.M):
+        structure_score += 2  # Has organized sections
+    else:
+        improvements.append("Add function/class definitions → +2 structure")
+    if not re.search(r'^[^ \t].*\n[ \t]+[^ \t]', content):  # Basic indentation check
+        structure_score += 1
+    scores["structure"] = min(structure_score, 10)
+    
+    # Score quality
+    quality_score = 5  # Base score
+    if "TODO" not in content.upper() and "FIXME" not in content.upper():
+        quality_score += 2  # No TODOs
+    else:
+        improvements.append("Remove TODO/FIXME comments → +2 quality")
+    if not re.search(r'(localhost|127\.0\.0\.1|password\s*=\s*["\'])', content, re.I):
+        quality_score += 2  # No hardcoded values
+    else:
+        improvements.append("Remove hardcoded values (localhost, passwords) → +2 quality")
+    if re.search(r'try:|except:|catch|\.catch\(|if.*err', content, re.I):
+        quality_score += 1  # Has error handling
+    else:
+        improvements.append("Add error handling (try/catch) → +1 quality")
+    scores["quality"] = min(quality_score, 10)
+    
+    # Score completeness
+    completeness_score = 5  # Base score
+    if "pass" not in content or content.count("pass") <= 2:
+        completeness_score += 2  # No placeholder pass statements
+    else:
+        improvements.append("Implement placeholder 'pass' statements → +2 completeness")
+    if re.search(r'def \w+|function \w+|const \w+ = \(|=>', content):
+        completeness_score += 2  # Has functions
+    else:
+        improvements.append("Add function implementations → +2 completeness")
+    if "__main__" in content or "export" in content or "module.exports" in content:
+        completeness_score += 1  # Has entry/export
+    else:
+        improvements.append("Add __main__ or export statement → +1 completeness")
+    scores["completeness"] = min(completeness_score, 10)
+    
+    # Calculate weighted total
+    total_weight = 0
+    weighted_score = 0
+    for category, details in CODE_RUBRIC.items():
+        weighted_score += scores[category] * details["weight"]
+        total_weight += details["weight"] * 10
+    
+    final_score = round((weighted_score / total_weight) * 10, 1)
+    
+    # Load threshold
+    data = load_scores()
+    threshold = data.get("passThreshold", 6)
+    
+    result = {
+        "file": str(path),
+        "type": "code",
+        "scores": scores,
+        "improvements": improvements if final_score < 10 else [],
+        "finalScore": final_score,
+        "passed": final_score >= threshold,
+        "threshold": threshold,
+        "timestamp": datetime.now().isoformat()
+    }
+    
+    # Save to database
+    data["scores"].append(result)
+    save_scores(data)
+    
+    return result
+
+
+def score_file(file_path: str) -> Dict[str, Any]:
+    """
+    Auto-detect file type and score appropriately.
+    """
+    path = Path(file_path)
+    ext = path.suffix.lower()
+    
+    if ext in CODE_EXTENSIONS:
+        return score_code(file_path)
+    else:
+        return score_report(file_path)
+
 
 def score_report(report_path: str) -> Dict[str, Any]:
     """
@@ -123,6 +273,7 @@ def score_report(report_path: str) -> Dict[str, Any]:
     content = path.read_text(encoding='utf-8')
     
     scores = {}
+    improvements = []  # Track what's missing
     total_weight = 0
     weighted_score = 0
     
@@ -130,34 +281,56 @@ def score_report(report_path: str) -> Dict[str, Any]:
     completeness_score = 0
     if re.search(r'##.*problem|##.*issue|##.*challenge', content, re.I):
         completeness_score += 2.5
+    else:
+        improvements.append("Add '## Problem' or '## Challenge' section → +2.5 completeness")
     if re.search(r'##.*solution|##.*fix|##.*implementation', content, re.I):
         completeness_score += 2.5
+    else:
+        improvements.append("Add '## Solution' or '## Implementation' section → +2.5 completeness")
     if re.search(r'##.*artifact|##.*output|##.*deliverable', content, re.I):
         completeness_score += 2.5
+    else:
+        improvements.append("Add '## Artifacts' or '## Output' section → +2.5 completeness")
     if re.search(r'##.*next|##.*todo|##.*action', content, re.I):
         completeness_score += 2.5
+    else:
+        improvements.append("Add '## Next Steps' or '## Actions' section → +2.5 completeness")
     scores["completeness"] = min(completeness_score, 10)
     
     # Score quality
     quality_score = 5  # Base score
     if len(content) > 500:
         quality_score += 2
+    else:
+        improvements.append("Add more content (>500 chars) → +2 quality")
     if "```" in content:  # Has code blocks
         quality_score += 1.5
+    else:
+        improvements.append("Add code blocks with ``` → +1.5 quality")
     if "[TODO]" not in content and "[PLACEHOLDER]" not in content:
         quality_score += 1.5
+    else:
+        improvements.append("Remove [TODO] and [PLACEHOLDER] text → +1.5 quality")
     scores["quality"] = min(quality_score, 10)
     
     # Score compliance
     compliance_score = 0
     if content.startswith("---"):  # Has frontmatter
         compliance_score += 2
+    else:
+        improvements.append("Add YAML frontmatter (---) at top → +2 compliance")
     if re.search(r'#[a-z-]+', content):  # Has tags
         compliance_score += 2
-    if path.parent.name in ["plans", "designs", "reports", "logs"]:
+    else:
+        improvements.append("Add hashtag tags like #walkthrough → +2 compliance")
+    if path.parent.name in ["plans", "designs", "reports", "logs", "walkthroughs"]:
         compliance_score += 3
+    else:
+        improvements.append("Move file to docs/plans/, docs/reports/, or docs/walkthroughs/ → +3 compliance")
     if re.search(r'\[.*\]\(.*\.md\)', content):  # Has links
         compliance_score += 3
+    else:
+        improvements.append("Add links to related .md files → +3 compliance")
     scores["compliance"] = min(compliance_score, 10)
     
     # Calculate weighted total
@@ -173,7 +346,9 @@ def score_report(report_path: str) -> Dict[str, Any]:
     
     result = {
         "file": str(path),
+        "type": "report",
         "scores": scores,
+        "improvements": improvements if final_score < 10 else [],
         "finalScore": final_score,
         "passed": final_score >= threshold,
         "threshold": threshold,
@@ -251,6 +426,8 @@ def print_score(result: Dict[str, Any]):
         return
     
     print(f"📄 File: {result['file']}")
+    if result.get("type"):
+        print(f"📁 Type: {result['type']}")
     print()
     
     for category, score in result.get("scores", {}).items():
@@ -265,6 +442,14 @@ def print_score(result: Dict[str, Any]):
     else:
         print(f"❌ FAILED (threshold: {result['threshold']})")
     
+    # Show improvements if not 10/10
+    improvements = result.get("improvements", [])
+    if improvements:
+        print()
+        print("💡 To reach 10/10:")
+        for imp in improvements:
+            print(f"   • {imp}")
+    
     print("━" * 50)
 
 
@@ -272,7 +457,7 @@ def main():
     import argparse
     
     parser = argparse.ArgumentParser(description="Brain Judge - Layer 1 Root Component")
-    parser.add_argument("--score", type=str, help="Score a report file")
+    parser.add_argument("--score", type=str, help="Score a file (auto-detects code vs report)")
     parser.add_argument("--review", action="store_true", help="Review sprint reports")
     parser.add_argument("--sprint", type=int, help="Sprint number for review")
     parser.add_argument("--threshold", type=int, help="Set pass threshold (1-10)")
@@ -283,7 +468,7 @@ def main():
     
     try:
         if args.score:
-            result = score_report(args.score)
+            result = score_file(args.score)  # Auto-detect file type
             if args.json:
                 print(json.dumps(result, indent=2))
             else:

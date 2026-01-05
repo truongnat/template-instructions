@@ -1,7 +1,7 @@
 # Knowledge Base Index
 
-**Last Updated:** 2026-01-05 08:46:26  
-**Total Entries:** 10
+**Last Updated:** 2026-01-05 09:45:51  
+**Total Entries:** 11
 
 This index provides a searchable overview of all knowledge base entries.
 
@@ -9,8 +9,8 @@ This index provides a searchable overview of all knowledge base entries.
 
 ## 📊 Quick Stats
 
-- **Total Entries:** 10
-- **Categories:** 7
+- **Total Entries:** 11
+- **Categories:** 8
 - **Priorities:** 3
 
 ---
@@ -89,6 +89,14 @@ This index provides a searchable overview of all knowledge base entries.
   - Tags: security, validation, sanitization, xss, injection
 
 
+### 📄 Walkthrough (1 entries)
+
+- ⚪ **Unknown**
+  - File: `2026-01-05-landing-page-orchestrator.md`
+  - Date: 2026-01-05 | Priority: unknown
+  - Tags: landing-page, orchestrator, enforcement-gates
+
+
 ---
 
 ## ⚠️ By Priority
@@ -119,6 +127,10 @@ This index provides a searchable overview of all knowledge base entries.
 ---
 
 ## 📅 Recent Entries (Last 20)
+
+- ⚪ **Unknown**
+  - `2026-01-05-landing-page-orchestrator.md`
+  - 2026-01-05 | walkthrough | unknown
 
 - ⚪ **Unknown**
   - `KB-2026-01-04-ai-agent-enforcement.md`

@@ -1,0 +1,113 @@
+{
+  "scores": [
+    {
+      "file": "projects\\landing-page\\src\\components\\Features.astro",
+      "scores": {
+        "completeness": 0,
+        "quality": 8.5,
+        "compliance": 2
+      },
+      "finalScore": 3.4,
+      "passed": false,
+      "threshold": 6,
+      "timestamp": "2026-01-05T09:28:25.776905"
+    },
+    {
+      "file": "docs\\walkthroughs\\2026-01-05-landing-page-orchestrator.md",
+      "scores": {
+        "completeness": 0,
+        "quality": 8.5,
+        "compliance": 0
+      },
+      "finalScore": 2.5,
+      "passed": false,
+      "threshold": 6,
+      "timestamp": "2026-01-05T09:32:11.806806"
+    },
+    {
+      "file": "docs\\walkthroughs\\2026-01-05-landing-page-orchestrator.md",
+      "scores": {
+        "completeness": 10.0,
+        "quality": 8.5,
+        "compliance": 4
+      },
+      "finalScore": 7.1,
+      "passed": true,
+      "threshold": 6,
+      "timestamp": "2026-01-05T09:33:57.519120"
+    },
+    {
+      "file": "projects\\landing-page\\src\\components\\Features.astro",
+      "type": "code",
+      "scores": {
+        "structure": 10.0,
+        "quality": 9,
+        "completeness": 9
+      },
+      "finalScore": 9.3,
+      "passed": true,
+      "threshold": 6,
+      "timestamp": "2026-01-05T09:45:00.343382"
+    },
+    {
+      "file": "docs\\walkthroughs\\2026-01-05-landing-page-orchestrator.md",
+      "scores": {
+        "completeness": 10.0,
+        "quality": 8.5,
+        "compliance": 4
+      },
+      "finalScore": 7.1,
+      "passed": true,
+      "threshold": 6,
+      "timestamp": "2026-01-05T09:45:04.197872"
+    },
+    {
+      "file": "docs\\walkthroughs\\2026-01-05-judge-enhancement.md",
+      "scores": {
+        "completeness": 10.0,
+        "quality": 8.5,
+        "compliance": 4
+      },
+      "finalScore": 7.1,
+      "passed": true,
+      "threshold": 6,
+      "timestamp": "2026-01-05T09:46:24.661632"
+    },
+    {
+      "file": "docs\\walkthroughs\\2026-01-05-landing-page-orchestrator.md",
+      "type": "report",
+      "scores": {
+        "completeness": 10.0,
+        "quality": 8.5,
+        "compliance": 7
+      },
+      "improvements": [
+        "Add code blocks with ``` → +1.5 quality",
+        "Add links to related .md files → +3 compliance"
+      ],
+      "finalScore": 8.3,
+      "passed": true,
+      "threshold": 6,
+      "timestamp": "2026-01-05T09:53:27.263595"
+    },
+    {
+      "file": "docs\\walkthroughs\\2026-01-05-landing-page-orchestrator.md",
+      "type": "report",
+      "scores": {
+        "completeness": 10.0,
+        "quality": 10.0,
+        "compliance": 10
+      },
+      "improvements": [],
+      "finalScore": 10.0,
+      "passed": true,
+      "threshold": 6,
+      "timestamp": "2026-01-05T10:22:55.679975"
+    }
+  ],
+  "averageScore": 0.0,
+  "totalReviews": 8,
+  "passThreshold": 6,
+  "createdAt": "2026-01-05T09:28:25.776862",
+  "lastUpdated": "2026-01-05T10:22:55.682274"
+}

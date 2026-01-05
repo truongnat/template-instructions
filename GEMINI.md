@@ -45,21 +45,102 @@ For ANY task, activate the appropriate roles based on task type:
 | Hotfix/Emergency | @DEV → @DEVOPS | `/emergency` |
 | Documentation | @PM → @REPORTER | `/cycle` |
 
-### Compliance Gates (MANDATORY)
+### 🚨 CRITICAL ENFORCEMENT GATES (6 MANDATORY)
 
-1. **Planning Gate** - For features/projects, create Project Plan BEFORE implementing
-2. **Design Gate** - For complex tasks, create design spec BEFORE coding
-3. **Review Gate** - All code must have conceptual @TESTER review
-4. **Learning Gate** - After completion, document learnings to KB
+> [!CAUTION]
+> **ALL 6 GATES ARE NON-NEGOTIABLE.** Skipping any gate is a protocol violation.
 
-### Self-Learning Protocol (REQUIRED After Every Task)
-
-After completing ANY task:
-
+#### Gate 1: PRE-TASK (Before Starting)
 ```bash
-# Record success pattern (conceptual - describe what was learned)
-# Update knowledge base if solution was non-obvious
-# Consider what should be documented for future reference
+# 1. Check brain state
+python tools/brain/observer.py --status
+
+# 2. Get model recommendation
+python tools/brain/model_optimizer.py --recommend "[task description]"
+
+# 3. For small tasks, consider A/B testing
+python tools/brain/ab_tester.py --create "[task]"
+```
+
+#### Gate 2: PLANNING (Before Code)
+- **MUST create** `implementation_plan.md` for any feature/change
+- **MUST get user approval** before writing code
+- Simple tasks: At minimum, outline steps in task.md
+
+#### Gate 3: ERROR HANDLING (On Any Failure)
+If ANY script or command fails:
+```bash
+# 1. STOP immediately - do NOT continue
+# 2. Halt the system
+python tools/brain/observer.py --halt "[error description]"
+
+# 3. Fix the issue
+# 4. Resume only after fix verified
+python tools/brain/observer.py --resume
+```
+
+#### Gate 4: POST-TASK (After Completion)
+```bash
+# 1. Trigger learning
+python tools/brain/learner.py --learn "[task description]"
+
+# 2. Score REPORTS (not code files!)
+# Judge is for: walkthroughs, plans, reports in docs/
+python tools/brain/judge.py --score "docs/walkthroughs/[date]-[name].md"
+
+# 3. Analyze for improvements
+python tools/brain/self_improver.py --analyze
+
+# 4. Create improvement plan (if issues found)
+python tools/brain/self_improver.py --plan
+
+# 5. Sync to Neo4j
+python bin/kb_cli.py compound sync
+```
+
+#### Gate 5: REPORTING (Mandatory Artifacts)
+- **MUST create** `walkthrough.md` documenting:
+  - What was done
+  - What was tested
+  - Validation results
+- **MUST save** to `docs/walkthroughs/[date]-[name].md`
+
+#### Gate 6: CLEANUP (After Every Session)
+```bash
+# Run housekeeping
+python tools/workflows/housekeeping.py
+```
+
+### 🧠 Brain Protocol (MANDATORY)
+
+The Brain Root Layer components MUST be used during agent sessions:
+
+**Before STARTING any task:**
+```bash
+# 1. Check system status
+python tools/brain/observer.py --status
+
+# 2. Get model recommendation (for complex tasks)
+python tools/brain/model_optimizer.py --recommend "[task description]"
+```
+
+**After COMPLETING any task:**
+```bash
+# 1. Trigger learning
+python tools/brain/learner.py --learn "[task description]"
+
+# 2. Score artifacts (if reports/docs created)
+python tools/brain/judge.py --score "[artifact path]"
+
+# 3. Sync to Neo4j
+python bin/kb_cli.py compound sync
+```
+
+**Periodically (per sprint or weekly):**
+```bash
+# Analyze patterns and create improvement plans
+python tools/brain/self_improver.py --analyze
+python tools/brain/self_improver.py --plan
 ```
 
 ---

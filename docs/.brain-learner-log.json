@@ -1,0 +1,27 @@
+{
+  "learnings": [
+    {
+      "description": "Updated landing page with 15 workflows, brain protocol, solutions feature",
+      "timestamp": "2026-01-05T09:01:02.577360",
+      "success": true,
+      "steps": [
+        {
+          "step": "KB Index Update",
+          "status": "success"
+        },
+        {
+          "step": "Neo4j Sync",
+          "status": "success"
+        },
+        {
+          "step": "Learning Engine",
+          "status": "success"
+        }
+      ]
+    }
+  ],
+  "totalLearnings": 1,
+  "autoLearnEnabled": true,
+  "createdAt": "2026-01-05T09:00:11.930196",
+  "lastUpdated": "2026-01-05T09:01:02.581164"
+}

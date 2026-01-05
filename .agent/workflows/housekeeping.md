@@ -43,6 +43,18 @@ Reports:
 - Current sprint status
 - System health status
 
+### Step 5: Brain Self-Analysis (NEW)
+```bash
+# Analyze patterns from A/B tests, Judge scores, Learner data
+python tools/brain/self_improver.py --analyze
+
+# Create improvement plan based on patterns
+python tools/brain/self_improver.py --plan
+
+# Sync all brain data
+python bin/kb_cli.py compound sync --full
+```
+
 ## Expected Output
 
 ```

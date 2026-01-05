@@ -7,7 +7,7 @@
 **Agentic SDLC** is an AI-powered development framework that simulates a complete software development team within your IDE. It provides:
 
 - **14 Specialized AI Roles** - PM, BA, SA, UI/UX, QA, Security, Dev, DevOps, Tester, Reporter, and more
-- **12 Automated Workflows** - From planning to deployment with `/slash` commands
+- **15 Automated Workflows** - From planning to deployment with `/slash` commands
 - **Intelligent Brain System** - 3-Layer architecture with state management and self-learning
 - **Cross-IDE Compatibility** - Works with Cursor, Windsurf, Cline, Aider, Gemini, and any AI-powered IDE
 - **Monorepo Architecture** - Shared brain system across multiple projects
@@ -78,7 +78,7 @@ Delivery    → @REPORTER, @STAKEHOLDER
 Meta        → @BRAIN, @ORCHESTRATOR
 ```
 
-### 2. Slash Commands (12 Workflows)
+### 2. Slash Commands (15 Workflows)
 
 Execute complete workflows with simple commands:
 
@@ -92,9 +92,12 @@ Execute complete workflows with simple commands:
 /metrics         # View metrics dashboard
 /release         # Release management
 /emergency       # Critical incident response
-/route           # Intelligent workflow routing
-/compound        # Knowledge capture
 /housekeeping    # Cleanup & maintenance
+/review          # Code review workflow (NEW)
+/debug           # Systematic debugging (NEW)
+/refactor        # Safe refactoring (NEW)
+/onboarding      # Agent ramp-up (NEW)
+/docs            # Documentation creation (NEW)
 ```
 
 ### 3. Monorepo Architecture
