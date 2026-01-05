@@ -1,73 +1,32 @@
-# Brain Tools
+# Brain CLI
 
-> **@BRAIN - Meta-Level System Controller**
+Command-line interface for Brain operations and state management.
 
-This directory contains the Root Layer (Layer 1) of the 3-layer architecture.
+## Files
 
-## 3-Layer Architecture
+| File | Purpose |
+|------|---------|
+| `brain_cli.py` | CLI entry point for brain commands |
+| `state_manager.py` | Global state tracking for SDLC phases |
 
-```
-┌────────────────────────────────────────────────────────────┐
-│              LAYER 1: ROOT (Brain)                          │
-│  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐       │
-│  │ Observer │ │  Judge   │ │ Learner  │ │A/B Tester│       │
-│  └──────────┘ └──────────┘ └──────────┘ └──────────┘       │
-│  ┌──────────────┐ ┌────────────────┐                       │
-│  │Model Optimizer│ │ Self-Improver  │                       │
-│  └──────────────┘ └────────────────┘                       │
-├────────────────────────────────────────────────────────────┤
-│              LAYER 2: WORKFLOW                              │
-│  /orchestrator │ /cycle │ /emergency │ /sprint             │
-├────────────────────────────────────────────────────────────┤
-│              LAYER 3: EXECUTION                             │
-│  @PM │ @BA │ @SA │ @DEV │ @TESTER │ Scripts                │
-└────────────────────────────────────────────────────────────┘
-```
-
-## Root Components
-
-| Component | File | Purpose |
-|-----------|------|---------|
-| **Observer** | `observer.py` | Monitors all actions, halts on errors |
-| **Judge** | `judge.py` | Scores reports, requires mandatory reporting |
-| **Learner** | `learner.py` | Auto-triggers learning on task completion |
-| **A/B Tester** | `ab_tester.py` | Tests 2 options, selects better |
-| **Model Optimizer** | `model_optimizer.py` | Selects optimal AI model |
-| **Self-Improver** | `self_improver.py` | Creates self-improvement plans |
-
-## Quick Commands
+## Usage
 
 ```bash
-# State Management
-python tools/brain/brain_cli.py init 1
+# Check status
 python tools/brain/brain_cli.py status
+
+# Transition state
 python tools/brain/brain_cli.py transition DESIGNING
 
-# Supervision
-python tools/brain/observer.py --watch
-python tools/brain/observer.py --halt "Error"
+# Sync brain
+python tools/brain/brain_cli.py sync
 
-# Quality
-python tools/brain/judge.py --score "path/to/report.md"
-python tools/brain/judge.py --stats
-
-# Learning
-python tools/brain/learner.py --learn "Task completed"
-python tools/brain/learner.py --stats
-
-# A/B Testing
-python tools/brain/ab_tester.py --create "Test description"
-python tools/brain/ab_tester.py --stats
-
-# Model Optimization
-python tools/brain/model_optimizer.py --recommend "Task description"
-
-# Self-Improvement
-python tools/brain/self_improver.py --analyze
-python tools/brain/self_improver.py --plan
+# Get recommendations
+python tools/brain/brain_cli.py recommend "implement feature"
 ```
 
-## Integration
+## Note
 
-- Skills: `.agent/skills/role-brain.md`
-- Workflow: `.agent/workflows/support/brain.md`
+Intelligence components (Observer, Judge, Learner, etc.) have been moved to `tools/layer2/`.
+
+See [Layer 2 README](../layer2/README.md) for details.

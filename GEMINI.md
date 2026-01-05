@@ -197,28 +197,58 @@ After completing ANY task:
 
 ## 🧠 What is the Brain System?
 
-The **Brain** is the core of Agentic SDLC - an intelligent, self-learning knowledge management system located in the `.agent/` directory. It provides:
+The **Brain** is the core of Agentic SDLC - an intelligent, self-learning knowledge management system. It provides:
 
-1. **3-Layer Architecture** - Root (Brain), Workflow, Execution layers
-2. **AI Role System** - 14 specialized agents (PM, BA, SA, Dev, QA, etc.)
-3. **Workflow Automation** - 12 predefined workflows accessible via `/slash` commands
+1. **3-Layer Concentric Architecture** - Core → Intelligence → Infrastructure (like Clean Architecture)
+2. **AI Role System** - 13 specialized agents (PM, BA, SA, Dev, QA, etc.)
+3. **Workflow Automation** - 16 predefined workflows accessible via `/slash` commands
 4. **Knowledge Base** - Compound learning from every task, bug, and solution
 5. **Cross-IDE Compatibility** - Works with any IDE through standard markdown files
 6. **Self-Learning Engine** - Automatically improves from project experience
 
-### 3-Layer Architecture (v2.0)
+### 3-Layer Concentric Architecture (v3.0)
+
 ```
-┌─────────────────────────────────────────────────────────────┐
-│              LAYER 1: ROOT (Brain)                           │
-│  Observer │ Judge │ Learner │ A/B Tester │ Model Optimizer  │
-│  Self-Improver                                               │
-├─────────────────────────────────────────────────────────────┤
-│              LAYER 2: WORKFLOW                               │
-│  /orchestrator │ /cycle │ /emergency │ /sprint              │
-├─────────────────────────────────────────────────────────────┤
-│              LAYER 3: EXECUTION                              │
-│  @PM │ @BA │ @SA │ @DEV │ @TESTER │ @DEVOPS │ Scripts       │
-└─────────────────────────────────────────────────────────────┘
+            ┌─────────────────────────────────────────────────────────────────────┐
+            │                        LAYER 3: INFRASTRUCTURE                       │
+            │   ┌──────────────────────────────────────────────────────────────┐  │
+            │   │                    LAYER 2: INTELLIGENCE                      │  │
+            │   │   ┌──────────────────────────────────────────────────────┐   │  │
+            │   │   │                  LAYER 1: CORE                        │   │  │
+            │   │   │                                                       │   │  │
+            │   │   │   ╔═══════════════════════════════════════════════╗  │   │  │
+            │   │   │   ║  GEMINI.md   ║  skills/  ║  rules/  ║ templates  │   │  │
+            │   │   │   ║  (SoT)       ║ (13 roles)║(6 files) ║ (17 files) │   │  │
+            │   │   │   ╚═══════════════════════════════════════════════╝  │   │  │
+            │   │   │                                                       │   │  │
+            │   │   └───────────────────────────────────────────────────────┘   │  │
+            │   │                              ↑                                │  │
+            │   │   ╔═══════════════════════════════════════════════════════╗  │  │
+            │   │   ║ scorer │ ab_test │ self_learning │ artifact_gen      ║  │  │
+            │   │   ║ router │ proxy   │ task_manager  │ monitor           ║  │  │
+            │   │   ║ performance                                           ║  │  │
+            │   │   ╚═══════════════════════════════════════════════════════╝  │  │
+            │   │                                                               │  │
+            │   └───────────────────────────────────────────────────────────────┘  │
+            │                                  ↑                                   │
+            │   ╔═══════════════════════════════════════════════════════════════╗ │
+            │   ║  tools/  │  docs/  │  workflows/  │  projects/  │ mcp/ │ cli/ ║ │
+            │   ╚═══════════════════════════════════════════════════════════════╝ │
+            │                                                                      │
+            └──────────────────────────────────────────────────────────────────────┘
+```
+
+### Layer Details
+
+| Layer | Content | Purpose |
+|-------|---------|---------|
+| **Layer 1: Core** | GEMINI.md, skills/, rules/, templates/ | Stable foundation, rarely changes |
+| **Layer 2: Intelligence** | scorer, ab_test, self_learning, artifact_gen, router, proxy, task_manager, monitor, performance | Brain intelligence, self-improvement |
+| **Layer 3: Infrastructure** | tools/, docs/, workflows/, projects/, mcp/, cli/ | External interfaces, storage |
+
+### Dependency Rule
+```
+Layer 3 → Layer 2 → Layer 1 (dependencies flow inward only)
 ```
 
 ---
@@ -226,57 +256,42 @@ The **Brain** is the core of Agentic SDLC - an intelligent, self-learning knowle
 ## 📁 Directory Structure
 
 ```
-.agent/                          # 🧠 THE BRAIN (Source of Truth)
+.agent/                          # 🧠 LAYER 1: CORE
 │
-├── workflows/                   # 12 workflow definitions (flat structure)
-│   ├── brain.md                # Brain system management
-│   ├── cycle.md                # Complete task lifecycle
-│   ├── explore.md              # Deep investigation
-│   ├── orchestrator.md         # Full SDLC automation
-│   ├── sprint.md               # Sprint management
-│   ├── emergency.md            # Critical incident response
-│   └── ...                     # + 6 more workflows
-│
-├── skills/                      # 14 AI role definitions
+├── skills/                      # 13 AI role definitions
 │   ├── role-pm.md              # Project Manager
-│   ├── role-ba.md              # Business Analyst
-│   ├── role-sa.md              # System Analyst
 │   ├── role-dev.md             # Developer
-│   ├── role-qa.md              # Quality Assurance
-│   ├── role-seca.md            # Security Analyst
-│   └── ...                     # + 8 more roles
+│   └── ...                     # + 11 more roles
 │
-├── knowledge-base/              # Compound learning system
-│   ├── INDEX.md                # Searchable index
-│   ├── bugs/                   # Bug patterns & solutions
-│   ├── features/               # Feature implementations
-│   ├── architecture/           # Architecture decisions
-│   ├── security/               # Security fixes
-│   ├── performance/            # Performance optimizations
-│   └── ...
-│
-├── templates/                   # 17+ document templates
-│   ├── project-plan.md
-│   ├── architecture-spec.md
-│   ├── test-report.md
-│   └── ...
-│
-├── rules/                       # Global rules & conventions
+├── rules/                       # 6 rule files
 │   ├── global.md               # Core SDLC flow
-│   ├── artifacts.md            # File naming & organization
-│   ├── git-workflow.md         # Git & task management
-│   ├── knowledge-base.md       # KB creation rules
-│   └── auto-learning.md        # Auto-learning triggers
+│   └── ...
 │
-├── ide-integration/             # IDE-specific configs
-│   └── [generated per IDE]
+├── templates/                   # 17 document templates
 │
-├── README.md                    # .agent directory overview
-├── CONFIG.md                    # Configuration guide
-└── USAGE.md                     # Usage instructions
+├── workflows/                   # 16 workflow definitions
+│   ├── brain.md, cycle.md, orchestrator.md, etc.
+│
+└── knowledge-base/              # Compound learning system
+
+tools/layer2/                    # 🧠 LAYER 2: INTELLIGENCE
+├── scorer/                      # Input/output quality scoring
+├── ab_test/                     # A/B testing engine
+├── self_learning/               # Pattern recognition
+├── artifact_gen/                # Artifact generation
+├── router/                      # Workflow/agent routing
+├── proxy/                       # Model cost optimization
+├── task_manager/                # Kanban-style management
+├── monitor/                     # Compliance monitoring
+└── performance/                 # Flow optimization
+
+mcp/                             # 🌐 LAYER 3: MCP CONNECTORS
+├── connectors/                  # filesystem, github, api
+└── protocol.py                  # MCP protocol handler
 ```
 
 ---
+
 
 ## 🎯 Core Components
 
