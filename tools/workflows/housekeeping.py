@@ -56,9 +56,10 @@ def main():
     """Main housekeeping workflow"""
     print_header("Housekeeping Workflow")
     
-    if not confirm("Run housekeeping tasks?", default=True):
-        print_info("Housekeeping cancelled")
-        return
+    # Run immediately without prompting
+    # if not confirm("Run housekeeping tasks?", default=True):
+    #     print_info("Housekeeping cancelled")
+    #     return
     
     try:
         archive_old_sprints()

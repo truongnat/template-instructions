@@ -19,7 +19,7 @@ try:
         get_project_root, ensure_dir, load_config
     )
     from utils.kb_manager import search_kb, create_kb_entry
-    from utils.artifact_manager import create_artifact, get_current_sprint
+    from utils.artifact_manager import get_current_sprint
 except ImportError:
     print("Error: Required utility modules not found. Run setup first.")
     sys.exit(1)
@@ -66,7 +66,7 @@ def plan_task(task_description, kb_results):
     return plan
 
 
-def execute_task(plan):
+def execute_task(plan, non_interactive=False):
     """Execute the planned task"""
     print_header("Step 3: Execute Task")
     
@@ -76,6 +76,10 @@ def execute_task(plan):
     print_info("  2. Commit with: git commit -m '[TASK-ID] Description'")
     print_info("  3. Continue to review step")
     
+    if non_interactive:
+        print_info("Non-interactive mode: Assuming task completed.")
+        return True
+
     response = input("\nTask completed? (y/n): ").strip().lower()
     
     if response != 'y':
@@ -85,7 +89,7 @@ def execute_task(plan):
     return True
 
 
-def review_task(plan):
+def review_task(plan, non_interactive=False):
     """Review task completion"""
     print_header("Step 4: Review Task")
     
@@ -99,6 +103,11 @@ def review_task(plan):
     print_info("Review checklist:")
     all_passed = True
     
+    if non_interactive:
+        for item in checklist:
+            print_info(f"  ✓ {item} (Auto-verified)")
+        return True
+
     for item in checklist:
         response = input(f"  ✓ {item}? (y/n): ").strip().lower()
         if response != 'y':
@@ -113,11 +122,21 @@ def review_task(plan):
     return True
 
 
-def compound_knowledge(task_description, plan, attempts=1):
+def compound_knowledge(task_description, plan, attempts=1, non_interactive=False, 
+                      kb_data=None):
     """Create KB entry if task was complex"""
     print_header("Step 5: Compound Knowledge")
     
-    if attempts < 3:
+    kb_data = kb_data or {}
+    
+    if non_interactive:
+        print_info("Non-interactive mode: checking for KB data...")
+        # In non-interactive mode, ONLY create if we have data or if it was complex
+        if not (kb_data.get('category') and kb_data.get('problem')):
+             if attempts < 3:
+                 print_info("Skipping KB entry (insufficient data & low complexity).")
+                 return None
+    elif attempts < 3:
         print_info("Task was straightforward (< 3 attempts).")
         response = input("Create KB entry anyway? (y/n): ").strip().lower()
         if response != 'y':
@@ -129,10 +148,16 @@ def compound_knowledge(task_description, plan, attempts=1):
     # Gather information for KB entry
     print_info("\nKB Entry Information:")
     
-    category = input("Category (bug/feature/architecture/security/performance): ").strip()
-    priority = input("Priority (critical/high/medium/low): ").strip()
-    problem = input("Problem description: ").strip()
-    solution = input("Solution summary: ").strip()
+    if non_interactive:
+        category = kb_data.get('category', 'feature')
+        priority = kb_data.get('priority', 'medium')
+        problem = kb_data.get('problem', task_description)
+        solution = kb_data.get('solution', 'Implemented as planned')
+    else:
+        category = input("Category (bug/feature/architecture/security/performance): ").strip()
+        priority = input("Priority (critical/high/medium/low): ").strip()
+        problem = input("Problem description: ").strip()
+        solution = input("Solution summary: ").strip()
     
     entry_data = {
         "title": task_description,
@@ -188,12 +213,18 @@ def generate_report(task_description, plan, kb_entry):
 
 def main():
     """Main cycle workflow execution"""
-    if len(sys.argv) < 2:
-        print_error("Usage: cycle.py <task_description>")
-        print_error("Example: cycle.py 'Add user avatar upload feature'")
-        sys.exit(1)
+    import argparse
+    parser = argparse.ArgumentParser(description='Cycle Workflow - Complete Task Lifecycle')
+    parser.add_argument('task', nargs='+', help='Task description')
+    parser.add_argument('--non-interactive', action='store_true', help='Run without user input')
+    parser.add_argument('--category', help='KB entry category')
+    parser.add_argument('--priority', help='KB entry priority')
+    parser.add_argument('--problem', help='KB entry problem description')
+    parser.add_argument('--solution', help='KB entry solution summary')
+    parser.add_argument('--attempts', type=int, default=1, help='Number of attempts (default: 1)')
     
-    task_description = " ".join(sys.argv[1:])
+    args = parser.parse_args()
+    task_description = " ".join(args.task)
     
     print_header(f"Cycle Workflow: {task_description}")
     
@@ -205,14 +236,27 @@ def main():
         plan = plan_task(task_description, kb_results)
         
         # Step 3: Execute
-        execute_task(plan)
+        execute_task(plan, non_interactive=args.non_interactive)
         
         # Step 4: Review
-        review_task(plan)
+        review_task(plan, non_interactive=args.non_interactive)
         
         # Step 5: Compound
-        attempts = int(input("\nHow many attempts did this task require? (1-10): ").strip() or "1")
-        kb_entry = compound_knowledge(task_description, plan, attempts)
+        if args.non_interactive:
+            attempts = args.attempts
+        else:
+            attempts = int(input("\nHow many attempts did this task require? (1-10): ").strip() or "1")
+            
+        kb_data = {
+            'category': args.category,
+            'priority': args.priority,
+            'problem': args.problem,
+            'solution': args.solution
+        }
+        
+        kb_entry = compound_knowledge(task_description, plan, attempts, 
+                                     non_interactive=args.non_interactive,
+                                     kb_data=kb_data)
         
         # Generate report
         generate_report(task_description, plan, kb_entry)

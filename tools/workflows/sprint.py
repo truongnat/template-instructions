@@ -47,7 +47,7 @@ except ImportError:
 SPRINT_FOLDERS = ['plans', 'designs', 'logs', 'reviews', 'reports']
 
 
-def start_sprint(sprint_number):
+def start_sprint(sprint_number, force=False):
     """Start a new sprint."""
     print_header(f"Starting Sprint {sprint_number}")
     
@@ -58,10 +58,13 @@ def start_sprint(sprint_number):
     # Check if sprint already exists
     if new_sprint_dir.exists():
         print_warning(f"Sprint {sprint_number} folder already exists")
-        response = input("Overwrite? (y/N): ").strip().lower()
-        if response != 'y':
-            print_info("Aborted.")
-            return 1
+        if force:
+            print_info("Forcing overwrite...")
+        else:
+            response = input("Overwrite? (y/N): ").strip().lower()
+            if response != 'y':
+                print_info("Aborted.")
+                return 1
     
     # Archive previous sprint if starting sprint > 1
     if sprint_number > 1:
@@ -258,6 +261,7 @@ def main():
     # start command
     start_parser = subparsers.add_parser('start', help='Start a new sprint')
     start_parser.add_argument('number', type=int, help='Sprint number')
+    start_parser.add_argument('--force', action='store_true', help='Force overwrite if exists')
     
     # status command
     subparsers.add_parser('status', help='Show current sprint status')
@@ -269,7 +273,7 @@ def main():
     args = parser.parse_args()
     
     if args.command == 'start':
-        return start_sprint(args.number)
+        return start_sprint(args.number, force=args.force)
     elif args.command == 'status':
         return show_status()
     elif args.command == 'close':
