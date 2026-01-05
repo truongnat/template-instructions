@@ -109,6 +109,9 @@ Step 4: Verify System Health
 
 #housekeeping #maintenance #cleanup #health-check
 
+## ⏭️ Next Steps
+- **If Issues Found:** Trigger `/cycle` to fix
+- **If Clean:** End session or Trigger `/metrics` for analysis
 
 ---
 

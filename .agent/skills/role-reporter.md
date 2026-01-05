@@ -115,3 +115,7 @@ Recommend cycle repeat if:
 - **File Tools** - Read all artifacts, update CHANGELOG.md
 - **Grep Search** - Find all GitHub Issue references
 - **Web Search** - Research reporting best practices
+
+## ⏭️ Next Steps
+- **If Report Ready:** Submit to `@STAKEHOLDER`.
+- **If Cycle Complete:** Archive artifacts.

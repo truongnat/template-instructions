@@ -221,3 +221,7 @@ Status update format:
 - **File Tools** - Read all artifacts, create orchestration log
 - **Grep Search** - Find workflow status indicators
 - **Web Search** - Research automation best practices
+
+## ⏭️ Next Steps
+- **If Step Done:** Execute next step in sequence.
+- **If Workflow Done:** Report completion to `@BRAIN`.

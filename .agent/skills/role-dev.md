@@ -341,3 +341,7 @@ kb search "your-solution"
 - **Neo4j Sync Status:** KB entries synced to graph database
 
 #dev #developer #implementation #compound-learning
+
+## ⏭️ Next Steps
+- **If Code Committed:** Trigger `@TESTER` for verification.
+- **If Blocked:** Notify `@SA` or `@PM`.

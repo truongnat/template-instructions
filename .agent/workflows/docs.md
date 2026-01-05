@@ -135,6 +135,10 @@ Example: Architecture-Auth-Sprint-6-v1.md
 
 #docs #documentation #writing #knowledge-base
 
+## ⏭️ Next Steps
+- **If Docs Created:** Trigger `/review` for feedback
+- **If Index Updated:** Trigger `/housekeeping` to verify health
+
 ---
 
 ## ENFORCEMENT REMINDER

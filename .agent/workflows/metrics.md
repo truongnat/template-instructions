@@ -171,6 +171,9 @@ Auto-generates recommendations based on:
 
 #metrics #dashboard #analytics #health #knowledge-base
 
+## ⏭️ Next Steps
+- **If Trends Negative:** Trigger `/sprint` retrospective
+- **If Goals Met:** Celebrate and plan next sprint
 
 ---
 

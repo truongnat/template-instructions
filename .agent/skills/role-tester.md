@@ -300,3 +300,7 @@ kb search "bug-description"
 - **Bug Recurrence Rate:** % of bugs that reappear
 
 #tester #testing #quality-assurance #compound-learning
+
+## ⏭️ Next Steps
+- **If Bugs Found:** Assign to `@DEV` via GitHub Issues.
+- **If Verified:** Signal `@DEVOPS` for deployment.

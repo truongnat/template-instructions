@@ -292,3 +292,7 @@ kb search "vulnerability-type"
 
 ### 4. **Self-Learning:**
    - Run: `python tools/neo4j/sync_skills_to_neo4j.py`arning
+
+## ⏭️ Next Steps
+- **If Secure:** Approve for Development.
+- **If Vulnerable:** Reject and require fixes from `@SA` or `@DEV`.

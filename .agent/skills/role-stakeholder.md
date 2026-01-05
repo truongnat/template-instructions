@@ -103,3 +103,7 @@ Reject if:
 - **File Tools** - Read all final artifacts
 - **Web Search** - Research industry standards for comparison
 - **Browser Tools** - Test deployed application
+
+## ⏭️ Next Steps
+- **If Approved:** Mark project complete.
+- **If Rejected:** Return to `@PM` for planning.

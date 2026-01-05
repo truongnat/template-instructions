@@ -145,6 +145,9 @@ git push && git push --tags
 
 #release #versioning #changelog #semver #git-tags
 
+## ⏭️ Next Steps
+- **If Release Successful:** Trigger `/housekeeping`
+- **If Changelog Updated:** Notify stakeholders via `@REPORTER`
 
 ---
 

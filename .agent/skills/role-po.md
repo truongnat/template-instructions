@@ -235,3 +235,7 @@ kb compound add
 - **Value Delivered:** Quantified business value per sprint
 
 #po #product-owner #backlog #compound-learning
+
+## ⏭️ Next Steps
+- **If Backlog Groomed:** Notify `@PM` for sprint planning.
+- **If Priorities Change:** Update roadmap.

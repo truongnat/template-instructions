@@ -275,3 +275,7 @@ kb compound sync
 - **Pattern Reuse Rate:** How often documented patterns are referenced
 
 #sa #system-analyst #architecture #compound-learning
+
+## ⏭️ Next Steps
+- **If Design Complete:** Tag `@QA` and `@SECA` for review.
+- **If Changes Needed:** Update spec and re-request review.

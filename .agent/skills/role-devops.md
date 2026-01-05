@@ -125,3 +125,7 @@ After DevOps setup:
 - **Shell Commands** - Run deployment scripts, test builds
 - **Web Search** - Research DevOps best practices
 - **Diagnostic Tools** - Check build and deployment status
+
+## ⏭️ Next Steps
+- **If Deployed:** Notify `@TESTER` (Staging) or `@REPORTER` (Prod).
+- **If Build Fails:** Notify `@DEV`.

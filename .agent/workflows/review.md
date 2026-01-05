@@ -89,6 +89,10 @@ agentic-sdlc kb compound sync
 
 #review #pr #code-quality #security
 
+## ⏭️ Next Steps
+- **If Approved:** Trigger `/release` (if ready) or Merger
+- **If Changes Requested:** Return to `@DEV` for fixes
+
 ---
 
 ## ENFORCEMENT REMINDER

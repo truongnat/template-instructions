@@ -57,6 +57,11 @@ agentic-sdlc learn --record-success "TASK-ID" --task-type "feature"
 
 #cycle #workflow #git-flow #self-learning
 
+## ⏭️ Next Steps
+- **If Compound Complete:** Workflow finished, ready for next task
+- **If Issues Found:** Repeat `/cycle` or escalate to `/explore`
+- **If Blocked:** Notify user via `notify_user`
+
 ---
 ## ⚠️ ENFORCEMENT REMINDER
 Before executing this workflow, agent MUST:

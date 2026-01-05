@@ -72,5 +72,9 @@ Activate when user mentions: `@BA`, "business analyst", "requirements", "user st
 ### 3. **Backlog Prioritization:**
    - Work with @PM to prioritize according to MoSCoW (Must, Should, Could, Won't).
 
-### 4. **Handoff:**
+### 4. Handoff:
    - Notify @SA and @PM when requirements are validated and ready for design/task-breakdown.
+
+## ⏭️ Next Steps
+- **If Requirements Approved:** Notify `@SA` and `@PM`.
+- **If Info Missing:** Schedule workshops with stakeholders.

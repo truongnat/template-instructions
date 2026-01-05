@@ -262,3 +262,7 @@ kb compound sync
 - **Pattern Reuse Rate:** How often documented patterns are referenced
 
 #uiux #ui-ux-designer #design #compound-learning
+
+## ⏭️ Next Steps
+- **If Design Approved:** Hand off to `@FRONTEND` / `@DEV`.
+- **If Feedback Received:** Iterate on designs.

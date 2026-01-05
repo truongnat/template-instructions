@@ -255,4 +255,8 @@ kb compound add
    - Update `CHANGELOG.md`.
    - Create `Final-Review-Report.md`.
    - **Self-Learning:** Run `python tools/neo4j/sync_skills_to_neo4j.py` to update the project brain.
+
+## ⏭️ Next Steps
+- **If Plan Approved:** Hand off to `@SA` and `@UIUX` for design.
+- **If Plan Rejected:** Revise plan based on feedback.
 ```

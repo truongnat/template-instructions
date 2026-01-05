@@ -106,6 +106,10 @@ python tools/workflows/emergency.py -s P1 -i "API timeout" --non-interactive
 
 #emergency #hotfix #incident #production #p0
 
+## ⏭️ Next Steps
+- **If Fixed:** Trigger `/compound` to document incident
+- **If Failed:** Escalate to User immediately
+- **If Recurring:** Trigger `/explore` for root cause analysis
 
 ---
 

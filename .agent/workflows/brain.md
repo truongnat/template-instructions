@@ -79,6 +79,11 @@ agentic-sdlc kb compound sync --full
 
 #brain #root-layer #meta-controller
 
+## ⏭️ Next Steps
+- **If State == IDLE:** Wait for user requirements (Active Listening)
+- **If State == PLANNING:** Monitor @PM and validate Project Plan
+- **If Critical Error:** Trigger `/emergency` workflow
+- **If Task Complete:** Trigger `/compound` for learning
 
 ---
 

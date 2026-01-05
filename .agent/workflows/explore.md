@@ -139,6 +139,10 @@ Fourth-Order: Token revocation, multi-device sessions, privacy compliance
 
 #explore #analysis #research #architecture #risk-assessment
 
+## ⏭️ Next Steps
+- **If Recommendation Approved:** Trigger `/cycle` or `/sprint` to implement
+- **If Rejected:** Refine analysis or explore alternatives
+- **If Unclear:** Request stakeholder feedback
 
 ---
 

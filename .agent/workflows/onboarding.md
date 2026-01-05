@@ -126,6 +126,10 @@ By end of onboarding, you should know:
 
 #onboarding #context #ramp-up #new-session
 
+## ⏭️ Next Steps
+- **If Setup Complete:** Trigger `/sprint` to check tasks
+- **If Task Assigned:** Trigger `/cycle` to start work
+
 ---
 
 ## ENFORCEMENT REMINDER

@@ -112,6 +112,11 @@ agentic-sdlc kb compound sync
 
 #debug #troubleshooting #bugs #development
 
+## ⏭️ Next Steps
+- **If Fixed:** Trigger `/cycle` to resume normal work
+- **If Root Cause Unknown:** Trigger `/explore` for deeper analysis
+- **If Hotfix Needed:** Trigger `/emergency` or `/release`
+
 ---
 
 ## ENFORCEMENT REMINDER

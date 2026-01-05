@@ -117,6 +117,9 @@ docs/sprints/sprint-[N]/
 
 #sprint #agile #lifecycle #planning #retrospective
 
+## ⏭️ Next Steps
+- **If Sprint Started:** Trigger `@PM` for planning details
+- **If Sprint Closed:** Trigger `/housekeeping` for cleanup
 
 ---
 

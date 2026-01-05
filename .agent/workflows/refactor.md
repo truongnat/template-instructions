@@ -121,6 +121,11 @@ agentic-sdlc kb compound sync
 
 #refactor #code-quality #technical-debt #cleanup
 
+## ⏭️ Next Steps
+- **If Tests Pass:** Trigger `/review` for code review
+- **If Tests Fail:** Fix regressions (do not merge)
+- **If Verified:** Trigger `/release` (if applicable)
+
 ---
 
 ## ENFORCEMENT REMINDER

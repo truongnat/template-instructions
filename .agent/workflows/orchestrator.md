@@ -59,6 +59,14 @@ agentic-sdlc brain init <SPRINT_NUMBER>
 - Run: `agentic-sdlc learn --record-success`
 
 #orchestrator #automation #sdlc
+
+## ⏭️ Next Steps
+- **If Setup Complete:** Trigger @PM for Phase 1 (Planning)
+- **If Planning Complete:** Trigger @SA + @UIUX for Phase 3 (Design)
+- **If Design Complete:** Trigger @TESTER + @SECA for Phase 4 (Verification)
+- **If Dev Complete:** Trigger @TESTER for Phase 6 (Testing)
+- **If Deployment Complete:** Trigger @REPORTER for Phase 9 (Reporting)
+
 ---
 ## ⚠️ ENFORCEMENT REMINDER
 Before executing this workflow, agent MUST:

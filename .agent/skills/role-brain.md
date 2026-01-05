@@ -468,3 +468,7 @@ Waiting for user requirements...
 8. **COMPOUND learnings** - Document all non-obvious solutions
 
 #brain #master-orchestrator #workflow-controller #state-machine
+
+## ⏭️ Next Steps
+- **If Phase Complete:** Validate and transition state.
+- **If Error:** Trigger error recovery protocols.
