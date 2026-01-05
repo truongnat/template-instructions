@@ -6,6 +6,28 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [1.7.0] - 2026-01-05
+
+### Added
+- add push capability to /commit workflow
+- implement /commit workflow and helper tool
+- remove interactive prompts and add non-interactive modes for automation
+- Implement agent brain protocol and enforcement gates with a new judge tool.
+- introduce agentic SDLC CLI, implement various agent workflows, and establish a comprehensive documentation structure.
+- introduce agentic SDLC workflow definitions for various operational tasks.
+
+### Fixed
+- mermaid syntax error in system-flow diagram
+
+### Documentation
+- update documentation and landing page with /commit workflow and agent autonomy features
+- update knowledge base index
+- add audit walkthrough and validation reports
+- add Next Steps section to all workflows and skills
+
+
+---
+
 ## [1.6.0] - 2026-01-04 (Sprint 6)
 
 ### Added
