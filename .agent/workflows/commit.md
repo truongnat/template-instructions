@@ -45,9 +45,15 @@ git commit -m "type(scope): description"
 git log -1 --oneline
 ```
 
+### 6. Push Changes
+- **If main or feature branch:**
+  ```bash
+  python tools/git/commit.py push
+  ```
+  *Or manually:* `git push`
+
 ## ⏭️ Next Steps
 - **If Success:** Return to previous workflow (e.g., `/cycle`).
-- **If Push Needed:** Ask user or run `git push` if authorized.
 
 ---
 ## ENFORCEMENT REMINDER

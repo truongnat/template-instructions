@@ -122,6 +122,24 @@ def review_changes():
     else:
         print_warning(f"Found {issues} potential issues")
 
+def push_changes():
+    """Push changes to remote"""
+    print_header("Pushing Changes")
+    
+    # Get current branch
+    rc, branch, _ = run_git(['rev-parse', '--abbrev-ref', 'HEAD'])
+    
+    print_info(f"Pushing {branch} to origin...")
+    
+    rc, stdout, stderr = run_git(['push', 'origin', branch])
+    
+    if rc == 0:
+        print_success(f"Successfully pushed {branch}")
+        return 0
+    else:
+        print_error(f"Failed to push: {stderr}")
+        return 1
+
 def main():
     parser = argparse.ArgumentParser(description='Git Commit Helper')
     subparsers = parser.add_subparsers(dest='command', help='Command')
@@ -129,11 +147,16 @@ def main():
     # review command
     subparsers.add_parser('review', help='Review changes')
     
+    # push command
+    subparsers.add_parser('push', help='Push changes')
+    
     args = parser.parse_args()
     
     if args.command == 'review':
         check_status()
         review_changes()
+    elif args.command == 'push':
+        push_changes()
     else:
         check_status()
 
