@@ -39,6 +39,9 @@ const commands = {
     // MCP
     'mcp': 'mcp/protocol.py',
 
+    // AutoGen Multi-Agent
+    'autogen': 'tools/autogen/runner.py',
+
     // Run arbitrary scripts
     'run': null // Special: run <path>
 };
@@ -104,6 +107,7 @@ Usage: agentic-sdlc <command> [args]
 │  setup       Initialize project                                 │
 
 │  mcp         MCP (Model Context Protocol) management            │
+│  autogen     Multi-agent task execution (AutoGen)               │
 │  run         Run arbitrary Python script                        │
 ╰─────────────────────────────────────────────────────────────────╯
 

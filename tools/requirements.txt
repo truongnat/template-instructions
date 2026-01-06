@@ -25,6 +25,12 @@ python-dotenv>=1.0.0         # Environment variable management
 # brave-search>=1.0.0        # Brave Search API
 
 # ============================================================
+# AutoGen Integration (tools/autogen/)
+# ============================================================
+autogen-agentchat>=0.4.0       # Core multi-agent framework
+autogen-ext[openai]>=0.4.0     # Extensions (OpenAI, tools)
+
+# ============================================================
 # Common Dependencies
 # Pinned versions for reproducibility (last verified: 2026-01-02)
 # ============================================================
