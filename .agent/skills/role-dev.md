@@ -232,6 +232,24 @@ After implementation:
 
 ## Enhanced Workflows
 
+### `/worktree` - Parallel Development
+For running multiple agents in parallel using git worktrees:
+```bash
+# Install Worktrunk (one-time)
+cargo install worktrunk && wt config shell install
+
+# Create worktree for new task
+wt switch -c feat/task-123
+
+# List all worktrees
+wt list
+
+# Merge and cleanup when done
+wt merge
+```
+
+See full workflow: `.agent/workflows/worktree.md`
+
 ### `/cycle` - Complete Task Lifecycle
 For small, self-contained tasks (< 4 hours):
 ```
