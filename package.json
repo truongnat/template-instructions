@@ -51,7 +51,10 @@
     "typecheck": "turbo run typecheck",
     "clean": "turbo run clean",
     "clean:all": "turbo run clean && rimraf node_modules/.cache .turbo",
-    "preview:todo:fe": "turbo run preview --filter=todo-app-frontend"
+    "preview:todo:fe": "turbo run preview --filter=todo-app-frontend",
+    "dev:landing": "turbo run dev --filter=landing-page",
+    "build:landing": "turbo run build --filter=landing-page",
+    "preview:landing": "turbo run preview --filter=landing-page"
   },
   "keywords": [
     "sdlc",
