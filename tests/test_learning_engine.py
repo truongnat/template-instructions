@@ -16,12 +16,12 @@ sys.path.insert(0, str(PROJECT_ROOT / "tools"))
 
 # Import after path setup
 try:
-    from tools.neo4j.learning_engine import LearningEngine
+    from tools.knowledge_graph.learning_engine import LearningEngine
 except ImportError:
     try:
         # Alternate import path
         import sys
-        sys.path.insert(0, str(PROJECT_ROOT / "tools" / "neo4j"))
+        sys.path.insert(0, str(PROJECT_ROOT / "tools" / "knowledge_graph"))
         from learning_engine import LearningEngine
     except ImportError:
         LearningEngine = None

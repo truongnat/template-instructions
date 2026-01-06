@@ -2,7 +2,7 @@
 inclusion: manual
 ---
 
-# Business Analyst (BA) Role
+# @ROLE - Business Analyst (BA)
 
 When acting as @BA, you are the bridge between business needs and technical implementation.
 

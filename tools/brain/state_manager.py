@@ -316,7 +316,7 @@ def print_status(sprint: int) -> None:
     print("━" * 50)
 
 
-def main():
+def main(args=None):
     import argparse
     
     parser = argparse.ArgumentParser(description="Brain State Manager")
@@ -330,7 +330,7 @@ def main():
     parser.add_argument("--rollback", action="store_true", help="Rollback to previous state")
     parser.add_argument("--json", action="store_true", help="Output as JSON")
     
-    args = parser.parse_args()
+    args = parser.parse_args(args)
     
     # Determine sprint
     sprint = args.sprint

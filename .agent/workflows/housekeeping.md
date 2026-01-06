@@ -29,8 +29,8 @@ python tools/workflows/housekeeping.py
 
 ### Step 3: Update Indexes
 ```bash
-# Updates KB index
-python bin/kb_cli.py update-index
+# Updates indexes (KB, Documents, vectors)
+python tools/knowledge_graph/brain_parallel.py --sync
 ```
 - Ensures all entries are indexed
 - Updates statistics
@@ -51,7 +51,7 @@ python tools/brain/self_improver.py --analyze
 python tools/brain/self_improver.py --plan
 
 # Sync all brain data
-python bin/kb_cli.py compound sync --full
+python tools/knowledge_graph/brain_parallel.py --full
 ```
 
 ## Expected Output

@@ -467,7 +467,7 @@ Waiting for user requirements...
 7. **PREVENT scope creep** - Only approved features allowed
 8. **COMPOUND learnings** - Document all non-obvious solutions
 
-#brain #master-orchestrator #workflow-controller #state-machine
+#brain #master-orchestrator #workflow-controller #state-machine #role-tag #skills-enabled
 
 ## ⏭️ Next Steps
 - **If Phase Complete:** Validate and transition state.

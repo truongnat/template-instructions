@@ -310,6 +310,7 @@ def main():
     parser = argparse.ArgumentParser(description='Sync Knowledge Base to Neo4j')
 
     parser.add_argument('--docs-path', default='docs', help='Path to docs directory')
+    parser.add_argument('--kb-path', default='.agent/knowledge-base', help='Path to knowledge base directory')
     parser.add_argument('--dry-run', action='store_true', help='Dry run without syncing')
     parser.add_argument('--stats-only', action='store_true', help='Show stats only')
     args = parser.parse_args()

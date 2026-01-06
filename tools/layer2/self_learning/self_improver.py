@@ -149,7 +149,9 @@ class SelfImprover:
         layer2_dir = project_root / "tools" / "layer2"
         if layer2_dir.exists():
             for component in layer2_dir.iterdir():
-                if component.is_dir():
+                if component.is_dir() and not component.name.startswith(('.', '__')):
+                    if component.name == "__pycache__":
+                        continue
                     py_files = list(component.glob("*.py"))
                     if len(py_files) <= 1:  # Only __init__.py
                         findings.append({

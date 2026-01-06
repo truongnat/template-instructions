@@ -72,6 +72,8 @@ def run_command(cmd: List[str], name: str, cwd: Optional[Path] = None) -> Tuple[
             cmd,
             capture_output=True,
             text=True,
+            encoding='utf-8',
+            errors='replace',
             cwd=cwd or Path(__file__).parent.parent.parent,
             timeout=300  # 5 minute timeout
         )
@@ -313,7 +315,7 @@ def get_recommendations(task_description: str):
            "--recommend", task_description]
     return run_command(cmd, "Get Recommendations")
 
-def main():
+def main(args=None):
     parser = argparse.ArgumentParser(
         description="Parallel Brain Workflow Executor",
         formatter_class=argparse.RawDescriptionHelpFormatter,
@@ -342,7 +344,7 @@ Examples:
     parser.add_argument('--workers', type=int, default=4,
                        help='Maximum parallel workers (default: 4)')
     
-    args = parser.parse_args()
+    args = parser.parse_args(args)
     
     # Check dependencies
     if not check_dependencies():

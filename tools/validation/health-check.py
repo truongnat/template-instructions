@@ -21,7 +21,6 @@ from utils.common import (
     print_header, print_success, print_error, print_warning,
     get_project_root, file_exists
 )
-from utils.kb_manager import get_kb_stats
 from utils.artifact_manager import get_current_sprint, get_sprint_dir
 
 
@@ -52,19 +51,21 @@ def check_directory_structure():
     return all_good
 
 
+# removed utils.kb_manager import
+
 def check_knowledge_base():
     """Check knowledge base health"""
     print_header("Checking Knowledge Base")
     
-    stats = get_kb_stats()
+    # Check for knowledge graph directory
+    kb_dir = get_project_root() / "tools" / "knowledge_graph"
     
-    print_success(f"✓ Total entries: {stats['total_entries']}")
-    print_success(f"✓ Categories: {len(stats['by_category'])}")
-    
-    if stats['total_entries'] == 0:
-        print_warning("⚠ No KB entries found - consider documenting learnings")
-    
-    return True
+    if kb_dir.exists():
+        print_success(f"✓ Knowledge Graph tools found: {kb_dir}")
+        return True
+    else:
+        print_warning("⚠ Knowledge Graph tools missing")
+        return False
 
 
 def check_current_sprint():

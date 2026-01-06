@@ -33,18 +33,46 @@ def get_tools_dir() -> Path:
     return Path(__file__).parent.parent
 
 
+# Import tools modules directly
+try:
+    from tools.brain import state_manager
+    from tools.knowledge_graph import brain_parallel
+except ImportError:
+    # Handle running from tools directory or root
+    sys.path.insert(0, str(get_tools_dir().parent))
+    try:
+        from tools.brain import state_manager
+        from tools.knowledge_graph import brain_parallel
+    except ImportError:
+        # Fallback for relative imports if needed
+        import state_manager
+        sys.path.insert(0, str(get_tools_dir() / "knowledge_graph"))
+        import brain_parallel
+
+
 def run_state_manager(*args) -> int:
     """Run the state manager with given arguments."""
-    state_manager = get_tools_dir() / "brain" / "state_manager.py"
-    cmd = [sys.executable, str(state_manager)] + list(args)
-    return subprocess.call(cmd)
+    try:
+        # Call main with list of args
+        state_manager.main(list(args))
+        return 0
+    except SystemExit as e:
+        return e.code
+    except Exception as e:
+        print(f"Error running state manager: {e}")
+        return 1
 
 
 def run_brain_parallel(*args) -> int:
     """Run the brain parallel script with given arguments."""
-    brain_parallel = get_tools_dir() / "neo4j" / "brain_parallel.py"
-    cmd = [sys.executable, str(brain_parallel)] + list(args)
-    return subprocess.call(cmd)
+    try:
+        brain_parallel.main(list(args))
+        return 0
+    except SystemExit as e:
+        return e.code
+    except Exception as e:
+        print(f"Error running brain parallel: {e}")
+        return 1
 
 
 def cmd_status(args):

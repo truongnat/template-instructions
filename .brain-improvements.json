@@ -1,0 +1,41 @@
+{
+  "plans": [
+    {
+      "id": "PLAN-0000",
+      "title": "Auto-generated improvement plan",
+      "description": "Improvement plan with 0 items",
+      "items": [],
+      "status": "pending",
+      "created_at": "2026-01-06T08:44:44.713909",
+      "completed_at": null
+    },
+    {
+      "id": "PLAN-0001",
+      "title": "Auto-generated improvement plan",
+      "description": "Improvement plan with 0 items",
+      "items": [],
+      "status": "pending",
+      "created_at": "2026-01-06T08:48:45.970256",
+      "completed_at": null
+    }
+  ],
+  "analyses": [
+    {
+      "timestamp": "2026-01-06T08:44:44.503111",
+      "findings_count": 0,
+      "findings": [],
+      "data_sources": [
+        "default"
+      ]
+    },
+    {
+      "timestamp": "2026-01-06T08:48:45.711946",
+      "findings_count": 0,
+      "findings": [],
+      "data_sources": [
+        "default"
+      ]
+    }
+  ],
+  "updated_at": "2026-01-06T08:48:45.970341"
+}

@@ -16,12 +16,12 @@ sys.path.insert(0, str(PROJECT_ROOT / "tools"))
 
 # Import after path setup
 try:
-    from tools.neo4j.document_sync import DocumentSyncNeo4j, find_documents, DOCUMENT_TYPES
+    from tools.knowledge_graph.document_sync import DocumentSyncNeo4j, find_documents, DOCUMENT_TYPES
 except ImportError:
     try:
         # Alternate import path
         import sys
-        sys.path.insert(0, str(PROJECT_ROOT / "tools" / "neo4j"))
+        sys.path.insert(0, str(PROJECT_ROOT / "tools" / "knowledge_graph"))
         from document_sync import DocumentSyncNeo4j, find_documents, DOCUMENT_TYPES
     except ImportError:
         DocumentSyncNeo4j = None
