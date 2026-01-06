@@ -198,10 +198,11 @@ The **Brain** is the core of Agentic SDLC - an intelligent, self-learning knowle
 
 1. **3-Layer Concentric Architecture** - Core → Intelligence → Infrastructure (like Clean Architecture)
 2. **AI Role System** - 13 specialized agents (PM, BA, SA, Dev, QA, etc.)
-3. **Workflow Automation** - 16 predefined workflows accessible via `/slash` commands
+3. **Workflow Automation** - 18 predefined workflows accessible via `/slash` commands
 4. **Knowledge Base** - Compound learning from every task, bug, and solution
 5. **Cross-IDE Compatibility** - Works with any IDE through standard markdown files
 6. **Self-Learning Engine** - Automatically improves from project experience
+7. **Multi-Agent Teams** - AutoGen-powered autonomous agent collaboration
 
 ### 3-Layer Concentric Architecture (v3.0)
 
@@ -266,7 +267,7 @@ Layer 3 → Layer 2 → Layer 1 (dependencies flow inward only)
 │
 ├── templates/                   # 17 document templates
 │
-└── workflows/                   # 16 workflow definitions
+└── workflows/                   # 18 workflow definitions
     ├── brain.md, cycle.md, orchestrator.md, etc.
 
 tools/layer2/                    # 🧠 LAYER 2: INTELLIGENCE
@@ -312,6 +313,7 @@ mcp/                             # 🌐 LAYER 3: MCP CONNECTORS
 | `/compound` | Knowledge Capture | Document solutions for future reuse |
 | `/housekeeping` | Maintenance | Cleanup and file organization |
 | `/commit` | Smart Commit | Review, message generation, commit, and push |
+| `/autogen` | Multi-Agent Teams | AutoGen-powered task execution |
 
 **Workflow Structure:**
 
