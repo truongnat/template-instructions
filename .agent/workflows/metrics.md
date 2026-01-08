@@ -11,16 +11,16 @@ Analyzes KB entries, workflow usage, and project health to generate a metrics da
 
 ```bash
 # Generate dashboard
-python tools/kb/metrics-dashboard.py
+python tools/infrastructure/workflows/metrics.py
 
 # Weekly report focus
-python tools/kb/metrics-dashboard.py --weekly
+python tools/infrastructure/workflows/metrics.py --weekly
 
 # Sprint-specific metrics
-python tools/kb/metrics-dashboard.py --sprint 6
+python tools/infrastructure/workflows/metrics.py --sprint sprint-2
 
 # Custom output path
-python tools/kb/metrics-dashboard.py --output ./my-report.md
+python tools/infrastructure/workflows/metrics.py --output ./my-report.md
 ```
 
 ## What It Measures
