@@ -795,19 +795,19 @@ python tools/intelligence/knowledge_graph/brain_parallel.py --recommend "impleme
 
 ```mermaid
 graph TD
-    A[New Task] --> B{Task Type?}
-    B -->|New Feature| C[/orchestrator]
-    B -->|Bug Fix| D[/cycle]
-    B -->|Investigation| E[/explore]
-    B -->|Emergency| F[/emergency]
-    B -->|Documentation| G[/docs]
+    A[New Task] --> B{"Task Type?"}
+    B -->|New Feature| C["/orchestrator"]
+    B -->|Bug Fix| D["/cycle"]
+    B -->|Investigation| E["/explore"]
+    B -->|Emergency| F["/emergency"]
+    B -->|Documentation| G["/docs"]
     
-    C --> H{Need Alternatives?}
-    H -->|Yes| I[/ab]
+    C --> H{"Need Alternatives?"}
+    H -->|Yes| I["/ab"]
     H -->|No| J[Continue]
     
-    D --> K{Code Quality?}
-    K -->|Check| L[/score]
+    D --> K{"Code Quality?"}
+    K -->|Check| L["/score"]
     K -->|OK| M[Continue]
 ```
 
@@ -815,16 +815,16 @@ graph TD
 
 ```mermaid
 graph TD
-    A[Task] --> B{Domain?}
-    B -->|Planning| C[@PM]
-    B -->|Design| D[@SA or @UIUX]
-    B -->|Web Dev| E[@DEV]
-    B -->|Mobile| F[@MOBILE]
-    B -->|Game| G[@GAME]
-    B -->|Cloud| H[@CLOUD]
-    B -->|QA| I[@TESTER]
-    B -->|Security| J[@SECA]
-    B -->|DevOps| K[@DEVOPS]
+    A[Task] --> B{"Domain?"}
+    B -->|Planning| C["@PM"]
+    B -->|Design| D["@SA or @UIUX"]
+    B -->|Web Dev| E["@DEV"]
+    B -->|Mobile| F["@MOBILE"]
+    B -->|Game| G["@GAME"]
+    B -->|Cloud| H["@CLOUD"]
+    B -->|QA| I["@TESTER"]
+    B -->|Security| J["@SECA"]
+    B -->|DevOps| K["@DEVOPS"]
 ```
 
 ---
