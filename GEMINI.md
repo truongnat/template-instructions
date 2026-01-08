@@ -9,7 +9,7 @@
 **Agentic SDLC** is an intelligent, self-learning software development lifecycle system powered by AI agents. It provides:
 
 1. **3-Layer Concentric Architecture** - Core → Intelligence → Infrastructure
-2. **7 Intelligence Sub-Agents** - Observer, A/B Test, Judge, Self-Learning, Proxy, Artifact Gen, Monitor
+2. **14 Intelligence Sub-Agents** - Observer, A/B Test, Judge, Self-Learning, Proxy, Artifact Gen, Monitor, Knowledge Graph, Performance, Research, Router, Scorer, Task Manager, and integration modules
 3. **17 Specialized AI Roles** - PM, BA, SA, UIUX, DEV, MOBILE, GAME, CLOUD, TESTER, SECA, DEVOPS, ORCHESTRATOR, REPORTER, RESEARCH
 4. **23 Automated Workflows** - Complete task lifecycle automation
 5. **Cross-IDE Compatibility** - Works everywhere through markdown files
@@ -463,6 +463,143 @@ python tools/intelligence/monitor/health_monitor.py --check-coverage
 
 # Get improvement suggestions
 python tools/intelligence/monitor/health_monitor.py --suggest
+```
+
+### 8. Knowledge Graph (Neo4j Integration)
+
+**Location:** `tools/intelligence/knowledge_graph/`
+
+**Responsibilities:**
+- Sync project data to Neo4j graph database
+- Store and query skills, workflows, and relationships
+- Provide learning path recommendations
+- Track task patterns and dependencies
+- Enable semantic search across knowledge base
+- Generate context-aware suggestions
+
+**Actions:**
+- `sync_to_neo4j()` - Sync all data to graph
+- `query_skills(skill_name)` - Query skill nodes
+- `get_learning_path(topic)` - Get learning recommendations
+- `find_patterns(query)` - Search for patterns
+
+**Usage:**
+```bash
+# Sync to Neo4j
+python tools/intelligence/knowledge_graph/brain_parallel.py --sync
+
+# Query skills
+python tools/intelligence/knowledge_graph/query_skills_neo4j.py --all-skills
+
+# Get recommendations
+python tools/intelligence/knowledge_graph/brain_parallel.py --recommend "implement OAuth"
+```
+
+### 9. Performance (Execution Metrics)
+
+**Location:** `tools/intelligence/performance/`
+
+**Responsibilities:**
+- Track execution time for tasks and workflows
+- Measure resource utilization (CPU, memory)
+- Identify performance bottlenecks
+- Generate performance reports
+- Optimize workflow execution
+
+**Usage:**
+```bash
+# Profile a workflow
+python tools/intelligence/performance/profiler.py --workflow cycle
+
+# Get performance report
+python tools/intelligence/performance/profiler.py --report
+```
+
+### 10. Research (Knowledge Discovery)
+
+**Location:** `tools/intelligence/research/`
+
+**Responsibilities:**
+- Web search for best practices and solutions
+- Query external APIs for documentation
+- Extract knowledge from research results
+- Build context for decision-making
+- Integrate with MCP connectors for external data
+
+**Usage:**
+```bash
+# Research a topic
+python tools/intelligence/research/researcher.py --query "implement JWT authentication"
+
+# Search knowledge base
+python tools/intelligence/research/researcher.py --kb-search "caching strategies"
+```
+
+### 11. Router (Workflow & Agent Routing)
+
+**Location:** `tools/intelligence/router/`
+
+**Responsibilities:**
+- Route tasks to appropriate workflows
+- Route tasks to appropriate agents
+- Apply routing rules based on task type
+- Manage workflow transitions
+- Handle complex routing logic
+
+**Components:**
+- `WorkflowRouter` - Routes to appropriate workflow
+- `AgentRouter` - Routes to appropriate agent role
+- `RulesEngine` - Applies routing rules
+
+**Usage:**
+```bash
+# Route a task
+python tools/intelligence/router/workflow_router.py --task "implement login feature"
+```
+
+### 12. Scorer (Input/Output Quality)
+
+**Location:** `tools/intelligence/scorer/`
+
+**Responsibilities:**
+- Score input quality (clarity, completeness)
+- Score output quality (correctness, relevance)
+- Evaluate prompt effectiveness
+- Track quality metrics over time
+- Provide quality improvement suggestions
+
+**Components:**
+- `InputScorer` - Evaluates input prompts
+- `OutputScorer` - Evaluates agent outputs
+- `QualityMetrics` - Tracks quality trends
+
+**Usage:**
+```bash
+# Score input
+python tools/intelligence/scorer/input_scorer.py --prompt "build a todo app"
+
+# Score output
+python tools/intelligence/scorer/output_scorer.py --artifact docs/planning/project-plan.md
+```
+
+### 13. Task Manager (Task Coordination)
+
+**Location:** `tools/intelligence/task_manager/`
+
+**Responsibilities:**
+- Track task status and progress
+- Manage task dependencies
+- Coordinate multi-agent tasks
+- Handle task prioritization
+- Generate task reports
+
+**Usage:**
+```bash
+# Create task
+python tools/intelligence/task_manager/manager.py --create "implement authentication"
+
+# Get task status
+python tools/intelligence/task_manager/manager.py --status task-123
 ```
 
 ---
