@@ -66,6 +66,15 @@ def stage_all_files():
 
 # ... (skip generate_commit_message)
 
+def generate_commit_message(diff: str) -> str:
+    """
+    Generate a commit message based on the diff.
+    For now, this asks the user for input as we don't have LLM attached here yet.
+    """
+    print("\n[AI] Please describe your changes (Conventional Commits format recommended):")
+    return input("Message: ").strip() or "chore: update"
+
+
 def commit_changes(message: str) -> bool:
     """Commit staged changes with given message."""
     code, stdout, stderr = run_command(["git", "commit", "-m", message])

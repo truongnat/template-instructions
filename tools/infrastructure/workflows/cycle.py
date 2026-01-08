@@ -11,15 +11,16 @@ from pathlib import Path
 from datetime import datetime
 
 # Add parent directory to path for imports
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+# Add project root to path (agentic-sdlc)
+sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
 
 try:
-    from core.utils.common import (
+    from tools.core.utils.common import (
         print_header, print_success, print_error, print_info,
         get_project_root, ensure_dir, load_config
     )
-    from core.utils.kb_manager import search_kb, create_kb_entry
-    from core.utils.artifact_manager import get_current_sprint
+    from tools.core.utils.kb_manager import search_kb, create_kb_entry
+    from tools.core.utils.artifact_manager import get_current_sprint
 except ImportError:
     print("Error: Required utility modules not found. Run setup first.")
     sys.exit(1)

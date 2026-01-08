@@ -10,15 +10,16 @@ from pathlib import Path
 from datetime import datetime
 
 # Add project root to path
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
+# Add project root to path
+sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
 
 try:
-    from core.utils.common import (
+    from tools.core.utils.common import (
         print_header, print_success, print_error, print_info,
         get_project_root, ensure_dir
     )
-    from intelligence.performance.metrics_collector import MetricsCollector
-    from core.utils.artifact_manager import get_current_sprint
+    from tools.intelligence.performance.metrics_collector import MetricsCollector
+    from tools.core.utils.artifact_manager import get_current_sprint
 except ImportError:
     print("Error: Required utility modules not found.")
     sys.exit(1)

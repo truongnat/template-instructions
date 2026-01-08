@@ -9,18 +9,17 @@ import subprocess
 from pathlib import Path
 
 # Add tools directory to path
-TOOLS_DIR = Path(__file__).parent.parent.parent
-sys.path.insert(0, str(TOOLS_DIR))
+# Add project root to path
+ROOT_DIR = Path(__file__).parent.parent.parent.parent
+sys.path.insert(0, str(ROOT_DIR))
 
-from core.utils.common import print_header, print_success, print_info, print_error, confirm
-from core.utils.artifact_manager import get_current_sprint
+from tools.core.utils.common import print_header, print_success, print_info, print_error, confirm
+from tools.core.utils.artifact_manager import get_current_sprint
 # Import brain_parallel for indexing and stats
 try:
-    from intelligence.knowledge_graph import brain_parallel
-except ImportError:
-    # Fallback if checking from root
-    sys.path.insert(0, str(TOOLS_DIR.parent))
     from tools.intelligence.knowledge_graph import brain_parallel
+except ImportError:
+    pass
 
 
 
