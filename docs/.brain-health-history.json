@@ -1,0 +1,22 @@
+[
+  {
+    "status": "healthy",
+    "score": 100.0,
+    "issues": [],
+    "metrics": {
+      "walkthrough_count": 10,
+      "plan_count": 7
+    },
+    "timestamp": "2026-01-08T06:55:27.350396"
+  },
+  {
+    "status": "healthy",
+    "score": 100.0,
+    "issues": [],
+    "metrics": {
+      "walkthrough_count": 10,
+      "plan_count": 7
+    },
+    "timestamp": "2026-01-08T07:15:47.509650"
+  }
+]

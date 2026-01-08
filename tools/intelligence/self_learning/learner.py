@@ -265,6 +265,86 @@ class Learner:
         
         return None
 
+    def learn_from_observer(self, violations: List[Dict]) -> Dict:
+        """
+        Learn from Observer violations.
+        
+        Args:
+            violations: List of violation dictionaries
+        """
+        learned_count = 0
+        for v in violations:
+            description = f"Observer violation: {v.get('rule')} in {v.get('location')}"
+            context = {"type": "violation", "severity": v.get("severity"), "rule": v.get("rule")}
+            
+            # Learn error pattern from critical violations
+            if v.get("severity") == "CRITICAL":
+                self.learn_error(
+                    error=description,
+                    resolution=v.get("recommendation", "Fix violation"),
+                    context=context
+                )
+                learned_count += 1
+                
+        return {"learned_count": learned_count, "total_violations": len(violations)}
+
+    def learn_from_judge(self, score_result: Dict) -> Dict:
+        """
+        Learn from Judge score results.
+        
+        Args:
+            score_result: Score result dictionary
+        """
+        final_score = score_result.get("finalScore", 0)
+        file_path = score_result.get("file", "unknown")
+        
+        # Learn from low scores
+        if final_score < 6.0:
+            improvements = score_result.get("improvements", [])
+            for imp in improvements:
+                self.learn_error(
+                    error=f"Low quality score in {file_path}",
+                    resolution=imp,
+                    context={"score": final_score, "type": "quality_issue"}
+                )
+            return {"status": "learned_from_issues", "issues_count": len(improvements)}
+        
+        # Learn from high scores (best practices)
+        elif final_score >= 9.0:
+            self.learn_success(
+                task=f"High quality implementation: {file_path}",
+                approach="Followed all quality guidelines",
+                context={"score": final_score, "type": "best_practice"}
+            )
+            return {"status": "learned_success"}
+            
+        return {"status": "no_significant_learning"}
+
+    def learn_from_ab_test(self, test_result: Dict) -> Dict:
+        """
+        Learn from A/B test results.
+        
+        Args:
+            test_result: Comparison result dictionary
+        """
+        winner = test_result.get("recommendation")
+        if winner in ["A", "B"]:
+            winning_opt = test_result.get(f"option_{winner.lower()}", {})
+            name = winning_opt.get("name", "Unknown")
+            
+            self.learn_success(
+                task=f"A/B Test Winner: {test_result.get('title')}",
+                approach=f"Chosen approach: {name}",
+                context={
+                    "test_id": test_result.get("test_id"),
+                    "confidence": test_result.get("confidence"),
+                    "reason": "Superior metrics in A/B test"
+                }
+            )
+            return {"status": "learned_winner", "winner": name}
+            
+        return {"status": "no_clear_winner"}
+
     def _extract_patterns(self, description: str, context: Dict) -> List[Pattern]:
         """Extract patterns from description."""
         new_patterns = []

@@ -7,12 +7,16 @@ Migrated and enhanced from tools/brain/ab_tester.py
 
 import json
 import uuid
+import logging
 from dataclasses import dataclass, field
 from datetime import datetime
 from enum import Enum
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 class TestStatus(Enum):
     """Test status states."""
@@ -40,6 +44,11 @@ class TestOption:
     score: float = 0.0
     votes: int = 0
     metadata: Dict = field(default_factory=dict)
+    
+    # New fields for enrichment
+    pros: List[str] = field(default_factory=list)
+    cons: List[str] = field(default_factory=list)
+    risks: List[str] = field(default_factory=list)
 
     def to_dict(self) -> dict:
         return {
@@ -49,7 +58,10 @@ class TestOption:
             "value": self.value,
             "score": self.score,
             "votes": self.votes,
-            "metadata": self.metadata
+            "metadata": self.metadata,
+            "pros": self.pros,
+            "cons": self.cons,
+            "risks": self.risks
         }
 
 
@@ -66,6 +78,10 @@ class ABTest:
     created_at: str = field(default_factory=lambda: datetime.now().isoformat())
     completed_at: Optional[str] = None
     criteria: Dict = field(default_factory=dict)
+    
+    # New fields for research context
+    kb_insights: List[str] = field(default_factory=list)
+    neo4j_related_nodes: List[str] = field(default_factory=list)
 
     def to_dict(self) -> dict:
         return {
@@ -78,7 +94,9 @@ class ABTest:
             "winner": self.winner,
             "created_at": self.created_at,
             "completed_at": self.completed_at,
-            "criteria": self.criteria
+            "criteria": self.criteria,
+            "kb_insights": self.kb_insights,
+            "neo4j_related_nodes": self.neo4j_related_nodes
         }
 
 
@@ -91,6 +109,7 @@ class ABTester:
     - Score and evaluate options
     - Track test history
     - Make data-driven selections
+    - Integrate with KB and Neo4j for context (Simulated/Placeholder)
     """
 
     def __init__(self, storage_file: Optional[Path] = None):
@@ -133,8 +152,29 @@ class ABTester:
             winner=data.get("winner"),
             created_at=data.get("created_at"),
             completed_at=data.get("completed_at"),
-            criteria=data.get("criteria", {})
+            criteria=data.get("criteria", {}),
+            kb_insights=data.get("kb_insights", []),
+            neo4j_related_nodes=data.get("neo4j_related_nodes", [])
         )
+
+    def _enrich_with_kb(self, test: ABTest):
+        """
+        Search Knowledge Base for insights related to the test (Placeholder).
+        In a real implementation, this would call the KB search API.
+        """
+        # TODO: Implement actual KB search logic
+        # Example: search_results = kb_client.search(f"{test.title} {test.description}")
+        logger.info(f"Searching KB for insights on: {test.title}")
+        test.kb_insights.append(f"Simulated insight[KB]: Best practices for '{test.title}' suggest considering scalability.")
+
+    def _enrich_with_neo4j(self, test: ABTest):
+        """
+        Query Neo4j for related technologies/nodes (Placeholder).
+        In a real implementation, this would call the Neo4j client.
+        """
+        # TODO: Implement actual Neo4j query logic
+        logger.info(f"Querying Neo4j for nodes related to: {test.title}")
+        test.neo4j_related_nodes.append("Simulated node[Neo4j]: HighCorrelationWith(Performance)")
 
     def create_test(
         self,
@@ -144,7 +184,8 @@ class ABTester:
         option_a_value: Any,
         option_b_name: str,
         option_b_value: Any,
-        criteria: Optional[Dict] = None
+        criteria: Optional[Dict] = None,
+        auto_enrich: bool = True
     ) -> ABTest:
         """
         Create a new A/B test.
@@ -157,6 +198,7 @@ class ABTester:
             option_b_name: Name for option B
             option_b_value: Value/content of option B
             criteria: Optional evaluation criteria
+            auto_enrich: Whether to automatically research from KB/Neo4j
             
         Returns:
             Created ABTest
@@ -186,6 +228,10 @@ class ABTester:
             status=TestStatus.RUNNING,
             criteria=criteria or {}
         )
+
+        if auto_enrich:
+            self._enrich_with_kb(test)
+            self._enrich_with_neo4j(test)
         
         self.tests[test_id] = test
         self._save_tests()
@@ -253,17 +299,23 @@ class ABTester:
                 "name": test.option_a.name,
                 "total_score": test.option_a.score,
                 "votes": test.option_a.votes,
-                "average": round(avg_a, 2)
+                "average": round(avg_a, 2),
+                "pros": test.option_a.pros,
+                "cons": test.option_a.cons
             },
             "option_b": {
                 "name": test.option_b.name,
                 "total_score": test.option_b.score,
                 "votes": test.option_b.votes,
-                "average": round(avg_b, 2)
+                "average": round(avg_b, 2),
+                "pros": test.option_b.pros,
+                "cons": test.option_b.cons
             },
             "recommendation": recommendation,
             "confidence": round(confidence, 2),
-            "status": test.status.value
+            "status": test.status.value,
+            "kb_insights": test.kb_insights,
+            "neo4j_related": test.neo4j_related_nodes
         }
 
     def select_winner(self, test_id: str, winner: str) -> ABTest:
@@ -404,6 +456,7 @@ def main():
         else:
             print(f"✅ Created test: {test.id}")
             print(f"   Title: {test.title}")
+            print(f"   Insights: {len(test.kb_insights)}")
     
     elif args.compare and args.test_id:
         result = tester.compare(args.test_id)
@@ -427,4 +480,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

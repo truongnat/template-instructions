@@ -4,20 +4,17 @@
 Brain CLI
 
 Command-line interface for @BRAIN operations.
-Provides status, validation, transitions, and workflow control.
+Provides centralized access to all Layer 2 Intelligence components.
 
 Usage:
-    python tools/brain/brain_cli.py status
-    python tools/brain/brain_cli.py validate
-    python tools/brain/brain_cli.py transition DESIGNING --reason "Design phase started"
-    python tools/brain/brain_cli.py rollback
-    python tools/brain/brain_cli.py sync
-    python tools/brain/brain_cli.py recommend "implement authentication"
+    python tools/core/brain/brain_cli.py <command> [options]
 """
 
 import sys
-import subprocess
+import json
+import argparse
 from pathlib import Path
+from typing import List, Optional
 
 # Set UTF-8 encoding for Windows console
 if sys.platform == 'win32':
@@ -27,313 +24,244 @@ if sys.platform == 'win32':
     except:
         pass
 
+def get_project_root() -> Path:
+    """Get the project root directory."""
+    # current: tools/core/brain/brain_cli.py
+    # root: ../../../
+    return Path(__file__).resolve().parent.parent.parent.parent
 
-def get_tools_dir() -> Path:
-    """Get the tools directory path."""
-    return Path(__file__).parent.parent.parent
+# Import Intelligence Components
+# Use sys.path hack to ensure we can import from tools root
+sys.path.insert(0, str(get_project_root()))
 
-
-# Import tools modules directly
 try:
     from tools.core.brain import state_manager
     from tools.intelligence.knowledge_graph import brain_parallel
-except ImportError:
-    # Handle running from tools directory or root
-    sys.path.insert(0, str(get_tools_dir().parent))
-    try:
-        from tools.core.brain import state_manager
-        from tools.intelligence.knowledge_graph import brain_parallel
-    except ImportError:
-        # Fallback for relative imports if needed
-        import state_manager
-        sys.path.insert(0, str(get_tools_dir() / "intelligence" / "knowledge_graph"))
-        import brain_parallel
+    from tools.intelligence.observer.observer import Observer
+    from tools.intelligence.judge.scorer import Judge
+    from tools.intelligence.ab_test.ab_tester import ABTester
+    from tools.intelligence.self_learning.learner import Learner
+    from tools.intelligence.artifact_gen.generator import ArtifactGenerator
+    from tools.intelligence.monitor.health_monitor import HealthMonitor
+    from tools.intelligence.proxy.router import Router
+except ImportError as e:
+    print(f"❌ Import Error: {e}")
+    sys.exit(1)
 
 
-def run_state_manager(*args) -> int:
-    """Run the state manager with given arguments."""
-    try:
-        # Call main with list of args
-        state_manager.main(list(args))
-        return 0
-    except SystemExit as e:
-        return e.code
-    except Exception as e:
-        print(f"Error running state manager: {e}")
-        return 1
-
-
-def run_brain_parallel(*args) -> int:
-    """Run the brain parallel script with given arguments."""
-    try:
-        brain_parallel.main(list(args))
-        return 0
-    except SystemExit as e:
-        return e.code
-    except Exception as e:
-        print(f"Error running brain parallel: {e}")
-        return 1
-
+# --- Command Handlers ---
 
 def cmd_status(args):
-    """Show current workflow status."""
+    """Show workflow status."""
     print("🧠 @BRAIN /status")
-    print()
-    return run_state_manager("--status")
-
+    state_manager.main(["--status"])
 
 def cmd_validate(args):
-    """Validate current phase completion."""
+    """Validate phase."""
     print("🔍 @BRAIN /validate")
-    print()
-    return run_state_manager("--validate")
-
+    state_manager.main(["--validate"])
 
 def cmd_transition(args):
-    """Transition to a new state."""
-    if not args:
-        print("❌ Usage: brain_cli.py transition <STATE> [--reason <REASON>] [--force]")
-        return 1
+    """Transition state."""
+    parser = argparse.ArgumentParser(description="Transition State")
+    parser.add_argument("state", help="New state")
+    parser.add_argument("--reason", help="Transition reason")
+    parser.add_argument("--force", action="store_true", help="Force transition")
     
-    new_state = args[0]
-    reason = ""
-    force = False
-    
-    i = 1
-    while i < len(args):
-        if args[i] == "--reason" and i + 1 < len(args):
-            reason = args[i + 1]
-            i += 2
-        elif args[i] == "--force":
-            force = True
-            i += 1
-        else:
-            i += 1
-    
-    print(f"➡️ @BRAIN /transition {new_state}")
-    print()
-    
-    cmd_args = ["--transition", new_state]
-    if reason:
-        cmd_args.extend(["--reason", reason])
-    if force:
+    parsed_args = parser.parse_args(args)
+    cmd_args = ["--transition", parsed_args.state]
+    if parsed_args.reason:
+        cmd_args.extend(["--reason", parsed_args.reason])
+    if parsed_args.force:
         cmd_args.append("--force")
-    
-    return run_state_manager(*cmd_args)
-
-
-def cmd_rollback(args):
-    """Rollback to previous state."""
-    print("⏪ @BRAIN /rollback")
-    print()
-    return run_state_manager("--rollback")
-
-
-def cmd_force_transition(args):
-    """Force transition (emergency only)."""
-    if not args:
-        print("❌ Usage: brain_cli.py force-transition <STATE> --reason <REASON>")
-        return 1
-    
-    new_state = args[0]
-    reason = ""
-    
-    i = 1
-    while i < len(args):
-        if args[i] == "--reason" and i + 1 < len(args):
-            reason = args[i + 1]
-            i += 2
-        else:
-            i += 1
-    
-    if not reason:
-        print("❌ --reason is required for force-transition (emergency only)")
-        return 1
-    
-    print(f"⚠️ @BRAIN /force-transition {new_state}")
-    print(f"   Reason: {reason}")
-    print()
-    
-    return run_state_manager("--transition", new_state, "--reason", reason, "--force")
-
+        
+    state_manager.main(cmd_args)
 
 def cmd_init(args):
-    """Initialize brain state for a sprint."""
-    if not args:
-        print("❌ Usage: brain_cli.py init <SPRINT_NUMBER>")
-        return 1
-    
-    sprint = args[0]
-    print(f"🆕 @BRAIN /init sprint-{sprint}")
-    print()
-    
-    return run_state_manager("--init", "--sprint", sprint)
-
+    """Initialize sprint."""
+    parser = argparse.ArgumentParser(description="Init Sprint")
+    parser.add_argument("sprint", help="Sprint ID")
+    parsed_args = parser.parse_args(args)
+    state_manager.main(["--init", "--sprint", parsed_args.sprint])
 
 def cmd_sync(args):
-    """Run brain sync (quick sync)."""
+    """Sync brain."""
     print("🔄 @BRAIN /sync")
-    print()
-    return run_brain_parallel("--sync")
-
+    brain_parallel.main(["--sync"])
 
 def cmd_full_sync(args):
-    """Run full brain sync."""
+    """Full sync."""
     print("🔄 @BRAIN /full-sync")
-    print()
-    return run_brain_parallel("--full")
-
+    brain_parallel.main(["--full"])
 
 def cmd_recommend(args):
-    """Get recommendations for a task."""
-    if not args:
-        print("❌ Usage: brain_cli.py recommend \"<task description>\"")
-        return 1
+    """Get recommendations."""
+    parser = argparse.ArgumentParser(description="Get recommendations")
+    parser.add_argument("task", help="Task description")
+    parsed_args = parser.parse_args(args)
     
-    task = " ".join(args)
-    print(f"💡 @BRAIN /recommend \"{task}\"")
-    print()
-    return run_brain_parallel("--recommend", task)
-
-
-def cmd_auto_execute(args):
-    """Full automation mode."""
-    print("🤖 @BRAIN /auto-execute")
-    print()
-    print("━" * 50)
-    print("Auto-execute mode activates the full SDLC flow.")
-    print("This is equivalent to running /orchestrator --mode=full-auto")
-    print()
-    print("Steps:")
-    print("  1. Initialize state (if needed)")
-    print("  2. Execute each phase in sequence")
-    print("  3. Wait for approvals at gates")
-    print("  4. Validate transitions")
-    print("  5. Complete with /compound learning")
-    print("━" * 50)
-    print()
-    print("⚠️ Auto-execute is conceptual. Use /orchestrator workflow for full automation.")
-    return 0
-
-
-def cmd_watch(args):
-    """Monitor all active workflows (supervisor mode)."""
-    print("👁️ @BRAIN /watch - Supervisor Mode")
-    print()
-    print("━" * 50)
-    print("Monitoring active workflows...")
-    print()
-    
-    # Check state
-    result = run_state_manager("--status")
-    
-    print()
-    print("━" * 50)
-    print("Watch complete. Brain is monitoring system health.")
-    print("Use `brain_cli.py health` for detailed health check.")
-    return result
-
-
-def cmd_route(args):
-    """Intelligently route a request to the appropriate workflow."""
-    if not args:
-        print("❌ Usage: brain_cli.py route \"<request description>\"")
-        return 1
-    
-    request = " ".join(args)
-    print(f"🔀 @BRAIN /route \"{request}\"")
-    print()
-    print("━" * 50)
-    print("Analyzing request to determine best workflow...")
-    print()
-    
-    # Simple keyword-based routing
-    request_lower = request.lower()
-    
-    if any(w in request_lower for w in ["emergency", "critical", "p0", "down", "outage"]):
-        print("🚨 Detected: EMERGENCY situation")
-        print("   → Recommended: /emergency workflow")
-        print("   → Command: python tools/brain/brain_cli.py transition BUG_FIXING --force --reason \"Emergency\"")
-    elif any(w in request_lower for w in ["explore", "investigate", "research", "analyze"]):
-        print("🔍 Detected: INVESTIGATION needed")
-        print("   → Recommended: /explore workflow")
-    elif any(w in request_lower for w in ["bug", "fix", "error", "issue"]):
-        print("🐛 Detected: BUG FIX needed")
-        print("   → Recommended: /cycle workflow with @DEV")
-    elif any(w in request_lower for w in ["feature", "implement", "add", "create", "build"]):
-        print("✨ Detected: FEATURE implementation")
-        print("   → Recommended: /orchestrator for full SDLC or /cycle for small task")
-    elif any(w in request_lower for w in ["deploy", "release", "ship"]):
-        print("🚀 Detected: DEPLOYMENT request")
-        print("   → Recommended: /orchestrator Phase 8 or direct @DEVOPS")
+    # Use Learner for this now
+    learner = Learner()
+    rec = learner.get_recommendation(parsed_args.task)
+    if rec:
+        print(f"💡 Recommendation for '{parsed_args.task}':")
+        print(f"   • {rec['recommendation']}")
+        print(f"   (Confidence: {rec['confidence']}, Based on: {rec['based_on']})")
     else:
-        print("🤔 Detected: GENERAL request")
-        print("   → Recommended: /cycle for small tasks")
-        print("   → Or: /orchestrator for full project")
-    
-    print()
-    print("━" * 50)
-    return 0
-
+        print(f"No specific recommendation found for '{parsed_args.task}'.")
+        print("Falling back to Knowledge Graph...")
+        brain_parallel.main(["--recommend", parsed_args.task])
 
 def cmd_health(args):
-    """Check system health across all components."""
-    print("🏥 @BRAIN /health - System Health Check")
-    print()
-    print("━" * 50)
+    """Check system health."""
+    print("🏥 @BRAIN /health")
+    monitor = HealthMonitor()
+    status = monitor.check_health()
     
-    # Check state file
-    print("📊 State Manager:")
-    run_state_manager("--status")
-    
-    print()
-    print("🔍 Validation:")
-    run_state_manager("--validate")
-    
-    print()
-    print("━" * 50)
-    print("Health check complete.")
-    return 0
+    print(f"Status: {status.status.upper()} (Score: {status.score})")
+    print("Issues:")
+    for issue in status.issues:
+        print(f" - {issue}")
+    print("Metrics:")
+    for k, v in status.metrics.items():
+        print(f" - {k}: {v}")
+        
+    if args and "--suggest" in args:
+        suggestions = monitor.suggest_improvements(status)
+        print("\nSuggestions:")
+        for s in suggestions:
+            print(f" - {s}")
 
+def cmd_observe(args):
+    """Run observer check."""
+    print("👁️ @BRAIN /observe")
+    parser = argparse.ArgumentParser(description="Observer")
+    parser.add_argument("--action", help="Action to check")
+    parser.add_argument("--context", help="JSON context")
+    
+    parsed_args = parser.parse_args(args)
+    observer = Observer()
+    
+    if parsed_args.action:
+        context = json.loads(parsed_args.context) if parsed_args.context else {}
+        result = observer.observe_action("User", parsed_args.action, context)
+        print(json.dumps(result, indent=2))
+    else:
+        # Just show stats
+        print(f"Compliance Score: {observer.get_compliance_score()}%")
+        print("Run with --action to check specific actions.")
+
+def cmd_score(args):
+    """Score a file."""
+    print("⚖️ @BRAIN /score")
+    parser = argparse.ArgumentParser(description="Judge Score")
+    parser.add_argument("file", help="File to score")
+    
+    parsed_args = parser.parse_args(args)
+    judge = Judge()
+    result = judge.score(parsed_args.file)
+    
+    print(f"Score: {result.final_score}/10 ({'PASSED' if result.passed else 'FAILED'})")
+    for cat, score in result.scores.items():
+        print(f" - {cat}: {score}")
+    if result.improvements:
+        print("Improvements:")
+        for imp in result.improvements:
+            print(f" - {imp}")
+
+def cmd_ab_test(args):
+    """Run A/B test."""
+    print("🅰️/🅱️ @BRAIN /ab-test")
+    parser = argparse.ArgumentParser(description="A/B Test")
+    parser.add_argument("prompt", help="Decision prompt")
+    
+    parsed_args = parser.parse_args(args)
+    tester = ABTester()
+    test = tester.create_test(
+        title=parsed_args.prompt,
+        description=parsed_args.prompt,
+        option_a_name="Approach A",
+        option_a_value="A-approach",
+        option_b_name="Approach B",
+        option_b_value="B-approach"
+    )
+    print(f"Generated Test: {test.title}")
+    print(f"Option A: {test.option_a.name}")
+    print(f"Option B: {test.option_b.name}")
+    print("... (Simulating comparison)")
+    result = tester.compare(test.id)
+    print(f"Winner: Option {result['recommendation']}")
+    print(f"Confidence: {result['confidence']}")
+
+def cmd_gen(args):
+    """Generate artifact."""
+    print("📄 @BRAIN /gen")
+    parser = argparse.ArgumentParser(description="Artifact Gen")
+    parser.add_argument("template", help="Template name")
+    parser.add_argument("context", help="JSON context")
+    parser.add_argument("--output", help="Output filename")
+    
+    parsed_args = parser.parse_args(args)
+    generator = ArtifactGenerator()
+    try:
+        context = json.loads(parsed_args.context)
+        path = generator.generate_from_template(parsed_args.template, context, output_filename=parsed_args.output)
+        print(f"Generated: {path}")
+    except Exception as e:
+        print(f"Error: {e}")
+
+def cmd_route_req(args):
+    """Route a request."""
+    print("🔀 @BRAIN /route")
+    parser = argparse.ArgumentParser(description="Router")
+    parser.add_argument("request", help="Request description")
+    
+    parsed_args = parser.parse_args(args)
+    router = Router()
+    result = router.route(parsed_args.request)
+    print(f"Recommended Model: {result['model']}")
+    print(f"Provider: {result['provider']}")
+    print(f"Reason: {result['reason']}")
+
+def cmd_learn(args):
+    """Record learning."""
+    print("🧠 @BRAIN /learn")
+    parser = argparse.ArgumentParser(description="Learner")
+    parser.add_argument("description", help="What was learned")
+    
+    parsed_args = parser.parse_args(args)
+    learner = Learner()
+    result = learner.learn(parsed_args.description)
+    print(f"Recorded. Patterns found: {result['patterns_found']}")
+
+
+# --- Main Dispatcher ---
 
 def cmd_help(args):
     """Show help."""
-    print("🧠 @BRAIN CLI - Master Orchestrator Commands")
-    print("━" * 50)
-    print()
-    print("Usage: python tools/brain/brain_cli.py <command> [options]")
+    print("🧠 @BRAIN CLI - Intelligence Layer Control")
+    print("Usage: python tools/core/brain/brain_cli.py <command> [options]")
     print()
     print("Commands:")
-    print("  status              Show current workflow state")
-    print("  validate            Validate current phase completion")
-    print("  transition <STATE>  Transition to a new state")
-    print("  rollback            Rollback to previous state")
-    print("  force-transition    Emergency transition (requires --reason)")
-    print("  init <SPRINT>       Initialize brain state for a sprint")
-    print("  sync                Quick brain sync (LEANN + Neo4j)")
-    print("  full-sync           Full brain sync with all operations")
-    print("  recommend \"<task>\"  Get recommendations for a task")
-    print("  watch               Monitor all active workflows (supervisor)")
-    print("  route \"<request>\"   Route request to appropriate workflow")
+    print("  status              Show workflow status")
+    print("  validate            Validate phase")
+    print("  transition          Transition state")
+    print("  init                Initialize sprint")
     print("  health              Check system health")
-    print("  auto-execute        Show auto-execute mode info")
-    print("  help                Show this help")
+    print("  sync                Sync knowledge base")
+    print("  observe             Check compliance")
+    print("  score               Score a file")
+    print("  ab-test             Run A/B test")
+    print("  gen                 Generate artifact")
+    print("  route               Route to AI model")
+    print("  learn               Record learning")
+    print("  recommend           Get task recommendation")
     print()
-    print("Options:")
-    print("  --reason <REASON>   Reason for transition")
-    print("  --force             Force transition (emergency)")
-    print()
-    print("Valid States:")
-    print("  IDLE, PLANNING, PLAN_APPROVAL, DESIGNING, DESIGN_REVIEW,")
-    print("  DEVELOPMENT, TESTING, BUG_FIXING, DEPLOYMENT, REPORTING,")
-    print("  FINAL_REVIEW, FINAL_APPROVAL, COMPLETE")
-    print()
-    return 0
-
 
 def main():
     if len(sys.argv) < 2:
-        return cmd_help([])
+        cmd_help([])
+        return 0
     
     command = sys.argv[1].lower()
     args = sys.argv[2:]
@@ -342,28 +270,35 @@ def main():
         "status": cmd_status,
         "validate": cmd_validate,
         "transition": cmd_transition,
-        "rollback": cmd_rollback,
-        "force-transition": cmd_force_transition,
         "init": cmd_init,
         "sync": cmd_sync,
         "full-sync": cmd_full_sync,
-        "recommend": cmd_recommend,
-        "watch": cmd_watch,
-        "route": cmd_route,
         "health": cmd_health,
-        "auto-execute": cmd_auto_execute,
+        "observe": cmd_observe,
+        "score": cmd_score,
+        "ab-test": cmd_ab_test,
+        "gen": cmd_gen,
+        "route": cmd_route_req,
+        "learn": cmd_learn,
+        "recommend": cmd_recommend,
         "help": cmd_help,
         "--help": cmd_help,
         "-h": cmd_help
     }
     
     if command in commands:
-        return commands[command](args)
+        try:
+            commands[command](args)
+            return 0
+        except SystemExit:
+            return 1
+        except Exception as e:
+            print(f"❌ Error executing {command}: {e}")
+            return 1
     else:
         print(f"❌ Unknown command: {command}")
-        print("   Run 'brain_cli.py help' for usage.")
+        cmd_help([])
         return 1
-
 
 if __name__ == "__main__":
     sys.exit(main())

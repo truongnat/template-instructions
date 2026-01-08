@@ -1,6 +1,110 @@
-# GEMINI.md - Brain System Documentation
+# GEMINI.md - Agentic SDLC Brain System
 
-> **⚠️ MANDATORY COMPLIANCE:** This document contains RULES that MUST be followed for ALL tasks. Non-compliance is NOT acceptable.
+> **📖 Universal Guide:** This document is the **single source of truth** for the Agentic SDLC system. It works with **ANY AI-powered IDE or CLI** (Cursor, Windsurf, Claude, ChatGPT, Cline, Aider, etc.).
+
+---
+
+## 🎯 What is Agentic SDLC?
+
+**Agentic SDLC** is an intelligent, self-learning software development lifecycle system powered by AI agents. It provides:
+
+1. **3-Layer Concentric Architecture** - Core → Intelligence → Infrastructure
+2. **7 Intelligence Sub-Agents** - Observer, A/B Test, Judge, Self-Learning, Proxy, Artifact Gen, Monitor
+3. **17 Specialized AI Roles** - PM, BA, SA, UIUX, DEV, MOBILE, GAME, CLOUD, TESTER, SECA, DEVOPS, ORCHESTRATOR, REPORTER, RESEARCH
+4. **18 Automated Workflows** - Complete task lifecycle automation
+5. **Cross-IDE Compatibility** - Works everywhere through markdown files
+6. **Self-Learning Knowledge Base** - Neo4j graph + LEANN vector search
+7. **Compound Learning** - Every task improves the system
+
+---
+
+## 🏗️ 3-Layer Concentric Architecture
+
+```
+            ┌───────────────────────────────────────────────────────────┐
+            │                  LAYER 3: INFRASTRUCTURE                   │
+            │        External Interfaces, Tools, CLI, MCP, Docs          │
+            │   ┌────────────────────────────────────────────────────┐  │
+            │   │              LAYER 2: INTELLIGENCE                  │  │
+            │   │     Brain System - 7 Sub-Agents (Root Layer)       │  │
+            │   │   ┌────────────────────────────────────────────┐   │  │
+            │   │   │           LAYER 1: CORE                     │   │  │
+            │   │   │   Stable Foundation - Rarely Changes        │   │  │
+            │   │   │                                             │   │  │
+            │   │   │  ┌───────────────────────────────────┐     │   │  │
+            │   │   │  │ GEMINI.md (This File)             │     │   │  │
+            │   │   │  │ Skills (17 AI Roles)              │     │   │  │
+            │   │   │  │ Templates (20+ Documents)         │     │   │  │
+            │   │   │  │ Rules (8 Rule Files)              │     │   │  │
+            │   │   │  │ Workflows (18 Workflows)          │     │   │  │
+            │   │   │  └───────────────────────────────────┘     │   │  │
+            │   │   │                                             │   │  │
+            │   │   └─────────────────────────────────────────────┘   │  │
+            │   │                         ↑                           │  │
+            │   │   ┌─────────────────────────────────────────────┐  │  │
+            │   │   │ Observer │ A/B Test │ Judge │ Self-Learning │  │  │
+            │   │   │ Proxy │ Artifact Gen │ Monitor              │  │  │
+            │   │   └─────────────────────────────────────────────┘  │  │
+            │   │                                                     │  │
+            │   └─────────────────────────────────────────────────────┘  │
+            │                            ↑                               │
+            │   ┌─────────────────────────────────────────────────────┐ │
+            │   │ Tools │ CLI │ MCP Connectors │ Docs │ Neo4j │ KB  │ │
+            │   └─────────────────────────────────────────────────────┘ │
+            │                                                            │
+            └────────────────────────────────────────────────────────────┘
+```
+
+### Dependency Rule
+
+```
+Layer 3 → Layer 2 → Layer 1 (dependencies flow INWARD only)
+```
+
+- **Layer 1 (Core)** has NO dependencies
+- **Layer 2 (Intelligence)** depends ONLY on Layer 1
+- **Layer 3 (Infrastructure)** depends on Layer 2 + Layer 1
+
+---
+
+## 📂 Directory Structure
+
+```
+agentic-sdlc/
+│
+├── .agent/                       # 🧠 LAYER 1: CORE
+│   ├── GEMINI.md                # This file - Universal guide
+│   ├── skills/                  # 17 AI role definitions
+│   ├── templates/               # 20+ document templates
+│   ├── rules/                   # 8 rule files
+│   └── workflows/               # 18 workflow definitions
+│
+├── tools/                        # 🧠 LAYER 2 + 3
+│   ├── intelligence/            # LAYER 2: Brain sub-agents
+│   │   ├── observer/           # Rule compliance monitor
+│   │   ├── ab_test/            # A/B result generator
+│   │   ├── judge/              # Quality scorer
+│   │   ├── self_learning/      # Learning engine
+│   │   ├── proxy/              # AI model router
+│   │   ├── artifact_gen/       # Document generator
+│   │   └── monitor/            # System health monitor
+│   │
+│   ├── core/                    # Core utilities
+│   │   └── brain/              # Brain CLI
+│   │
+│   └── infrastructure/          # LAYER 3: External interfaces
+│       ├── workflows/          # Workflow scripts
+│       ├── autogen/            # Multi-agent teams
+│       ├── communication/      # Notifications
+│       ├── git/                # Git operations
+│       ├── github/             # GitHub integration
+│       ├── release/            # Release management
+│       └── validation/         # Health checks
+│
+├── bin/                          # CLI entry point
+├── mcp/                          # MCP connectors
+└── docs/                         # Generated documentation
+```
 
 ---
 
@@ -15,8 +119,8 @@ Before starting ANY work, complete these steps IN ORDER:
 
 1. **READ THE WORKFLOW FILE** - If user mentions `/slash`, read `.agent/workflows/[slash].md` FIRST
 2. **IDENTIFY ROLES** - Determine which `@ROLE` agents should be activated
-3. **INITIALIZE STATE** - Run `python tools/brain/brain_cli.py status` to check current state
-4. **ANNOUNCE START** - Log the task start (conceptually, no actual command needed)
+3. **INITIALIZE STATE** - Run `python tools/core/brain/brain_cli.py status` to check current state
+4. **ANNOUNCE START** - Use task_boundary to log the task start
 
 ### Slash Command Interpretation
 
@@ -31,6 +135,11 @@ When user types a slash command, you MUST:
 | `/sprint` | Read `.agent/workflows/sprint.md` for sprint management |
 | `/emergency` | Read `.agent/workflows/emergency.md` for hotfix |
 | `/commit` | Read `.agent/workflows/commit.md` for git commit |
+| `/autogen` | Read `.agent/workflows/autogen.md` for multi-agent teams |
+| `/observe` | Trigger Observer for rule compliance check |
+| `/ab <prompt>` | Run A/B test to generate alternatives |
+| `/score <file>` | Get quality score from Judge |
+| `/monitor` | Check system health |
 | Any `/command` | Read `.agent/workflows/[command].md` BEFORE doing anything |
 
 ### Role Activation Matrix
@@ -40,959 +149,803 @@ For ANY task, activate the appropriate roles based on task type:
 | Task Type | Required Roles | Workflow |
 |-----------|---------------|----------|
 | New Feature/Project | @PM → @SA → @UIUX → @DEV → @TESTER | `/orchestrator` |
+| Mobile App | @PM → @SA → @MOBILE → @TESTER | `/orchestrator` |
+| Game Development | @PM → @GAME → @TESTER | `/orchestrator` |
+| Cloud Infrastructure | @PM → @CLOUD → @DEVOPS | `/orchestrator` |
 | Bug Fix | @DEV → @TESTER | `/cycle` |
+| Security Audit | @SECA → @DEV | `/explore` |
 | Investigation | @SA → @DEV | `/explore` |
 | Hotfix/Emergency | @DEV → @DEVOPS | `/emergency` |
 | Documentation | @PM → @REPORTER | `/cycle` |
+| Research | @RESEARCH | `/explore` |
 
-### 🚨 CRITICAL ENFORCEMENT GATES (6 MANDATORY)
+---
+
+## 🚨 CRITICAL ENFORCEMENT GATES (6 MANDATORY)
 
 > [!CAUTION]
 > **ALL 6 GATES ARE NON-NEGOTIABLE.** Skipping any gate is a protocol violation.
 
-#### Gate 1: PRE-TASK (Before Starting)
+### Gate 1: PRE-TASK (Before Starting)
+
 ```bash
 # 1. Check brain state
-python tools/brain/observer.py --status
+python tools/core/brain/brain_cli.py status
 
 # 2. Get model recommendation
-python tools/brain/model_optimizer.py --recommend "[task description]"
+python tools/intelligence/knowledge_graph/brain_parallel.py --recommend "[task description]"
 
-# 3. For small tasks, consider A/B testing
-python tools/brain/ab_tester.py --create "[task]"
+# 3. Optional: Get A/B alternatives for complex decisions
+python tools/intelligence/ab_test/ab_tester.py --prompt "[decision]"
 ```
 
-#### Gate 2: PLANNING (Before Code)
+### Gate 2: PLANNING (Before Code)
+
 - **MUST create** `implementation_plan.md` for any feature/change
 - **MUST get user approval** before writing code
 - Simple tasks: At minimum, outline steps in task.md
+- Observer monitors planning compliance
 
-#### Gate 3: ERROR HANDLING (On Any Failure)
+### Gate 3: ERROR HANDLING (On Any Failure)
+
 If ANY script or command fails:
+
 ```bash
 # 1. STOP immediately - do NOT continue
-# 2. Halt the system
-python tools/brain/observer.py --halt "[error description]"
+# 2. Halt the system (Observer triggers)
+python tools/core/brain/brain_cli.py halt "[error description]"
 
 # 3. Fix the issue
 # 4. Resume only after fix verified
-python tools/brain/observer.py --resume
+python tools/core/brain/brain_cli.py resume
 ```
 
-#### Gate 4: POST-TASK (After Completion)
+### Gate 4: POST-TASK (After Completion)
+
 ```bash
 # 1. Trigger learning
-python tools/brain/learner.py --learn "[task description]"
+python tools/intelligence/self_learning/learner.py --learn "[task description]"
 
-# 2. Score REPORTS (not code files!)
-# Judge is for: walkthroughs, plans, reports in docs/
-python tools/brain/judge.py --score "docs/walkthroughs/[date]-[name].md"
+# 2. Score output (if applicable)
+python tools/intelligence/judge/scorer.py --score "[artifact path]"
 
-# 3. Analyze for improvements
-python tools/brain/self_improver.py --analyze
+# 3. Sync to Neo4j
+python tools/intelligence/knowledge_graph/brain_parallel.py --sync
 
-# 4. Create improvement plan (if issues found)
-python tools/brain/self_improver.py --plan
-
-# 5. Sync to Neo4j
-python tools/neo4j/brain_parallel.py --sync
+# 4. Monitor health
+python tools/intelligence/monitor/health_monitor.py --check
 ```
 
-#### Gate 5: REPORTING (Mandatory Artifacts)
+### Gate 5: REPORTING (Mandatory Artifacts)
+
 - **MUST create** `walkthrough.md` documenting:
   - What was done
   - What was tested
   - Validation results
 - **MUST save** to `docs/walkthroughs/[date]-[name].md`
+- Judge scores the walkthrough quality
 
-#### Gate 6: CLEANUP (After Every Session)
+### Gate 6: CLEANUP (After Every Session)
+
 ```bash
 # Run housekeeping
-python tools/workflows/housekeeping.py
+python tools/infrastructure/workflows/housekeeping.py
 ```
 
-### 🧠 Brain Protocol (MANDATORY)
+---
 
-The Brain Root Layer components MUST be used during agent sessions:
+## 🧠 Layer 2: Intelligence Sub-Agents
 
-**Before STARTING any task:**
+The brain system consists of 7 specialized sub-agents:
+
+### 1. Observer (Rule Compliance Monitor)
+
+**Location:** `tools/intelligence/observer/`
+
+**Responsibilities:**
+- Monitor ALL agent actions in real-time
+- Check compliance with rules (code quality, naming, templates, steps)
+- Detect violations: code style, naming conventions, missing steps, template deviations
+- Generate violation reports to `docs/reports/observer/`
+- Track compliance metrics over time
+- Auto-correct minor violations
+- Escalate major violations to user
+
+**Actions:**
+- `observe_action(agent, action, context)` - Monitor an action
+- `check_compliance(action, rules)` - Validate against rules
+- `report_violation(violation)` - Generate report
+- `get_compliance_score()` - Get system compliance %
+
+**Usage:**
 ```bash
-# 1. Check system status
-python tools/brain/observer.py --status
+# Start observing
+python tools/intelligence/observer/observer.py --start
 
-# 2. Get model recommendation (for complex tasks)
-python tools/brain/model_optimizer.py --recommend "[task description]"
+# Get compliance report
+python tools/intelligence/observer/observer.py --report
+
+# Check specific action
+python tools/intelligence/observer/observer.py --check-action "create file foo.py"
 ```
 
-**After COMPLETING any task:**
+### 2. A/B Test (Alternative Generator)
+
+**Location:** `tools/intelligence/ab_test/`
+
+**Responsibilities:**
+- Accept ANY user input (task, feature, decision, architecture choice)
+- Generate 2 alternative approaches
+- Search KB for past similar solutions
+- Query Neo4j graph for related patterns
+- Use MCP connectors for external research
+- Score each option (time, complexity, reliability, maintainability)
+- Generate structured comparison report
+
+**Actions:**
+- `generate_alternatives(prompt)` - Create A & B options
+- `research_past_solutions(prompt)` - Search KB + Neo4j
+- `score_alternatives(A, B)` - Compare and score
+- `generate_report(A, B, scores)` - Create comparison document
+
+**Usage:**
 ```bash
-# 1. Trigger learning
-python tools/brain/learner.py --learn "[task description]"
+# Generate alternatives
+python tools/intelligence/ab_test/ab_tester.py --prompt "implement user authentication"
 
-# 2. Score artifacts (if reports/docs created)
-python tools/brain/judge.py --score "[artifact path]"
-
-# 3. Sync to Neo4j
-python tools/neo4j/brain_parallel.py --sync
+# Output: docs/reports/ab_tests/YYYY-MM-DD-authentication-alternatives.md
 ```
 
-**Periodically (per sprint or weekly):**
+### 3. Judge (Quality Scorer)
+
+**Location:** `tools/intelligence/judge/`
+
+**Responsibilities:**
+- Score A/B test results
+- Score code quality (complexity, readability, security, performance, maintainability)
+- Score report quality (completeness, clarity, accuracy, actionability)
+- Score documentation quality
+- Generate improvement suggestions
+- Track quality trends over time
+
+**Scoring Dimensions:**
+
+**Code (0-100):**
+- Complexity (cyclomatic, nesting depth)
+- Readability (naming, comments, structure)
+- Security (vulnerabilities, best practices)
+- Performance (efficiency, optimization)
+- Maintainability (modularity, DRY, SOLID)
+
+**Reports (0-100):**
+- Completeness (all sections present)
+- Clarity (well-written, understandable)
+- Accuracy (correct information)
+- Actionability (clear next steps)
+
+**Usage:**
 ```bash
-# Analyze patterns and create improvement plans
-python tools/brain/self_improver.py --analyze
-python tools/brain/self_improver.py --plan
+# Score code file
+python tools/intelligence/judge/scorer.py --code src/app.py
+
+# Score report
+python tools/intelligence/judge/scorer.py--report docs/walkthroughs/2026-01-07-feature.md
+
+# Score A/B alternatives
+python tools/intelligence/judge/scorer.py --ab-test docs/reports/ab_tests/YYYY-MM-DD-auth.md
+```
+
+### 4. Self-Learning (Learning Engine)
+
+**Location:** `tools/intelligence/self_learning/`
+
+**Responsibilities:**
+- Learn from ALL sub-agent outputs
+- Extract patterns from Observer violations → New rules to add
+- Learn from A/B test outcomes → Best practices
+- Learn from Judge scores → Quality patterns
+- Store solutions, bugs, anti-patterns
+- Generate learning digests
+- Update KB and Neo4j with learnings
+
+**Learning Sources:**
+- Observer violations → Rules to add/update
+- A/B test results → Best solution patterns
+- Judge low scores → Areas to improve
+- Completed tasks → Reusable solutions
+- Fixed bugs → Anti-patterns to avoid
+- Security issues → Security best practices
+
+**Usage:**
+```bash
+# Record successful task
+python tools/intelligence/self_learning/learner.py --record-success "task-123" --approach "JWT auth"
+
+# Record error pattern
+python tools/intelligence/self_learning/learner.py --record-error "TypeError" --resolution "Added null check"
+
+# Generate learning digest
+python tools/intelligence/self_learning/learner.py --digest
+
+# Get recommendations
+python tools/intelligence/self_learning/learner.py --recommend "implement caching"
+```
+
+### 5. Proxy (AI Model Router)
+
+**Location:** `tools/intelligence/proxy/`
+
+**Responsibilities:**
+- Analyze prompt complexity
+- Route to appropriate model based on difficulty
+- Track cost metrics per model
+- Optimize model selection over time based on results
+- Support multiple providers (OpenAI, Anthropic, Google, local models)
+
+**Routing Logic:**
+
+| Task Complexity | Model | Use Case |
+|----------------|-------|----------|
+| Simple (0-3) | GPT-3.5, Claude Haiku, Gemini Flash | Formatting, renaming, simple refactors |
+| Medium (4-6) | GPT-4, Claude Sonnet, Gemini Pro | Coding, debugging, feature implementation |
+| Complex (7-10) | GPT-4o, Claude Opus, Gemini Pro 1.5 | Architecture, design, complex problem-solving |
+
+**Usage:**
+```bash
+# Route a prompt
+python tools/intelligence/proxy/router.py --prompt "refactor this function" --analyze
+
+# Get cost report
+python tools/intelligence/proxy/router.py --cost-report
+
+# Optimize routing
+python tools/intelligence/proxy/router.py --optimize
+```
+
+### 6. Artifact Gen (Document Generator)
+
+**Location:** `tools/intelligence/artifact_gen/`
+
+**Responsibilities:**
+- Generate documents from templates
+- Support all 20+ template types
+- Auto-fill from context (files, KB, Neo4j)
+- Validate against rules
+- Version control artifacts
+
+**Supported Templates:**
+- All planning templates (project plan, requirements, user stories)
+- All design templates (architecture, backend, UI/UX, API)
+- All quality templates (test reports, security reviews)
+- All delivery templates (deployment plans, changelogs)
+- All intelligence templates (observer reports, A/B comparisons, quality scores)
+
+**Usage:**
+```bash
+# Generate from template
+python tools/intelligence/artifact_gen/generator.py --template project-plan --context "Build todo app"
+
+# Auto-fill template
+python tools/intelligence/artifact_gen/generator.py --template architecture --auto-fill
+
+# Validate artifact
+python tools/intelligence/artifact_gen/generator.py --validate docs/planning/project-plan.md
+```
+
+### 7. Monitor (System Health Monitor)
+
+**Location:** `tools/intelligence/monitor/`
+
+**Responsibilities:**
+- Check for missing documentation
+- Identify incomplete features
+- Detect obsolete code
+- Track rule violation trends
+- Measure test coverage gaps
+- Detect performance bottlenecks
+- Generate health reports
+
+**Monitoring Areas:**
+- **Missing Components:** Undocumented code, missing tests
+- **Improvements Needed:** Low-quality code (Judge score < 70)
+- **Obsolete Code:** Unused files, deprecated functions
+- **Compliance Trends:** Observer violation rate over time
+- **Coverage Gaps:** Missing tests, undocumented APIs
+- **Performance Issues:** Slow functions, memory leaks
+
+**Usage:**
+```bash
+# Full health check
+python tools/intelligence/monitor/health_monitor.py --check
+
+# Check specific area
+python tools/intelligence/monitor/health_monitor.py --check-coverage
+
+# Get improvement suggestions
+python tools/intelligence/monitor/health_monitor.py --suggest
 ```
 
 ---
 
-> [!IMPORTANT]
-> **FAILURE TO FOLLOW THESE RULES** means the brain system is not being used correctly. If you find yourself implementing without reading workflows, STOP and restart with the pre-flight checklist.
+## 👥 Layer 1: Skills (17 AI Roles)
 
-### 📦 Artifact Persistence Rule (MANDATORY)
+Located in `.agent/skills/`
 
-> [!CAUTION]
-> **ALL task results, reports, and IDE-generated artifacts MUST be persisted to docs and synced to Neo4j.**
+### Planning & Requirements
 
-After completing ANY task:
+#### @PM (Project Manager)
+- Sprint planning and task breakdown
+- Project plan creation
+- Backlog management
+- Progress reporting
+- Stakeholder communication
 
-1. **Save artifacts to project docs:**
-   ```bash
-   # Implementation plans → docs/sprints/sprint-[N]/plans/
-   # Walkthroughs → docs/walkthroughs/
-   # Reports → docs/reports/
-   # Analysis → docs/artifacts/
-   ```
+#### @BA (Business Analyst)
+- Requirements gathering
+- User story creation
+- Acceptance criteria definition
+- Business process analysis
 
-2. **Sync to Neo4j:**
-   ```bash
-   agentic-sdlc kb compound sync
-   ```
+### Design & Architecture
 
-3. **Record in learning engine:**
-   ```bash
-   agentic-sdlc learn --record-success "[task-id]" --task-type "[type]"
-   ```
+#### @SA (System Analyst / Architect)
+- System architecture design
+- Technology stack selection
+- Integration design
+- Performance planning
 
-| Artifact Type | Save Location | Neo4j Sync |
-|---------------|---------------|------------|
-| Implementation plans | `docs/sprints/sprint-[N]/plans/` | ✅ |
-| Walkthroughs | `docs/walkthroughs/` | ✅ |
-| Analysis reports | `docs/reports/` | ✅ |
-| IDE artifacts | `docs/artifacts/` | ✅ |
-| **Solutions** | `docs/solutions/` | ✅ |
+#### @UIUX (UI/UX Designer)
+- Interface design
+- User experience flows
+- Wireframes and mockups
+- Design system creation
 
-**Enforcement:**
-- ❌ No silent completion - every task produces a persisted artifact
-- ❌ No orphan artifacts - IDE artifacts MUST be copied to project docs
-- ❌ No unsynced knowledge - all learnings MUST sync to Neo4j
+### Development
 
----
+#### @DEV (Web Developer)
+- General web development (React, Vue, Angular, Next.js)
+- Backend development (Node.js, Python, Java)
+- API development
+- Database design
 
-> **Universal Guide:** This document describes the `.agent/` brain system in an IDE-agnostic way. Use this guide with **any AI-powered IDE** (Cursor, Windsurf, Cline, Aider, etc.) or CLI tools.
+#### @MOBILE (Mobile Developer)
+- iOS development (Swift, SwiftUI)
+- Android development (Kotlin, Jetpack Compose)
+- Cross-platform (React Native, Flutter)
+- Mobile-specific patterns
 
----
+#### @GAME (Game Developer)
+- Game development (Unity, Unreal, Godot)
+- Gameplay programming
+- Graphics and physics
+- Game design patterns
 
-## 🧠 What is the Brain System?
+#### @CLOUD (Cloud Architect)
+- Cloud infrastructure (AWS, GCP, Azure)
+- Infrastructure as Code (Terraform, Pulumi)
+- Container orchestration (Kubernetes, Docker)
+- Serverless architectures
 
-The **Brain** is the core of Agentic SDLC - an intelligent, self-learning knowledge management system. It provides:
+### Quality & Security
 
-1. **3-Layer Concentric Architecture** - Core → Intelligence → Infrastructure (like Clean Architecture)
-2. **AI Role System** - 13 specialized agents (PM, BA, SA, Dev, QA, etc.)
-3. **Workflow Automation** - 18 predefined workflows accessible via `/slash` commands
-4. **Knowledge Base** - Compound learning from every task, bug, and solution
-5. **Cross-IDE Compatibility** - Works with any IDE through standard markdown files
-6. **Self-Learning Engine** - Automatically improves from project experience
-7. **Multi-Agent Teams** - AutoGen-powered autonomous agent collaboration
+#### @TESTER (QA Engineer)
+- Test planning and execution
+- Test automation
+- Quality assurance
+- Bug reporting
 
-### 3-Layer Concentric Architecture (v3.0)
+#### @SECA (Security Analyst)
+- Security audits
+- Vulnerability scanning
+- Penetration testing
+- Compliance checks (SOC2, GDPR, HIPAA)
+- Security best practices
 
-```
-            ┌─────────────────────────────────────────────────────────────────────┐
-            │                        LAYER 3: INFRASTRUCTURE                       │
-            │   ┌──────────────────────────────────────────────────────────────┐  │
-            │   │                    LAYER 2: INTELLIGENCE                      │  │
-            │   │   ┌──────────────────────────────────────────────────────┐   │  │
-            │   │   │                  LAYER 1: CORE                        │   │  │
-            │   │   │                                                       │   │  │
-            │   │   │   ╔═══════════════════════════════════════════════╗  │   │  │
-            │   │   │   ║  GEMINI.md   ║  skills/  ║  rules/  ║ templates  │   │  │
-            │   │   │   ║  (SoT)       ║ (13 roles)║(5 files) ║ (17 files) │   │  │
-            │   │   │   ╚═══════════════════════════════════════════════╝  │   │  │
-            │   │   │                                                       │   │  │
-            │   │   └───────────────────────────────────────────────────────┘   │  │
-            │   │                              ↑                                │  │
-            │   │   ╔═══════════════════════════════════════════════════════╗  │  │
-            │   │   ║ scorer │ ab_test │ self_learning │ artifact_gen      ║  │  │
-            │   │   ║ router │ proxy   │ task_manager  │ monitor   │ judge ║  │  │
-            │   │   ║ performance                                           ║  │  │
-            │   │   ╚═══════════════════════════════════════════════════════╝  │  │
-            │   │                                                               │  │
-            │   └───────────────────────────────────────────────────────────────┘  │
-            │                                  ↑                                   │
-            │   ╔═══════════════════════════════════════════════════════════════╗ │
-            │   ║  tools/  │  docs/  │  workflows/  │  projects/  │ mcp/ │ cli/ ║ │
-            │   ╚═══════════════════════════════════════════════════════════════╝ │
-            │                                                                      │
-            └──────────────────────────────────────────────────────────────────────┘
-```
+### Operations
 
-### Layer Details
+#### @DEVOPS (DevOps Engineer)
+- CI/CD pipeline setup
+- Deployment automation
+- Infrastructure management
+- Monitoring and logging
+- Release management
 
-| Layer | Content | Purpose |
-|-------|---------|---------|
-| **Layer 1: Core** | GEMINI.md, skills/, rules/, templates/ | Stable foundation, rarely changes |
-| **Layer 2: Intelligence** | scorer, ab_test, self_learning, artifact_gen, router, proxy, task_manager, monitor, performance, judge | Brain intelligence, self-improvement |
-| **Layer 3: Infrastructure** | tools/, docs/, workflows/, projects/, mcp/, cli/ | External interfaces, storage |
+### Coordination
 
-### Dependency Rule
-```
-Layer 3 → Layer 2 → Layer 1 (dependencies flow inward only)
-```
+#### @ORCHESTRATOR (Workflow Coordinator)
+- Multi-agent coordination
+- Workflow execution
+- Task routing
+- Progress tracking
 
----
+#### @REPORTER (Documentation Specialist)
+- Documentation creation
+- Report generation
+- Knowledge base maintenance
+- User guide creation
 
-## 📁 Directory Structure
-
-```
-.agent/                          # 🧠 LAYER 1: CORE
-│
-├── skills/                      # 13 AI role definitions
-│   ├── role-pm.md              # Project Manager
-│   ├── role-dev.md             # Developer
-│   └── ...                     # + 11 more roles
-│
-├── rules/                       # 5 rule files
-│   ├── global.md               # Core SDLC flow
-│   └── ...
-│
-├── templates/                   # 17 document templates
-│
-└── workflows/                   # 18 workflow definitions
-    ├── brain.md, cycle.md, orchestrator.md, etc.
-
-tools/layer2/                    # 🧠 LAYER 2: INTELLIGENCE
-├── scorer/                      # Input/output quality scoring
-├── ab_test/                     # A/B testing engine
-├── self_learning/               # Pattern recognition
-├── artifact_gen/                # Artifact generation
-├── router/                      # Workflow/agent routing
-├── proxy/                       # Model cost optimization
-├── task_manager/                # Kanban-style management
-├── monitor/                     # Compliance monitoring
-└── performance/                 # Flow optimization
-
-mcp/                             # 🌐 LAYER 3: MCP CONNECTORS
-├── connectors/                  # filesystem, github, api
-└── protocol.py                  # MCP protocol handler
-```
+#### @RESEARCH (Research Agent)
+- Knowledge base search
+- External research (web, APIs)
+- Technology evaluation
+- Best practice discovery
 
 ---
 
+## 📋 Layer 1: Templates (20+ Types)
 
-## 🎯 Core Components
+Located in `.agent/templates/`
 
-### 1. Workflows (`.agent/workflows/`)
+### Planning Templates
+- `project-plan.md` - Project overview and goals
+- `requirements-spec.md` - Detailed requirements
+- `user-stories.md` - User story format
 
-**What:** Step-by-step automation for SDLC tasks
-**How to use:** Reference workflows in your IDE or use `/slash` commands
+### Design Templates
+- `architecture-spec.md` - System architecture
+- `backend-design-spec.md` - Backend design
+- `uiux-design-spec.md` - UI/UX design
+- `api-design.md` - API specifications
+- `mobile-design-spec.md` - Mobile app design
+- `game-design-document.md` - Game design
+- `cloud-architecture-spec.md` - Cloud infrastructure
 
-**Key Workflows (12 total):**
+### Quality Templates
+- `test-report.md` - Test results
+- `security-review-report.md` - Security audit
+- `design-verification-report.md` - Design review
 
-| Command | Purpose | What It Does |
-|---------|---------|--------------|
-| `/brain` | Brain Management | Sync knowledge, get stats, state control |
-| `/cycle` | Task Lifecycle | Plan → Work → Review → Document |
-| `/explore` | Deep Investigation | Multi-order analysis before planning |
-| `/orchestrator` | Full Automation | Complete SDLC from planning to deployment |
-| `/sprint` | Sprint Management | Sprint planning and tracking |
-| `/emergency` | Hotfix Response | Critical incidents & production fixes |
-| `/validate` | System Validation | Check system health and configuration |
-| `/metrics` | Metrics Dashboard | View project metrics and statistics |
-| `/release` | Release Management | Version bumping and changelog generation |
-| `/route` | Workflow Routing | Intelligently route requests to workflows |
-| `/compound` | Knowledge Capture | Document solutions for future reuse |
-| `/housekeeping` | Maintenance | Cleanup and file organization |
-| `/commit` | Smart Commit | Review, message generation, commit, and push |
-| `/autogen` | Multi-Agent Teams | AutoGen-powered task execution |
+### Delivery Templates
+- `implementation-log.md` - Development log
+- `deployment-plan.md` - Deployment steps
+- `final-report.md` - Project completion
+- `changelog-entry.md` - Version changes
 
-**Workflow Structure:**
-
-```markdown
----
-description: Brief workflow description
----
-
-# Workflow Title
-
-## Step 1: [Action]
-[Detailed instructions]
-
-## Step 2: [Action]
-[Detailed instructions]
-
-### Decision Point:
-- If [condition] → Go to Step X
-- Otherwise → Continue
-
-#workflow-tag #skill-tag
-```
-
-### 2. Skills (`.agent/skills/`)
-
-**What:** Specialized AI agent definitions for each SDLC phase
-**How to use:** Reference with `@ROLE` mentions in your IDE
-
-**Available Roles:**
-
-```
-📋 Planning & Requirements
-  ├── @PM          - Project Manager (planning, backlog, reporting)
-  └── @BA          - Business Analyst (requirements)
-
-🎨 Design & Architecture
-  ├── @SA          - System Analyst (architecture)
-  └── @UIUX        - UI/UX Designer (interface design)
-
-✅ Review & Quality
-  ├── @SECA        - Security Analyst (security review)
-  └── @TESTER      - Quality Assurance & Testing
-
-💻 Development & Operations
-  ├── @DEV         - Developer (implementation)
-  └── @DEVOPS      - DevOps Engineer (CI/CD, deployment)
-
-🤖 Automation
-  └── @ORCHESTRATOR - Workflow orchestrator
-```
-
-**Role Definition Structure:**
-
-```markdown
-# @ROLE - Role Title
-
-## Identity
-[Who this role is, responsibilities]
-
-## Commands
-[Available commands and workflows]
-
-## Integration
-[How this role works with others]
-
-## Templates Used
-[Document templates this role creates]
-
-#role-tag #skills-enabled
-```
-
-
-
-### 4. Templates (`.agent/templates/`)
-
-**What:** Standardized document templates for consistency
-**How to use:** Roles use templates to create project artifacts
-
-**Available Templates:**
-
-```
-Planning & Requirements:
-  ├── project-plan.md
-  ├── requirements-spec.md
-  └── user-stories.md
-
-Design & Architecture:
-  ├── architecture-spec.md
-  ├── backend-design-spec.md
-  ├── uiux-design-spec.md
-  └── api-design.md
-
-Quality & Security:
-  ├── design-verification-report.md
-  ├── security-review-report.md
-  └── test-report.md
-
-Development & Delivery:
-  ├── implementation-log.md
-  ├── deployment-plan.md
-  ├── final-report.md
-  └── changelog-entry.md
-
-Documentation:
-  ├── technical-documentation.md
-  └── user-guide.md
-```
-
-### 5. Rules (`.agent/rules/`)
-
-**What:** Global conventions that all agents must follow
-**Why:** Ensures consistency, quality, and traceability
-
-**Rule Files:**
-
-| File | Purpose |
-|------|---------|
-| `global.md` | Core SDLC flow, role dependencies, approval gates |
-| `artifacts.md` | File naming, folder structure, sprint-based organization |
-| `git-workflow.md` | Task tracking, atomic commits, branching strategy |
-| `auto-learning.md` | Automatic knowledge capture triggers |
+### Intelligence Templates (NEW)
+- `observer-report.md` - Rule compliance report
+- `ab-comparison-report.md` - A/B test results
+- `quality-score-report.md` - Judge scoring
+- `self-learning-digest.md` - Learning summary
+- `system-health-report.md` - Monitor health check
 
 ---
 
-## 🔧 How to Use with Any IDE
+## 📏 Layer 1: Rules (7 Files)
+
+Located in `.agent/rules/`
+
+### 1. global.md
+- Core SDLC flow
+- Role dependencies
+- Approval gates
+- Layer 2 intelligence rules
+
+### 2. artifacts.md
+- File naming conventions
+- Folder structure
+- Sprint-based organization
+- Artifact persistence rules
+
+### 3. git-workflow.md
+- Task tracking
+- Atomic commits
+- Branching strategy
+- PR process
+
+### 4. AUTO-LEARNING.md
+- Automatic knowledge capture triggers
+- Learning thresholds
+- KB sync rules
+
+### 5. naming-conventions.md (NEW)
+- File naming (snake_case, kebab-case, PascalCase)
+- Variable naming (camelCase, UPPER_CASE)
+- Database naming
+- API endpoint naming
+
+### 6. code-quality.md (NEW)
+- Linting rules per language
+- Code style guides
+- Test coverage requirements
+- Documentation standards
+
+### 7. agent-execution.md (NEW)
+- Agent behavior rules
+- Inter-agent communication
+- Handoff procedures
+- Escalation rules
+
+---
+
+## 🔄 Layer 1: Workflows (18 Types)
+
+Located in `.agent/workflows/`
+
+### Process Workflows
+- `/orchestrator` - Full automation (all roles)
+- `/cycle` - Complete task lifecycle
+- `/explore` - Deep investigation
+- `/emergency` - Hotfix response
+- `/debug` - Systematic debugging
+- `/refactor` - Safe refactoring
+- `/review` - Code review for PRs
+- `/autogen` - Multi-agent teams
+
+### Support Workflows
+- `/brain` - Brain system controller
+- `/commit` - Automated commit workflow
+- `/docs` - Documentation creation
+- `/onboarding` - New agent onboarding
+- `/housekeeping` - Cleanup and maintenance
+- `/release` - Release management
+- `/sprint` - Sprint management
+- `/worktree` - Parallel agent worktrees
+
+### Utility Workflows
+- `/validate` - Compliance checker
+- `/metrics` - Project statistics
+
+### New Intelligence Workflows
+- `/observe` - Trigger Observer check
+- `/ab <prompt>` - Run A/B test
+- `/score <file>` - Get quality score
+- `/monitor` - System health check
+
+---
+
+## 🛠️ How to Use with Any IDE/CLI
 
 ### Option 1: Cursor IDE
 
-1. **Install Agentic SDLC:**
-   ```bash
-   agentic-sdlc install
-   agentic-sdlc ide cursor
-   ```
-
-2. **Use in Chat:**
-   ```
-   @pm Build a todo app
-   /cycle Implement user authentication
-   ```
-
-3. **Access Brain:**
-   ```
-   /brain
-   /kb-search authentication
-   ```
+```
+@pm Build a todo app
+/cycle Implement user authentication
+/observe Check my last commit
+```
 
 ### Option 2: Windsurf IDE
 
-1. **Install:**
-   ```bash
-   agentic-sdlc install
-   agentic-sdlc ide windsurf
-   ```
+```
+Read .agent/GEMINI.md and act as @DEV
+Follow /cycle workflow for this task
+Run /ab "implement OAuth vs JWT"
+```
 
-2. **Reference in Cascade:**
-   - Windsurf automatically reads `.agent/` files
-   - Use `@` mentions for roles
-   - Use `/` commands for workflows
+### Option 3: Claude Desktop / ChatGPT
 
-### Option 3: Cline / Aider / Other IDEs
+```
+I'm using Agentic SDLC. Read .agent/GEMINI.md.
+Act as @SA and help me design system architecture.
+Use /explore workflow to investigate options.
+```
 
-1. **Install:**
-   ```bash
-   agentic-sdlc install
-   ```
-
-2. **Manual Integration:**
-   - Point your IDE to `.agent/workflows/` directory
-   - Reference skill files in `.agent/skills/`
-   - Use workflows as instruction templates
-
-3. **In Chat:**
-   ```
-   Read .agent/workflows/pm.md and help me plan a new feature
-   Act as @DEV and follow .agent/workflows/dev.md
-   ```
-
-### Option 4: CLI / Command Line
+### Option 4: CLI
 
 ```bash
-# Universal JS CLI (Bridge to Python tools)
-agentic-sdlc release --help
-agentic-sdlc workflow cycle
+# Install CLI
+npm install -g agentic-sdlc
 
-# View workflows
-ls .agent/workflows/
+# Run workflows
+agentic-sdlc cycle --task "Add dark mode"
+agentic-sdlc observe --check
+agentic-sdlc ab "implement authentication"
+agentic-sdlc score src/app.py
+agentic-sdlc monitor --health
 
-# Read a workflow
-cat .agent/workflows/pm.md
-
-# Use brain system
-python tools/neo4j/brain_parallel.py --recommend "OAuth implementation"
+# Brain commands
+agentic-sdlc brain status
+agentic-sdlc brain sync
+agentic-sdlc brain recommend "implement caching"
 ```
 
 ---
 
-## 🧠 Brain Intelligence System
+## 🔧 Layer 3: Tools & Infrastructure
 
-The brain consists of **three interconnected layers:**
+### Brain CLI
 
-### Layer 1: LEANN (Vector Search)
-
-**What:** High-performance vector database for semantic search
-**Location:** `.leann/` directory (auto-generated)
+**Location:** `tools/core/brain/brain_cli.py`
 
 ```bash
-# Index project
-leann index --path .
+# Check system status
+python tools/core/brain/brain_cli.py status
 
-# Update index
-leann index --update
+# Pause system
+python tools/core/brain/brain_cli.py halt "fixing critical bug"
 
-# Search (used by Research Agent)
-leann search "authentication patterns"
-```
-
-### Layer 2: Neo4j (Knowledge Graph)
-
-**What:** Graph database mapping skills, technologies, and relationships
-**Location:** Cloud-hosted (configured in `.env`)
-
-**Capabilities:**
-- Visualize skill relationships
-- Find learning paths
-- Discover related technologies
-- Track team expertise
-- Reason about solutions
-
-**Configuration (`.env`):**
-
-```bash
-NEO4J_URI=neo4j+s://xxxxx.databases.neo4j.io
-NEO4J_USERNAME=neo4j
-NEO4J_PASSWORD=your-password
-NEO4J_DATABASE=neo4j
-```
-
-**Usage:**
-
-```bash
-# Sync KB to Neo4j
-python tools/neo4j/sync_skills_to_neo4j.py
-
-# Sync documents (plans, reports, artifacts)
-python tools/neo4j/document_sync.py --all
-
-# Query skills
-python tools/neo4j/query_skills_neo4j.py --all-skills
-
-# Get learning path
-python tools/neo4j/query_skills_neo4j.py --learning-path "Authentication"
-```
-
-
-
-### Brain Workflows (Parallel Execution)
-
-**Quick Sync (Recommended):**
-
-```bash
-# Sync all brain systems in parallel
-python tools/neo4j/brain_parallel.py --sync
-```
-
-**Full Operations:**
-
-```bash
-# Complete sync (LEANN + Neo4j + Learning Engine)
-python tools/neo4j/brain_parallel.py --full
+# Resume system
+python tools/core/brain/brain_cli.py resume
 
 # Get statistics
-python tools/neo4j/brain_parallel.py --stats
-
-# Get recommendations
-python tools/neo4j/brain_parallel.py --recommend "implement caching"
+python tools/core/brain/brain_cli.py stats
 ```
 
-**Self-Learning Commands:**
+### Knowledge Graph (Neo4j)
+
+**Location:** `tools/intelligence/knowledge_graph/`
 
 ```bash
-# Record error pattern
-python tools/neo4j/learning_engine.py --record-error "TypeError" \
-  "Cannot read property X of undefined" \
-  --resolution "Added null check" \
-  --approach "defensive_coding"
+# Sync to Neo4j
+python tools/intelligence/knowledge_graph/brain_parallel.py --sync
 
-# Record success pattern
-python tools/neo4j/learning_engine.py --record-success "task-123" \
-  --task-type "auth_feature" \
-  --success-approach "JWT with refresh tokens"
+# Query skills
+python tools/intelligence/knowledge_graph/query_skills_neo4j.py --all-skills
 
-# Find similar errors
-python tools/neo4j/learning_engine.py --similar-errors "ConnectionError"
+# Get learning path
+python tools/intelligence/knowledge_graph/query_skills_neo4j.py --learning-path "Authentication"
 
 # Get recommendations
-python tools/neo4j/learning_engine.py --recommend \
-  "implement user authentication"
+python tools/intelligence/knowledge_graph/brain_parallel.py --recommend "implement OAuth"
 ```
 
-**Statistics & Insights:**
+### MCP Connectors
 
-```bash
-# Learning statistics
-python tools/neo4j/learning_engine.py --stats
+**Location:** `mcp/connectors/`
 
-# View learned patterns
-python tools/neo4j/learning_engine.py --patterns
+- `filesystem` - File operations
+- `github` - GitHub integration
+- `research` - Web search and API calls
+- `transform` - Code transformations
 
-# View reasoning paths
-python tools/neo4j/learning_engine.py --reasoning-path "TypeError" "null check"
+---
+
+## 📊 Decision Trees
+
+### When to Use Which Workflow?
+
+```mermaid
+graph TD
+    A[New Task] --> B{Task Type?}
+    B -->|New Feature| C[/orchestrator]
+    B -->|Bug Fix| D[/cycle]
+    B -->|Investigation| E[/explore]
+    B -->|Emergency| F[/emergency]
+    B -->|Documentation| G[/docs]
+    
+    C --> H{Need Alternatives?}
+    H -->|Yes| I[/ab]
+    H -->|No| J[Continue]
+    
+    D --> K{Code Quality?}
+    K -->|Check| L[/score]
+    K -->|OK| M[Continue]
+```
+
+### When to Use Which Role?
+
+```mermaid
+graph TD
+    A[Task] --> B{Domain?}
+    B -->|Planning| C[@PM]
+    B -->|Design| D[@SA or @UIUX]
+    B -->|Web Dev| E[@DEV]
+    B -->|Mobile| F[@MOBILE]
+    B -->|Game| G[@GAME]
+    B -->|Cloud| H[@CLOUD]
+    B -->|QA| I[@TESTER]
+    B -->|Security| J[@SECA]
+    B -->|DevOps| K[@DEVOPS]
 ```
 
 ---
 
-## 🔄 Self-Learning Triggers
-
-The brain **automatically learns** when these events occur:
-
-| Trigger | What Gets Learned |
-|---------|-------------------|
-| Bug fixed (medium+ priority) | Error pattern, resolution, similar issues |
-| Task required 3+ attempts | Complexity patterns, better approaches |
-| Same error occurred 2+ times | Root cause, prevention strategy |
-| Complex feature completed (4+ hours) | Implementation approach, best practices |
-| Security/performance issue resolved | Vulnerability patterns, optimization techniques |
-
-**How it works:**
-
-1. **Detection** - Agent detects qualifying event
-2. **Capture** - Automatically extracts:
-   - Problem description
-   - Solution approach
-   - Code patterns
-   - Related technologies
-3. **Storage** - Saves to:
-   - Neo4j graph (relationships)
-   - LEANN index (semantic search)
-4. **Indexing** - Updates:
-   - Neo4j relationships
-   - LEANN vectors
-5. **Future Use** - Available for:
-   - Recommendations
-   - Similar problem detection
-   - Learning path suggestions
-
----
-
-## 📊 Best Practices
+## 🎓 Best Practices
 
 ### Daily Workflow
 
 ```bash
 # Morning: Sync brain
-python tools/neo4j/brain_parallel.py --sync
+python tools/intelligence/knowledge_graph/brain_parallel.py --sync
 
-# Before new task: Get recommendations
-python tools/neo4j/brain_parallel.py --recommend "your task description"
+# Before task: Get recommendations
+python tools/intelligence/knowledge_graph/brain_parallel.py --recommend "your task"
 
-# During work: Use workflows
-/pm plan feature
-/dev implement
-/qa review
+# Optional: A/B test decision
+python tools/intelligence/ab_test/ab_tester.py --prompt "architectural choice"
 
-# After work: Check what was learned
-python tools/neo4j/learning_engine.py --stats
+# During work: Use appropriate workflow
+/pm plan feature           # Planning
+/dev implement            # Development
+/score src/app.py         # Quality check
+/observe                  # Compliance check
+
+# After work: Record learning
+python tools/intelligence/self_learning/learner.py --record-success "task-id"
+python tools/intelligence/judge/scorer.py --score docs/walkthroughs/...
 ```
 
 ### Weekly Maintenance
 
 ```bash
-# Full brain sync
-python tools/neo4j/brain_parallel.py --full
+# Full sync
+python tools/intelligence/knowledge_graph/brain_parallel.py --full
 
-# Check learning patterns
-python tools/neo4j/learning_engine.py --patterns
-```
+# Health check
+python tools/intelligence/monitor/health_monitor.py --check
 
-### Team Collaboration
-
-```bash
-# Share brain via Git
-git add .agent/knowledge-base/
-git commit -m "docs: add OAuth implementation knowledge"
-git push
-
-# Pull team knowledge
-git pull
-
-# Re-sync brain
-python tools/neo4j/brain_parallel.py --sync
+# Review learning
+python tools/intelligence/self_learning/learner.py --digest
 ```
 
 ---
 
-## 🎨 IDE-Specific Integration
+## 🚧 Troubleshooting
 
-### For Cursor
+### Common Issues
 
-**Setup:**
+**1. Import errors**
 ```bash
-agentic-sdlc ide cursor
+pip install -r tools/requirements.txt
 ```
 
-**Created files:**
-- `.cursorrules` - References `.agent/` workflows
-- Automatic role recognition with `@` mentions
-- `/slash` command integration
-
-**Usage:**
-```
-@pm Build a REST API
-/dev implement authentication
-/brain sync and recommend
-```
-
-### For Windsurf
-
-**Setup:**
+**2. Neo4j connection failed**
 ```bash
-agentic-sdlc ide windsurf
+# Check .env file
+cat .env | grep NEO4J_URI
+
+# Test connection
+python tools/intelligence/knowledge_graph/test_neo4j_connection.py
 ```
 
-**Created files:**
-- `.windsurfrules` - References `.agent/` workflows
-- Cascade integration
-- Memory persistence
-
-**Usage:**
-```
-@sa design the architecture
-/cycle complete this feature
-```
-
-### For Cline
-
-**Setup:**
+**3. Workflow not found**
 ```bash
-agentic-sdlc ide cline
+# List all workflows
+ls -la .agent/workflows/
 ```
 
-**Created files:**
-- `.clinerules` - References `.agent/` workflows
-- Custom instructions
-
-**Usage:**
-```
-Read .agent/workflows/dev.md and implement this feature
-Act as @QA and review the implementation
-```
-
-### For Aider
-
-**Setup:**
+**4. Observer not monitoring**
 ```bash
-agentic-sdlc ide aider
-```
-
-**Created files:**
-- `.aider.conf.yml` - References `.agent/` workflows
-
-**Usage:**
-```bash
-# In terminal
-aider --read .agent/workflows/dev.md
-aider --message "Act as @DEV and implement authentication"
+# Restart observer
+python tools/intelligence/observer/observer.py --restart
 ```
 
 ---
 
-## 🔧 Tools & Utilities
+## 📖 FAQ
 
-All executable tools are located in `tools/` directory:
+**Q: Can I use this with any IDE?**
+A: Yes! GEMINI.md is designed to be IDE-agnostic. Copy it into any AI chat.
 
-```
-tools/
-├── neo4j/                   # Knowledge graph tools
-│   ├── brain_parallel.py   # Parallel brain operations
-│   ├── learning_engine.py  # Self-learning engine
-│   ├── document_sync.py    # Document synchronization
-│   └── sync_skills_to_neo4j.py
-│
-├── research/                # Research agent
-│   ├── research_agent.py   # Automated research
-│   └── research_mcp.py     # MCP integration
-│
-├── kb/                      # Knowledge base management
-│   ├── kb_manager.py       # KB operations
-│   └── update_index.py     # Index generation
-│
-├── github/                  # GitHub integration
-│   └── sync_issues.py      # Issue synchronization
-│
-└── workflows/               # Workflow automation
-    └── [workflow scripts]
-```
+**Q: Do I need to set up Neo4j?**
+A: Optional. The system works without it, but you lose graph-based recommendations.
 
-**See `tools/README.md` for complete tool documentation.**
+**Q: Which workflow should I start with?**
+A: For new features: `/orchestrator`. For quick tasks: `/cycle`.
+
+**Q: How does Observer work?**
+A: It monitors all actions in real-time and checks compliance with rules in `.agent/rules/`.
+
+**Q: Can I customize the templates?**
+A: Yes! Edit files in `.agent/templates/` to match your needs.
+
+**Q: How does A/B testing work?**
+A: Provide a prompt, it generates 2 alternatives using KB search + Neo4j, then Judge scores them.
+
+**Q: What if I skip the mandatory gates?**
+A: Observer will detect it and generate a violation report.
 
 ---
 
-## 💡 Advanced Usage
+## 🔗 Related Documentation
 
-### Research Agent Integration
-
-The Research Agent automatically queries the brain when researching:
-
-```bash
-python tools/research/research_agent.py \
-  --task "authentication" \
-  --type feature
-
-# Output includes:
-# - LEANN semantic search results
-# - Neo4j graph relationships
-# - File-based KB entries
-# - Confidence level
-```
-
-### Custom Workflows
-
-Create your own workflows in `.agent/workflows/`:
-
-```markdown
----
-description: My Custom Workflow
----
-
-# Custom Workflow
-
-## Step 1: [Action]
-[Instructions]
-
-## Step 2: [Action]
-[Instructions]
-
-#custom #workflow
-```
-
-### Knowledge Base Search
-
-```bash
-# CLI search
-python bin/kb_cli.py search "authentication"
-
-# In IDE
-/kb-search authentication
-
-# Advanced search
-python bin/kb_cli.py search "JWT" --category security --tags oauth
-```
-
-### Compound Learning
-
-**Concept:** Knowledge from one project benefits all projects in the monorepo.
-
-**How it works:**
-1. Project A solves OAuth authentication
-2. Knowledge saved to `.agent/knowledge-base/`
-3. Project B needs authentication
-4. Brain recommends OAuth approach from Project A
-5. Project B adapts and improves solution
-6. Updated knowledge benefits Projects C, D, E...
-
-```bash
-# Trigger compound learning
-python tools/neo4j/brain_parallel.py --full
-
-# View cross-project knowledge
-python bin/kb_cli.py list --all-projects
-```
+- **Architecture Details:** `docs/ARCHITECTURE.md`
+- **CLI Guide:** `docs/CLI-GUIDE.md`
+- **KB Guide:** `docs/KB-GUIDE.md`
+- **Workflow Guides:** `.agent/workflows/*.md`
+- **Tools README:** `tools/README.md`
 
 ---
 
-## 🌟 Why This Structure?
+## 📝 Version
 
-### Single Source of Truth
-
-✅ All knowledge in `.agent/`
-✅ IDE integrations are just references
-✅ Update once, available everywhere
-
-### IDE Agnostic
-
-✅ Works with any IDE
-✅ Markdown-based (human-readable)
-✅ CLI-accessible
-✅ Git-friendly
-
-### Scalable
-
-✅ Add new roles easily
-✅ Create custom workflows
-✅ Extend knowledge categories
-✅ Cross-project learning
-
-### Maintainable
-
-✅ Clear structure
-✅ YAML metadata for automation
-✅ Version-controllable
-✅ Documentable
+- **Version:** 3.0.0 (3-Layer Concentric Architecture)
+- **Last Updated:** 2026-01-07
+- **Layer Model:** Core → Intelligence → Infrastructure
 
 ---
 
-## 🚀 Quick Reference
+> [!IMPORTANT]
+> **This document is the SINGLE SOURCE OF TRUTH.** If any other documentation conflicts with GEMINI.md, GEMINI.md takes precedence.
 
-### Most Used Commands
+**🎯 Quick Start:** Read this file → Choose workflow (`/cycle`, `/orchestrator`) → Activate roles (`@PM`, `@DEV`) → Follow gates → Let intelligence sub-agents help you.
 
-```bash
-# Brain sync
-python tools/neo4j/brain_parallel.py --sync
-
-# Get recommendations
-python tools/neo4j/brain_parallel.py --recommend "task description"
-
-# Search KB
-python bin/kb_cli.py search "query"
-
-# View stats
-python tools/neo4j/brain_parallel.py --stats
-```
-
-### Most Used Workflows
-
-```
-/brain        - Brain management (sync, status, route)
-/cycle        - Complete task lifecycle
-/orchestrator - Full SDLC automation
-/explore      - Deep investigation
-/sprint       - Sprint management
-/release      - Release & changelog
-```
-
-### Most Used Roles
-
-```
-@PM    - Planning
-@SA    - Architecture
-@DEV   - Implementation
-@QA    - Review
-@SECA  - Security
-```
-
----
-
-## 📚 Additional Resources
-
-- **Project Documentation:** [docs/](docs/)
-- **Tools README:** [tools/README.md](tools/README.md)
-- **Monorepo Architecture:** [docs/MONOREPO-ARCHITECTURE.md](docs/MONOREPO-ARCHITECTURE.md)
-- **Quick Start Guide:** [docs/guides/QUICK-START.md](docs/guides/QUICK-START.md)
-- **MCP Setup:** [docs/guides/MCP-SETUP.md](docs/guides/MCP-SETUP.md)
-
----
-
-## ❓ FAQ
-
-**Q: Can I use this without Neo4j?**
-A: Yes! The file-based KB and LEANN work independently. Neo4j adds graph intelligence but is optional.
-
-**Q: Does this work offline?**
-A: Partially. File-based KB and LEANN work offline. Neo4j requires internet connection.
-
-**Q: Can I customize workflows?**
-A: Absolutely! Add your own workflows to `.agent/workflows/` following the existing format.
-
-**Q: How do I share knowledge with my team?**
-A: Commit `.agent/knowledge-base/` to Git. Team members sync brain after pulling.
-
-**Q: What if my IDE isn't supported?**
-A: All IDEs can reference `.agent/` files. Create custom integration or use CLI tools.
-
-**Q: How do I migrate from another system?**
-A: Run `agentic-sdlc install` in your project. It preserves existing code and adds the brain system.
-
----
-
-**Version:** 2.0.0
-**Last Updated:** 2026-01-03
-**Philosophy:** IDE-agnostic, compound learning, single source of truth
-
-**Next:** Read [Quick Start Guide](docs/guides/QUICK-START.md) or explore [workflows](.agent/workflows/)

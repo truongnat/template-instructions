@@ -1,6 +1,4 @@
 # Proxy Module - Model Selection & Cost Optimization
-from .model_proxy import ModelProxy, LoadBalancer, ModelConfig, MODELS
-from .cost_tracker import CostTracker, CostEntry
-
-__all__ = ['ModelProxy', 'LoadBalancer', 'ModelConfig', 'MODELS', 'CostTracker', 'CostEntry']
-
+from .router import Router as ModelProxy, MODELS, ModelConfig
+from .cost_tracker import CostTracker
+__all__ = ['ModelProxy', 'MODELS', 'ModelConfig', 'CostTracker']

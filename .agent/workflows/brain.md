@@ -12,69 +12,75 @@ Brain is NOT an executor—it monitors, detects issues, routes to handlers, scor
 
 // turbo-all
 
-## Root Components (Layer 1)
+## Root Components (Layer 2: Intelligence)
 
-### Observer (Halt on Errors)
+### Observer (Compliance Monitor)
 ```bash
-agentic-sdlc run tools/brain/observer.py --watch       # Monitor workflows
-agentic-sdlc run tools/brain/observer.py --halt "Err"  # Halt system
-agentic-sdlc run tools/brain/observer.py --resume      # Resume after halt
+# Check compliance of an action
+python tools/core/brain/brain_cli.py observe --action "create file" --context '{"file": "test.py"}'
+
+# Show compliance stats
+python tools/core/brain/brain_cli.py observe
 ```
 
-### Judge (Score Quality)
+### Judge (Quality Scorer)
 ```bash
-agentic-sdlc run tools/brain/judge.py --score "path/to/report.md"
-agentic-sdlc run tools/brain/judge.py --review --sprint 1
-agentic-sdlc run tools/brain/judge.py --threshold 7    # Set pass threshold
+# Score a file
+python tools/core/brain/brain_cli.py score "path/to/file.py"
+
+# Score a report
+python tools/core/brain/brain_cli.py score "docs/reports/latest.md"
 ```
 
 ### Learner (Auto-Learning)
 ```bash
-agentic-sdlc learn --learn "Task completed"
-agentic-sdlc learn --watch
-agentic-sdlc learn --stats
+# Record learning
+python tools/core/brain/brain_cli.py learn "Fixed bug in auth module by updating token expiry"
+
+# Get recommendations
+python tools/core/brain/brain_cli.py recommend "implement oauth"
 ```
 
-### A/B Tester (Compare Options)
+### A/B Tester (Decision Making)
 ```bash
-agentic-sdlc run tools/brain/ab_tester.py --create "Test description"
-agentic-sdlc run tools/brain/ab_tester.py --compare --test-id TEST-001
-agentic-sdlc run tools/brain/ab_tester.py --select A --test-id TEST-001
+# Run A/B test
+python tools/core/brain/brain_cli.py ab-test "Should we use JWT or Session Auth?"
 ```
 
-### Model Optimizer (Token Efficiency)
+### Router (Model Selection)
 ```bash
-agentic-sdlc run tools/brain/model_optimizer.py --recommend "Task description"
-agentic-sdlc run tools/brain/model_optimizer.py --record --model "gemini-2.5" --tokens 1500
+# Route request to optimal AI model
+python tools/core/brain/brain_cli.py route "Generate complex architectural diagram"
 ```
 
-### Self-Improver (Create Improvement Plans)
+### Artifact Generator
 ```bash
-agentic-sdlc run tools/brain/self_improver.py --analyze  # Analyze all data
-agentic-sdlc run tools/brain/self_improver.py --plan     # Create improvement plan
-agentic-sdlc run tools/brain/self_improver.py --apply-plan PLAN-ID
+# Generate document from template
+python tools/core/brain/brain_cli.py gen --template "project-plan" --context '{"project": "New App"}' --output "plan.md"
 ```
 
-## State Management
+### Health Monitor
 ```bash
-agentic-sdlc brain init 1          # Initialize sprint
-agentic-sdlc brain status          # Check status
-agentic-sdlc brain transition STATE --reason "Reason"
-agentic-sdlc brain validate        # Validate state
-agentic-sdlc brain rollback        # Rollback
+# Check system health
+python tools/core/brain/brain_cli.py health
+
+# Get improvement suggestions
+python tools/core/brain/brain_cli.py health --suggest
 ```
 
-## Supervisor Commands
+## State Management (Layer 1: Core)
 ```bash
-agentic-sdlc brain watch   # Monitor workflows
-agentic-sdlc run tools/brain/brain_cli.py route "request"  # Route to workflow
-agentic-sdlc health  # Health check
+python tools/core/brain/brain_cli.py init 1          # Initialize sprint
+python tools/core/brain/brain_cli.py status          # Check status
+python tools/core/brain/brain_cli.py transition STATE --reason "Reason"
+python tools/core/brain/brain_cli.py validate        # Validate state
+python tools/core/brain/brain_cli.py rollback        # Rollback
 ```
 
 ## Sync Commands
 ```bash
-agentic-sdlc kb compound sync
-agentic-sdlc kb compound sync --full
+python tools/core/brain/brain_cli.py sync      # Quick sync
+python tools/core/brain/brain_cli.py full-sync # Full sync
 ```
 
 #brain #root-layer #meta-controller

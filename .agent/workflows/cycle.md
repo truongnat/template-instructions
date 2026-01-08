@@ -11,11 +11,11 @@ Complete Task Lifecycle workflow for small to medium tasks. This workflow guides
 2. **TEAM COMMUNICATION FIRST:** Announce start and check history.
 3. **GIT FLOW:** Feature branch, atomic commits, PR.
 4. **SELF-LEARNING:** After completion, update Neo4j.
-
+5. **QUALITY CHECKS:** Run Observer and Judge before PR.
 
 ### 0.0 **Team Communication (MANDATORY):**
-   - **Check History:** `agentic-sdlc run tools/communication/cli.py history --channel general --limit 10`
-   - **Announce Start:** `agentic-sdlc run tools/communication/cli.py send --channel general --thread "SDLC-Flow" --role AGENT --content "Starting /cycle for [Task]."`
+   - **Check History:** `agentic-sdlc run tools/infrastructure/communication/cli.py history --channel general --limit 10`
+   - **Announce Start:** `agentic-sdlc run tools/infrastructure/communication/cli.py send --channel general --thread "SDLC-Flow" --role AGENT --content "Starting /cycle for [Task]."`
 
 ## Workflow Steps
 
@@ -29,6 +29,10 @@ agentic-sdlc research --feature "[task]" --type feature
 ### 2. Planning
 - Define acceptance criteria.
 - Add task to `Development-Log.md`.
+- **Observer Check:**
+  ```bash
+  python tools/core/brain/brain_cli.py observe --action "planning" --context '{"task": "[task]"}'
+  ```
 
 ### 3. Feature Branch
 ```bash
@@ -40,18 +44,26 @@ git push -u origin feat/TASK-ID-name
 - Code according to plan.
 - Atomic commits: `git commit -m "[TASK-ID] feat: description"`
 
-### 5. Verification
+### 5. Verification & Quality Assurance (MANDATORY)
 - Run local tests.
-- Create PR, tag @TESTER.
+- **Judge Score (Target > 8/10):**
+  ```bash
+  python tools/core/brain/brain_cli.py score "path/to/main_file.py"
+  ```
+- **Compliance Check:**
+  ```bash
+  python tools/core/brain/brain_cli.py observe
+  ```
 
 ### 6. Merge
+- Create PR, tag @TESTER.
 - Wait for `#testing-passed`.
 - Merge via @DEVOPS or @SA.
 
 ### 7. Self-Learning (MANDATORY)
 ```bash
 agentic-sdlc kb compound sync
-agentic-sdlc learn --record-success "TASK-ID" --task-type "feature"
+python tools/core/brain/brain_cli.py learn "Completed [task] using [approach]"
 ```
 - Update `CHANGELOG.md`.
 

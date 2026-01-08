@@ -1,5 +1,4 @@
 # Judge Module - Quality Scoring
-from .quality_judge import QualityJudge, ScoreResult
+from .scorer import Judge
 
-__all__ = ['QualityJudge', 'ScoreResult']
-
+__all__ = ['Judge']

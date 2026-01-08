@@ -21,7 +21,8 @@ from .scorer import InputScorer, OutputScorer, QualityMetrics
 from .router import WorkflowRouter, AgentRouter, RulesEngine
 
 # Monitor Module
-from .monitor import Observer, RuleChecker, AuditLogger
+from .monitor import RuleChecker, AuditLogger
+from .observer.observer import Observer
 
 # A/B Test Module
 from .ab_test import ABTester, OptionComparator
@@ -30,7 +31,7 @@ from .ab_test import ABTester, OptionComparator
 from .self_learning import Learner, SelfImprover, PatternEngine
 
 # Artifact Generator Module
-from .artifact_gen import DocGenerator, ReportGenerator, TemplateEngine
+from .artifact_gen import ArtifactGenerator
 
 # Proxy Module
 from .proxy import ModelProxy, CostTracker
@@ -42,7 +43,7 @@ from .task_manager import TaskBoard, SprintManager
 from .performance import MetricsCollector, FlowOptimizer
 
 # Judge Module
-from .judge import QualityJudge
+from .judge import Judge
 
 
 __all__ = [
@@ -51,13 +52,13 @@ __all__ = [
     # Router
     'WorkflowRouter', 'AgentRouter', 'RulesEngine',
     # Monitor
-    'Observer', 'RuleChecker', 'AuditLogger',
+    'RuleChecker', 'AuditLogger', 'Observer',
     # A/B Test
     'ABTester', 'OptionComparator',
     # Self-Learning
     'Learner', 'SelfImprover', 'PatternEngine',
     # Artifact Generator
-    'DocGenerator', 'ReportGenerator', 'TemplateEngine',
+    'ArtifactGenerator',
     # Proxy
     'ModelProxy', 'CostTracker',
     # Task Manager
@@ -65,9 +66,12 @@ __all__ = [
     # Performance
     'MetricsCollector', 'FlowOptimizer',
     # Judge
-    'QualityJudge',
+    'Judge',
 ]
 
 
 __version__ = "1.0.0"
+
+
+
 

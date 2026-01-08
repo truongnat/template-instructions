@@ -1,8 +1,8 @@
 """
-Model Proxy - Model selection and cost optimization.
+Router - AI Model Selection and Optimization.
 
 Part of Layer 2: Intelligence Layer.
-Migrated from tools/brain/model_optimizer.py
+Migrated and enhanced from tools/brain/model_optimizer.py
 """
 
 import json
@@ -92,12 +92,12 @@ MODELS = {
 }
 
 
-class ModelProxy:
+class Router:
     """
-    Model selection and cost optimization proxy.
+    Model Router and cost optimization.
     
     Features:
-    - Recommend models based on task
+    - Route tasks to optimal models
     - Track token usage and costs
     - Balance cost vs quality
     - Load balancing
@@ -122,7 +122,7 @@ class ModelProxy:
         with open(self.usage_file, 'w', encoding='utf-8') as f:
             json.dump(self.usage, f, indent=2, ensure_ascii=False)
 
-    def recommend(
+    def route(
         self,
         task: str,
         priority: str = "balanced",  # cost, quality, speed, balanced
@@ -130,7 +130,7 @@ class ModelProxy:
         max_tokens_needed: int = 4000
     ) -> Dict:
         """
-        Recommend a model for a task.
+        Route a task to the best model.
         
         Args:
             task: Task description
@@ -165,7 +165,7 @@ class ModelProxy:
             else:  # balanced
                 quality_score = {"low": 1, "medium": 2, "high": 3}[model.quality]
                 speed_score = {"slow": 1, "medium": 2, "fast": 3}[model.speed]
-                cost_score = 1 / (model.cost_per_1k_input + 1)
+                cost_score = 1 / (model.cost_per_1k_input + 10) # Weighted less
                 return quality_score * 0.4 + speed_score * 0.3 + cost_score * 0.3
         
         # Sort by score
@@ -179,25 +179,23 @@ class ModelProxy:
         )
         
         return {
-            "recommended_model": recommended.name,
+            "model": recommended.name,
             "provider": recommended.provider,
             "priority": priority,
             "estimated_cost": f"${estimated_cost:.4f}",
-            "capabilities": recommended.capabilities,
-            "alternatives": [m.name for m in candidates[1:3]],
             "reason": self._generate_reason(recommended, priority)
         }
 
     def _generate_reason(self, model: ModelConfig, priority: str) -> str:
         """Generate recommendation reason."""
         if priority == "cost":
-            return f"{model.name} offers the best cost efficiency at ${model.cost_per_1k_input}/1K tokens"
+            return f"{model.name} offers the best cost efficiency"
         elif priority == "quality":
             return f"{model.name} provides {model.quality} quality output"
         elif priority == "speed":
             return f"{model.name} has {model.speed} response time"
         else:
-            return f"{model.name} provides optimal balance of quality, speed, and cost"
+            return f"{model.name} balances quality, speed, and cost"
 
     def record_usage(
         self,
@@ -263,76 +261,26 @@ class ModelProxy:
             "by_model": by_model
         }
 
-    def list_models(self) -> List[Dict]:
-        """List available models."""
-        return [m.to_dict() for m in MODELS.values()]
-
-
-class LoadBalancer:
-    """
-    Load balancer for distributing requests across models.
-    """
-
-    def __init__(self):
-        self.request_counts: Dict[str, int] = {}
-        self.error_counts: Dict[str, int] = {}
-
-    def get_model(
-        self,
-        candidates: List[str],
-        strategy: str = "round_robin"  # round_robin, least_loaded, random
-    ) -> str:
-        """Get next model based on strategy."""
-        if not candidates:
-            return "gemini-2.5-flash"  # Default
-        
-        if strategy == "round_robin":
-            # Get model with fewest requests
-            counts = [(m, self.request_counts.get(m, 0)) for m in candidates]
-            counts.sort(key=lambda x: x[1])
-            selected = counts[0][0]
-        elif strategy == "least_loaded":
-            # Avoid models with errors
-            scores = [(m, self.request_counts.get(m, 0) + self.error_counts.get(m, 0) * 10) 
-                     for m in candidates]
-            scores.sort(key=lambda x: x[1])
-            selected = scores[0][0]
-        else:  # random
-            import random
-            selected = random.choice(candidates)
-        
-        self.request_counts[selected] = self.request_counts.get(selected, 0) + 1
-        return selected
-
-    def record_error(self, model: str):
-        """Record an error for a model."""
-        self.error_counts[model] = self.error_counts.get(model, 0) + 1
-
 
 def main():
     """CLI entry point."""
     import argparse
     
-    parser = argparse.ArgumentParser(description="Model Proxy - Layer 2 Intelligence")
-    parser.add_argument("--recommend", type=str, help="Get model recommendation for task")
+    parser = argparse.ArgumentParser(description="Model Router - Layer 2 Intelligence")
+    parser.add_argument("--route", type=str, help="Route a task to a model")
     parser.add_argument("--priority", choices=["cost", "quality", "speed", "balanced"], 
                         default="balanced", help="Optimization priority")
-    parser.add_argument("--list-models", action="store_true", help="List available models")
     parser.add_argument("--stats", action="store_true", help="Show usage statistics")
     
     args = parser.parse_args()
-    proxy = ModelProxy()
+    router = Router()
     
-    if args.recommend:
-        result = proxy.recommend(args.recommend, priority=args.priority)
+    if args.route:
+        result = router.route(args.route, priority=args.priority)
         print(json.dumps(result, indent=2))
     
-    elif args.list_models:
-        for model in proxy.list_models():
-            print(f"[{model['provider']}] {model['name']}: {model['quality']} quality, {model['speed']} speed")
-    
     elif args.stats:
-        print(json.dumps(proxy.get_stats(), indent=2))
+        print(json.dumps(router.get_stats(), indent=2))
     
     else:
         parser.print_help()
@@ -340,4 +288,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
