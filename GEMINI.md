@@ -794,37 +794,37 @@ python tools/intelligence/knowledge_graph/brain_parallel.py --recommend "impleme
 ### When to Use Which Workflow?
 
 ```mermaid
-graph TD
-    A[New Task] --> B{"Task Type?"}
-    B -->|New Feature| C["/orchestrator"]
-    B -->|Bug Fix| D["/cycle"]
-    B -->|Investigation| E["/explore"]
-    B -->|Emergency| F["/emergency"]
-    B -->|Documentation| G["/docs"]
+flowchart TD
+    Start["New Task"] --> Type{"Task Type?"}
+    Type -- "New Feature" --> Orchestrator["/orchestrator"]
+    Type -- "Bug Fix" --> Cycle["/cycle"]
+    Type -- "Investigation" --> Explore["/explore"]
+    Type -- "Emergency" --> Emergency["/emergency"]
+    Type -- "Documentation" --> Docs["/docs"]
     
-    C --> H{"Need Alternatives?"}
-    H -->|Yes| I["/ab"]
-    H -->|No| J[Continue]
+    Orchestrator --> Alternatives{"Need Alternatives?"}
+    Alternatives -- "Yes" --> AB["/ab"]
+    Alternatives -- "No" --> Cont1["Continue"]
     
-    D --> K{"Code Quality?"}
-    K -->|Check| L["/score"]
-    K -->|OK| M[Continue]
+    Cycle --> Quality{"Code Quality?"}
+    Quality -- "Check" --> Score["/score"]
+    Quality -- "OK" --> Cont2["Continue"]
 ```
 
 ### When to Use Which Role?
 
 ```mermaid
-graph TD
-    A[Task] --> B{"Domain?"}
-    B -->|Planning| C["@PM"]
-    B -->|Design| D["@SA or @UIUX"]
-    B -->|Web Dev| E["@DEV"]
-    B -->|Mobile| F["@MOBILE"]
-    B -->|Game| G["@GAME"]
-    B -->|Cloud| H["@CLOUD"]
-    B -->|QA| I["@TESTER"]
-    B -->|Security| J["@SECA"]
-    B -->|DevOps| K["@DEVOPS"]
+flowchart TD
+    Task["Task"] --> Domain{"Domain?"}
+    Domain -- "Planning" --> PM["@PM"]
+    Domain -- "Design" --> SA["@SA or @UIUX"]
+    Domain -- "Web Dev" --> DEV["@DEV"]
+    Domain -- "Mobile" --> MOBILE["@MOBILE"]
+    Domain -- "Game" --> GAME["@GAME"]
+    Domain -- "Cloud" --> CLOUD["@CLOUD"]
+    Domain -- "QA" --> TESTER["@TESTER"]
+    Domain -- "Security" --> SECA["@SECA"]
+    Domain -- "DevOps" --> DEVOPS["@DEVOPS"]
 ```
 
 ---
