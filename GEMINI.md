@@ -11,7 +11,7 @@
 1. **3-Layer Concentric Architecture** - Core → Intelligence → Infrastructure
 2. **7 Intelligence Sub-Agents** - Observer, A/B Test, Judge, Self-Learning, Proxy, Artifact Gen, Monitor
 3. **17 Specialized AI Roles** - PM, BA, SA, UIUX, DEV, MOBILE, GAME, CLOUD, TESTER, SECA, DEVOPS, ORCHESTRATOR, REPORTER, RESEARCH
-4. **18 Automated Workflows** - Complete task lifecycle automation
+4. **23 Automated Workflows** - Complete task lifecycle automation
 5. **Cross-IDE Compatibility** - Works everywhere through markdown files
 6. **Self-Learning Knowledge Base** - Neo4j graph + LEANN vector search
 7. **Compound Learning** - Every task improves the system
@@ -36,7 +36,7 @@
             │   │   │  │ Skills (17 AI Roles)              │     │   │  │
             │   │   │  │ Templates (20+ Documents)         │     │   │  │
             │   │   │  │ Rules (8 Rule Files)              │     │   │  │
-            │   │   │  │ Workflows (18 Workflows)          │     │   │  │
+            │   │   │  │ Workflows (23 Workflows)          │     │   │  │
             │   │   │  └───────────────────────────────────┘     │   │  │
             │   │   │                                             │   │  │
             │   │   └─────────────────────────────────────────────┘   │  │
@@ -77,7 +77,7 @@ agentic-sdlc/
 │   ├── skills/                  # 17 AI role definitions
 │   ├── templates/               # 20+ document templates
 │   ├── rules/                   # 8 rule files
-│   └── workflows/               # 18 workflow definitions
+│   └── workflows/               # 23 workflow definitions
 │
 ├── tools/                        # 🧠 LAYER 2 + 3
 │   ├── intelligence/            # LAYER 2: Brain sub-agents
@@ -657,7 +657,7 @@ Located in `.agent/rules/`
 
 ---
 
-## 🔄 Layer 1: Workflows (18 Types)
+## 🔄 Layer 1: Workflows (23 Types)
 
 Located in `.agent/workflows/`
 
@@ -670,6 +670,7 @@ Located in `.agent/workflows/`
 - `/refactor` - Safe refactoring
 - `/review` - Code review for PRs
 - `/autogen` - Multi-agent teams
+- `/planning` - Task planning phase
 
 ### Support Workflows
 - `/brain` - Brain system controller
@@ -685,7 +686,7 @@ Located in `.agent/workflows/`
 - `/validate` - Compliance checker
 - `/metrics` - Project statistics
 
-### New Intelligence Workflows
+### Intelligence Workflows
 - `/observe` - Trigger Observer check
 - `/ab <prompt>` - Run A/B test
 - `/score <file>` - Get quality score
