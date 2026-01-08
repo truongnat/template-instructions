@@ -11,13 +11,13 @@ Scans all workflow files for `python tools/...` commands and file path reference
 
 ```bash
 # Full validation
-python tools/validation/validate.py
+python tools/infrastructure/validation/validate.py
 
 # With fix suggestions
-python tools/validation/validate.py --fix
+python tools/infrastructure/validation/validate.py --fix
 
 # Generate report file
-python tools/validation/validate.py --report
+python tools/infrastructure/validation/validate.py --report
 ```
 
 ## What It Checks
@@ -110,7 +110,7 @@ Generates `docs/reports/Validation-Report-YYYY-MM-DD.md`:
 ## Fix Suggestions (--fix)
 
 ```bash
-python tools/validation/validate.py --fix
+python tools/infrastructure/validation/validate.py --fix
 ```
 
 Outputs:

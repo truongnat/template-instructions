@@ -12,7 +12,7 @@ description: Support - Housekeeping - Cleanup and Maintenance
 ## Quick Command
 
 ```bash
-python tools/workflows/housekeeping.py
+python tools/infrastructure/workflows/housekeeping.py
 ```
 
 ## Workflow Steps
@@ -30,7 +30,7 @@ python tools/workflows/housekeeping.py
 ### Step 3: Update Indexes
 ```bash
 # Updates indexes (KB, Documents, vectors)
-python tools/knowledge_graph/brain_parallel.py --sync
+python tools/intelligence/knowledge_graph/brain_parallel.py --sync
 ```
 - Ensures all entries are indexed
 - Updates statistics
@@ -45,13 +45,13 @@ Reports:
 ### Step 5: Brain Self-Analysis (NEW)
 ```bash
 # Analyze patterns from A/B tests, Judge scores, Learner data
-python tools/brain/self_improver.py --analyze
+python tools/intelligence/self_learning/self_improver.py --analyze
 
 # Create improvement plan based on patterns
-python tools/brain/self_improver.py --plan
+python tools/intelligence/self_learning/self_improver.py --plan
 
 # Sync all brain data
-python tools/knowledge_graph/brain_parallel.py --full
+python tools/intelligence/knowledge_graph/brain_parallel.py --full
 ```
 
 ## Expected Output

@@ -18,7 +18,7 @@ Automates the process of reviewing changes, generating Conventional Commits mess
 
 ### 1. Check Status
 ```bash
-python tools/git/commit.py review
+python tools/infrastructure/git/commit.py review
 ```
 
 ### 2. Review Diff
@@ -28,6 +28,7 @@ python tools/git/commit.py review
   ```
 - **If files STAGED:**
   - Read `git diff --cached` to understand changes.
+```
 
 ### 3. Generate Message
 - Format: `type(scope): description`
@@ -48,7 +49,7 @@ git log -1 --oneline
 ### 6. Push Changes
 - **If main or feature branch:**
   ```bash
-  python tools/git/commit.py push
+  python tools/infrastructure/git/commit.py push
   ```
   *Or manually:* `git push`
 

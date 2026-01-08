@@ -13,13 +13,13 @@ description: Process - Sprint Management Workflow
 
 ```bash
 # Start a new sprint
-python tools/workflows/sprint.py start 6
+python tools/infrastructure/workflows/sprint.py start 6
 
 # Check current sprint status
-python tools/workflows/sprint.py status
+python tools/infrastructure/workflows/sprint.py status
 
 # Close a sprint
-python tools/workflows/sprint.py close 5
+python tools/infrastructure/workflows/sprint.py close 5
 ```
 
 ## Sprint Start
@@ -40,7 +40,7 @@ python tools/workflows/sprint.py close 5
 
 ### Usage
 ```bash
-python tools/workflows/sprint.py start 6
+python tools/infrastructure/workflows/sprint.py start 6
 ```
 
 ### Next Steps After Start
@@ -58,7 +58,7 @@ python tools/workflows/sprint.py start 6
 
 ### Usage
 ```bash
-python tools/workflows/sprint.py status
+python tools/infrastructure/workflows/sprint.py status
 ```
 
 ## Sprint Close
@@ -78,13 +78,13 @@ python tools/workflows/sprint.py status
 
 ### Usage
 ```bash
-python tools/workflows/sprint.py close 5
+python tools/infrastructure/workflows/sprint.py close 5
 ```
 
 ### Next Steps After Close
 1. Fill in Sprint Review with accomplishments
 2. Complete Retrospective with team
-3. Start next sprint: `python tools/workflows/sprint.py start 6`
+3. Start next sprint: `python tools/infrastructure/workflows/sprint.py start 6`
 
 ## Sprint Folder Structure
 

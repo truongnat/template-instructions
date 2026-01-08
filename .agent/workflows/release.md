@@ -13,16 +13,16 @@ description: Support - Release Management Workflow
 
 ```bash
 # Preview changes (dry run)
-python tools/release/release.py preview
+python tools/infrastructure/release/release.py preview
 
 # Generate changelog only
-python tools/release/release.py changelog --sprint 6
+python tools/infrastructure/release/release.py changelog --sprint 6
 
 # Bump version only
-python tools/release/release.py version --auto
+python tools/infrastructure/release/release.py version --auto
 
 # Full release cycle
-python tools/release/release.py release --commit --tag --push --publish
+python tools/infrastructure/release/release.py release --commit --tag --push --publish
 ```
 
 ## Conventional Commit Format
@@ -65,7 +65,7 @@ refactor(core): extract utility functions
 
 ### 1. Preview Changes
 ```bash
-python tools/release/release.py preview --sprint 6
+python tools/infrastructure/release/release.py preview --sprint 6
 ```
 Shows:
 - Last git tag
@@ -76,7 +76,7 @@ Shows:
 
 ### 2. Generate Changelog
 ```bash
-python tools/release/release.py changelog --sprint 6 --dry-run
+python tools/infrastructure/release/release.py changelog --sprint 6 --dry-run
 ```
 - Parses commits since last tag
 - Categorizes by type
@@ -86,16 +86,16 @@ python tools/release/release.py changelog --sprint 6 --dry-run
 ### 3. Bump Version
 ```bash
 # Auto-detect based on commits
-python tools/release/release.py version --auto
+python tools/infrastructure/release/release.py version --auto
 
 # Explicit bump type
-python tools/release/release.py version --bump minor
+python tools/infrastructure/release/release.py version --bump minor
 ```
 Updates `package.json` version.
 
 ### 4. Full Release
 ```bash
-python tools/release/release.py release --sprint 6 --commit --tag --push --publish
+python tools/infrastructure/release/release.py release --sprint 6 --commit --tag --push --publish
 ```
 Executes:
 1. Parse commits

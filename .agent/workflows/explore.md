@@ -24,7 +24,7 @@ description: Process - Deep Investigation Workflow
 
 ```bash
 # Basic research
-python tools/research/research_agent.py --task "[feature]" --type general
+python tools/intelligence/research/research_agent.py --task "[feature]" --type general
 ```
 
 - [ ] Understand explicit requirements
