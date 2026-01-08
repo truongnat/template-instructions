@@ -181,6 +181,7 @@ python tools/intelligence/ab_test/ab_tester.py --prompt "[decision]"
 
 ### Gate 2: PLANNING (Before Code)
 
+- **MUST create** `specification.md` for new features (use --template specification)
 - **MUST create** `implementation_plan.md` for any feature/change
 - **MUST get user approval** before writing code
 - Simple tasks: At minimum, outline steps in task.md

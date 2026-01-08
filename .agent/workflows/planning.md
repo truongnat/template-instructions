@@ -45,19 +45,32 @@ python tools/core/brain/brain_cli.py transition PLANNING --reason "New task: [de
 python tools/intelligence/research/research_agent.py --task "[feature]" --type general
 ```
 
-### 3. Create Implementation Plan
+### 3. Create Specification (New Requirement)
+For new features or complex changes, create a specification first:
 
-Create `implementation_plan.md` with:
-- **Goal Description** - What are we building?
+```bash
+# Generate specification from template
+python tools/intelligence/artifact_gen/generator.py --template specification --context "[feature description]"
+```
+
+**Spec Review:**
+- Verify user stories cover the problem
+- Confirm functional requirements are complete
+- Clarify open questions with user
+
+### 4. Create Implementation Plan
+
+Create `implementation_plan.md` based on the approved spec:
+- **Goal Description** - Link to functionality in spec
 - **Proposed Changes** - File-by-file breakdown
-- **Verification Plan** - How to test
+- **Verification Plan** - How to test against requirements
 
 ```bash
 python tools/intelligence/artifact_gen/generator.py --template project-plan --context "[description]"
 ```
 
-### 4. Request User Approval
-Present the plan to the user for review.
+### 5. Request User Approval
+Present the Spec and Plan to the user for review.
 
 **Approval Checklist:**
 - [ ] Requirements understood
@@ -77,6 +90,7 @@ python tools/core/brain/brain_cli.py transition EXECUTION --reason "Plan approve
 |------|----------|
 | Requirements documented | ✅ |
 | KB searched | ✅ |
+| Specification created | ✅ |
 | Implementation plan created | ✅ |
 | User approval obtained | ✅ |
 | Risks identified | ✅ |

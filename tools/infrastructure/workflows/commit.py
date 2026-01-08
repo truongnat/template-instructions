@@ -61,28 +61,10 @@ def stage_all_files():
     if code != 0:
         print(f"Error staging files: {stderr}")
         return False
-    print("✅ All files staged")
+    print("[INFO] All files staged")
     return True
 
-
-def generate_commit_message(changes: str) -> str:
-    """Generate a conventional commit message based on changes."""
-    # Simple heuristic - in production, use LLM or manual input
-    if "feat" in changes.lower() or "add" in changes.lower():
-        msg_type = "feat"
-    elif "fix" in changes.lower() or "bug" in changes.lower():
-        msg_type = "fix"
-    elif "doc" in changes.lower():
-        msg_type = "docs"
-    elif "test" in changes.lower():
-        msg_type = "test"
-    elif "refactor" in changes.lower():
-        msg_type = "refactor"
-    else:
-        msg_type = "chore"
-    
-    return f"{msg_type}(workflow): automated commit via /commit workflow"
-
+# ... (skip generate_commit_message)
 
 def commit_changes(message: str) -> bool:
     """Commit staged changes with given message."""
@@ -90,7 +72,7 @@ def commit_changes(message: str) -> bool:
     if code != 0:
         print(f"Error committing: {stderr}")
         return False
-    print(f"✅ Committed: {message}")
+    print(f"[INFO] Committed: {message}")
     return True
 
 
@@ -98,7 +80,7 @@ def verify_commit():
     """Show the last commit."""
     code, stdout, stderr = run_command(["git", "log", "-1", "--oneline"])
     if code == 0:
-        print(f"\n📋 Last commit: {stdout.strip()}")
+        print(f"\n[INFO] Last commit: {stdout.strip()}")
 
 
 def push_changes() -> bool:
@@ -107,14 +89,14 @@ def push_changes() -> bool:
     if code != 0:
         print(f"Error pushing: {stderr}")
         return False
-    print("✅ Pushed to remote")
+    print("[INFO] Pushed to remote")
     return True
 
 
 def main():
     """Main workflow execution."""
     print("=" * 60)
-    print("🔍 /commit - Automated Code Review and Commit")
+    print(" /commit - Automated Code Review and Commit")
     print("=" * 60)
     
     # Step 1: Check status
@@ -134,7 +116,7 @@ def main():
         print("\n[2/6] Files already staged, skipping...")
     
     if not staged:
-        print("\n⚠️  No changes to commit")
+        print("\n[INFO] No changes to commit")
         sys.exit(0)
     
     # Step 3: Review diff
@@ -158,7 +140,7 @@ def main():
     
     # Optional: Push
     print("\n" + "=" * 60)
-    print("✅ Commit workflow complete!")
+    print("[SUCCESS] Commit workflow complete!")
     print("=" * 60)
     print("\nTo push changes, run:")
     print("  git push")

@@ -28,5 +28,15 @@
       "plan_count": 7
     },
     "timestamp": "2026-01-08T20:35:08.123731"
+  },
+  {
+    "status": "healthy",
+    "score": 100.0,
+    "issues": [],
+    "metrics": {
+      "walkthrough_count": 10,
+      "plan_count": 7
+    },
+    "timestamp": "2026-01-08T20:58:54.707900"
   }
 ]

@@ -1,0 +1,12 @@
+usage: scorer.py [-h] [--score SCORE] [--threshold THRESHOLD] [--stats]
+                 [--json]
+
+Judge - Layer 2 Intelligence
+
+options:
+  -h, --help            show this help message and exit
+  --score SCORE         Score a file
+  --threshold THRESHOLD
+                        Set pass threshold
+  --stats               Show statistics
+  --json                Output as JSON
