@@ -15,13 +15,14 @@ if sys.platform == 'win32':
     except:
         pass
 
-sys.path.insert(0, str(Path(__file__).parent.parent))
+# Add project root to path
+sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 
-from utils.common import (
+from tools.core.utils.common import (
     print_header, print_success, print_error, print_warning,
     get_project_root, file_exists
 )
-from utils.artifact_manager import get_current_sprint, get_sprint_dir
+from tools.core.utils.artifact_manager import get_current_sprint, get_sprint_dir
 
 
 def check_directory_structure():
@@ -31,7 +32,7 @@ def check_directory_structure():
     root = get_project_root()
     required_dirs = [
         '.agent',
-        '.agent/roles',
+        '.agent/skills',
         '.agent/workflows',
         '.agent/templates',
 
@@ -51,14 +52,12 @@ def check_directory_structure():
     return all_good
 
 
-# removed utils.kb_manager import
-
 def check_knowledge_base():
     """Check knowledge base health"""
     print_header("Checking Knowledge Base")
     
     # Check for knowledge graph directory
-    kb_dir = get_project_root() / "tools" / "knowledge_graph"
+    kb_dir = get_project_root() / "tools" / "intelligence" / "knowledge_graph"
     
     if kb_dir.exists():
         print_success(f"✓ Knowledge Graph tools found: {kb_dir}")
@@ -91,9 +90,8 @@ def check_configuration():
     
     root = get_project_root()
     config_files = [
-        '.agent/CONFIG.md',
-        '.agent/USAGE.md',
-        '.agent/README.md'
+        'README.md',
+        'package.json'
     ]
     
     all_good = True

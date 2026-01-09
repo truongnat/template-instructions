@@ -175,7 +175,7 @@ def run_self_analysis():
     """Run Brain Self-Analysis"""
     print_header("Step 5: Brain Self-Analysis")
     
-    improver_path = TOOLS_DIR / "intelligence" / "self_learning" / "self_improver.py"
+    improver_path = ROOT_DIR / "tools" / "intelligence" / "self_learning" / "self_improver.py"
     
     if not improver_path.exists():
         print_info(f"Self-improver not found at {improver_path}, skipping.")
