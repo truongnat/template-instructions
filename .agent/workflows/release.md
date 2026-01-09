@@ -141,6 +141,10 @@ git push && git push --tags
   bun run release            # Full release
   ```
 
+- **Update Methods:**
+  - **NPM Update:** `npm update -g agentic-sdlc`
+  - **Source Update:** `python tools/infrastructure/update/updater.py`
+
 - **CI/CD:** Can be triggered in GitHub Actions
 
 - **Publish to NPM:** To publish to NPM, ensure you are logged in using `npm login` then run the release command with the --publish flag.

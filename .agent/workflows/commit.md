@@ -14,6 +14,12 @@ Automates the process of reviewing changes, generating Conventional Commits mess
 - You need to generate a structured commit message.
 - You want a quick sanity check (lint/diff) before committing.
 
+## Tool Maintenance
+Before starting complex tasks, ensure your tools are up to date:
+```bash
+python tools/infrastructure/update/updater.py --check
+```
+
 ## Workflow Steps
 
 ### 1. Check Status

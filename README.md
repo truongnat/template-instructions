@@ -27,14 +27,36 @@ At the core of Agentic SDLC is the **Brain** - an intelligent knowledge manageme
 ## ✨ Quick Start
 
 ### Installation
-
-```bash
-# Install globally
-npm install -g agentic-sdlc
-
-# Or with bun
-bun install -g agentic-sdlc
-```
+ 
+ ```bash
+ # Install globally
+ npm install -g agentic-sdlc
+ 
+ # Or with bun
+ bun install -g agentic-sdlc
+ ```
+ 
+ ### Installation from Source (GitHub)
+ 
+ If you prefer to run directly from source or update frequently:
+ 
+ ```bash
+ # Clone repository
+ git clone https://github.com/truongnat/agentic-sdlc.git
+ cd agentic-sdlc
+ 
+ # Install dependencies
+ bun install  # or npm install
+ ```
+ 
+ ### keeping Updated
+ 
+ If you installed from source, use the built-in updater:
+ 
+ ```bash
+ # Check and install updates
+ python tools/infrastructure/update/updater.py
+ ```
 
 ### Create New Project
 
