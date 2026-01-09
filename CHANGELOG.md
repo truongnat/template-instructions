@@ -6,6 +6,17 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [1.8.1] - 2026-01-10 (Sprint 6)
+
+### Documentation
+- [Workflows] add npm publish step to release workflow
+
+### Maintenance
+- [Tools] fix import paths and update package.json for new structure
+
+
+---
+
 ## [1.8.0] - 2026-01-10 (Sprint 6)
 
 ### Added
