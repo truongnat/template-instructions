@@ -143,6 +143,11 @@ git push && git push --tags
 
 - **CI/CD:** Can be triggered in GitHub Actions
 
+- **Publish to NPM:** To publish to NPM, ensure you are logged in using `npm login` then run the release command with the --publish flag.
+  ```bash
+  python tools/infrastructure/release/release.py release --publish
+  ```
+
 #release #versioning #changelog #semver #git-tags
 
 ## ⏭️ Next Steps
