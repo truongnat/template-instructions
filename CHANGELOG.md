@@ -6,6 +6,44 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [1.8.0] - 2026-01-10 (Sprint 6)
+
+### Added
+- [Telegram] implement custom login, file previews, and os polyfill fixes
+- [Telegram] implement user-based MTProto authentication with GramJS, dual login UI, and demo file previews
+- [Workflows] add missing intelligence workflows (observe, ab, score, monitor, planning)
+- [Workflows] reach 100 health score
+- [Workflows] restore metrics dashboard functionality and reach 100 health score
+- [Core] complete project restructure, fix import errors and update documentation
+- Initialize the FFmpeg editor project with Tauri, React, and core UI components.
+- [Autogen] integrate Microsoft AutoGen for multi-agent task execution
+- [Landing Page] add /worktree workflow to landing page
+- [Worktree] add Worktrunk CLI integration for parallel AI agent workflows
+- Replace `kb` scripts with new `brain` and Neo4j-related commands.
+- introduce Layer 2 Intelligence with core agentic capabilities and initial Multi-Agent Control Plane.
+
+### Fixed
+- [Workflows] resolve sys.path and import errors in all workflow scripts
+- [Workflows] repair housekeeping workflow and crash issues - fix: update housekeeping.py to use knowledge_graph instead of legacy modules - fix: patch brain_parallel.py with explicit utf-8 encoding for windows compatibility - fix: add missing --kb-path argument to sync_skills_to_neo4j.py - feat: enhance housekeeping cleanup to remove *_output.txt and debug_*.txt - fix: prevent self_improver from flagging __pycache__ as errors
+
+### Documentation
+- update workflow count to 23 and add /planning to workflow list
+- [Report] update validation report timestamp and health score confirmation
+- update workflow count to 18 and add AutoGen feature
+- add release walkthrough
+
+### Maintenance
+- [Workflows] enforce specification workflow in rules and docs
+- finalize project restructure and reach 100 health score
+- [Workflows] fix broken tool paths after restructure
+- [Scripts] add landing-page project scripts to root package.json
+- [Landing-Page] update obsolete KB references to neo4j brain
+- [Arch] remediate architecture audit findings
+- [Knowledge Base] remove file-based knowledge base and associated tools
+
+
+---
+
 ## [1.7.0] - 2026-01-05
 
 ### Added
