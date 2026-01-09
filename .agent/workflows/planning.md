@@ -42,7 +42,11 @@ python tools/core/brain/brain_cli.py transition PLANNING --reason "New task: [de
 - Identify stakeholders
 
 ```bash
+# Research with agent
 python tools/intelligence/research/research_agent.py --task "[feature]" --type general
+
+# Deep Search (DuckDuckGo + GitHub + StackOverflow)
+python mcp/connectors/deep_search.py --search "[feature]"
 ```
 
 ### 3. Create Specification (New Requirement)

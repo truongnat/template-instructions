@@ -9,16 +9,15 @@
 import { TelegramClient } from "telegram";
 import { StringSession } from "telegram/sessions";
 import { Api } from "telegram/tl";
+import { CustomFile } from "telegram/client/uploads";
 import type { TelegramFile } from "./types";
 
 // ============================================================================
 // CONSTANTS
 // ============================================================================
 
-// Default API credentials - users can also provide their own
+// Users must provide their own API credentials
 // Get yours at https://my.telegram.org/apps
-const DEFAULT_API_ID = 2040;  // Telegram Desktop's API ID (public)
-const DEFAULT_API_HASH = "b18441a1ff607e10a989891a5462e627"; // Telegram Desktop's API Hash
 
 // ============================================================================
 // TYPES
@@ -58,15 +57,47 @@ export interface UserInfo {
 
 class GramJSClient {
     private client: TelegramClient | null = null;
-    private apiId: number;
-    private apiHash: string;
+    private apiId: number | null = null;
+    private apiHash: string | null = null;
     private _isConnected: boolean = false;
     private _currentUser: UserInfo | null = null;
     private _storageChat: ChatInfo | null = null;
+    private _resolvedEntities: Map<string, Api.TypeInputPeer> = new Map();
 
     constructor(config?: GramJSConfig) {
-        this.apiId = config?.apiId || DEFAULT_API_ID;
-        this.apiHash = config?.apiHash || DEFAULT_API_HASH;
+        if (config?.apiId && config?.apiHash) {
+            this.apiId = config.apiId;
+            this.apiHash = config.apiHash;
+        }
+    }
+
+    // --------------------------------------------------------------------------
+    // CREDENTIALS
+    // --------------------------------------------------------------------------
+
+    /**
+     * Set API credentials (required before login)
+     */
+    setCredentials(apiId: number, apiHash: string): void {
+        this.apiId = apiId;
+        this.apiHash = apiHash;
+    }
+
+    /**
+     * Check if credentials are set
+     */
+    get hasCredentials(): boolean {
+        return this.apiId !== null && this.apiHash !== null;
+    }
+
+    /**
+     * Get current credentials
+     */
+    getCredentials(): { apiId: number; apiHash: string } | null {
+        if (this.apiId && this.apiHash) {
+            return { apiId: this.apiId, apiHash: this.apiHash };
+        }
+        return null;
     }
 
     // --------------------------------------------------------------------------
@@ -93,6 +124,10 @@ class GramJSClient {
      * Load session from saved string
      */
     async loadSession(sessionString: string): Promise<boolean> {
+        if (!this.apiId || !this.apiHash) {
+            throw new Error("API credentials not set. Call setCredentials() first.");
+        }
+
         try {
             const session = new StringSession(sessionString);
             this.client = new TelegramClient(session, this.apiId, this.apiHash, {
@@ -132,6 +167,10 @@ class GramJSClient {
      * Start login flow with phone number
      */
     async login(callbacks: LoginCallbacks): Promise<boolean> {
+        if (!this.apiId || !this.apiHash) {
+            throw new Error("API credentials not set. Call setCredentials() first.");
+        }
+
         try {
             const session = new StringSession("");
             this.client = new TelegramClient(session, this.apiId, this.apiHash, {
@@ -146,11 +185,16 @@ class GramJSClient {
                 onError: callbacks.onError,
             });
 
-            const me = await this.client.getMe();
-            if (me) {
-                this._isConnected = true;
-                this._currentUser = this.parseUser(me);
-                return true;
+            // client.start() already calls getMe internally and caches the result
+            // We can access it via client.session.save() being non-empty
+            // But we need user info, so we call getMe once here (it's cached in GramJS)
+            if (this.client.connected) {
+                const me = await this.client.getMe();
+                if (me) {
+                    this._isConnected = true;
+                    this._currentUser = this.parseUser(me);
+                    return true;
+                }
             }
             return false;
         } catch (error) {
@@ -175,6 +219,7 @@ class GramJSClient {
         this._isConnected = false;
         this._currentUser = null;
         this._storageChat = null;
+        this._resolvedEntities.clear();
     }
 
     // --------------------------------------------------------------------------
@@ -247,6 +292,43 @@ class GramJSClient {
     // --------------------------------------------------------------------------
 
     /**
+     * Resolve chat entity for API calls
+     * Caches resolved entities to avoid repeated lookups
+     */
+    private async resolveEntity(chatId: string): Promise<Api.TypeInputPeer> {
+        if (!this.client) throw new Error("Not connected");
+
+        // Check cache first
+        if (this._resolvedEntities.has(chatId)) {
+            return this._resolvedEntities.get(chatId)!;
+        }
+
+        // Resolve "me" to current user
+        if (chatId === "me") {
+            const me = await this.client.getMe();
+            const inputPeer = new Api.InputPeerUser({
+                userId: me.id,
+                accessHash: (me as Api.User).accessHash || BigInt(0),
+            });
+            this._resolvedEntities.set(chatId, inputPeer);
+            return inputPeer;
+        }
+
+        // Try to get input entity from GramJS
+        try {
+            const entity = await this.client.getInputEntity(chatId);
+            this._resolvedEntities.set(chatId, entity);
+            return entity;
+        } catch {
+            // If that fails, try parsing the ID and getting from dialogs
+            const numericId = BigInt(chatId.replace(/^-100/, "-").replace(/^-/, ""));
+            const entity = await this.client.getInputEntity(numericId);
+            this._resolvedEntities.set(chatId, entity);
+            return entity;
+        }
+    }
+
+    /**
      * Upload file to storage chat
      */
     async uploadFile(
@@ -256,14 +338,18 @@ class GramJSClient {
         if (!this.client) throw new Error("Not connected");
         if (!this._storageChat) throw new Error("No storage chat selected");
 
-        const chatId = this._storageChat.id === "me" ? "me" : this._storageChat.id;
+        // Resolve the chat entity properly
+        const chatId = this._storageChat.id;
+        const entity = await this.resolveEntity(chatId);
 
-        // Convert File to buffer for upload
-        const buffer = Buffer.from(await file.arrayBuffer());
+        // Convert File to Uint8Array for upload (browser-compatible)
+        const buffer = new Uint8Array(await file.arrayBuffer());
 
-        const result = await this.client.sendFile(chatId, {
-            file: buffer,
-            fileName: file.name,
+        // Wrap buffer in CustomFile to include filename metadata
+        const customFile = new CustomFile(file.name, file.size, "", buffer);
+
+        const result = await this.client.sendFile(entity, {
+            file: customFile,
             caption: JSON.stringify({
                 name: file.name,
                 size: file.size,
@@ -311,10 +397,11 @@ class GramJSClient {
         if (!this.client) throw new Error("Not connected");
         if (!this._storageChat) throw new Error("No storage chat selected");
 
-        const chatId = this._storageChat.id === "me" ? "me" : this._storageChat.id;
+        // Resolve the chat entity properly
+        const entity = await this.resolveEntity(this._storageChat.id);
 
         // Get the message
-        const messages = await this.client.getMessages(chatId, { ids: [messageId] });
+        const messages = await this.client.getMessages(entity, { ids: [messageId] });
         if (!messages.length || !messages[0]) {
             throw new Error("Message not found");
         }
@@ -328,7 +415,39 @@ class GramJSClient {
         const buffer = await this.client.downloadMedia(message, {});
         if (!buffer) throw new Error("Failed to download");
 
-        return new Blob([buffer as Buffer]);
+        // Convert to Uint8Array and create a new ArrayBuffer copy for Blob compatibility
+        // This ensures we have a pure ArrayBuffer, not SharedArrayBuffer
+        const data = buffer as Uint8Array;
+        const copy = new Uint8Array(data);
+        return new Blob([copy]);
+    }
+
+    /**
+     * Download file thumbnail
+     */
+    async downloadThumbnail(messageId: number): Promise<Blob | null> {
+        if (!this.client || !this._storageChat) return null;
+
+        try {
+            const entity = await this.resolveEntity(this._storageChat.id);
+            const messages = await this.client.getMessages(entity, { ids: [messageId] });
+            if (!messages.length || !messages[0]) return null;
+
+            const message = messages[0];
+
+            // Attempt to download thumbnail (size 's' for small)
+            // @ts-ignore - GramJS types might be incomplete for downloadMedia options
+            const buffer = await this.client.downloadMedia(message, { thumb: 's' });
+
+            if (!buffer) return null;
+
+            const data = buffer as Uint8Array;
+            const copy = new Uint8Array(data);
+            return new Blob([copy], { type: 'image/jpeg' });
+        } catch (error) {
+            console.warn("Thumbnail download failed:", error);
+            return null;
+        }
     }
 
     /**
@@ -338,10 +457,10 @@ class GramJSClient {
         if (!this.client) throw new Error("Not connected");
         if (!this._storageChat) throw new Error("No storage chat selected");
 
-        const chatId = this._storageChat.id === "me" ? "me" : this._storageChat.id;
-
         try {
-            await this.client.deleteMessages(chatId, [messageId], { revoke: true });
+            // Resolve the chat entity properly
+            const entity = await this.resolveEntity(this._storageChat.id);
+            await this.client.deleteMessages(entity, [messageId], { revoke: true });
             return true;
         } catch (error) {
             console.error("Failed to delete message:", error);
@@ -356,9 +475,10 @@ class GramJSClient {
         if (!this.client) throw new Error("Not connected");
         if (!this._storageChat) throw new Error("No storage chat selected");
 
-        const chatId = this._storageChat.id === "me" ? "me" : this._storageChat.id;
+        // Resolve the chat entity properly
+        const entity = await this.resolveEntity(this._storageChat.id);
 
-        const messages = await this.client.getMessages(chatId, {
+        const messages = await this.client.getMessages(entity, {
             limit,
             filter: new Api.InputMessagesFilterDocument(),
         });

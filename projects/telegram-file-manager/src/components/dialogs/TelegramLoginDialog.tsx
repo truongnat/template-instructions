@@ -22,6 +22,7 @@ import {
     Megaphone,
 } from 'lucide-react';
 import { gramjsClient, type ChatInfo } from '../../lib/telegram/gramjs-client';
+import { useResponsive } from '../../hooks/useResponsive';
 
 // ============================================================================
 // TYPES
@@ -33,14 +34,16 @@ interface TelegramLoginDialogProps {
     onSuccess: (session: string, chat: ChatInfo) => void;
 }
 
-type Step = 'phone' | 'code' | 'password' | 'chat' | 'success';
+type Step = 'credentials' | 'phone' | 'code' | 'password' | 'chat' | 'success';
 
 // ============================================================================
 // COMPONENT
 // ============================================================================
 
 export function TelegramLoginDialog({ isOpen, onClose, onSuccess }: TelegramLoginDialogProps) {
-    const [step, setStep] = useState<Step>('phone');
+    const [step, setStep] = useState<Step>('credentials');
+    const [apiId, setApiId] = useState('');
+    const [apiHash, setApiHash] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [phoneCode, setPhoneCode] = useState('');
     const [password, setPassword] = useState('');
@@ -48,6 +51,7 @@ export function TelegramLoginDialog({ isOpen, onClose, onSuccess }: TelegramLogi
     const [isLoading, setIsLoading] = useState(false);
     const [chats, setChats] = useState<ChatInfo[]>([]);
     const [selectedChat, setSelectedChat] = useState<ChatInfo | null>(null);
+    const { isMobile } = useResponsive();
 
     // Refs for resolving promises
     const codeResolve = useRef<((value: string) => void) | null>(null);
@@ -56,7 +60,9 @@ export function TelegramLoginDialog({ isOpen, onClose, onSuccess }: TelegramLogi
     // Reset state when dialog opens
     useEffect(() => {
         if (isOpen) {
-            setStep('phone');
+            setStep('credentials');
+            setApiId('');
+            setApiHash('');
             setPhoneNumber('');
             setPhoneCode('');
             setPassword('');
@@ -66,6 +72,32 @@ export function TelegramLoginDialog({ isOpen, onClose, onSuccess }: TelegramLogi
             setSelectedChat(null);
         }
     }, [isOpen]);
+
+    // Submit API credentials
+    const handleCredentialsSubmit = () => {
+        if (!apiId.trim()) {
+            setError('Please enter your API ID');
+            return;
+        }
+        if (!apiHash.trim()) {
+            setError('Please enter your API Hash');
+            return;
+        }
+
+        const numericApiId = parseInt(apiId.trim(), 10);
+        if (isNaN(numericApiId)) {
+            setError('API ID must be a number');
+            return;
+        }
+
+        setError(null);
+
+        // Set credentials on the client
+        gramjsClient.setCredentials(numericApiId, apiHash.trim());
+
+        // Proceed to phone step
+        setStep('phone');
+    };
 
     // Start login when phone is submitted
     const handlePhoneSubmit = async () => {
@@ -177,25 +209,31 @@ export function TelegramLoginDialog({ isOpen, onClose, onSuccess }: TelegramLogi
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="modal-overlay"
+            className={`modal-overlay z-[60] ${isMobile ? 'flex flex-col' : ''}`}
             onClick={onClose}
+            style={isMobile ? { padding: 0, justifyContent: 'flex-end', background: 'rgba(0,0,0,0.8)' } : undefined}
         >
             <motion.div
-                initial={{ scale: 0.95, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.95, opacity: 0 }}
-                className="glass w-full max-w-md rounded-2xl overflow-hidden"
+                initial={isMobile ? { y: '100%' } : { scale: 0.95, opacity: 0 }}
+                animate={isMobile ? { y: 0 } : { scale: 1, opacity: 1 }}
+                exit={isMobile ? { y: '100%' } : { scale: 0.95, opacity: 0 }}
+                transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+                className={`glass overflow-hidden ${isMobile ? 'w-full h-[95vh] rounded-t-3xl' : 'w-full max-w-md rounded-2xl'}`}
                 onClick={e => e.stopPropagation()}
             >
                 {/* Header */}
                 <div
-                    className="flex items-center justify-between p-4"
+                    className="flex items-center justify-between p-4 relative"
                     style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}
                 >
+                    {isMobile && (
+                        <div className="absolute top-2 left-1/2 -translate-x-1/2 w-12 h-1 bg-white/20 rounded-full" />
+                    )}
                     <div className="flex items-center gap-3">
-                        {step !== 'phone' && step !== 'success' && (
+                        {step !== 'credentials' && step !== 'success' && (
                             <button
                                 onClick={() => {
+                                    if (step === 'phone') setStep('credentials');
                                     if (step === 'code') setStep('phone');
                                     if (step === 'password') setStep('code');
                                     if (step === 'chat') setStep('code');
@@ -206,8 +244,9 @@ export function TelegramLoginDialog({ isOpen, onClose, onSuccess }: TelegramLogi
                             </button>
                         )}
                         <MessageSquare size={20} style={{ color: '#0088cc' }} />
-                        <h2 className="text-lg font-semibold">
-                            {step === 'phone' && 'Connect Telegram'}
+                        <h2 className="text-lg font-semibold truncate max-w-[200px]">
+                            {step === 'credentials' && 'API Credentials'}
+                            {step === 'phone' && 'Phone Number'}
                             {step === 'code' && 'Verification Code'}
                             {step === 'password' && 'Two-Factor Auth'}
                             {step === 'chat' && 'Select Storage'}
@@ -220,9 +259,83 @@ export function TelegramLoginDialog({ isOpen, onClose, onSuccess }: TelegramLogi
                 </div>
 
                 {/* Content */}
-                <div className="p-6">
+                <div className={`p-6 overflow-y-auto ${isMobile ? 'h-[calc(95vh-6rem)] pb-safe-bottom' : ''}`}>
                     <AnimatePresence mode="wait">
-                        {/* Step 1: Phone Number */}
+                        {/* Step 1: API Credentials */}
+                        {step === 'credentials' && (
+                            <motion.div
+                                key="credentials"
+                                initial={{ opacity: 0, x: 20 }}
+                                animate={{ opacity: 1, x: 0 }}
+                                exit={{ opacity: 0, x: -20 }}
+                                className="space-y-4"
+                            >
+                                <p className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>
+                                    Enter your Telegram API credentials. Get them from{' '}
+                                    <a
+                                        href="https://my.telegram.org/apps"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="underline hover:text-white transition-colors"
+                                        style={{ color: '#0088cc' }}
+                                    >
+                                        my.telegram.org
+                                    </a>
+                                </p>
+
+                                <div>
+                                    <label className="text-sm mb-1 block" style={{ color: 'rgba(255,255,255,0.6)' }}>
+                                        API ID
+                                    </label>
+                                    <div className="relative">
+                                        <Key size={16} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: 'rgba(255,255,255,0.4)' }} />
+                                        <input
+                                            type="text"
+                                            value={apiId}
+                                            onChange={e => setApiId(e.target.value.replace(/\D/g, ''))}
+                                            placeholder="12345678"
+                                            className="input-glass pl-10 text-sm"
+                                            autoFocus
+                                            onKeyDown={e => e.key === 'Enter' && handleCredentialsSubmit()}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label className="text-sm mb-1 block" style={{ color: 'rgba(255,255,255,0.6)' }}>
+                                        API Hash
+                                    </label>
+                                    <div className="relative">
+                                        <Lock size={16} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: 'rgba(255,255,255,0.4)' }} />
+                                        <input
+                                            type="text"
+                                            value={apiHash}
+                                            onChange={e => setApiHash(e.target.value)}
+                                            placeholder="0123456789abcdef0123456789abcdef"
+                                            className="input-glass pl-10 text-sm font-mono"
+                                            onKeyDown={e => e.key === 'Enter' && handleCredentialsSubmit()}
+                                        />
+                                    </div>
+                                </div>
+
+                                {error && (
+                                    <div className="p-3 rounded-lg text-sm" style={{ background: 'rgba(239, 68, 68, 0.1)', color: '#f87171' }}>
+                                        {error}
+                                    </div>
+                                )}
+
+                                <button
+                                    onClick={handleCredentialsSubmit}
+                                    disabled={!apiId.trim() || !apiHash.trim()}
+                                    className="btn-gradient w-full flex items-center justify-center gap-2"
+                                    style={{ opacity: (!apiId.trim() || !apiHash.trim()) ? 0.5 : 1 }}
+                                >
+                                    Continue
+                                </button>
+                            </motion.div>
+                        )}
+
+                        {/* Step 2: Phone Number */}
                         {step === 'phone' && (
                             <motion.div
                                 key="phone"
@@ -233,7 +346,6 @@ export function TelegramLoginDialog({ isOpen, onClose, onSuccess }: TelegramLogi
                             >
                                 <p className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>
                                     Enter your phone number to login with your Telegram account.
-                                    No bot required!
                                 </p>
 
                                 <div>

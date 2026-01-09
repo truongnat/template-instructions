@@ -829,6 +829,7 @@ Located in `.agent/workflows/`
 - `/ab <prompt>` - Run A/B test
 - `/score <file>` - Get quality score
 - `/monitor` - System health check
+- `/deep-search` - Technical research (DDG + GitHub + StackOverflow)
 
 ---
 
@@ -921,10 +922,27 @@ python tools/intelligence/knowledge_graph/brain_parallel.py --recommend "impleme
 
 **Location:** `mcp/connectors/`
 
-- `filesystem` - File operations
-- `github` - GitHub integration
-- `research` - Web search and API calls
-- `transform` - Code transformations
+| Connector | Description | API Key |
+|-----------|-------------|---------|
+| `filesystem` | File operations | None |
+| `github` | GitHub integration | Optional |
+| `api` | Generic REST API | Varies |
+| `deep_search` | Technical research (DDG + GitHub + SO) | None |
+
+**Deep Search Usage:**
+```bash
+# Aggregated search
+python mcp/connectors/deep_search.py --search "Python async tutorial"
+
+# DuckDuckGo only
+python mcp/connectors/deep_search.py --ddg "query"
+
+# GitHub search
+python mcp/connectors/deep_search.py --github "MCP connector"
+
+# StackOverflow search
+python mcp/connectors/deep_search.py --stackoverflow "async await"
+```
 
 ---
 

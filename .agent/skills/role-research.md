@@ -36,10 +36,25 @@ Activate when user mentions: @RESEARCH, research, investigate, explore, evaluate
 2. Query Neo4j: brain_parallel.py --recommend
 3. Review docs/ for architecture decisions
 ### Step 2: External Research
-1. Web search for current solutions
-2. Review official documentation
-3. Check community forums and issues
-4. Evaluate StackOverflow solutions
+1. Use Deep Search MCP for aggregated search:
+   ```bash
+   python mcp/connectors/deep_search.py --search "topic"
+   ```
+2. Search specific sources:
+   ```bash
+   # DuckDuckGo web search
+   python mcp/connectors/deep_search.py --ddg "topic"
+   
+   # GitHub repos/code
+   python mcp/connectors/deep_search.py --github "topic"
+   
+   # StackOverflow Q&A
+   python mcp/connectors/deep_search.py --stackoverflow "topic"
+   ```
+3. Fetch specific documentation:
+   ```bash
+   python -c "from mcp.connectors.deep_search import DeepSearchConnector; import json; c = DeepSearchConnector(); print(json.dumps(c.call_tool('fetch_content', {'url': 'https://docs.example.com'}), indent=2))"
+   ```
 ### Step 3: Analysis
 1. Compare options objectively
 2. List pros and cons

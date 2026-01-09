@@ -23,8 +23,11 @@ description: Process - Deep Investigation Workflow
 **Question:** What does the user want?
 
 ```bash
-# Basic research
+# Basic research with research agent
 python tools/intelligence/research/research_agent.py --task "[feature]" --type general
+
+# Deep Search MCP (aggregated: DuckDuckGo + GitHub + StackOverflow)
+python mcp/connectors/deep_search.py --search "[feature]"
 ```
 
 - [ ] Understand explicit requirements

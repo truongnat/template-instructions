@@ -25,11 +25,13 @@ import {
     Save,
     Users,
     ChevronRight,
+    ChevronLeft,
 } from 'lucide-react';
 import { useSettingsStore } from '../../store/settings';
 import { database } from '../../lib/telegram/metadata';
 import { TelegramLoginDialog } from './TelegramLoginDialog';
 import type { ChatInfo } from '../../lib/telegram/gramjs-client';
+import { useResponsive } from '../../hooks/useResponsive';
 
 // ============================================================================
 // TYPES
@@ -53,6 +55,7 @@ export function SettingsDialog({ isOpen, onClose }: SettingsDialogProps) {
     const [botToken, setBotToken] = useState('');
     const [channelId, setChannelId] = useState('');
     const [showClearConfirm, setShowClearConfirm] = useState(false);
+    const { isMobile } = useResponsive();
 
     const {
         telegram,
@@ -140,21 +143,27 @@ export function SettingsDialog({ isOpen, onClose }: SettingsDialogProps) {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
-                        className="modal-overlay"
+                        className={`modal-overlay z-50 ${isMobile ? 'flex flex-col' : ''}`}
                         onClick={onClose}
+                        style={isMobile ? { padding: 0, justifyContent: 'flex-end' } : undefined}
                     >
                         <motion.div
-                            initial={{ scale: 0.95, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            exit={{ scale: 0.95, opacity: 0 }}
-                            className="glass w-full max-w-lg rounded-2xl overflow-hidden"
+                            initial={isMobile ? { y: '100%' } : { scale: 0.95, opacity: 0 }}
+                            animate={isMobile ? { y: 0 } : { scale: 1, opacity: 1 }}
+                            exit={isMobile ? { y: '100%' } : { scale: 0.95, opacity: 0 }}
+                            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+                            className={`glass overflow-hidden ${isMobile ? 'w-full h-[95vh] rounded-t-3xl' : 'w-full max-w-lg rounded-2xl'}`}
                             onClick={e => e.stopPropagation()}
                         >
                             {/* Header */}
                             <div
-                                className="flex items-center justify-between p-4"
+                                className="flex items-center justify-between p-4 relative"
                                 style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}
                             >
+                                {isMobile && (
+                                    <div className="absolute top-2 left-1/2 -translate-x-1/2 w-12 h-1 bg-white/20 rounded-full" />
+                                )}
+
                                 <div className="flex items-center gap-3">
                                     <Settings size={20} style={{ color: '#7c3aed' }} />
                                     <h2 className="text-lg font-semibold">Settings</h2>
@@ -166,14 +175,14 @@ export function SettingsDialog({ isOpen, onClose }: SettingsDialogProps) {
 
                             {/* Tabs */}
                             <div
-                                className="flex p-2 gap-1"
+                                className="flex p-2 gap-1 overflow-x-auto scrollbar-hide"
                                 style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}
                             >
                                 {tabs.map(tab => (
                                     <button
                                         key={tab.id}
                                         onClick={() => setActiveTab(tab.id)}
-                                        className="flex items-center gap-2 px-4 py-2 rounded-lg transition-all text-sm"
+                                        className="flex items-center gap-2 px-4 py-2.5 rounded-lg transition-all text-sm whitespace-nowrap flex-1 justify-center"
                                         style={{
                                             background: activeTab === tab.id ? 'rgba(124, 58, 237, 0.2)' : 'transparent',
                                             color: activeTab === tab.id ? 'white' : 'rgba(255,255,255,0.6)',
@@ -186,7 +195,7 @@ export function SettingsDialog({ isOpen, onClose }: SettingsDialogProps) {
                             </div>
 
                             {/* Content */}
-                            <div className="p-4 max-h-96 overflow-y-auto">
+                            <div className={`p-4 overflow-y-auto ${isMobile ? 'h-[calc(95vh-8rem)] pb-safe-bottom' : 'max-h-96'}`}>
                                 {/* Telegram Tab */}
                                 {activeTab === 'telegram' && (
                                     <div className="space-y-4">
@@ -225,7 +234,7 @@ export function SettingsDialog({ isOpen, onClose }: SettingsDialogProps) {
                                                 </div>
                                                 <button
                                                     onClick={disconnectTelegram}
-                                                    className="mt-4 btn-ghost text-sm w-full"
+                                                    className="mt-4 btn-ghost text-sm w-full h-10"
                                                     style={{ color: '#f87171' }}
                                                 >
                                                     Disconnect
@@ -236,17 +245,17 @@ export function SettingsDialog({ isOpen, onClose }: SettingsDialogProps) {
                                                 <div className="flex items-center gap-2 mb-2">
                                                     <button
                                                         onClick={() => setShowBotLogin(false)}
-                                                        className="text-sm flex items-center gap-1"
+                                                        className="text-sm flex items-center gap-1 h-10 px-2 -ml-2"
                                                         style={{ color: 'rgba(255,255,255,0.5)' }}
                                                     >
-                                                        ← Back
+                                                        <ChevronLeft size={16} /> Back
                                                     </button>
                                                 </div>
                                                 <p className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>
                                                     Connect using a Telegram bot (legacy method).
                                                 </p>
 
-                                                <div className="space-y-3">
+                                                <div className="space-y-4">
                                                     <div>
                                                         <label className="text-sm mb-1 block" style={{ color: 'rgba(255,255,255,0.6)' }}>
                                                             Bot Token
@@ -258,7 +267,7 @@ export function SettingsDialog({ isOpen, onClose }: SettingsDialogProps) {
                                                                 value={botToken}
                                                                 onChange={e => setBotToken(e.target.value)}
                                                                 placeholder="123456789:ABCdef..."
-                                                                className="input-glass pl-10 text-sm"
+                                                                className="input-glass pl-10 text-sm h-11"
                                                             />
                                                         </div>
                                                     </div>
@@ -274,7 +283,7 @@ export function SettingsDialog({ isOpen, onClose }: SettingsDialogProps) {
                                                                 value={channelId}
                                                                 onChange={e => setChannelId(e.target.value)}
                                                                 placeholder="-1001234567890"
-                                                                className="input-glass pl-10 text-sm"
+                                                                className="input-glass pl-10 text-sm h-11"
                                                             />
                                                         </div>
                                                     </div>
@@ -291,7 +300,7 @@ export function SettingsDialog({ isOpen, onClose }: SettingsDialogProps) {
                                                     <button
                                                         onClick={handleBotConnect}
                                                         disabled={!botToken || !channelId || isConnecting}
-                                                        className="btn-gradient w-full flex items-center justify-center gap-2"
+                                                        className="btn-gradient w-full flex items-center justify-center gap-2 h-11"
                                                         style={{ opacity: (!botToken || !channelId || isConnecting) ? 0.5 : 1 }}
                                                     >
                                                         {isConnecting ? (
@@ -311,11 +320,11 @@ export function SettingsDialog({ isOpen, onClose }: SettingsDialogProps) {
                                                     Connect your Telegram account to store files securely.
                                                 </p>
 
-                                                <div className="space-y-2">
+                                                <div className="space-y-3">
                                                     {/* GramJS Login - Recommended */}
                                                     <button
                                                         onClick={() => setShowGramJSLogin(true)}
-                                                        className="w-full flex items-center gap-3 p-4 rounded-xl transition-all group"
+                                                        className="w-full flex items-center gap-3 p-4 rounded-xl transition-all group active:scale-95"
                                                         style={{
                                                             background: 'linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(59, 130, 246, 0.2))',
                                                             border: '1px solid rgba(124, 58, 237, 0.4)',
@@ -344,7 +353,7 @@ export function SettingsDialog({ isOpen, onClose }: SettingsDialogProps) {
                                                     {/* Bot Login - Legacy */}
                                                     <button
                                                         onClick={() => setShowBotLogin(true)}
-                                                        className="w-full flex items-center gap-3 p-4 rounded-xl transition-all group"
+                                                        className="w-full flex items-center gap-3 p-4 rounded-xl transition-all group active:scale-95"
                                                         style={{
                                                             background: 'rgba(255,255,255,0.05)',
                                                             border: '1px solid rgba(255,255,255,0.1)',
@@ -382,7 +391,7 @@ export function SettingsDialog({ isOpen, onClose }: SettingsDialogProps) {
                                                     <button
                                                         key={t}
                                                         onClick={() => setTheme(t)}
-                                                        className="flex-1 py-2 px-4 rounded-lg text-sm capitalize transition-all"
+                                                        className="flex-1 py-3 px-4 rounded-lg text-sm capitalize transition-all"
                                                         style={{
                                                             background: theme === t ? 'rgba(124, 58, 237, 0.2)' : 'rgba(255,255,255,0.05)',
                                                             border: theme === t ? '1px solid rgba(124, 58, 237, 0.5)' : '1px solid rgba(255,255,255,0.1)',
@@ -399,13 +408,13 @@ export function SettingsDialog({ isOpen, onClose }: SettingsDialogProps) {
                                 {/* Data Tab */}
                                 {activeTab === 'data' && (
                                     <div className="space-y-4">
-                                        <div className="space-y-2">
+                                        <div className="space-y-3">
                                             <button
                                                 onClick={handleExportData}
-                                                className="w-full flex items-center gap-3 p-3 rounded-lg transition-all"
+                                                className="w-full flex items-center gap-3 p-4 rounded-lg transition-all active:scale-95"
                                                 style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}
                                             >
-                                                <Download size={18} style={{ color: '#22c55e' }} />
+                                                <Download size={20} style={{ color: '#22c55e' }} />
                                                 <div className="text-left">
                                                     <p className="font-medium text-sm">Export Data</p>
                                                     <p className="text-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>
@@ -416,10 +425,10 @@ export function SettingsDialog({ isOpen, onClose }: SettingsDialogProps) {
 
                                             <button
                                                 onClick={handleImportData}
-                                                className="w-full flex items-center gap-3 p-3 rounded-lg transition-all"
+                                                className="w-full flex items-center gap-3 p-4 rounded-lg transition-all active:scale-95"
                                                 style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}
                                             >
-                                                <Upload size={18} style={{ color: '#3b82f6' }} />
+                                                <Upload size={20} style={{ color: '#3b82f6' }} />
                                                 <div className="text-left">
                                                     <p className="font-medium text-sm">Import Data</p>
                                                     <p className="text-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>
@@ -433,10 +442,10 @@ export function SettingsDialog({ isOpen, onClose }: SettingsDialogProps) {
                                             {!showClearConfirm ? (
                                                 <button
                                                     onClick={() => setShowClearConfirm(true)}
-                                                    className="w-full flex items-center gap-3 p-3 rounded-lg transition-all"
+                                                    className="w-full flex items-center gap-3 p-4 rounded-lg transition-all active:scale-95"
                                                     style={{ background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.3)' }}
                                                 >
-                                                    <Trash2 size={18} style={{ color: '#f87171' }} />
+                                                    <Trash2 size={20} style={{ color: '#f87171' }} />
                                                     <div className="text-left">
                                                         <p className="font-medium text-sm" style={{ color: '#f87171' }}>Clear All Data</p>
                                                         <p className="text-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>
@@ -461,14 +470,14 @@ export function SettingsDialog({ isOpen, onClose }: SettingsDialogProps) {
                                                     <div className="flex gap-2">
                                                         <button
                                                             onClick={() => setShowClearConfirm(false)}
-                                                            className="flex-1 btn-ghost text-sm"
+                                                            className="flex-1 btn-ghost text-sm h-10"
                                                         >
                                                             Cancel
                                                         </button>
                                                         <button
                                                             onClick={handleClearData}
-                                                            className="flex-1 py-2 px-4 rounded-lg text-sm"
-                                                            style={{ background: '#ef4444', color: 'white' }}
+                                                            className="flex-1 py-2 px-4 rounded-lg text-sm bg-red-500 text-white h-10"
+                                                            style={{ background: '#ef4444' }}
                                                         >
                                                             Clear Data
                                                         </button>

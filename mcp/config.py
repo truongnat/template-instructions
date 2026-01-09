@@ -40,6 +40,16 @@ class MCPConfig:
                 "github": ConnectorConfig("github", enabled=True),
                 "database": ConnectorConfig("database", enabled=False),
                 "api": ConnectorConfig("api", enabled=True),
+                "deep_search": ConnectorConfig(
+                    "deep_search", 
+                    enabled=True,
+                    timeout=60,
+                    settings={
+                        "github_token": os.getenv("GITHUB_TOKEN"),
+                        "cache_enabled": True,
+                        "cache_ttl_hours": 24
+                    }
+                ),
             }
     
     @classmethod

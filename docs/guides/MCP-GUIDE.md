@@ -14,6 +14,7 @@ The following servers are integrated into the team roles. Ensure these are confi
 | **GitIngest** | Codebase snapshots | @ORCHESTRATOR, @REPORTER |
 | **Apidog** | API Testing & Design | @SA, @TESTER |
 | **Brave Search** | External Research | @PM, @PO |
+| **Deep Search** | Technical Research (DDG + GitHub + StackOverflow) | @RESEARCH, @SA, @DEV |
 | **Firecrawl** | Web Scraper / Log research | @SECA, @DEVOPS |
 | **Playwright** | E2E / Browser Testing | @QA, @TESTER |
 | **Context7** | Architecture Analysis | @SA, @DEV |

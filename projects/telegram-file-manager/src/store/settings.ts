@@ -20,6 +20,8 @@ type Theme = 'dark' | 'light' | 'system';
 type AuthMethod = 'bot' | 'gramjs';
 
 interface GramJSSettings {
+    apiId: number;
+    apiHash: string;
     session: string;
     chatId: string;
     chatTitle: string;
@@ -133,8 +135,15 @@ export const useSettingsStore = create<SettingsState>()(
 
                 try {
                     const user = gramjsClient.currentUser;
+                    const credentials = gramjsClient.getCredentials();
+
+                    if (!credentials) {
+                        throw new Error('API credentials not set');
+                    }
 
                     const gramjsSettings: GramJSSettings = {
+                        apiId: credentials.apiId,
+                        apiHash: credentials.apiHash,
                         session,
                         chatId: chat.id,
                         chatTitle: chat.title,
@@ -168,7 +177,11 @@ export const useSettingsStore = create<SettingsState>()(
                 try {
                     const gramjsSettings = await settingsMetadata.get('gramjs') as GramJSSettings | null;
 
-                    if (gramjsSettings?.session) {
+                    if (gramjsSettings?.session && gramjsSettings.apiId && gramjsSettings.apiHash) {
+                        // Set credentials first
+                        gramjsClient.setCredentials(gramjsSettings.apiId, gramjsSettings.apiHash);
+
+                        // Then load session
                         const success = await gramjsClient.loadSession(gramjsSettings.session);
 
                         if (success) {
