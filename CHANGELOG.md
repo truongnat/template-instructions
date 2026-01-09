@@ -6,6 +6,17 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [1.9.0] - 2026-01-10
+
+### Added
+- [Tools] add source update script and documentation
+
+### Other
+- fix (scripts): fix absolute path in pacpacke.json
+
+
+---
+
 ## [1.8.1] - 2026-01-10 (Sprint 6)
 
 ### Documentation
