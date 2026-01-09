@@ -13,7 +13,7 @@
     "projects/telegram-file-manager"
   ],
   "bin": {
-    "agentic-sdlc": "./bin/cli.js"
+    "agentic-sdlc": "bin/cli.js"
   },
   "scripts": {
     "test": "pytest tests/ -v",
