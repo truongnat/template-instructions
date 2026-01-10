@@ -1,10 +1,9 @@
 /**
- * Main Application Component - Responsive Layout
+ * Main Application Component - Responsive Layout with CSS Animations
  * @module App
  */
 
 import { useEffect, useState, useMemo } from 'react';
-import { motion } from 'framer-motion';
 import { Sidebar } from './components/layout/Sidebar';
 import { Header } from './components/layout/Header';
 import { FileGrid } from './components/file/FileGrid';
@@ -12,6 +11,7 @@ import { DropZone } from './components/upload/DropZone';
 import { PreviewModal } from './components/dialogs/PreviewModal';
 import { SettingsDialog } from './components/dialogs/SettingsDialog';
 import { MobileNav, MobileHeader, SwipeableDrawer, MobileActionSheet } from './components/mobile';
+import { OnboardingPage } from './pages/Onboarding';
 import { useFileStore } from './store/files';
 import { useSettingsStore } from './store/settings';
 import { useResponsive } from './hooks/useResponsive';
@@ -78,7 +78,7 @@ type MobileTab = 'home' | 'files' | 'favorites' | 'more';
 
 function App() {
   const { loadFiles, loadFolders, getFilteredFiles, downloadFile, moveToTrash, toggleFavorite } = useFileStore();
-  const { loadSettings, telegram, theme, setTheme } = useSettingsStore();
+  const { loadSettings, isConnected, theme, setTheme } = useSettingsStore();
   const { isMobile, isTablet } = useResponsive();
 
   // UI State
@@ -99,10 +99,13 @@ function App() {
   // Load data on mount
   useEffect(() => {
     loadSettings().then(() => {
-      loadFiles();
-      loadFolders();
+      // Only load files if already authenticated
+      if (isConnected()) {
+        loadFiles();
+        loadFolders();
+      }
     });
-  }, [loadSettings, loadFiles, loadFolders]);
+  }, [loadSettings, loadFiles, loadFolders, isConnected]);
 
   // Apply theme
   useEffect(() => {
@@ -134,14 +137,15 @@ function App() {
     return () => window.removeEventListener('open-action-sheet', handleOpenActionSheet as EventListener);
   }, []);
 
+  // Authentication check - show onboarding if not connected
+  if (!isConnected()) {
+    return <OnboardingPage />;
+  }
+
   // Render mobile layout
   if (isMobile) {
     return (
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="h-screen-mobile flex flex-col overflow-hidden"
-      >
+      <div className="h-screen-mobile flex flex-col overflow-hidden animate-fade-in">
         {/* Mobile Header */}
         <MobileHeader
           onMenuClick={() => setIsDrawerOpen(true)}
@@ -195,33 +199,14 @@ function App() {
           isOpen={showSettings}
           onClose={() => setShowSettings(false)}
         />
-
-        {/* Connection Status Banner */}
-        {!telegram?.is_connected && (
-          <button
-            onClick={() => setShowSettings(true)}
-            className="fixed bottom-20 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full text-sm cursor-pointer transition-all hover:scale-105 z-30"
-            style={{
-              background: 'rgba(234, 179, 8, 0.2)',
-              border: '1px solid rgba(234, 179, 8, 0.3)',
-              color: '#fbbf24',
-            }}
-          >
-            Demo Mode - Tap to connect
-          </button>
-        )}
-      </motion.div>
+      </div>
     );
   }
 
   // Render tablet layout (collapsible sidebar)
   if (isTablet) {
     return (
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="h-screen flex overflow-hidden"
-      >
+      <div className="h-screen flex overflow-hidden animate-fade-in">
         {/* Sidebar - Collapsed by default on tablet */}
         <Sidebar />
 
@@ -254,32 +239,13 @@ function App() {
           isOpen={showSettings}
           onClose={() => setShowSettings(false)}
         />
-
-        {/* Connection Status Banner */}
-        {!telegram?.is_connected && (
-          <button
-            onClick={() => setShowSettings(true)}
-            className="fixed bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full text-sm cursor-pointer transition-all hover:scale-105"
-            style={{
-              background: 'rgba(234, 179, 8, 0.2)',
-              border: '1px solid rgba(234, 179, 8, 0.3)',
-              color: '#fbbf24',
-            }}
-          >
-            Demo Mode - Click to connect Telegram
-          </button>
-        )}
-      </motion.div>
+      </div>
     );
   }
 
   // Render desktop layout (original)
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      className="h-screen flex overflow-hidden"
-    >
+    <div className="h-screen flex overflow-hidden animate-fade-in">
       {/* Sidebar */}
       <Sidebar />
 
@@ -312,22 +278,7 @@ function App() {
         isOpen={showSettings}
         onClose={() => setShowSettings(false)}
       />
-
-      {/* Connection Status Banner */}
-      {!telegram?.is_connected && (
-        <button
-          onClick={() => setShowSettings(true)}
-          className="fixed bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 rounded-full text-sm cursor-pointer transition-all hover:scale-105"
-          style={{
-            background: 'rgba(234, 179, 8, 0.2)',
-            border: '1px solid rgba(234, 179, 8, 0.3)',
-            color: '#fbbf24',
-          }}
-        >
-          Demo Mode - Click to connect Telegram
-        </button>
-      )}
-    </motion.div>
+    </div>
   );
 }
 

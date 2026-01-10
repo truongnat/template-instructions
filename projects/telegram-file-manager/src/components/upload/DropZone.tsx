@@ -1,11 +1,10 @@
 /**
- * Upload Drop Zone Component
+ * Upload Drop Zone Component - Updated with CSS Animations
  * @module components/upload/DropZone
  */
 
 import { useState, useCallback, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Upload, X, FileUp, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { Upload as UploadIcon, X, FileUp, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { useFileStore } from '../../store/files';
 import { formatFileSize } from '../../lib/telegram/types';
 
@@ -13,7 +12,7 @@ import { formatFileSize } from '../../lib/telegram/types';
 // CONSTANTS
 // ============================================================================
 
-const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
+const MAX_FILE_SIZE = 2 * 1024 * 1024 * 1024; // 2GB (MTProto limit)
 
 // ============================================================================
 // TYPES
@@ -48,36 +47,10 @@ export function DropZone() {
         return () => window.removeEventListener('trigger-upload', handleTriggerUpload);
     }, []);
 
-    const handleDragOver = useCallback((e: React.DragEvent) => {
-        e.preventDefault();
-        e.stopPropagation();
-    }, []);
-
-    const handleDragEnter = useCallback((e: React.DragEvent) => {
-        e.preventDefault();
-        e.stopPropagation();
-        setIsDragging(true);
-    }, []);
-
-    const handleDragLeave = useCallback((e: React.DragEvent) => {
-        e.preventDefault();
-        e.stopPropagation();
-
-        const rect = (e.currentTarget as HTMLElement).getBoundingClientRect();
-        const x = e.clientX;
-        const y = e.clientY;
-
-        if (x < rect.left || x > rect.right || y < rect.top || y > rect.bottom) {
-            setIsDragging(false);
-        }
-    }, []);
-
     const processFiles = useCallback(async (files: FileList | File[]) => {
         const fileArray = Array.from(files);
-
         if (fileArray.length === 0) return;
 
-        // Create upload items
         const newUploads: UploadItem[] = fileArray.map(file => ({
             id: crypto.randomUUID(),
             file,
@@ -91,7 +64,6 @@ export function DropZone() {
         setUploads(prev => [...prev, ...newUploads]);
         setShowPanel(true);
 
-        // Upload each file sequentially
         for (const upload of newUploads) {
             if (upload.status === 'error') continue;
 
@@ -125,214 +97,148 @@ export function DropZone() {
         e.preventDefault();
         e.stopPropagation();
         setIsDragging(false);
-
         const { files } = e.dataTransfer;
-        if (files.length > 0) {
-            processFiles(files);
-        }
+        if (files.length > 0) processFiles(files);
     }, [processFiles]);
 
     const handleFileSelect = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
         const { files } = e.target;
-        if (files && files.length > 0) {
-            processFiles(files);
-        }
-        // Reset input so same file can be selected again
+        if (files && files.length > 0) processFiles(files);
         e.target.value = '';
     }, [processFiles]);
 
     const clearCompleted = useCallback(() => {
         const remaining = uploads.filter(u => u.status !== 'complete' && u.status !== 'error');
         setUploads(remaining);
-        if (remaining.length === 0) {
-            setShowPanel(false);
-        }
+        if (remaining.length === 0) setShowPanel(false);
     }, [uploads]);
 
     const removeUpload = useCallback((id: string) => {
         setUploads(prev => {
             const remaining = prev.filter(u => u.id !== id);
-            if (remaining.length === 0) {
-                setShowPanel(false);
-            }
+            if (remaining.length === 0) setShowPanel(false);
             return remaining;
         });
     }, []);
 
+    const uploadingCount = uploads.filter(u => u.status === 'uploading').length;
     const completedCount = uploads.filter(u => u.status === 'complete').length;
     const errorCount = uploads.filter(u => u.status === 'error').length;
-    const uploadingCount = uploads.filter(u => u.status === 'uploading').length;
 
     return (
         <>
-            {/* Hidden File Input */}
             <input
                 ref={fileInputRef}
                 type="file"
                 multiple
                 onChange={handleFileSelect}
                 className="hidden"
-                id="file-upload-input"
-            />
-
-            {/* Global Drag Listener */}
-            <div
-                className="fixed inset-0 pointer-events-none z-40"
-                onDragEnter={(e) => {
-                    e.preventDefault();
-                    setIsDragging(true);
-                }}
             />
 
             {/* Drag Overlay */}
-            <AnimatePresence>
-                {isDragging && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="drag-overlay pointer-events-auto"
-                        onDragOver={handleDragOver}
-                        onDragLeave={handleDragLeave}
-                        onDrop={handleDrop}
-                    >
-                        <div className="text-center">
-                            <motion.div
-                                animate={{ y: [0, -10, 0] }}
-                                transition={{ repeat: Infinity, duration: 1.5 }}
-                                className="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-4"
-                                style={{ background: 'rgba(124, 58, 237, 0.2)' }}
-                            >
-                                <FileUp size={40} style={{ color: '#7c3aed' }} />
-                            </motion.div>
-                            <h2 className="text-2xl font-semibold mb-2">Drop files here</h2>
-                            <p style={{ color: 'rgba(255,255,255,0.6)' }}>Release to upload</p>
+            {isDragging && (
+                <div
+                    className="fixed inset-0 z-[100] flex items-center justify-center animate-fade-in"
+                    style={{ background: 'rgba(124, 58, 237, 0.2)', backdropFilter: 'blur(10px)' }}
+                    onDragOver={e => e.preventDefault()}
+                    onDragLeave={() => setIsDragging(false)}
+                    onDrop={handleDrop}
+                >
+                    <div className="text-center animate-scale-in">
+                        <div className="w-24 h-24 rounded-[2rem] bg-accent-purple/20 flex items-center justify-center mx-auto mb-6 border-2 border-dashed border-accent-purple animate-pulse">
+                            <FileUp size={48} className="text-accent-purple" />
                         </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+                        <h2 className="text-3xl font-black text-white mb-2">Drop it here</h2>
+                        <p className="text-white/40 font-bold uppercase tracking-widest text-xs">Ready for Telegram storage</p>
+                    </div>
+                </div>
+            )}
 
-            {/* Floating Upload Panel */}
-            <AnimatePresence>
-                {showPanel && uploads.length > 0 && (
-                    <motion.div
-                        initial={{ opacity: 0, y: 100, scale: 0.9 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 100, scale: 0.9 }}
-                        className="fixed bottom-6 right-6 w-96 glass rounded-2xl overflow-hidden z-50"
-                        style={{ boxShadow: '0 8px 40px rgba(0, 0, 0, 0.3)' }}
-                    >
-                        {/* Header */}
-                        <div className="flex items-center justify-between p-4" style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
-                            <div className="flex items-center gap-3">
-                                <Upload size={18} style={{ color: '#7c3aed' }} />
-                                <span className="font-medium">Uploads</span>
-                                {uploadingCount > 0 && (
-                                    <span className="badge badge-accent">{uploadingCount} uploading</span>
-                                )}
-                                {completedCount > 0 && (
-                                    <span className="badge" style={{ background: 'rgba(34, 197, 94, 0.2)', color: '#22c55e' }}>
-                                        {completedCount} done
-                                    </span>
-                                )}
+            {/* Background Trigger */}
+            <div
+                className="fixed inset-0 pointer-events-none z-40"
+                onDragEnter={() => setIsDragging(true)}
+            />
+
+            {/* Progress Panel */}
+            {showPanel && uploads.length > 0 && (
+                <div className="fixed bottom-6 right-6 w-96 glass rounded-2xl overflow-hidden z-50 shadow-2xl border border-white/10 animate-slide-up-from-bottom">
+                    <div className="p-5 border-b border-white/5 bg-black/5 flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                            <div className="w-8 h-8 rounded-lg bg-accent-purple/10 flex items-center justify-center">
+                                <UploadIcon size={16} className="text-accent-purple" />
                             </div>
-                            <button
-                                onClick={() => setShowPanel(false)}
-                                className="btn-icon"
-                            >
-                                <X size={16} />
-                            </button>
+                            <div>
+                                <h3 className="text-xs font-black uppercase tracking-widest text-white/40">Upload Queue</h3>
+                                <div className="flex gap-2 text-[10px] font-bold">
+                                    {uploadingCount > 0 && <span className="text-accent-blue">{uploadingCount} Transferring</span>}
+                                    {completedCount > 0 && <span className="text-green-500">{completedCount} Finished</span>}
+                                    {errorCount > 0 && <span className="text-red-500">{errorCount} Failed</span>}
+                                </div>
+                            </div>
                         </div>
+                        <button onClick={() => setShowPanel(false)} className="btn-icon">
+                            <X size={16} />
+                        </button>
+                    </div>
 
-                        {/* Upload List */}
-                        <div className="max-h-80 overflow-y-auto p-3 space-y-2">
-                            {uploads.map((upload) => (
-                                <motion.div
-                                    key={upload.id}
-                                    layout
-                                    initial={{ opacity: 0, x: 20 }}
-                                    animate={{ opacity: 1, x: 0 }}
-                                    exit={{ opacity: 0, x: -20 }}
-                                    className="p-3 rounded-xl"
-                                    style={{ background: 'rgba(26, 26, 26, 0.5)' }}
-                                >
-                                    <div className="flex items-start gap-3">
-                                        <div
-                                            className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-                                            style={{
-                                                background: upload.status === 'error'
-                                                    ? 'rgba(239, 68, 68, 0.2)'
-                                                    : upload.status === 'complete'
-                                                        ? 'rgba(34, 197, 94, 0.2)'
-                                                        : 'rgba(124, 58, 237, 0.2)'
-                                            }}
-                                        >
-                                            {upload.status === 'error' ? (
-                                                <AlertCircle size={20} style={{ color: '#f87171' }} />
-                                            ) : upload.status === 'complete' ? (
-                                                <CheckCircle2 size={20} style={{ color: '#22c55e' }} />
-                                            ) : (
-                                                <FileUp size={20} style={{ color: '#7c3aed' }} />
-                                            )}
-                                        </div>
+                    <div className="max-h-96 overflow-y-auto p-4 space-y-3 scroll-container">
+                        {uploads.map((upload) => (
+                            <div key={upload.id} className="p-4 rounded-2xl bg-white/5 border border-white/5 transition-all group">
+                                <div className="flex items-start gap-4">
+                                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${upload.status === 'error' ? 'bg-red-500/10 text-red-500' :
+                                            upload.status === 'complete' ? 'bg-green-500/10 text-green-500' :
+                                                'bg-accent-purple/10 text-accent-purple'
+                                        }`}>
+                                        {upload.status === 'error' ? <AlertCircle size={20} /> :
+                                            upload.status === 'complete' ? <CheckCircle2 size={20} /> :
+                                                <FileUp size={20} className="animate-bounce" />}
+                                    </div>
 
-                                        <div className="flex-1 min-w-0">
-                                            <p className="text-sm font-medium truncate">{upload.file.name}</p>
-                                            <p className="text-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>
-                                                {upload.status === 'error'
-                                                    ? upload.error
-                                                    : upload.status === 'complete'
-                                                        ? `${formatFileSize(upload.file.size)} • Complete`
-                                                        : upload.status === 'uploading'
-                                                            ? `${formatFileSize(upload.file.size)} • ${upload.progress}%`
-                                                            : `${formatFileSize(upload.file.size)} • Pending`
-                                                }
-                                            </p>
-
-                                            {upload.status === 'uploading' && (
-                                                <div className="progress-bar mt-2">
-                                                    <motion.div
-                                                        className="progress-bar-fill"
-                                                        initial={{ width: 0 }}
-                                                        animate={{ width: `${upload.progress}%` }}
-                                                    />
-                                                </div>
-                                            )}
-                                        </div>
-
-                                        {(upload.status === 'complete' || upload.status === 'error') && (
-                                            <button
-                                                onClick={() => removeUpload(upload.id)}
-                                                className="p-1.5 rounded-lg hover:bg-white/10 transition-colors"
-                                                style={{ color: 'rgba(255,255,255,0.4)' }}
-                                            >
-                                                <X size={14} />
+                                    <div className="flex-1 min-w-0">
+                                        <div className="flex items-center justify-between mb-1">
+                                            <p className="text-sm font-bold truncate text-white/90">{upload.file.name}</p>
+                                            <button onClick={() => removeUpload(upload.id)} className="opacity-0 group-hover:opacity-100 transition-opacity p-1 hover:text-red-400">
+                                                <X size={12} />
                                             </button>
+                                        </div>
+
+                                        <div className="flex items-center justify-between text-[10px] uppercase font-bold text-white/30 tracking-tight">
+                                            <span>{formatFileSize(upload.file.size)}</span>
+                                            {upload.status === 'uploading' && <span>{upload.progress}%</span>}
+                                        </div>
+
+                                        {upload.status === 'uploading' && (
+                                            <div className="h-1 w-full bg-white/5 rounded-full mt-3 overflow-hidden">
+                                                <div
+                                                    className="h-full bg-accent-purple transition-all duration-300 shadow-[0_0_10px_rgba(124,58,237,0.5)]"
+                                                    style={{ width: `${upload.progress}%` }}
+                                                />
+                                            </div>
+                                        )}
+
+                                        {upload.status === 'error' && (
+                                            <p className="text-[10px] text-red-400 mt-2 font-bold">{upload.error}</p>
                                         )}
                                     </div>
-                                </motion.div>
-                            ))}
-                        </div>
-
-                        {/* Footer */}
-                        {(completedCount > 0 || errorCount > 0) && (
-                            <div className="p-3" style={{ borderTop: '1px solid rgba(255,255,255,0.1)' }}>
-                                <button
-                                    onClick={clearCompleted}
-                                    className="w-full btn-ghost text-sm"
-                                >
-                                    Clear completed
-                                </button>
+                                </div>
                             </div>
-                        )}
-                    </motion.div>
-                )}
-            </AnimatePresence>
+                        ))}
+                    </div>
+
+                    {(completedCount > 0 || errorCount > 0) && (
+                        <div className="p-4 bg-black/20 border-t border-white/5 text-center">
+                            <button onClick={clearCompleted} className="text-[10px] font-black uppercase tracking-widest text-white/30 hover:text-white transition-colors">
+                                Clear Finished Tasks
+                            </button>
+                        </div>
+                    )}
+                </div>
+            )}
         </>
     );
 }
 
-// Export trigger function for use by other components
 export function triggerUpload() {
     window.dispatchEvent(new CustomEvent('trigger-upload'));
 }

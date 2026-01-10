@@ -1,34 +1,14 @@
 /**
- * File Grid Component - Responsive Layout
+ * File Grid Component - Responsive Layout with CSS Animations
  * @module components/file/FileGrid
  */
 
 import { useMemo, useState, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Upload, FolderOpen, RefreshCw } from 'lucide-react';
+import { Upload as UploadIcon, FolderOpen, RefreshCw } from 'lucide-react';
 import { useFileStore } from '../../store/files';
 import { FileCard } from './FileCard';
 import { triggerUpload } from '../upload/DropZone';
 import { useResponsive } from '../../hooks/useResponsive';
-
-// ============================================================================
-// ANIMATION VARIANTS
-// ============================================================================
-
-const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-        opacity: 1,
-        transition: {
-            staggerChildren: 0.03,
-        },
-    },
-};
-
-const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 },
-};
 
 // ============================================================================
 // PULL TO REFRESH HOOK
@@ -50,13 +30,9 @@ function usePullToRefresh(onRefresh: () => Promise<void>) {
 
     const handleTouchMove = (e: React.TouchEvent) => {
         if (!isPulling || isRefreshing) return;
-
         const currentY = e.touches[0].clientY;
         const diff = currentY - startY.current;
-
-        if (diff > 0 && diff < 150) {
-            setPullDistance(diff);
-        }
+        if (diff > 0 && diff < 150) setPullDistance(diff);
     };
 
     const handleTouchEnd = async () => {
@@ -71,7 +47,6 @@ function usePullToRefresh(onRefresh: () => Promise<void>) {
 
     return {
         containerRef,
-        isPulling,
         isRefreshing,
         pullDistance,
         handleTouchStart,
@@ -103,9 +78,8 @@ export function FileGrid() {
         sortOrder,
     } = useFileStore();
 
-    const { isMobile, isTablet, breakpoint } = useResponsive();
+    const { isMobile, breakpoint } = useResponsive();
 
-    // Pull to refresh
     const {
         containerRef,
         isRefreshing,
@@ -117,7 +91,6 @@ export function FileGrid() {
         await loadFiles();
     });
 
-    // Re-compute filtered files when dependencies change
     const files = useMemo(() => getFilteredFiles(), [
         storeFiles,
         filterType,
@@ -128,70 +101,51 @@ export function FileGrid() {
         getFilteredFiles
     ]);
 
-    // Get grid columns based on breakpoint
     const getGridClass = () => {
-        if (viewMode === 'list') return 'space-y-2';
-
+        if (viewMode === 'list') return 'space-y-3';
         switch (breakpoint) {
-            case 'xs':
-                return 'grid grid-cols-2 gap-3';
-            case 'sm':
-                return 'grid grid-cols-2 gap-3';
-            case 'md':
-                return 'grid grid-cols-3 gap-4';
-            case 'lg':
-                return 'grid grid-cols-4 gap-4';
+            case 'xs': return 'grid grid-cols-2 gap-4';
+            case 'sm': return 'grid grid-cols-2 gap-4';
+            case 'md': return 'grid grid-cols-3 gap-5';
+            case 'lg': return 'grid grid-cols-4 gap-6';
             case 'xl':
-            default:
-                return 'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4';
+            default: return 'grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6';
         }
     };
 
-    // Empty State
     if (!isLoading && files.length === 0) {
         return (
-            <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className={`flex-1 flex flex-col items-center justify-center p-6 ${isMobile ? 'pt-header pb-nav' : 'p-8'}`}
-            >
-                <div className="glass p-6 md:p-8 rounded-3xl text-center max-w-md w-full">
-                    <div
-                        className="w-16 h-16 md:w-20 md:h-20 rounded-2xl flex items-center justify-center mx-auto mb-4 md:mb-6"
-                        style={{ background: 'linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(37, 99, 235, 0.2))' }}
-                    >
-                        <FolderOpen size={isMobile ? 32 : 40} style={{ color: '#7c3aed' }} />
+            <div className={`flex-1 flex flex-col items-center justify-center p-8 animate-fade-in`}>
+                <div className="glass p-10 rounded-[3rem] text-center max-w-md w-full border border-white/5 relative overflow-hidden group">
+                    <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-accent-purple to-accent-blue" />
+                    <div className="w-24 h-24 rounded-[2.5rem] bg-gradient-to-br from-accent-purple/10 to-accent-blue/10 flex items-center justify-center mx-auto mb-8 group-hover:scale-110 transition-transform duration-500">
+                        <FolderOpen size={48} className="text-accent-purple" />
                     </div>
-                    <h2 className="text-lg md:text-xl font-semibold mb-2">No files here</h2>
-                    <p className="mb-4 md:mb-6 text-sm md:text-base" style={{ color: 'rgba(255,255,255,0.6)' }}>
-                        {isMobile
-                            ? 'Tap the upload button to get started'
-                            : 'Drop files here or click the upload button to get started'
-                        }
+                    <h2 className="text-2xl font-black text-white mb-3">No Files Found</h2>
+                    <p className="mb-8 text-white/40 font-medium px-4">
+                        Your cloud storage is empty. Tap upload to start storing unlimited data.
                     </p>
                     <button
                         onClick={triggerUpload}
-                        className="btn-gradient inline-flex items-center gap-2 touch-target"
+                        className="btn-gradient px-8 py-3.5 flex items-center justify-center gap-3 mx-auto shadow-xl shadow-accent-purple/20"
                     >
-                        <Upload size={18} />
-                        Upload Files
+                        <UploadIcon size={20} />
+                        <span>Upload Now</span>
                     </button>
                 </div>
-            </motion.div>
+            </div>
         );
     }
 
-    // Loading State
     if (isLoading) {
-        const skeletonCount = isMobile ? 6 : 12;
         return (
-            <div className={`flex-1 p-4 md:p-6 ${isMobile ? 'pt-header pb-nav' : ''}`}>
+            <div className="flex-1 p-6 animate-fade-in">
                 <div className={getGridClass()}>
-                    {Array.from({ length: skeletonCount }).map((_, i) => (
-                        <div key={i} className="glass p-3 md:p-4 rounded-xl">
-                            <div className="aspect-square rounded-lg md:rounded-xl skeleton mb-2 md:mb-3" />
-                            <div className="h-3 md:h-4 skeleton rounded mb-1 md:mb-2" />
-                            <div className="h-2 md:h-3 skeleton rounded w-2/3" />
+                    {Array.from({ length: isMobile ? 6 : 12 }).map((_, i) => (
+                        <div key={i} className="glass rounded-3xl p-4 min-h-[160px] animate-pulse">
+                            <div className="aspect-square bg-white/5 rounded-2xl mb-4" />
+                            <div className="h-4 bg-white/5 rounded-lg w-3/4 mb-2" />
+                            <div className="h-3 bg-white/5 rounded-lg w-1/2" />
                         </div>
                     ))}
                 </div>
@@ -200,81 +154,62 @@ export function FileGrid() {
     }
 
     return (
-        <motion.div
+        <div
             ref={containerRef}
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className={`flex-1 p-4 md:p-6 overflow-y-auto scroll-container relative ${isMobile ? '' : ''}`}
+            className={`flex-1 p-6 overflow-y-auto scroll-container relative`}
             onTouchStart={isMobile ? handleTouchStart : undefined}
             onTouchMove={isMobile ? handleTouchMove : undefined}
             onTouchEnd={isMobile ? handleTouchEnd : undefined}
         >
-            {/* Pull to Refresh Indicator */}
+            {/* Pull to Refresh */}
             {isMobile && pullDistance > 0 && (
-                <motion.div
-                    className="absolute top-0 left-0 right-0 flex justify-center py-4 z-10"
+                <div
+                    className="absolute top-0 left-0 right-0 flex justify-center py-6 z-10 pointer-events-none"
                     style={{
-                        transform: `translateY(${pullDistance - 40}px)`,
-                        opacity: pullDistance / 80,
+                        opacity: Math.min(1, pullDistance / 100),
+                        transform: `translateY(${Math.min(20, pullDistance - 40)}px)`
                     }}
                 >
-                    <motion.div
-                        animate={{ rotate: isRefreshing ? 360 : pullDistance * 2 }}
-                        transition={isRefreshing ? { repeat: Infinity, duration: 1 } : { duration: 0 }}
-                    >
-                        <RefreshCw
-                            size={24}
-                            style={{
-                                color: pullDistance > 80 ? '#7c3aed' : 'rgba(255,255,255,0.5)'
-                            }}
-                        />
-                    </motion.div>
-                </motion.div>
+                    <div className={`${isRefreshing ? 'animate-spin' : ''} transition-transform`}>
+                        <RefreshCw size={24} className={pullDistance > 80 ? 'text-accent-purple' : 'text-white/20'} />
+                    </div>
+                </div>
             )}
 
-            {/* Selected count indicator for mobile */}
+            {/* Selection Toolbar for Mobile */}
             {isMobile && selectedFiles.length > 0 && (
-                <motion.div
-                    initial={{ y: -50, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    exit={{ y: -50, opacity: 0 }}
-                    className="sticky top-0 z-20 mb-4 py-2 px-4 rounded-xl glass text-center"
-                    style={{ background: 'rgba(124, 58, 237, 0.2)', border: '1px solid rgba(124, 58, 237, 0.3)' }}
-                >
-                    <span className="font-medium">{selectedFiles.length} selected</span>
-                    <button
-                        onClick={() => moveToTrash(selectedFiles)}
-                        className="ml-4 text-red-400 font-medium"
-                    >
+                <div className="sticky top-0 z-20 mb-6 py-4 px-6 rounded-2xl glass border border-accent-purple/30 bg-accent-purple/10 flex items-center justify-between shadow-2xl animate-slide-up">
+                    <span className="font-black text-sm text-white">{selectedFiles.length} Selected</span>
+                    <button onClick={() => moveToTrash(selectedFiles)} className="text-red-500 font-black text-xs uppercase tracking-widest">
                         Delete
                     </button>
-                </motion.div>
+                </div>
             )}
 
-            {/* File Grid */}
+            {/* Grid Content */}
             <div className={getGridClass()}>
-                <AnimatePresence mode="popLayout">
-                    {files.map((file) => (
-                        <motion.div key={file.file_unique_id} variants={itemVariants} layout>
-                            <FileCard
-                                file={file}
-                                isSelected={selectedFiles.includes(file.file_unique_id)}
-                                onSelect={(multi) => selectFile(file.file_unique_id, multi)}
-                                onPreview={() => {
-                                    window.dispatchEvent(new CustomEvent('preview-file', { detail: file }));
-                                }}
-                                onDownload={() => downloadFile(file)}
-                                onDelete={() => moveToTrash([file.file_unique_id])}
-                                onToggleFavorite={() => toggleFavorite(file.file_unique_id)}
-                            />
-                        </motion.div>
-                    ))}
-                </AnimatePresence>
+                {files.map((file, idx) => (
+                    <div
+                        key={file.file_unique_id}
+                        className="animate-fade-in"
+                        style={{ animationDelay: `${idx * 20}ms` }}
+                    >
+                        <FileCard
+                            file={file}
+                            isSelected={selectedFiles.includes(file.file_unique_id)}
+                            onSelect={(multi) => selectFile(file.file_unique_id, multi)}
+                            onPreview={() => {
+                                window.dispatchEvent(new CustomEvent('preview-file', { detail: file }));
+                            }}
+                            onDownload={() => downloadFile(file)}
+                            onDelete={() => moveToTrash([file.file_unique_id])}
+                            onToggleFavorite={() => toggleFavorite(file.file_unique_id)}
+                        />
+                    </div>
+                ))}
             </div>
 
-            {/* Bottom padding for mobile nav */}
-            {isMobile && <div className="h-4" />}
-        </motion.div>
+            {isMobile && <div className="h-6" />}
+        </div>
     );
 }

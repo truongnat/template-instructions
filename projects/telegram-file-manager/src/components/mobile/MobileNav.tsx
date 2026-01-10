@@ -1,9 +1,8 @@
 /**
- * Mobile Bottom Navigation Bar
+ * Mobile Bottom Navigation Bar - Updated with CSS Animations
  * @module components/mobile/MobileNav
  */
 
-import { motion } from 'framer-motion';
 import { Home, FolderOpen, Star, MoreHorizontal, Upload } from 'lucide-react';
 import { useFileStore } from '../../store/files';
 import { triggerUpload } from '../upload/DropZone';
@@ -19,8 +18,8 @@ interface MobileNavProps {
 const navItems: { id: NavTab; label: string; icon: typeof Home }[] = [
     { id: 'home', label: 'Home', icon: Home },
     { id: 'files', label: 'Files', icon: FolderOpen },
-    { id: 'favorites', label: 'Favorites', icon: Star },
-    { id: 'more', label: 'More', icon: MoreHorizontal },
+    { id: 'favorites', label: 'Starred', icon: Star },
+    { id: 'more', label: 'Menu', icon: MoreHorizontal },
 ];
 
 export function MobileNav({ activeTab, onTabChange, onOpenDrawer }: MobileNavProps) {
@@ -31,15 +30,12 @@ export function MobileNav({ activeTab, onTabChange, onOpenDrawer }: MobileNavPro
 
         switch (tab) {
             case 'home':
-                navigateToFolder(null);
-                setFilterType('all');
-                break;
             case 'files':
                 navigateToFolder(null);
                 setFilterType('all');
                 break;
             case 'favorites':
-                // TODO: Implement favorites filter
+                // TODO: Favorites
                 break;
             case 'more':
                 onOpenDrawer();
@@ -49,72 +45,47 @@ export function MobileNav({ activeTab, onTabChange, onOpenDrawer }: MobileNavPro
 
     return (
         <nav
-            className="fixed bottom-0 left-0 right-0 z-40 glass"
-            style={{
-                paddingBottom: 'env(safe-area-inset-bottom)',
-                borderTop: '1px solid rgba(255, 255, 255, 0.1)',
-            }}
+            className="fixed bottom-0 left-0 right-0 z-40 glass safe-bottom"
+            style={{ borderTop: '1px solid rgba(255, 255, 255, 0.05)' }}
         >
-            <div className="flex items-center justify-around h-16">
-                {navItems.map((item) => {
+            <div className="flex items-center justify-between h-16 px-2">
+                {navItems.map((item, index) => {
                     const Icon = item.icon;
                     const isActive = activeTab === item.id;
 
-                    return (
-                        <button
-                            key={item.id}
-                            onClick={() => handleTabClick(item.id)}
-                            className="flex flex-col items-center justify-center flex-1 h-full touch-target relative"
-                        >
-                            {/* Active indicator background */}
-                            {isActive && (
-                                <motion.div
-                                    layoutId="nav-indicator"
-                                    className="absolute inset-x-2 top-1.5 bottom-1.5 rounded-xl"
-                                    style={{ background: 'rgba(124, 58, 237, 0.2)' }}
-                                    transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
-                                />
-                            )}
+                    // Add spacer for the center FAB
+                    const isSecond = index === 1;
 
-                            <motion.div
-                                animate={{ scale: isActive ? 1.1 : 1 }}
-                                className="relative z-10 flex flex-col items-center gap-0.5"
+                    return (
+                        <div key={item.id} className="flex flex-1 items-center justify-center">
+                            <button
+                                onClick={() => handleTabClick(item.id)}
+                                className={`flex flex-col items-center justify-center gap-1 w-full h-full transition-all duration-300 ${isActive ? 'text-accent-purple' : 'text-white/30 hover:text-white/50'
+                                    }`}
                             >
-                                <Icon
-                                    size={22}
-                                    style={{
-                                        color: isActive ? '#7c3aed' : 'rgba(255, 255, 255, 0.5)',
-                                        transition: 'color 0.2s',
-                                    }}
-                                />
-                                <span
-                                    className="text-xs font-medium"
-                                    style={{
-                                        color: isActive ? '#7c3aed' : 'rgba(255, 255, 255, 0.5)',
-                                        transition: 'color 0.2s',
-                                    }}
-                                >
+                                <div className={`p-2 rounded-xl transition-all duration-300 ${isActive ? 'bg-accent-purple/10' : ''}`}>
+                                    <Icon size={22} className={isActive ? 'animate-scale-in' : ''} />
+                                </div>
+                                <span className={`text-[10px] font-black uppercase tracking-widest transition-opacity ${isActive ? 'opacity-100' : 'opacity-40'}`}>
                                     {item.label}
                                 </span>
-                            </motion.div>
-                        </button>
+                            </button>
+
+                            {/* Insert FAB in the middle */}
+                            {isSecond && (
+                                <div className="flex-1 flex justify-center -translate-y-8 animate-fade-in">
+                                    <button
+                                        onClick={triggerUpload}
+                                        className="w-14 h-14 rounded-2xl bg-gradient-to-br from-accent-purple to-accent-blue flex items-center justify-center shadow-2xl shadow-accent-purple/40 border border-white/20 active:scale-90 transition-transform hover:rotate-90 duration-500"
+                                    >
+                                        <Upload size={24} className="text-white" />
+                                    </button>
+                                </div>
+                            )}
+                        </div>
                     );
                 })}
             </div>
-
-            {/* Floating Upload Button */}
-            <motion.button
-                onClick={triggerUpload}
-                className="absolute -top-7 left-1/2 -translate-x-1/2 w-14 h-14 rounded-full flex items-center justify-center shadow-lg"
-                style={{
-                    background: 'linear-gradient(135deg, #7c3aed, #2563eb)',
-                    boxShadow: '0 4px 20px rgba(124, 58, 237, 0.4)',
-                }}
-                whileTap={{ scale: 0.95 }}
-                whileHover={{ scale: 1.05 }}
-            >
-                <Upload size={24} className="text-white" />
-            </motion.button>
         </nav>
     );
 }

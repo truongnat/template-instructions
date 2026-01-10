@@ -67,9 +67,6 @@ interface FileState {
     // Utilities
     getFilteredFiles: () => TelegramFile[];
     clearError: () => void;
-
-    // Demo mode (when not connected to Telegram)
-    addDemoFile: (file: File) => void;
 }
 
 // ============================================================================
@@ -118,9 +115,9 @@ export const useFileStore = create<FileState>()(
 
             // Upload a file
             uploadFile: async (file, onProgress) => {
-                const state = get();
+                const { currentFolder, folders } = get();
 
-                // Check for GramJS connection first (preferred)
+                // Preferred: GramJS (MTProto)
                 if (gramjsClient.connected) {
                     set({ error: null });
                     try {
@@ -128,33 +125,22 @@ export const useFileStore = create<FileState>()(
                             onProgress?.(progress);
                         });
 
-                        // Add folder path if we're in a folder
-                        const { currentFolder, folders } = get();
                         if (currentFolder) {
                             const folder = folders.find(f => f.id === currentFolder);
-                            if (folder) {
-                                result.folder_path = folder.path;
-                            }
+                            if (folder) result.folder_path = folder.path;
                         }
 
-                        // Save to local database
                         await fileMetadata.upsert(result);
-
-                        // Update state
-                        set(s => ({
-                            files: [result, ...s.files],
-                        }));
-
+                        set(s => ({ files: [result, ...s.files] }));
                         return result;
                     } catch (error) {
-                        set({
-                            error: error instanceof Error ? error.message : 'Upload failed',
-                        });
+                        const msg = error instanceof Error ? error.message : 'Upload failed';
+                        set({ error: msg });
                         throw error;
                     }
                 }
 
-                // Check for Bot API connection
+                // Legacy: Bot API
                 if (telegramClient.connected) {
                     set({ error: null });
                     try {
@@ -162,78 +148,22 @@ export const useFileStore = create<FileState>()(
                             onProgress?.(progress.progress);
                         });
 
-                        // Add folder path if we're in a folder
-                        const { currentFolder, folders } = get();
                         if (currentFolder) {
                             const folder = folders.find(f => f.id === currentFolder);
-                            if (folder) {
-                                result.folder_path = folder.path;
-                            }
+                            if (folder) result.folder_path = folder.path;
                         }
 
-                        // Save to local database
                         await fileMetadata.upsert(result);
-
-                        // Update state
-                        set(s => ({
-                            files: [result, ...s.files],
-                        }));
-
+                        set(s => ({ files: [result, ...s.files] }));
                         return result;
                     } catch (error) {
-                        set({
-                            error: error instanceof Error ? error.message : 'Upload failed',
-                        });
+                        const msg = error instanceof Error ? error.message : 'Upload failed';
+                        set({ error: msg });
                         throw error;
                     }
                 }
 
-                // Demo mode: just add file to local state
-                const demoFile: TelegramFile = {
-                    file_id: `demo-${crypto.randomUUID()}`,
-                    file_unique_id: crypto.randomUUID(),
-                    file_size: file.size,
-                    file_name: file.name,
-                    mime_type: file.type || 'application/octet-stream',
-                    created_at: new Date(),
-                    message_id: Date.now(),
-                    folder_path: state.currentFolder
-                        ? state.folders.find(f => f.id === state.currentFolder)?.path
-                        : undefined,
-                    is_deleted: false,
-                    is_favorite: false,
-                };
-
-                // Simulate progress
-                for (let i = 0; i <= 100; i += 10) {
-                    onProgress?.(i);
-                    await new Promise(r => setTimeout(r, 50));
-                }
-
-                // Save metadata to local database
-                await fileMetadata.upsert(demoFile);
-
-                // Save actual file blob for preview (demo mode only)
-                await fileMetadata.saveBlob(demoFile.file_unique_id, file);
-
-                set(s => ({ files: [demoFile, ...s.files] }));
-
-                return demoFile;
-            },
-
-            // Add demo file (for testing without Telegram)
-            addDemoFile: (file: File) => {
-                const demoFile: TelegramFile = {
-                    file_id: `demo-${crypto.randomUUID()}`,
-                    file_unique_id: crypto.randomUUID(),
-                    file_size: file.size,
-                    file_name: file.name,
-                    mime_type: file.type || 'application/octet-stream',
-                    created_at: new Date(),
-                    message_id: Date.now(),
-                };
-
-                set(s => ({ files: [demoFile, ...s.files] }));
+                throw new Error('No Telegram connection available. Please connect first.');
             },
 
             // Delete files
@@ -245,9 +175,9 @@ export const useFileStore = create<FileState>()(
                     for (const fileId of fileIds) {
                         const file = files.find(f => f.file_unique_id === fileId);
                         if (file) {
-                            // Only call Telegram API if connected and not a demo file
-                            if (telegramClient.connected && !file.file_id.startsWith('demo-')) {
-                                await telegramClient.deleteFile(file.message_id);
+                            // Try deleting from Telegram if possible
+                            if (telegramClient.connected) {
+                                try { await telegramClient.deleteFile(file.message_id); } catch (e) { /* Ignore */ }
                             }
                             await fileMetadata.permanentDelete(fileId);
                         }
@@ -270,15 +200,10 @@ export const useFileStore = create<FileState>()(
             // Download a file
             downloadFile: async (file) => {
                 try {
-                    // Demo file: can't download
-                    if (file.file_id.startsWith('demo-')) {
-                        alert('Demo files cannot be downloaded. Connect to Telegram for full functionality.');
-                        return;
-                    }
-
+                    set({ isLoading: true });
                     const blob = await telegramClient.downloadFile(file.file_id);
+                    set({ isLoading: false });
 
-                    // Create download link
                     const url = URL.createObjectURL(blob);
                     const a = document.createElement('a');
                     a.href = url;
@@ -288,7 +213,10 @@ export const useFileStore = create<FileState>()(
                     document.body.removeChild(a);
                     URL.revokeObjectURL(url);
                 } catch (error) {
-                    set({ error: error instanceof Error ? error.message : 'Download failed' });
+                    set({
+                        error: error instanceof Error ? error.message : 'Download failed',
+                        isLoading: false
+                    });
                     throw error;
                 }
             },
@@ -397,12 +325,8 @@ export const useFileStore = create<FileState>()(
                 const trashedFiles = files.filter(f => f.is_deleted);
 
                 for (const file of trashedFiles) {
-                    try {
-                        if (telegramClient.connected && !file.file_id.startsWith('demo-')) {
-                            await telegramClient.deleteFile(file.message_id);
-                        }
-                    } catch {
-                        // File might already be deleted from Telegram
+                    if (telegramClient.connected) {
+                        try { await telegramClient.deleteFile(file.message_id); } catch { /* Ignore */ }
                     }
                 }
 
@@ -416,21 +340,14 @@ export const useFileStore = create<FileState>()(
             getFilteredFiles: () => {
                 const { files, currentFolder, folders, filterType, searchQuery, sortBy, sortOrder } = get();
 
-                // Get current folder path
                 const currentFolderPath = currentFolder
                     ? folders.find(f => f.id === currentFolder)?.path
                     : undefined;
 
                 let filtered = files.filter(file => {
-                    // Exclude deleted files
                     if (file.is_deleted) return false;
+                    if (currentFolderPath && file.folder_path !== currentFolderPath) return false;
 
-                    // Filter by folder (only if in a folder)
-                    if (currentFolderPath && file.folder_path !== currentFolderPath) {
-                        return false;
-                    }
-
-                    // Filter by type
                     if (filterType !== 'all') {
                         const isImage = file.mime_type.startsWith('image/');
                         const isVideo = file.mime_type.startsWith('video/');
@@ -447,7 +364,6 @@ export const useFileStore = create<FileState>()(
                         }
                     }
 
-                    // Filter by search
                     if (searchQuery && !file.file_name.toLowerCase().includes(searchQuery.toLowerCase())) {
                         return false;
                     }
@@ -455,25 +371,14 @@ export const useFileStore = create<FileState>()(
                     return true;
                 });
 
-                // Sort
                 filtered.sort((a, b) => {
                     let comparison = 0;
-
                     switch (sortBy) {
-                        case 'name':
-                            comparison = a.file_name.localeCompare(b.file_name);
-                            break;
-                        case 'date':
-                            comparison = new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
-                            break;
-                        case 'size':
-                            comparison = a.file_size - b.file_size;
-                            break;
-                        case 'type':
-                            comparison = a.mime_type.localeCompare(b.mime_type);
-                            break;
+                        case 'name': comparison = a.file_name.localeCompare(b.file_name); break;
+                        case 'date': comparison = new Date(a.created_at).getTime() - new Date(b.created_at).getTime(); break;
+                        case 'size': comparison = a.file_size - b.file_size; break;
+                        case 'type': comparison = a.mime_type.localeCompare(b.mime_type); break;
                     }
-
                     return sortOrder === 'asc' ? comparison : -comparison;
                 });
 

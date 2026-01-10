@@ -305,13 +305,9 @@ class GramJSClient {
 
         // Resolve "me" to current user
         if (chatId === "me") {
-            const me = await this.client.getMe();
-            const inputPeer = new Api.InputPeerUser({
-                userId: me.id,
-                accessHash: (me as Api.User).accessHash || BigInt(0),
-            });
-            this._resolvedEntities.set(chatId, inputPeer);
-            return inputPeer;
+            const entity = await this.client.getInputEntity("me");
+            this._resolvedEntities.set(chatId, entity);
+            return entity;
         }
 
         // Try to get input entity from GramJS
@@ -321,8 +317,8 @@ class GramJSClient {
             return entity;
         } catch {
             // If that fails, try parsing the ID and getting from dialogs
-            const numericId = BigInt(chatId.replace(/^-100/, "-").replace(/^-/, ""));
-            const entity = await this.client.getInputEntity(numericId);
+            // For channels/groups, we might need to handle the ID specially
+            const entity = await this.client.getInputEntity(chatId);
             this._resolvedEntities.set(chatId, entity);
             return entity;
         }

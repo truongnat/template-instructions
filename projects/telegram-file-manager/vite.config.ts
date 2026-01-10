@@ -10,7 +10,7 @@ export default defineConfig({
     tailwindcss(),
     // Polyfill Node.js globals for GramJS (telegram library)
     nodePolyfills({
-      include: ['buffer', 'crypto', 'stream', 'util', 'events', 'path', 'os'],
+      include: ['buffer', 'crypto', 'stream', 'util', 'events', 'path', 'os', 'fs', 'net', 'vm', 'tty', 'constants', 'tls', 'child_process'],
       globals: {
         Buffer: true,
         global: true,

@@ -1,31 +1,26 @@
 /**
- * Settings Dialog Component
+ * Settings Dialog Component - Updated with CSS Animations & GramJS focus
  * @module components/dialogs/SettingsDialog
- * 
- * Updated to support both Bot API and GramJS authentication
  */
 
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useCallback, useEffect } from 'react';
 import {
     X,
     Settings,
-    Bot,
     Palette,
     Trash2,
     Download,
     Upload,
     AlertTriangle,
     CheckCircle2,
-    Loader2,
-    Key,
-    Hash,
     Smartphone,
     MessageSquare,
     Save,
     Users,
     ChevronRight,
-    ChevronLeft,
+    Monitor,
+    Sun,
+    Moon,
 } from 'lucide-react';
 import { useSettingsStore } from '../../store/settings';
 import { database } from '../../lib/telegram/metadata';
@@ -50,38 +45,38 @@ type Tab = 'telegram' | 'appearance' | 'data';
 
 export function SettingsDialog({ isOpen, onClose }: SettingsDialogProps) {
     const [activeTab, setActiveTab] = useState<Tab>('telegram');
-    const [showBotLogin, setShowBotLogin] = useState(false);
     const [showGramJSLogin, setShowGramJSLogin] = useState(false);
-    const [botToken, setBotToken] = useState('');
-    const [channelId, setChannelId] = useState('');
     const [showClearConfirm, setShowClearConfirm] = useState(false);
+    const [isExiting, setIsExiting] = useState(false);
     const { isMobile } = useResponsive();
 
     const {
-        telegram,
         gramjs,
         authMethod,
-        isConnecting,
-        connectionError,
-        connectTelegram,
         connectGramJS,
         disconnectTelegram,
         theme,
         setTheme,
     } = useSettingsStore();
 
-    const isConnected = authMethod !== null && (telegram?.is_connected || gramjs !== null);
+    const isConnected = authMethod === 'gramjs' && gramjs !== null;
 
-    const handleBotConnect = async () => {
-        if (botToken && channelId) {
-            const success = await connectTelegram(botToken, channelId);
-            if (success) {
-                setBotToken('');
-                setChannelId('');
-                setShowBotLogin(false);
-            }
-        }
-    };
+    // Securely handle modal closing with animation
+    const handleClose = useCallback(() => {
+        setIsExiting(true);
+        setTimeout(() => {
+            onClose();
+            setIsExiting(false);
+        }, 300);
+    }, [onClose]);
+
+    // Handle escape key
+    useEffect(() => {
+        if (!isOpen) return;
+        const handleEsc = (e: KeyboardEvent) => e.key === 'Escape' && handleClose();
+        window.addEventListener('keydown', handleEsc);
+        return () => window.removeEventListener('keydown', handleEsc);
+    }, [isOpen, handleClose]);
 
     const handleGramJSSuccess = async (session: string, chat: ChatInfo) => {
         await connectGramJS(session, chat);
@@ -122,383 +117,234 @@ export function SettingsDialog({ isOpen, onClose }: SettingsDialogProps) {
 
     const getChatIcon = (type: string) => {
         switch (type) {
-            case 'saved': return <Save size={16} style={{ color: '#7c3aed' }} />;
-            case 'channel': return <MessageSquare size={16} style={{ color: '#3b82f6' }} />;
-            case 'chat': return <Users size={16} style={{ color: '#22c55e' }} />;
-            default: return <MessageSquare size={16} style={{ color: '#f59e0b' }} />;
+            case 'saved': return <Save size={16} className="text-accent-purple" />;
+            case 'channel': return <MessageSquare size={16} className="text-accent-blue" />;
+            case 'chat': return <Users size={16} className="text-green-500" />;
+            default: return <MessageSquare size={16} className="text-yellow-500" />;
         }
     };
 
+    if (!isOpen && !isExiting) return null;
+
     const tabs = [
-        { id: 'telegram' as Tab, label: 'Telegram', icon: <MessageSquare size={18} /> },
-        { id: 'appearance' as Tab, label: 'Appearance', icon: <Palette size={18} /> },
-        { id: 'data' as Tab, label: 'Data', icon: <Download size={18} /> },
+        { id: 'telegram' as Tab, label: 'Account', icon: <MessageSquare size={18} /> },
+        { id: 'appearance' as Tab, label: 'Theme', icon: <Palette size={18} /> },
+        { id: 'data' as Tab, label: 'System', icon: <Download size={18} /> },
     ];
 
     return (
-        <>
-            <AnimatePresence>
-                {isOpen && (
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className={`modal-overlay z-50 ${isMobile ? 'flex flex-col' : ''}`}
-                        onClick={onClose}
-                        style={isMobile ? { padding: 0, justifyContent: 'flex-end' } : undefined}
-                    >
-                        <motion.div
-                            initial={isMobile ? { y: '100%' } : { scale: 0.95, opacity: 0 }}
-                            animate={isMobile ? { y: 0 } : { scale: 1, opacity: 1 }}
-                            exit={isMobile ? { y: '100%' } : { scale: 0.95, opacity: 0 }}
-                            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-                            className={`glass overflow-hidden ${isMobile ? 'w-full h-[95vh] rounded-t-3xl' : 'w-full max-w-lg rounded-2xl'}`}
-                            onClick={e => e.stopPropagation()}
+        <div
+            className={`fixed inset-0 z-50 flex items-center justify-center p-4 transition-all duration-300 ${isMobile ? 'items-end p-0' : ''} ${isExiting ? 'animate-fade-out' : 'animate-fade-in'
+                }`}
+            style={{ background: 'rgba(0, 0, 0, 0.4)', backdropFilter: 'blur(8px)' }}
+            onClick={handleClose}
+        >
+            <div
+                className={`glass w-full max-w-lg overflow-hidden flex flex-col shadow-2xl safe-bottom ${isMobile ? 'h-[85vh] rounded-t-[2.5rem]' : 'max-h-[85vh] rounded-3xl'
+                    } ${isExiting ? 'animate-slide-down-to-bottom' : 'animate-slide-up-from-bottom'}`}
+                onClick={e => e.stopPropagation()}
+            >
+                {/* Header */}
+                <div className="flex items-center justify-between p-6 border-b border-white/10">
+                    <div className="flex items-center gap-3">
+                        <div className="p-2.5 rounded-xl bg-accent-purple/10">
+                            <Settings size={22} className="text-accent-purple" />
+                        </div>
+                        <h2 className="text-xl font-bold gradient-text">Settings</h2>
+                    </div>
+                    <button onClick={handleClose} className="btn-icon">
+                        <X size={24} />
+                    </button>
+                    {isMobile && (
+                        <div className="absolute top-2 left-1/2 -translate-x-1/2 w-12 h-1 bg-white/20 rounded-full" />
+                    )}
+                </div>
+
+                {/* Tabs */}
+                <div className="flex p-2 gap-1 bg-black/20 border-b border-white/5">
+                    {tabs.map(tab => (
+                        <button
+                            key={tab.id}
+                            onClick={() => setActiveTab(tab.id)}
+                            className={`flex items-center gap-2 px-4 py-3 rounded-xl transition-all text-sm font-medium flex-1 justify-center ${activeTab === tab.id
+                                ? 'bg-white/10 text-white shadow-lg'
+                                : 'text-white/50 hover:text-white/80 hover:bg-white/5'
+                                }`}
                         >
-                            {/* Header */}
-                            <div
-                                className="flex items-center justify-between p-4 relative"
-                                style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}
-                            >
-                                {isMobile && (
-                                    <div className="absolute top-2 left-1/2 -translate-x-1/2 w-12 h-1 bg-white/20 rounded-full" />
-                                )}
+                            {tab.icon}
+                            {tab.label}
+                        </button>
+                    ))}
+                </div>
 
-                                <div className="flex items-center gap-3">
-                                    <Settings size={20} style={{ color: '#7c3aed' }} />
-                                    <h2 className="text-lg font-semibold">Settings</h2>
+                {/* Content */}
+                <div className="flex-1 overflow-y-auto p-6 scroll-container">
+                    {/* Telegram Tab */}
+                    {activeTab === 'telegram' && (
+                        <div className="space-y-6 animate-fade-in">
+                            <div>
+                                <h3 className="text-white/40 text-xs font-bold uppercase tracking-widest mb-4">Telegram Connection</h3>
+                                {isConnected ? (
+                                    <div className="p-5 rounded-2xl bg-green-500/10 border border-green-500/20 group">
+                                        <div className="flex items-center gap-4">
+                                            <div className="w-12 h-12 rounded-full bg-green-500/20 flex items-center justify-center shrink-0">
+                                                <CheckCircle2 size={24} className="text-green-500" />
+                                            </div>
+                                            <div className="flex-1 min-w-0">
+                                                <p className="font-bold text-white">Authenticated</p>
+                                                <div className="flex items-center gap-2 mt-1">
+                                                    {getChatIcon(gramjs?.chatType || 'saved')}
+                                                    <span className="text-sm text-white/50 truncate">
+                                                        {gramjs?.chatTitle || 'Saved Messages'}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button
+                                            onClick={disconnectTelegram}
+                                            className="mt-6 w-full py-3 rounded-xl bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-colors text-sm font-bold flex items-center justify-center gap-2"
+                                        >
+                                            <Trash2 size={16} />
+                                            Sign Out Account
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <div className="space-y-4">
+                                        <div className="p-5 rounded-2xl bg-white/5 border border-white/10 text-center py-8">
+                                            <Smartphone size={40} className="mx-auto mb-4 text-white/20" />
+                                            <p className="text-white/60 text-sm mb-6 max-w-xs mx-auto">
+                                                Sign in with your phone number to enable high-speed cloud storage.
+                                            </p>
+                                            <button
+                                                onClick={() => setShowGramJSLogin(true)}
+                                                className="btn-gradient w-full py-4 flex items-center justify-center gap-2"
+                                            >
+                                                Connect Telegram <ChevronRight size={18} />
+                                            </button>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Appearance Tab */}
+                    {activeTab === 'appearance' && (
+                        <div className="space-y-6 animate-fade-in">
+                            <div>
+                                <h3 className="text-white/40 text-xs font-bold uppercase tracking-widest mb-4">Theme Preference</h3>
+                                <div className="grid grid-cols-1 gap-3">
+                                    {[
+                                        { id: 'dark', label: 'Dark Mode', icon: <Moon size={20} />, color: 'bg-[#0a0a0a]' },
+                                        { id: 'light', label: 'Light Mode', icon: <Sun size={20} />, color: 'bg-white' },
+                                        { id: 'system', label: 'System Default', icon: <Monitor size={20} />, color: 'bg-gradient-to-r from-[#0a0a0a] to-white' },
+                                    ].map(t => (
+                                        <button
+                                            key={t.id}
+                                            onClick={() => setTheme(t.id as any)}
+                                            className={`flex items-center gap-4 p-4 rounded-2xl border transition-all ${theme === t.id
+                                                ? 'bg-accent-purple/10 border-accent-purple/50 ring-2 ring-accent-purple/20'
+                                                : 'bg-white/5 border-white/10 hover:bg-white/10'
+                                                }`}
+                                        >
+                                            <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${t.id === 'light' ? 'bg-black/5 text-black' : 'bg-black/40 text-white'}`}>
+                                                {t.icon}
+                                            </div>
+                                            <div className="flex-1 text-left">
+                                                <p className="font-bold text-white">{t.label}</p>
+                                                <p className="text-xs text-white/40">Switch app appearance</p>
+                                            </div>
+                                            {theme === t.id && <div className="w-4 h-4 rounded-full bg-accent-purple ring-4 ring-accent-purple/20" />}
+                                        </button>
+                                    ))}
                                 </div>
-                                <button onClick={onClose} className="btn-icon">
-                                    <X size={20} />
-                                </button>
                             </div>
+                        </div>
+                    )}
 
-                            {/* Tabs */}
-                            <div
-                                className="flex p-2 gap-1 overflow-x-auto scrollbar-hide"
-                                style={{ borderBottom: '1px solid rgba(255,255,255,0.1)' }}
-                            >
-                                {tabs.map(tab => (
+                    {/* Data Tab */}
+                    {activeTab === 'data' && (
+                        <div className="space-y-8 animate-fade-in">
+                            <div className="space-y-4">
+                                <h3 className="text-white/40 text-xs font-bold uppercase tracking-widest mb-1">Metadata Backup</h3>
+                                <div className="grid grid-cols-2 gap-3">
                                     <button
-                                        key={tab.id}
-                                        onClick={() => setActiveTab(tab.id)}
-                                        className="flex items-center gap-2 px-4 py-2.5 rounded-lg transition-all text-sm whitespace-nowrap flex-1 justify-center"
-                                        style={{
-                                            background: activeTab === tab.id ? 'rgba(124, 58, 237, 0.2)' : 'transparent',
-                                            color: activeTab === tab.id ? 'white' : 'rgba(255,255,255,0.6)',
-                                        }}
+                                        onClick={handleExportData}
+                                        className="flex flex-col items-center gap-3 p-5 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all text-center"
                                     >
-                                        {tab.icon}
-                                        {tab.label}
+                                        <Download size={24} className="text-green-400" />
+                                        <p className="font-bold text-sm text-white">Export</p>
                                     </button>
-                                ))}
+                                    <button
+                                        onClick={handleImportData}
+                                        className="flex flex-col items-center gap-3 p-5 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all text-center"
+                                    >
+                                        <Upload size={24} className="text-accent-blue" />
+                                        <p className="font-bold text-sm text-white">Import</p>
+                                    </button>
+                                </div>
                             </div>
 
-                            {/* Content */}
-                            <div className={`p-4 overflow-y-auto ${isMobile ? 'h-[calc(95vh-8rem)] pb-safe-bottom' : 'max-h-96'}`}>
-                                {/* Telegram Tab */}
-                                {activeTab === 'telegram' && (
-                                    <div className="space-y-4">
-                                        {isConnected ? (
-                                            <div
-                                                className="p-4 rounded-xl"
-                                                style={{ background: 'rgba(34, 197, 94, 0.1)', border: '1px solid rgba(34, 197, 94, 0.3)' }}
-                                            >
-                                                <div className="flex items-center gap-3">
-                                                    <CheckCircle2 size={20} style={{ color: '#22c55e' }} />
-                                                    <div className="flex-1">
-                                                        <p className="font-medium">Connected to Telegram</p>
-                                                        {authMethod === 'gramjs' && gramjs && (
-                                                            <div className="flex items-center gap-2 mt-1">
-                                                                {getChatIcon(gramjs.chatType)}
-                                                                <span className="text-sm" style={{ color: 'rgba(255,255,255,0.5)' }}>
-                                                                    {gramjs.chatTitle}
-                                                                </span>
-                                                                <span className="text-xs px-2 py-0.5 rounded-full" style={{ background: 'rgba(124, 58, 237, 0.3)', color: '#a78bfa' }}>
-                                                                    MTProto
-                                                                </span>
-                                                            </div>
-                                                        )}
-                                                        {authMethod === 'bot' && telegram && (
-                                                            <div className="flex items-center gap-2 mt-1">
-                                                                <Bot size={16} style={{ color: 'rgba(255,255,255,0.4)' }} />
-                                                                <span className="text-sm" style={{ color: 'rgba(255,255,255,0.5)' }}>
-                                                                    @{telegram.bot_username}
-                                                                </span>
-                                                                <span className="text-xs px-2 py-0.5 rounded-full" style={{ background: 'rgba(59, 130, 246, 0.3)', color: '#93c5fd' }}>
-                                                                    Bot API
-                                                                </span>
-                                                            </div>
-                                                        )}
-                                                    </div>
-                                                </div>
-                                                <button
-                                                    onClick={disconnectTelegram}
-                                                    className="mt-4 btn-ghost text-sm w-full h-10"
-                                                    style={{ color: '#f87171' }}
-                                                >
-                                                    Disconnect
-                                                </button>
+                            <div className="pt-6 border-t border-white/5">
+                                {!showClearConfirm ? (
+                                    <button
+                                        onClick={() => setShowClearConfirm(true)}
+                                        className="w-full flex items-center gap-4 p-5 rounded-2xl bg-red-500/5 border border-red-500/10 hover:bg-red-500/10 transition-all group"
+                                    >
+                                        <div className="w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center shrink-0">
+                                            <Trash2 size={24} className="text-red-400" />
+                                        </div>
+                                        <div className="text-left">
+                                            <p className="font-bold text-sm text-red-400">Clear Storage</p>
+                                            <p className="text-xs text-red-400/50">Delete all local files and metadata</p>
+                                        </div>
+                                    </button>
+                                ) : (
+                                    <div className="p-6 rounded-2xl bg-red-500/10 border border-red-500/30 animate-scale-in">
+                                        <div className="flex items-start gap-4 mb-6">
+                                            <div className="p-2 rounded-lg bg-red-500/20 text-red-400">
+                                                <AlertTriangle size={24} />
                                             </div>
-                                        ) : showBotLogin ? (
-                                            <>
-                                                <div className="flex items-center gap-2 mb-2">
-                                                    <button
-                                                        onClick={() => setShowBotLogin(false)}
-                                                        className="text-sm flex items-center gap-1 h-10 px-2 -ml-2"
-                                                        style={{ color: 'rgba(255,255,255,0.5)' }}
-                                                    >
-                                                        <ChevronLeft size={16} /> Back
-                                                    </button>
-                                                </div>
-                                                <p className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>
-                                                    Connect using a Telegram bot (legacy method).
+                                            <div>
+                                                <p className="font-bold text-white">Critical Action</p>
+                                                <p className="text-sm text-white/50">
+                                                    This will wipe all data. Are you absolutely sure?
                                                 </p>
-
-                                                <div className="space-y-4">
-                                                    <div>
-                                                        <label className="text-sm mb-1 block" style={{ color: 'rgba(255,255,255,0.6)' }}>
-                                                            Bot Token
-                                                        </label>
-                                                        <div className="relative">
-                                                            <Key size={16} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: 'rgba(255,255,255,0.4)' }} />
-                                                            <input
-                                                                type="password"
-                                                                value={botToken}
-                                                                onChange={e => setBotToken(e.target.value)}
-                                                                placeholder="123456789:ABCdef..."
-                                                                className="input-glass pl-10 text-sm h-11"
-                                                            />
-                                                        </div>
-                                                    </div>
-
-                                                    <div>
-                                                        <label className="text-sm mb-1 block" style={{ color: 'rgba(255,255,255,0.6)' }}>
-                                                            Channel ID
-                                                        </label>
-                                                        <div className="relative">
-                                                            <Hash size={16} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: 'rgba(255,255,255,0.4)' }} />
-                                                            <input
-                                                                type="text"
-                                                                value={channelId}
-                                                                onChange={e => setChannelId(e.target.value)}
-                                                                placeholder="-1001234567890"
-                                                                className="input-glass pl-10 text-sm h-11"
-                                                            />
-                                                        </div>
-                                                    </div>
-
-                                                    {connectionError && (
-                                                        <div
-                                                            className="p-3 rounded-lg text-sm"
-                                                            style={{ background: 'rgba(239, 68, 68, 0.1)', color: '#f87171' }}
-                                                        >
-                                                            {connectionError}
-                                                        </div>
-                                                    )}
-
-                                                    <button
-                                                        onClick={handleBotConnect}
-                                                        disabled={!botToken || !channelId || isConnecting}
-                                                        className="btn-gradient w-full flex items-center justify-center gap-2 h-11"
-                                                        style={{ opacity: (!botToken || !channelId || isConnecting) ? 0.5 : 1 }}
-                                                    >
-                                                        {isConnecting ? (
-                                                            <>
-                                                                <Loader2 size={18} className="animate-spin" />
-                                                                Connecting...
-                                                            </>
-                                                        ) : (
-                                                            'Connect'
-                                                        )}
-                                                    </button>
-                                                </div>
-                                            </>
-                                        ) : (
-                                            <>
-                                                <p className="text-sm" style={{ color: 'rgba(255,255,255,0.6)' }}>
-                                                    Connect your Telegram account to store files securely.
-                                                </p>
-
-                                                <div className="space-y-3">
-                                                    {/* GramJS Login - Recommended */}
-                                                    <button
-                                                        onClick={() => setShowGramJSLogin(true)}
-                                                        className="w-full flex items-center gap-3 p-4 rounded-xl transition-all group active:scale-95"
-                                                        style={{
-                                                            background: 'linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(59, 130, 246, 0.2))',
-                                                            border: '1px solid rgba(124, 58, 237, 0.4)',
-                                                        }}
-                                                    >
-                                                        <div
-                                                            className="w-12 h-12 rounded-xl flex items-center justify-center"
-                                                            style={{ background: 'rgba(124, 58, 237, 0.3)' }}
-                                                        >
-                                                            <Smartphone size={24} style={{ color: '#a78bfa' }} />
-                                                        </div>
-                                                        <div className="flex-1 text-left">
-                                                            <div className="flex items-center gap-2">
-                                                                <p className="font-medium">Login with Phone</p>
-                                                                <span className="text-xs px-2 py-0.5 rounded-full" style={{ background: 'rgba(34, 197, 94, 0.3)', color: '#86efac' }}>
-                                                                    Recommended
-                                                                </span>
-                                                            </div>
-                                                            <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.5)' }}>
-                                                                Login with your Telegram account • No bot required • 2GB file limit
-                                                            </p>
-                                                        </div>
-                                                        <ChevronRight size={20} style={{ color: 'rgba(255,255,255,0.4)' }} className="group-hover:translate-x-1 transition-transform" />
-                                                    </button>
-
-                                                    {/* Bot Login - Legacy */}
-                                                    <button
-                                                        onClick={() => setShowBotLogin(true)}
-                                                        className="w-full flex items-center gap-3 p-4 rounded-xl transition-all group active:scale-95"
-                                                        style={{
-                                                            background: 'rgba(255,255,255,0.05)',
-                                                            border: '1px solid rgba(255,255,255,0.1)',
-                                                        }}
-                                                    >
-                                                        <div
-                                                            className="w-12 h-12 rounded-xl flex items-center justify-center"
-                                                            style={{ background: 'rgba(255,255,255,0.1)' }}
-                                                        >
-                                                            <Bot size={24} style={{ color: 'rgba(255,255,255,0.6)' }} />
-                                                        </div>
-                                                        <div className="flex-1 text-left">
-                                                            <p className="font-medium">Connect Bot</p>
-                                                            <p className="text-xs mt-0.5" style={{ color: 'rgba(255,255,255,0.5)' }}>
-                                                                Use a Telegram bot token • 50MB file limit
-                                                            </p>
-                                                        </div>
-                                                        <ChevronRight size={20} style={{ color: 'rgba(255,255,255,0.4)' }} className="group-hover:translate-x-1 transition-transform" />
-                                                    </button>
-                                                </div>
-                                            </>
-                                        )}
-                                    </div>
-                                )}
-
-                                {/* Appearance Tab */}
-                                {activeTab === 'appearance' && (
-                                    <div className="space-y-4">
-                                        <div>
-                                            <label className="text-sm mb-2 block" style={{ color: 'rgba(255,255,255,0.6)' }}>
-                                                Theme
-                                            </label>
-                                            <div className="flex gap-2">
-                                                {(['dark', 'light', 'system'] as const).map(t => (
-                                                    <button
-                                                        key={t}
-                                                        onClick={() => setTheme(t)}
-                                                        className="flex-1 py-3 px-4 rounded-lg text-sm capitalize transition-all"
-                                                        style={{
-                                                            background: theme === t ? 'rgba(124, 58, 237, 0.2)' : 'rgba(255,255,255,0.05)',
-                                                            border: theme === t ? '1px solid rgba(124, 58, 237, 0.5)' : '1px solid rgba(255,255,255,0.1)',
-                                                        }}
-                                                    >
-                                                        {t}
-                                                    </button>
-                                                ))}
                                             </div>
                                         </div>
-                                    </div>
-                                )}
-
-                                {/* Data Tab */}
-                                {activeTab === 'data' && (
-                                    <div className="space-y-4">
-                                        <div className="space-y-3">
+                                        <div className="grid grid-cols-2 gap-3">
                                             <button
-                                                onClick={handleExportData}
-                                                className="w-full flex items-center gap-3 p-4 rounded-lg transition-all active:scale-95"
-                                                style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}
+                                                onClick={() => setShowClearConfirm(false)}
+                                                className="py-3 rounded-xl bg-white/5 text-white/60 hover:text-white transition-colors text-sm font-bold"
                                             >
-                                                <Download size={20} style={{ color: '#22c55e' }} />
-                                                <div className="text-left">
-                                                    <p className="font-medium text-sm">Export Data</p>
-                                                    <p className="text-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>
-                                                        Download all your file metadata as JSON
-                                                    </p>
-                                                </div>
+                                                Cancel
                                             </button>
-
                                             <button
-                                                onClick={handleImportData}
-                                                className="w-full flex items-center gap-3 p-4 rounded-lg transition-all active:scale-95"
-                                                style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}
+                                                onClick={handleClearData}
+                                                className="py-3 rounded-xl bg-red-500 text-white hover:bg-red-600 transition-colors text-sm font-bold shadow-lg shadow-red-500/20"
                                             >
-                                                <Upload size={20} style={{ color: '#3b82f6' }} />
-                                                <div className="text-left">
-                                                    <p className="font-medium text-sm">Import Data</p>
-                                                    <p className="text-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>
-                                                        Restore from a backup file
-                                                    </p>
-                                                </div>
+                                                Wipe Now
                                             </button>
-                                        </div>
-
-                                        <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '1rem' }}>
-                                            {!showClearConfirm ? (
-                                                <button
-                                                    onClick={() => setShowClearConfirm(true)}
-                                                    className="w-full flex items-center gap-3 p-4 rounded-lg transition-all active:scale-95"
-                                                    style={{ background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.3)' }}
-                                                >
-                                                    <Trash2 size={20} style={{ color: '#f87171' }} />
-                                                    <div className="text-left">
-                                                        <p className="font-medium text-sm" style={{ color: '#f87171' }}>Clear All Data</p>
-                                                        <p className="text-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>
-                                                            Delete all local data and reset the app
-                                                        </p>
-                                                    </div>
-                                                </button>
-                                            ) : (
-                                                <div
-                                                    className="p-4 rounded-lg"
-                                                    style={{ background: 'rgba(239, 68, 68, 0.1)', border: '1px solid rgba(239, 68, 68, 0.3)' }}
-                                                >
-                                                    <div className="flex items-start gap-3 mb-4">
-                                                        <AlertTriangle size={20} style={{ color: '#f87171' }} />
-                                                        <div>
-                                                            <p className="font-medium" style={{ color: '#f87171' }}>Are you sure?</p>
-                                                            <p className="text-sm" style={{ color: 'rgba(255,255,255,0.5)' }}>
-                                                                This will permanently delete all your local data.
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                    <div className="flex gap-2">
-                                                        <button
-                                                            onClick={() => setShowClearConfirm(false)}
-                                                            className="flex-1 btn-ghost text-sm h-10"
-                                                        >
-                                                            Cancel
-                                                        </button>
-                                                        <button
-                                                            onClick={handleClearData}
-                                                            className="flex-1 py-2 px-4 rounded-lg text-sm bg-red-500 text-white h-10"
-                                                            style={{ background: '#ef4444' }}
-                                                        >
-                                                            Clear Data
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            )}
                                         </div>
                                     </div>
                                 )}
                             </div>
-                        </motion.div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+                        </div>
+                    )}
+                </div>
 
-            {/* GramJS Login Dialog */}
+                {/* Footer */}
+                <div className="p-6 bg-black/10 text-center">
+                    <p className="text-[10px] text-white/20 uppercase font-black tracking-[0.2em]">TeleCloud v1.0 • Built with GramJS</p>
+                </div>
+            </div>
+
+            {/* Sub-modals */}
             <TelegramLoginDialog
                 isOpen={showGramJSLogin}
                 onClose={() => setShowGramJSLogin(false)}
                 onSuccess={handleGramJSSuccess}
             />
-        </>
+        </div>
     );
 }

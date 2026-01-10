@@ -1,14 +1,12 @@
 /**
- * Swipeable Drawer Component for Mobile
+ * Swipeable Drawer Component for Mobile - Updated with CSS Animations
  * @module components/mobile/SwipeableDrawer
  */
 
-import { useEffect, useRef, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import type { PanInfo } from 'framer-motion';
+import { useEffect, useState, useCallback } from 'react';
 import {
     FolderOpen,
-    Image,
+    Image as ImageIcon,
     Video,
     FileText,
     Music,
@@ -28,8 +26,7 @@ interface SwipeableDrawerProps {
 
 export function SwipeableDrawer({ isOpen, onClose }: SwipeableDrawerProps) {
     const { files, filterType, navigateToFolder, setFilterType } = useFileStore();
-    const drawerRef = useRef<HTMLDivElement>(null);
-    const [dragX, setDragX] = useState(0);
+    const [isExiting, setIsExiting] = useState(false);
 
     // Calculate stats
     const activeFiles = files.filter(f => !f.is_deleted);
@@ -48,188 +45,159 @@ export function SwipeableDrawer({ isOpen, onClose }: SwipeableDrawerProps) {
 
     const navItems = [
         { id: 'all', label: 'All Files', icon: FolderOpen, badge: stats.total },
-        { id: 'images', label: 'Photos', icon: Image, badge: stats.images },
+        { id: 'images', label: 'Photos', icon: ImageIcon, badge: stats.images },
         { id: 'videos', label: 'Videos', icon: Video, badge: stats.videos },
         { id: 'documents', label: 'Documents', icon: FileText, badge: stats.documents },
         { id: 'audio', label: 'Music', icon: Music, badge: stats.audio },
     ];
 
+    const handleClose = useCallback(() => {
+        setIsExiting(true);
+        setTimeout(() => {
+            onClose();
+            setIsExiting(false);
+        }, 300);
+    }, [onClose]);
+
     // Lock body scroll when drawer is open
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = 'hidden';
+            window.addEventListener('keydown', handleEsc);
         } else {
             document.body.style.overflow = '';
         }
         return () => {
             document.body.style.overflow = '';
+            window.removeEventListener('keydown', handleEsc);
         };
     }, [isOpen]);
+
+    const handleEsc = (e: KeyboardEvent) => e.key === 'Escape' && handleClose();
 
     const handleNavClick = (filter: string) => {
         navigateToFolder(null);
         setFilterType(filter as never);
-        onClose();
+        handleClose();
     };
 
-    const handleDragEnd = (_: MouseEvent | TouchEvent, info: PanInfo) => {
-        if (info.velocity.x < -500 || info.offset.x < -100) {
-            onClose();
-        }
-        setDragX(0);
-    };
-
-    const drawerWidth = Math.min(window.innerWidth * 0.85, 320);
+    if (!isOpen && !isExiting) return null;
 
     return (
-        <AnimatePresence>
-            {isOpen && (
-                <>
-                    {/* Backdrop */}
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        onClick={onClose}
-                        className="fixed inset-0 z-50"
-                        style={{ background: 'rgba(0, 0, 0, 0.6)', backdropFilter: 'blur(4px)' }}
-                    />
+        <div className="fixed inset-0 z-50 flex overflow-hidden">
+            {/* Backdrop */}
+            <div
+                onClick={handleClose}
+                className={`absolute inset-0 transition-opacity duration-300 ${isExiting ? 'opacity-0' : 'opacity-100'
+                    }`}
+                style={{ background: 'rgba(0, 0, 0, 0.6)', backdropFilter: 'blur(4px)' }}
+            />
 
-                    {/* Drawer */}
-                    <motion.div
-                        ref={drawerRef}
-                        initial={{ x: -drawerWidth }}
-                        animate={{ x: dragX }}
-                        exit={{ x: -drawerWidth }}
-                        transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-                        drag="x"
-                        dragConstraints={{ left: -drawerWidth, right: 0 }}
-                        dragElastic={0.1}
-                        onDrag={(_, info) => setDragX(Math.min(0, info.offset.x))}
-                        onDragEnd={handleDragEnd}
-                        className="fixed top-0 left-0 bottom-0 z-50 glass flex flex-col"
-                        style={{
-                            width: drawerWidth,
-                            paddingTop: 'env(safe-area-inset-top)',
-                            paddingBottom: 'env(safe-area-inset-bottom)',
-                            borderRight: '1px solid rgba(255, 255, 255, 0.1)',
-                        }}
+            {/* Sidebar Drawer */}
+            <div
+                className={`relative glass w-[280px] h-full flex flex-col transition-transform duration-300 border-r border-white/10 ${isExiting ? '-translate-x-full' : 'translate-x-0 outline-none'
+                    } ${!isOpen && !isExiting ? '-translate-x-full' : 'animate-slide-in-left'}`}
+                style={{
+                    paddingTop: 'env(safe-area-inset-top)',
+                    paddingBottom: 'env(safe-area-inset-bottom)',
+                }}
+            >
+                {/* Header */}
+                <div className="flex items-center justify-between p-6 border-b border-white/10">
+                    <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-accent-purple to-accent-blue flex items-center justify-center shadow-lg shadow-accent-purple/20">
+                            <HardDrive size={20} className="text-white" />
+                        </div>
+                        <span className="font-black text-lg gradient-text tracking-tight">TeleCloud</span>
+                    </div>
+                    <button onClick={handleClose} className="btn-icon">
+                        <X size={20} />
+                    </button>
+                </div>
+
+                {/* Navigation */}
+                <nav className="flex-1 p-4 space-y-1 overflow-y-auto scroll-container">
+                    <p className="text-[10px] font-black uppercase text-white/20 px-4 mb-2 tracking-widest">Library</p>
+                    {navItems.map((item) => {
+                        const Icon = item.icon;
+                        const isActive = filterType === item.id;
+
+                        return (
+                            <button
+                                key={item.id}
+                                onClick={() => handleNavClick(item.id)}
+                                className={`w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl transition-all duration-200 ${isActive
+                                        ? 'bg-accent-purple/10 text-white border border-accent-purple/20'
+                                        : 'text-white/60 hover:text-white hover:bg-white/5 border border-transparent'
+                                    }`}
+                            >
+                                <Icon
+                                    size={20}
+                                    className={isActive ? 'text-accent-purple' : 'text-white/40'}
+                                />
+                                <span className="flex-1 text-left font-bold text-sm">
+                                    {item.label}
+                                </span>
+                                <span className="text-xs font-mono opacity-40">
+                                    {item.badge}
+                                </span>
+                            </button>
+                        );
+                    })}
+
+                    <div className="h-px my-6 bg-white/5" />
+
+                    <p className="text-[10px] font-black uppercase text-white/20 px-4 mb-2 tracking-widest">Organize</p>
+
+                    {/* Favorites */}
+                    <button
+                        onClick={() => {/* TODO */ }}
+                        className="w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl text-white/60 hover:text-white hover:bg-white/5 transition-all"
                     >
-                        {/* Header */}
-                        <div className="flex items-center justify-between p-4 border-b border-white/10">
-                            <div className="flex items-center gap-3">
-                                <div
-                                    className="w-10 h-10 rounded-xl flex items-center justify-center"
-                                    style={{ background: 'linear-gradient(135deg, #7c3aed, #2563eb)' }}
-                                >
-                                    <HardDrive size={20} className="text-white" />
-                                </div>
-                                <span className="font-semibold text-lg gradient-text">TeleCloud</span>
-                            </div>
-                            <button onClick={onClose} className="btn-icon">
-                                <X size={20} />
-                            </button>
-                        </div>
+                        <Star size={20} className="text-yellow-500" />
+                        <span className="flex-1 text-left font-bold text-sm">Favorites</span>
+                        <span className="text-xs font-mono opacity-40">{stats.favorites}</span>
+                    </button>
 
-                        {/* Navigation */}
-                        <nav className="flex-1 p-3 space-y-1 overflow-y-auto scrollbar-hide">
-                            {navItems.map((item) => {
-                                const Icon = item.icon;
-                                const isActive = filterType === item.id;
+                    {/* Trash */}
+                    <button
+                        onClick={() => {/* TODO */ }}
+                        className="w-full flex items-center gap-3 px-4 py-3.5 rounded-2xl text-white/60 hover:text-white hover:bg-white/5 transition-all"
+                    >
+                        <Trash2 size={20} className="text-red-500" />
+                        <span className="flex-1 text-left font-bold text-sm">Trash</span>
+                        <span className="text-xs font-mono opacity-40">{stats.trash}</span>
+                    </button>
+                </nav>
 
-                                return (
-                                    <button
-                                        key={item.id}
-                                        onClick={() => handleNavClick(item.id)}
-                                        className="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 touch-target"
-                                        style={{
-                                            background: isActive ? 'rgba(124, 58, 237, 0.2)' : 'transparent',
-                                            border: isActive ? '1px solid rgba(124, 58, 237, 0.3)' : '1px solid transparent',
-                                        }}
-                                    >
-                                        <Icon
-                                            size={22}
-                                            style={{ color: isActive ? '#7c3aed' : 'rgba(255, 255, 255, 0.6)' }}
-                                        />
-                                        <span
-                                            className="flex-1 text-left font-medium"
-                                            style={{ color: isActive ? 'white' : 'rgba(255, 255, 255, 0.8)' }}
-                                        >
-                                            {item.label}
-                                        </span>
-                                        <span
-                                            className="text-sm"
-                                            style={{ color: 'rgba(255, 255, 255, 0.5)' }}
-                                        >
-                                            {item.badge}
-                                        </span>
-                                    </button>
-                                );
-                            })}
+                {/* Storage Info */}
+                <div className="p-6 border-t border-white/5 bg-black/5">
+                    <div className="flex items-center gap-2 mb-3 text-white/30">
+                        <HardDrive size={14} />
+                        <span className="text-[10px] uppercase font-bold tracking-widest">Cloud Usage</span>
+                    </div>
+                    <div className="text-2xl font-black text-white mb-1">
+                        {formatFileSize(stats.totalSize)}
+                    </div>
+                    <div className="text-[10px] font-bold text-white/20 uppercase">
+                        {stats.total} Objects • <span className="text-accent-purple">Unlimited</span>
+                    </div>
+                </div>
 
-                            {/* Divider */}
-                            <div className="h-px my-3 bg-white/10" />
-
-                            {/* Favorites */}
-                            <button
-                                onClick={() => {/* TODO */ }}
-                                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all touch-target"
-                            >
-                                <Star size={22} style={{ color: '#eab308' }} />
-                                <span className="flex-1 text-left font-medium" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
-                                    Favorites
-                                </span>
-                                <span className="text-sm" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>
-                                    {stats.favorites}
-                                </span>
-                            </button>
-
-                            {/* Trash */}
-                            <button
-                                onClick={() => {/* TODO */ }}
-                                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all touch-target"
-                            >
-                                <Trash2 size={22} style={{ color: '#f87171' }} />
-                                <span className="flex-1 text-left font-medium" style={{ color: 'rgba(255, 255, 255, 0.8)' }}>
-                                    Trash
-                                </span>
-                                <span className="text-sm" style={{ color: 'rgba(255, 255, 255, 0.5)' }}>
-                                    {stats.trash}
-                                </span>
-                            </button>
-                        </nav>
-
-                        {/* Storage Info */}
-                        <div className="p-4 border-t border-white/10">
-                            <div className="flex items-center gap-2 mb-2" style={{ color: 'rgba(255, 255, 255, 0.6)' }}>
-                                <HardDrive size={16} />
-                                <span className="text-sm">Storage</span>
-                            </div>
-                            <div className="text-xl font-semibold mb-1">
-                                {formatFileSize(stats.totalSize)}
-                            </div>
-                            <div className="text-xs" style={{ color: 'rgba(255, 255, 255, 0.4)' }}>
-                                {stats.total} files • Unlimited
-                            </div>
-                        </div>
-
-                        {/* Settings */}
-                        <div className="p-3 border-t border-white/10">
-                            <button
-                                onClick={() => {
-                                    window.dispatchEvent(new CustomEvent('open-settings'));
-                                    onClose();
-                                }}
-                                className="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all touch-target"
-                                style={{ color: 'rgba(255, 255, 255, 0.8)' }}
-                            >
-                                <Settings size={22} />
-                                <span className="font-medium">Settings</span>
-                            </button>
-                        </div>
-                    </motion.div>
-                </>
-            )}
-        </AnimatePresence>
+                {/* Settings */}
+                <div className="p-4 border-t border-white/5">
+                    <button
+                        onClick={() => {
+                            window.dispatchEvent(new CustomEvent('open-settings'));
+                            handleClose();
+                        }}
+                        className="w-full flex items-center gap-3 px-5 py-4 rounded-2xl bg-white/5 hover:bg-white/10 transition-all font-bold text-sm text-white/80"
+                    >
+                        <Settings size={20} />
+                        <span>Settings</span>
+                    </button>
+                </div>
+            </div>
+        </div>
     );
 }

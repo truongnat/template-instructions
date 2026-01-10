@@ -1,10 +1,9 @@
 /**
- * Header Component
+ * Header Component - Updated with CSS Animations
  * @module components/layout/Header
  */
 
 import { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import {
     Search,
     LayoutGrid,
@@ -12,14 +11,12 @@ import {
     SortAsc,
     SortDesc,
     Upload,
-    Moon,
-    Sun,
     ChevronDown,
     X,
 } from 'lucide-react';
 import { useFileStore } from '../../store/files';
-import { useSettingsStore } from '../../store/settings';
 import { triggerUpload } from '../upload/DropZone';
+import { useResponsive } from '../../hooks/useResponsive';
 
 // ============================================================================
 // COMPONENT
@@ -40,7 +37,7 @@ export function Header() {
         filterType,
     } = useFileStore();
 
-    const { theme, setTheme } = useSettingsStore();
+    const { isMobile } = useResponsive();
 
     const [showSortMenu, setShowSortMenu] = useState(false);
     const [isSearchFocused, setIsSearchFocused] = useState(false);
@@ -87,7 +84,6 @@ export function Header() {
                 setSearchQuery('');
                 searchRef.current?.blur();
             }
-            // Ctrl+U for upload
             if ((e.ctrlKey || e.metaKey) && e.key === 'u') {
                 e.preventDefault();
                 triggerUpload();
@@ -105,20 +101,20 @@ export function Header() {
     ] as const;
 
     return (
-        <header className="glass" style={{ borderBottom: '1px solid rgba(255,255,255,0.1)', padding: '1rem 1.5rem' }}>
-            <div className="flex items-center justify-between gap-4">
+        <header className="glass sticky top-0 z-30 border-b border-white/10 px-6 py-4">
+            <div className="flex items-center justify-between gap-6">
                 {/* Left: Title */}
-                <div className="flex items-center gap-4">
-                    <h1 className="text-xl font-semibold">{getTitle()}</h1>
+                <div className="flex items-center gap-4 min-w-[120px]">
+                    <h1 className="text-xl font-black gradient-text tracking-tight animate-fade-in">{getTitle()}</h1>
                 </div>
 
                 {/* Center: Search */}
-                <div className="flex-1 max-w-md">
-                    <div className={`relative flex items-center transition-all duration-200 ${isSearchFocused ? 'scale-105' : ''}`}>
+                <div className="flex-1 max-w-xl hidden sm:block">
+                    <div className={`relative flex items-center transition-all duration-500 rounded-2xl ${isSearchFocused ? 'scale-[1.02] ring-4 ring-accent-purple/10' : ''}`}>
                         <Search
                             size={18}
-                            className="absolute left-4"
-                            style={{ color: isSearchFocused ? '#7c3aed' : 'rgba(255,255,255,0.4)' }}
+                            className="absolute left-4 transition-colors duration-300"
+                            style={{ color: isSearchFocused ? 'var(--accent-purple)' : 'rgba(255,255,255,0.2)' }}
                         />
                         <input
                             ref={searchRef}
@@ -127,116 +123,89 @@ export function Header() {
                             onChange={(e) => setSearchQuery(e.target.value)}
                             onFocus={() => setIsSearchFocused(true)}
                             onBlur={() => setIsSearchFocused(false)}
-                            placeholder="Search files... (press /)"
-                            className="input-glass pl-11 pr-10 text-sm"
+                            placeholder="Search your cloud... (press /)"
+                            className="input-glass pl-12 pr-12 py-3 text-sm font-medium placeholder:text-white/20"
                         />
-                        <AnimatePresence>
-                            {searchQuery && (
-                                <motion.button
-                                    initial={{ opacity: 0, scale: 0.8 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    exit={{ opacity: 0, scale: 0.8 }}
-                                    onClick={() => setSearchQuery('')}
-                                    className="absolute right-3 p-1 rounded-full"
-                                    style={{ color: 'rgba(255,255,255,0.4)' }}
-                                >
-                                    <X size={14} />
-                                </motion.button>
-                            )}
-                        </AnimatePresence>
+                        {searchQuery && (
+                            <button
+                                onClick={() => setSearchQuery('')}
+                                className="absolute right-3 p-1.5 rounded-xl hover:bg-white/10 transition-all text-white/30 hover:text-white active:scale-90 animate-scale-in"
+                            >
+                                <X size={16} />
+                            </button>
+                        )}
                     </div>
                 </div>
 
                 {/* Right: Actions */}
-                <div className="flex items-center gap-2">
-                    {/* View Mode Toggle */}
-                    <div className="flex items-center glass-sm rounded-lg p-1 gap-1">
-                        <button
-                            onClick={() => setViewMode('grid')}
-                            className="p-2 rounded-md transition-all"
-                            style={{
-                                background: viewMode === 'grid' ? 'rgba(124, 58, 237, 0.3)' : 'transparent',
-                                color: viewMode === 'grid' ? '#7c3aed' : 'rgba(255,255,255,0.5)',
-                            }}
-                            title="Grid view (Ctrl+1)"
-                        >
-                            <LayoutGrid size={18} />
-                        </button>
-                        <button
-                            onClick={() => setViewMode('list')}
-                            className="p-2 rounded-md transition-all"
-                            style={{
-                                background: viewMode === 'list' ? 'rgba(124, 58, 237, 0.3)' : 'transparent',
-                                color: viewMode === 'list' ? '#7c3aed' : 'rgba(255,255,255,0.5)',
-                            }}
-                            title="List view (Ctrl+2)"
-                        >
-                            <List size={18} />
-                        </button>
-                    </div>
+                <div className="flex items-center gap-3">
+                    {/* View Mode Toggle - Only on desktop */}
+                    {!isMobile && (
+                        <div className="flex items-center bg-black/20 rounded-xl p-1 gap-1 border border-white/5">
+                            <button
+                                onClick={() => setViewMode('grid')}
+                                className={`p-2 rounded-lg transition-all ${viewMode === 'grid' ? 'bg-white/10 text-white shadow-lg' : 'text-white/30 hover:text-white/60'
+                                    }`}
+                                title="Grid (Ctrl+1)"
+                            >
+                                <LayoutGrid size={18} />
+                            </button>
+                            <button
+                                onClick={() => setViewMode('list')}
+                                className={`p-2 rounded-lg transition-all ${viewMode === 'list' ? 'bg-white/10 text-white shadow-lg' : 'text-white/30 hover:text-white/60'
+                                    }`}
+                                title="List (Ctrl+2)"
+                            >
+                                <List size={18} />
+                            </button>
+                        </div>
+                    )}
 
                     {/* Sort Dropdown */}
                     <div className="relative" ref={sortMenuRef}>
                         <button
                             onClick={() => setShowSortMenu(!showSortMenu)}
-                            className="btn-ghost flex items-center gap-2 text-sm"
+                            className="glass-sm px-4 py-2 flex items-center gap-2 text-sm font-bold text-white/70 hover:text-white transition-all rounded-xl active:scale-95"
                         >
                             {sortOrder === 'asc' ? <SortAsc size={16} /> : <SortDesc size={16} />}
-                            <span className="hidden sm:inline">
+                            <span className="hidden lg:inline">
                                 {sortOptions.find(o => o.value === sortBy)?.label}
                             </span>
-                            <ChevronDown size={14} className={`transition-transform ${showSortMenu ? 'rotate-180' : ''}`} />
+                            <ChevronDown size={14} className={`transition-transform duration-300 ${showSortMenu ? 'rotate-180' : ''}`} />
                         </button>
 
-                        <AnimatePresence>
-                            {showSortMenu && (
-                                <motion.div
-                                    initial={{ opacity: 0, y: -10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    exit={{ opacity: 0, y: -10 }}
-                                    className="dropdown-menu"
-                                    style={{ right: 0, marginTop: '0.5rem' }}
-                                >
-                                    {sortOptions.map((option) => (
-                                        <button
-                                            key={option.value}
-                                            onClick={() => {
-                                                if (sortBy === option.value) {
-                                                    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
-                                                } else {
-                                                    setSortBy(option.value);
-                                                }
-                                                setShowSortMenu(false);
-                                            }}
-                                            className="dropdown-item"
-                                            style={{ color: sortBy === option.value ? '#7c3aed' : undefined }}
-                                        >
-                                            <span className="flex-1">{option.label}</span>
-                                            {sortBy === option.value && (
-                                                sortOrder === 'asc' ? <SortAsc size={14} /> : <SortDesc size={14} />
-                                            )}
-                                        </button>
-                                    ))}
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
+                        {showSortMenu && (
+                            <div className="absolute right-0 mt-3 w-48 glass rounded-2xl border border-white/10 p-2 shadow-2xl animate-scale-in origin-top-right">
+                                {sortOptions.map((option) => (
+                                    <button
+                                        key={option.value}
+                                        onClick={() => {
+                                            if (sortBy === option.value) {
+                                                setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+                                            } else {
+                                                setSortBy(option.value);
+                                            }
+                                            setShowSortMenu(false);
+                                        }}
+                                        className={`w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all text-xs font-bold ${sortBy === option.value ? 'bg-accent-purple/10 text-accent-purple' : 'text-white/50 hover:bg-white/5 hover:text-white'
+                                            }`}
+                                    >
+                                        <span>{option.label}</span>
+                                        {sortBy === option.value && (
+                                            sortOrder === 'asc' ? <SortAsc size={14} /> : <SortDesc size={14} />
+                                        )}
+                                    </button>
+                                ))}
+                            </div>
+                        )}
                     </div>
-
-                    {/* Theme Toggle */}
-                    <button
-                        onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                        className="btn-icon"
-                        title="Toggle theme"
-                    >
-                        {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
-                    </button>
 
                     {/* Upload Button */}
                     <button
                         onClick={triggerUpload}
-                        className="btn-gradient flex items-center gap-2"
+                        className="btn-gradient px-6 py-2.5 flex items-center gap-2 group"
                     >
-                        <Upload size={18} />
+                        <Upload size={18} className="group-hover:-translate-y-0.5 transition-transform" />
                         <span className="hidden sm:inline">Upload</span>
                     </button>
                 </div>
