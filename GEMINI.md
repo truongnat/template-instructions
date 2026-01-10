@@ -599,11 +599,59 @@ python tools/intelligence/scorer/output_scorer.py --artifact docs/planning/proje
 # Create task
 python tools/intelligence/task_manager/manager.py --create "implement authentication"
 
-# Get task status
+# GetTask status
 python tools/intelligence/task_manager/manager.py --status task-123
 ```
 
----
+### 14. Workflow Validator (Execution Compliance)
+
+**Location:** `tools/intelligence/workflow_validator/`
+
+**Responsibilities:**
+- Parse workflow definitions from `.agent/workflows/*.md`
+- Track AI agent actions during workflow execution
+- Validate post-execution compliance against workflow steps
+- Detect skipped steps, wrong commands, order violations
+- Generate detailed compliance reports with scores
+- Provide actionable recommendations for improvement
+
+**Components:**
+- `WorkflowParser` - Parse .md workflows into structured steps
+- `ExecutionTracker` - Log AI actions with session management
+- `ComplianceValidator` - Validate execution against definition
+- `ComplianceReporter` - Generate markdown compliance reports
+
+**Violation Types:**
+- 🔴 **CRITICAL**: Missing critical enforcement steps
+- 🟠 **HIGH**: Skipped required steps  
+- 🟡 **MEDIUM**: Wrong order or significant deviations
+- 🟢 **LOW**: Minor command variations, extra steps
+
+**Usage:**
+```bash
+# Auto-validate last workflow execution
+python tools/core/brain/brain_cli.py validate-workflow --auto
+
+# Validate specific workflow with full report
+python tools/core/brain/brain_cli.py validate-workflow --workflow commit --report
+
+# Manual tracking
+python tools/core/brain/brain_cli.py validate-workflow --start --workflow cycle
+# ... execute workflow ...
+python tools/core/brain/brain_cli.py validate-workflow --end
+```
+
+**Report Contents:**
+- Compliance Score (0-100)
+- Overall Status (PASS/PARTIAL/FAIL)
+- Step-by-step results
+- Violations with impact levels
+- Metrics and completion rates
+- Actionable recommendations
+
+**Report Location:** `docs/reports/workflow_compliance/`
+
+
 
 ## 👥 Layer 1: Skills (17 AI Roles)
 

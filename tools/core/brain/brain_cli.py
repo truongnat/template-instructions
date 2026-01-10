@@ -44,6 +44,10 @@ try:
     from tools.intelligence.artifact_gen.generator import ArtifactGenerator
     from tools.intelligence.monitor.health_monitor import HealthMonitor
     from tools.intelligence.proxy.router import Router
+    from tools.intelligence.workflow_validator.parser import parse_workflow
+    from tools.intelligence.workflow_validator.tracker import get_tracker
+    from tools.intelligence.workflow_validator.validator import ComplianceValidator
+    from tools.intelligence.workflow_validator.reporter import ComplianceReporter
 except ImportError as e:
     print(f"❌ Import Error: {e}")
     sys.exit(1)
@@ -234,6 +238,82 @@ def cmd_learn(args):
     result = learner.learn(parsed_args.description)
     print(f"Recorded. Patterns found: {result['patterns_found']}")
 
+def cmd_validate_workflow(args):
+    """Validate workflow execution."""
+    print("✓ @BRAIN /validate-workflow")
+    parser = argparse.ArgumentParser(description="Workflow Validator")
+    parser.add_argument("--workflow", help="Workflow name to validate")
+    parser.add_argument("--auto", action="store_true", help="Auto-detect last workflow")
+    parser.add_argument("--start", action="store_true", help="Start tracking workflow")
+    parser.add_argument("--end", action="store_true", help="End tracking and validate")
+    parser.add_argument("--report", action="store_true", help="Generate report for last execution")
+    parser.add_argument("--save", action="store_true", default=True, help="Save report to file")
+    
+    parsed_args = parser.parse_args(args)
+    tracker = get_tracker()
+    
+    # Start tracking
+    if parsed_args.start:
+        if not parsed_args.workflow:
+            print("❌ --workflow required when using --start")
+            return
+        tracker.start_tracking(parsed_args.workflow)
+        print(f"✓ Started tracking workflow: {parsed_args.workflow}")
+        return
+    
+    # End tracking
+    if parsed_args.end:
+        tracker.end_tracking()
+        print("✓ Tracking session ended")
+        return
+    
+    # Validate last execution
+    workflow_name = parsed_args.workflow if parsed_args.workflow else None
+    
+    # Get last session
+    session = tracker.get_latest_session(workflow_name)
+    if not session:
+        print("❌ No execution session found")
+        if workflow_name:
+            print(f"   For workflow: {workflow_name}")
+        return
+    
+    print(f"📊 Validating workflow: {session.workflow_name}")
+    print(f"   Execution time: {session.start_time}")
+    print(f"   Duration: {session.duration():.2f}s")
+    print(f"   Actions logged: {len(session.actions)}")
+    print()
+    
+    # Parse workflow definition
+    try:
+        workflow_def = parse_workflow(session.workflow_name)
+    except FileNotFoundError:
+        print(f"❌ Workflow definition not found: {session.workflow_name}")
+        return
+    except Exception as e:
+        print(f"❌ Error parsing workflow: {e}")
+        return
+    
+    # Validate
+    validator = ComplianceValidator()
+    report = validator.validate(workflow_def, session)
+    
+    # Generate report
+    reporter = ComplianceReporter()
+    
+    # Show console summary
+    print(reporter.generate_console_summary(report))
+    print()
+    
+    # Generate full report if requested
+    if parsed_args.report:
+        full_report = reporter.generate_report(report, save=parsed_args.save)
+        if parsed_args.save:
+            print("📄 Full report saved!")
+        else:
+            print("\n" + "="*60)
+            print(full_report)
+
 
 # --- Main Dispatcher ---
 
@@ -256,6 +336,7 @@ def cmd_help(args):
     print("  route               Route to AI model")
     print("  learn               Record learning")
     print("  recommend           Get task recommendation")
+    print("  validate-workflow   Validate workflow execution")
     print()
 
 def main():
@@ -281,6 +362,7 @@ def main():
         "route": cmd_route_req,
         "learn": cmd_learn,
         "recommend": cmd_recommend,
+        "validate-workflow": cmd_validate_workflow,
         "help": cmd_help,
         "--help": cmd_help,
         "-h": cmd_help
