@@ -6,6 +6,19 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [1.10.0] - 2026-01-10 (Sprint 6)
+
+### Added
+- [Validator] enhance workflow compliance logic and multi-command support
+- [Brain] implement workflow validator sub-agent
+- [Telegram-File-Manager] implement onboarding flow and enhanced file preview
+
+### Fixed
+- [Workflow-Validator] update parser to handle markdown headers and fix imports
+
+
+---
+
 ## [1.9.0] - 2026-01-10
 
 ### Added
