@@ -109,8 +109,8 @@ class WorkflowParser:
         while i < len(lines):
             line = lines[i].strip()
             
-            # Check for step number
-            step_match = re.match(r'^(\d+)\.\s+(.+)$', line)
+            # Check for step number (handle direct "1. " or markdown "### 1. ")
+            step_match = re.match(r'^(?:#+\s*)?(\d+)\.\s+(.+)$', line)
             if step_match:
                 step_num = int(step_match.group(1))
                 step_desc = step_match.group(2)
@@ -123,7 +123,7 @@ class WorkflowParser:
                 # Look ahead for code block
                 command = None
                 j = i + 1
-                while j < len(lines) and not re.match(r'^\d+\.', lines[j]):
+                while j < len(lines) and not re.match(r'^(?:#+\s*)?\d+\.', lines[j].strip()):
                     if lines[j].strip().startswith('```'):
                         # Extract code block
                         code_start = j + 1
@@ -132,6 +132,8 @@ class WorkflowParser:
                             code_end += 1
                         if code_end < len(lines):
                             command = '\n'.join(lines[code_start:code_end]).strip()
+                            # If there are multiple lines in code block, just take the first one or clean it
+                            # For commit workflow, it might have comments or logic
                             i = code_end
                             break
                     j += 1

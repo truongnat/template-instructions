@@ -12,13 +12,13 @@ This module provides:
 Author: Agentic SDLC Brain System
 """
 
-from .validator import WorkflowValidator
+from .validator import ComplianceValidator
 from .parser import WorkflowParser
 from .tracker import ExecutionTracker
 from .reporter import ComplianceReporter
 
 __all__ = [
-    "WorkflowValidator",
+    "ComplianceValidator",
     "WorkflowParser",
     "ExecutionTracker",
     "ComplianceReporter",
