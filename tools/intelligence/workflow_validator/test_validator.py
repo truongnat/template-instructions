@@ -58,6 +58,12 @@ def test_commit_workflow():
     
     tracker.log_action(
         ActionType.COMMAND,
+        {"command": "python tools/infrastructure/git/generate_msg.py"},
+        step_number=3
+    )
+    
+    tracker.log_action(
+        ActionType.COMMAND,
         {"command": 'git commit -m "feat(validator): implement workflow validator"'},
         step_number=4
     )

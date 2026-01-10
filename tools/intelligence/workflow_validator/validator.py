@@ -156,19 +156,31 @@ class ComplianceValidator:
         if matched_actions:
             result.completed = True
             
-            # Check command accuracy if step has a defined command
-            if step.command:
-                for action in matched_actions:
-                    if action.action_type == ActionType.COMMAND:
-                        if not self._commands_match(step.command, action.details.get('command', '')):
-                            result.violations.append(Violation(
-                                violation_type=ViolationType.WRONG_COMMAND,
-                                impact=ImpactLevel.LOW,
-                                step_number=step.number,
-                                description=f"Step {step.number} used different command than specified",
-                                recommendation=f"Use exact command: {step.command}",
-                                detected_action=action
-                            ))
+            # Check command accuracy if step has defined commands
+            if step.commands:
+                # Find if any of the matched commands match any of the expected ones
+                command_actions = [a for a in matched_actions if a.action_type == ActionType.COMMAND]
+                
+                if command_actions:
+                    has_match = False
+                    for expected_cmd in step.commands:
+                        if any(self._commands_match(expected_cmd, a.details.get('command', '')) for a in command_actions):
+                            has_match = True
+                            break
+                    
+                    if not has_match:
+                        # None of the commands match any of the expected ones
+                        best_action = command_actions[-1]
+                        detected = best_action.details.get('command', '')
+                        expected_display = " or ".join([f"'{c}'" for c in step.commands])
+                        result.violations.append(Violation(
+                            violation_type=ViolationType.WRONG_COMMAND,
+                            impact=ImpactLevel.MEDIUM,
+                            step_number=step.number,
+                            description=f"Step {step.number} executed different command than expected. Found: '{detected}'",
+                            recommendation=f"Use one of: {expected_display}",
+                            detected_action=best_action
+                        ))
         else:
             # Step not completed
             impact = ImpactLevel.CRITICAL if step.is_critical else ImpactLevel.MEDIUM
@@ -188,14 +200,16 @@ class ComplianceValidator:
         
         for action in actions:
             # Match by step number if annotated
-            if action.step_number == step.number:
-                matched.append(action)
+            if action.step_number is not None:
+                if action.step_number == step.number:
+                    matched.append(action)
+                # If it has a different step number, don't match it here
                 continue
             
             # Match by command similarity
-            if step.command and action.action_type == ActionType.COMMAND:
+            if step.commands and action.action_type == ActionType.COMMAND:
                 cmd = action.details.get('command', '')
-                if self._commands_match(step.command, cmd):
+                if any(self._commands_match(expected, cmd) for expected in step.commands):
                     matched.append(action)
                     continue
             
@@ -207,17 +221,33 @@ class ComplianceValidator:
     
     def _commands_match(self, expected: str, actual: str) -> bool:
         """Check if two commands match (with some flexibility)"""
+        exp = expected.strip()
+        act = actual.strip()
+        
         # Exact match
-        if expected.strip() == actual.strip():
+        if exp == act:
             return True
         
-        # Check if the core command is the same (ignore flags/options for now)
-        expected_base = expected.strip().split()[0] if expected.strip() else ""
-        actual_base = actual.strip().split()[0] if actual.strip() else ""
+        # Check if the core command is the same
+        expected_parts = exp.split()
+        actual_parts = act.split()
+        
+        if not expected_parts or not actual_parts:
+            return False
+            
+        expected_base = expected_parts[0]
+        actual_base = actual_parts[0]
         
         if expected_base == actual_base:
+            # Special case for git commit with message
+            if expected_base == "git" and len(expected_parts) > 1 and expected_parts[1] == "commit":
+                # If expected has "type(scope): description" placeholder
+                if "type(scope): description" in exp:
+                    # Just check if it has -m and some message
+                    return "-m" in actual_parts or "--message" in actual_parts
+            
             # Same base command, check similarity
-            return self._text_similarity(expected, actual) > self.command_similarity_threshold
+            return self._text_similarity(exp, act) > self.command_similarity_threshold
         
         return False
     

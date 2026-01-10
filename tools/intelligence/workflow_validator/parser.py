@@ -13,10 +13,15 @@ class WorkflowStep:
     """Represents a single step in a workflow"""
     number: int
     description: str
-    command: Optional[str] = None
+    commands: List[str] = field(default_factory=list)
     is_turbo: bool = False
     is_critical: bool = False
     substeps: List['WorkflowStep'] = field(default_factory=list)
+
+    @property
+    def command(self) -> Optional[str]:
+        """Backward compatibility for single command access"""
+        return self.commands[0] if self.commands else None
 
 
 @dataclass
@@ -120,28 +125,38 @@ class WorkflowParser:
                 if i > 0 and '// turbo' in lines[i-1]:
                     is_turbo = True
                 
-                # Look ahead for code block
-                command = None
+                # Look ahead for code blocks
+                commands = []
                 j = i + 1
                 while j < len(lines) and not re.match(r'^(?:#+\s*)?\d+\.', lines[j].strip()):
-                    if lines[j].strip().startswith('```'):
-                        # Extract code block
+                    line_j = lines[j].strip()
+                    if line_j.startswith('```'):
+                        # Extract fenced code block
                         code_start = j + 1
                         code_end = code_start
                         while code_end < len(lines) and not lines[code_end].strip().startswith('```'):
                             code_end += 1
                         if code_end < len(lines):
-                            command = '\n'.join(lines[code_start:code_end]).strip()
-                            # If there are multiple lines in code block, just take the first one or clean it
-                            # For commit workflow, it might have comments or logic
-                            i = code_end
-                            break
+                            cmd = '\n'.join(lines[code_start:code_end]).strip()
+                            if cmd:
+                                commands.append(cmd)
+                            j = code_end
+                    else:
+                        # Check for inline backtick commands in list items or standalone
+                        inline_matches = re.findall(r'`([^`\n]+)`', line_j)
+                        for cmd in inline_matches:
+                            # Only count as a command if it looks like a shell command
+                            # (simple heuristic: starts with common tools)
+                            cmd_base = cmd.split()[0] if cmd.split() else ""
+                            if cmd_base in ['git', 'python', 'npm', 'bun', 'pytest', 'ls', 'rm']:
+                                commands.append(cmd.strip())
+                                
                     j += 1
                 
                 steps.append(WorkflowStep(
                     number=step_num,
                     description=step_desc,
-                    command=command,
+                    commands=commands,
                     is_turbo=is_turbo
                 ))
             

@@ -1,0 +1,49 @@
+{
+  "workflow_name": "commit",
+  "start_time": 1768039908.4878438,
+  "end_time": 1768039908.4878752,
+  "duration": 3.147125244140625e-05,
+  "actions": [
+    {
+      "action_type": "workflow_start",
+      "timestamp": 1768039908.4878569,
+      "details": {
+        "workflow": "commit"
+      },
+      "step_number": null,
+      "success": true,
+      "error": null
+    },
+    {
+      "action_type": "command",
+      "timestamp": 1768039908.4878678,
+      "details": {
+        "command": "git status"
+      },
+      "step_number": 1,
+      "success": true,
+      "error": null
+    },
+    {
+      "action_type": "command",
+      "timestamp": 1768039908.4878714,
+      "details": {
+        "command": "git diff"
+      },
+      "step_number": 2,
+      "success": true,
+      "error": null
+    },
+    {
+      "action_type": "workflow_end",
+      "timestamp": 1768039908.4878774,
+      "details": {
+        "workflow": "commit"
+      },
+      "step_number": null,
+      "success": true,
+      "error": null
+    }
+  ],
+  "metadata": {}
+}
