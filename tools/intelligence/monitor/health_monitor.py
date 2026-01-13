@@ -5,10 +5,19 @@ Part of Layer 2: Intelligence Layer.
 """
 
 import json
+import sys
 from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
 from typing import Dict, List, Optional
+
+# Set UTF-8 encoding for Windows console
+if sys.platform == 'win32':
+    try:
+        sys.stdout.reconfigure(encoding='utf-8')
+        sys.stderr.reconfigure(encoding='utf-8')
+    except:
+        pass
 
 
 @dataclass

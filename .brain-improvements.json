@@ -44,6 +44,15 @@
       "status": "pending",
       "created_at": "2026-01-08T21:16:22.314882",
       "completed_at": null
+    },
+    {
+      "id": "PLAN-0005",
+      "title": "Auto-generated improvement plan",
+      "description": "Improvement plan with 0 items",
+      "items": [],
+      "status": "pending",
+      "created_at": "2026-01-11T09:58:53.283105",
+      "completed_at": null
     }
   ],
   "analyses": [
@@ -86,7 +95,15 @@
       "data_sources": [
         "default"
       ]
+    },
+    {
+      "timestamp": "2026-01-11T09:58:53.098860",
+      "findings_count": 0,
+      "findings": [],
+      "data_sources": [
+        "default"
+      ]
     }
   ],
-  "updated_at": "2026-01-08T21:16:22.314922"
+  "updated_at": "2026-01-11T09:58:53.283175"
 }

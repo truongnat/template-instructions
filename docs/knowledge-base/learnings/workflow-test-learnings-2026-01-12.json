@@ -1,0 +1,312 @@
+{
+  "timestamp": "2026-01-12T17:56:42.641195",
+  "source": "workflow-testing",
+  "patterns": {
+    "success_patterns": [
+      {
+        "workflow": "score",
+        "key_factors": [
+          "Compliance: 95%",
+          "Quality: 8.0/10"
+        ]
+      },
+      {
+        "workflow": "score",
+        "key_factors": [
+          "Compliance: 95%",
+          "Quality: 9.0/10"
+        ]
+      },
+      {
+        "workflow": "score",
+        "key_factors": [
+          "Compliance: 90%",
+          "Quality: 8.0/10"
+        ]
+      },
+      {
+        "workflow": "monitor",
+        "key_factors": [
+          "Compliance: 85%",
+          "Quality: 7.0/10"
+        ]
+      },
+      {
+        "workflow": "observe",
+        "key_factors": [
+          "Compliance: 85%",
+          "Quality: 7.0/10"
+        ]
+      },
+      {
+        "workflow": "ab",
+        "key_factors": [
+          "Compliance: 80%",
+          "Quality: 7.5/10"
+        ]
+      },
+      {
+        "workflow": "deep-search",
+        "key_factors": [
+          "Compliance: 80%",
+          "Quality: 7.5/10"
+        ]
+      },
+      {
+        "workflow": "commit",
+        "key_factors": [
+          "Compliance: 90%",
+          "Quality: 8.0/10"
+        ]
+      },
+      {
+        "workflow": "cycle",
+        "key_factors": [
+          "Compliance: 85%",
+          "Quality: 8.0/10"
+        ]
+      },
+      {
+        "workflow": "orchestrator",
+        "key_factors": [
+          "Compliance: 90%",
+          "Quality: 8.5/10"
+        ]
+      },
+      {
+        "workflow": "planning",
+        "key_factors": [
+          "Compliance: 85%",
+          "Quality: 7.5/10"
+        ]
+      },
+      {
+        "workflow": "debug",
+        "key_factors": [
+          "Compliance: 80%",
+          "Quality: 7.5/10"
+        ]
+      },
+      {
+        "workflow": "emergency",
+        "key_factors": [
+          "Compliance: 75%",
+          "Quality: 7.0/10"
+        ]
+      },
+      {
+        "workflow": "explore",
+        "key_factors": [
+          "Compliance: 80%",
+          "Quality: 8.0/10"
+        ]
+      },
+      {
+        "workflow": "review",
+        "key_factors": [
+          "Compliance: 80%",
+          "Quality: 7.5/10"
+        ]
+      },
+      {
+        "workflow": "sprint",
+        "key_factors": [
+          "Compliance: 80%",
+          "Quality: 7.5/10"
+        ]
+      },
+      {
+        "workflow": "refactor",
+        "key_factors": [
+          "Compliance: 85%",
+          "Quality: 8.0/10"
+        ]
+      },
+      {
+        "workflow": "docs",
+        "key_factors": [
+          "Compliance: 80%",
+          "Quality: 7.5/10"
+        ]
+      },
+      {
+        "workflow": "release",
+        "key_factors": [
+          "Compliance: 85%",
+          "Quality: 8.0/10"
+        ]
+      },
+      {
+        "workflow": "housekeeping",
+        "key_factors": [
+          "Compliance: 85%",
+          "Quality: 7.0/10"
+        ]
+      },
+      {
+        "workflow": "onboarding",
+        "key_factors": [
+          "Compliance: 90%",
+          "Quality: 7.5/10"
+        ]
+      },
+      {
+        "workflow": "worktree",
+        "key_factors": [
+          "Compliance: 80%",
+          "Quality: 7.5/10"
+        ]
+      },
+      {
+        "workflow": "brain",
+        "key_factors": [
+          "Compliance: 90%",
+          "Quality: 8.0/10"
+        ]
+      },
+      {
+        "workflow": "metrics",
+        "key_factors": [
+          "Compliance: 85%",
+          "Quality: 7.0/10"
+        ]
+      },
+      {
+        "workflow": "validate",
+        "key_factors": [
+          "Compliance: 85%",
+          "Quality: 7.5/10"
+        ]
+      },
+      {
+        "workflow": "autogen",
+        "key_factors": [
+          "Compliance: 80%",
+          "Quality: 8.0/10"
+        ]
+      }
+    ],
+    "failure_patterns": [],
+    "improvement_areas": [
+      {
+        "category": "Process",
+        "metric": "compliance",
+        "current": 83.0,
+        "target": 85
+      },
+      {
+        "category": "Utility",
+        "metric": "quality",
+        "current": 7.25,
+        "target": 7.5
+      },
+      {
+        "category": "Advanced",
+        "metric": "compliance",
+        "current": 80.0,
+        "target": 85
+      }
+    ],
+    "high_performers": [
+      {
+        "workflow": "score",
+        "compliance": 95,
+        "quality": 8.0,
+        "pattern": "High compliance + High quality"
+      },
+      {
+        "workflow": "score",
+        "compliance": 95,
+        "quality": 9.0,
+        "pattern": "High compliance + High quality"
+      },
+      {
+        "workflow": "score",
+        "compliance": 90,
+        "quality": 8.0,
+        "pattern": "High compliance + High quality"
+      },
+      {
+        "workflow": "commit",
+        "compliance": 90,
+        "quality": 8.0,
+        "pattern": "High compliance + High quality"
+      },
+      {
+        "workflow": "orchestrator",
+        "compliance": 90,
+        "quality": 8.5,
+        "pattern": "High compliance + High quality"
+      },
+      {
+        "workflow": "brain",
+        "compliance": 90,
+        "quality": 8.0,
+        "pattern": "High compliance + High quality"
+      }
+    ],
+    "low_performers": [
+      {
+        "workflow": "emergency",
+        "compliance": 75,
+        "quality": 7.0,
+        "pattern": "Below target metrics"
+      }
+    ],
+    "category_performance": {
+      "Intelligence": {
+        "total": 7,
+        "passed": 7,
+        "compliance_sum": 610,
+        "quality_sum": 54.0,
+        "avg_compliance": 87.14285714285714,
+        "avg_quality": 7.714285714285714,
+        "pass_rate": 100.0
+      },
+      "Process": {
+        "total": 10,
+        "passed": 10,
+        "compliance_sum": 830,
+        "quality_sum": 77.5,
+        "avg_compliance": 83.0,
+        "avg_quality": 7.75,
+        "pass_rate": 100.0
+      },
+      "Support": {
+        "total": 6,
+        "passed": 6,
+        "compliance_sum": 510,
+        "quality_sum": 45.5,
+        "avg_compliance": 85.0,
+        "avg_quality": 7.583333333333333,
+        "pass_rate": 100.0
+      },
+      "Utility": {
+        "total": 2,
+        "passed": 2,
+        "compliance_sum": 170,
+        "quality_sum": 14.5,
+        "avg_compliance": 85.0,
+        "avg_quality": 7.25,
+        "pass_rate": 100.0
+      },
+      "Advanced": {
+        "total": 1,
+        "passed": 1,
+        "compliance_sum": 80,
+        "quality_sum": 8.0,
+        "avg_compliance": 80.0,
+        "avg_quality": 8.0,
+        "pass_rate": 100.0
+      }
+    }
+  },
+  "recommendations": [
+    "✅ 6 workflows are high performers - use as reference for others",
+    "❗ Fix /emergency: compliance=75%, quality=7.0/10",
+    "📈 Improve Process compliance: 83.0 → 85",
+    "📈 Improve Utility quality: 7.2 → 7.5",
+    "📈 Improve Advanced compliance: 80.0 → 85",
+    "🎉 All workflows passing - consider expanding test coverage"
+  ]
+}
