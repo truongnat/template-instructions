@@ -12,7 +12,7 @@ description: Support - Housekeeping - Cleanup and Maintenance
 ## Quick Command
 
 ```bash
-python tools/infrastructure/workflows/housekeeping.py
+python asdlc.py workflow housekeeping
 ```
 
 ## Workflow Steps
@@ -30,7 +30,7 @@ python tools/infrastructure/workflows/housekeeping.py
 ### Step 3: Update Indexes
 ```bash
 # Updates indexes (KB, Documents, vectors)
-python tools/intelligence/knowledge_graph/brain_parallel.py --sync
+python asdlc.py brain sync
 ```
 - Ensures all entries are indexed
 - Updates statistics
@@ -44,14 +44,11 @@ Reports:
 
 ### Step 5: Brain Self-Analysis (NEW)
 ```bash
-# Analyze patterns from A/B tests, Judge scores, Learner data
-python tools/intelligence/self_learning/self_improver.py --analyze
-
-# Create improvement plan based on patterns
-python tools/intelligence/self_learning/self_improver.py --plan
-
 # Sync all brain data
-python tools/intelligence/knowledge_graph/brain_parallel.py --full
+python asdlc.py brain sync
+
+# Full sync with all components
+python asdlc.py brain full-sync
 ```
 
 ## Expected Output
