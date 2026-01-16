@@ -53,6 +53,24 @@
       "status": "pending",
       "created_at": "2026-01-11T09:58:53.283105",
       "completed_at": null
+    },
+    {
+      "id": "PLAN-0006",
+      "title": "Auto-generated improvement plan",
+      "description": "Improvement plan with 0 items",
+      "items": [],
+      "status": "pending",
+      "created_at": "2026-01-16T15:35:47.056094",
+      "completed_at": null
+    },
+    {
+      "id": "PLAN-0007",
+      "title": "Auto-generated improvement plan",
+      "description": "Improvement plan with 0 items",
+      "items": [],
+      "status": "pending",
+      "created_at": "2026-01-16T15:37:13.722644",
+      "completed_at": null
     }
   ],
   "analyses": [
@@ -103,7 +121,23 @@
       "data_sources": [
         "default"
       ]
+    },
+    {
+      "timestamp": "2026-01-16T15:35:46.805452",
+      "findings_count": 0,
+      "findings": [],
+      "data_sources": [
+        "default"
+      ]
+    },
+    {
+      "timestamp": "2026-01-16T15:37:13.476622",
+      "findings_count": 0,
+      "findings": [],
+      "data_sources": [
+        "default"
+      ]
     }
   ],
-  "updated_at": "2026-01-11T09:58:53.283175"
+  "updated_at": "2026-01-16T15:37:13.722706"
 }

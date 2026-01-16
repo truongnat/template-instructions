@@ -13,6 +13,129 @@
 - **Cross-IDE Compatibility** - Works with Cursor, Windsurf, Cline, Aider, Gemini, and any AI-powered IDE
 - **Monorepo Architecture** - Shared brain system across multiple projects
 
+## 🏗️ Architecture & Flows
+
+### 3-Layer Concentric Architecture
+
+The system is built on a robust 3-layer architecture where dependencies flow inward (Layer 3 → Layer 2 → Layer 1):
+
+![3-Layer Architecture](https://raw.githubusercontent.com/truongnat/agentic-sdlc/main/docs/diagrams/architecture_3_layers.png)
+
+**Layer 1 (Core)** - The stable foundation that rarely changes:
+- GEMINI.md - Universal guide and single source of truth
+- Skills - 17 AI role definitions
+- Templates - 20+ document templates
+- Rules - 8 rule files for enforcement
+- Workflows - 23 workflow definitions
+
+**Layer 2 (Intelligence)** - The brain system with 21 sub-agents:
+- **Monitoring & Compliance**: Observer, Monitor, Workflow Validator
+- **Quality & Scoring**: Judge, Scorer, Evaluation
+- **Learning & Optimization**: Self-Learning, DSPy, A/B Test
+- **Execution & Safety**: HITL, Sandbox, Self-Healing
+- **Intelligence & Routing**: Proxy, Router, Task Manager, Research
+- **Generation & Tracking**: Artifact Gen, Cost, Performance
+
+**Layer 3 (Infrastructure)** - External interfaces and tools:
+- CLI, MCP Connectors, GitHub Integration
+- Neo4j Knowledge Graph, Documentation
+- Workflow Scripts, Communication Tools
+
+### Orchestrator Workflow with HITL Gates
+
+The orchestrator workflow manages the complete SDLC lifecycle with mandatory human approval gates:
+
+![Orchestrator Workflow](https://raw.githubusercontent.com/truongnat/agentic-sdlc/main/docs/diagrams/orchestrator_workflow_flow.png)
+
+**Key Features:**
+- **11 Phases**: From Planning to Self-Learning
+- **3 HITL Gates**: Design Approval, Code Review, Deployment Approval
+- **4 Checkpoints**: State persistence at critical phases
+- **Self-Healing Loop**: Automatic fix/retry on test failures
+- **Brain Status Checks**: Validation at start and end
+
+**Flow:**
+1. **Planning** (@PM) → Create project plan
+2. **Requirements** (@BA) → Define user stories
+3. **Design** (@SA + @UIUX) → Architecture & UI/UX specs
+4. 🛑 **HITL Gate 1** → Human approval required
+5. **Verification** (@TESTER + @SECA) → Quality & security review
+6. **Development** (@DEV + @DEVOPS) → Feature implementation
+7. 🛑 **HITL Gate 2** → Code review & PR approval
+8. **Testing** (@TESTER) → E2E testing with self-healing
+9. **Bug Fixing** (@DEV) → Issue resolution
+10. **Deployment** (@DEVOPS) → Production deployment
+11. 🛑 **HITL Gate 3** → Production approval
+12. **Reporting** (@PM) → CHANGELOG & review
+13. **Self-Learning** (@BRAIN) → KB sync & archive
+
+### Brain Intelligence Sub-Agents Network
+
+The brain system consists of 21 specialized sub-agents working in harmony:
+
+![Brain Intelligence Sub-Agents](https://raw.githubusercontent.com/truongnat/agentic-sdlc/main/docs/diagrams/brain_intelligence_subagents.png)
+
+**Data Flow Patterns:**
+- **Compliance Feedback Loop**: Observer → Judge → Self-Learning
+- **Quality Improvement Loop**: A/B Test → Judge → Self-Learning
+- **Persistence**: All agents → State Manager
+- **Learning**: All agents → Knowledge Graph (Neo4j)
+- **Approval Gates**: HITL ↔ Critical phases
+- **Auto-Fix**: Self-Healing ↔ Testing
+- **Model Routing**: Proxy → All agents
+- **Cost Tracking**: Cost → All agents
+
+### Brain Learning Loop
+
+Every task execution improves the system through compound learning:
+
+![Brain Learning Loop](https://raw.githubusercontent.com/truongnat/agentic-sdlc/main/docs/diagrams/brain_learning_loop.png)
+
+**8-Step Learning Cycle:**
+1. **Execute Task** - Any SDLC phase
+2. **Observer Monitors** - Track actions & violations
+3. **Judge Scores** - Quality assessment (0-100)
+4. **A/B Testing** - Generate alternatives
+5. **Self-Learning** - Extract patterns:
+   - Observer violations → New rules
+   - Judge scores → Quality patterns
+   - A/B results → Best solutions
+   - Completed tasks → Reusable solutions
+   - Fixed bugs → Anti-patterns
+6. **Knowledge Storage** - Neo4j Graph + SQLite State + LEANN Vector Search
+7. **Context-Aware Suggestions** - Smart recommendations
+8. **DSPy Optimization** - Improve prompts
+
+**Side Flows:**
+- **Error Path**: Self-Healing → Fix → Back to execution
+- **Cost Path**: Cost Monitor → Budget alerts
+- **State Path**: State Manager → Checkpoints
+
+### SDLC State Machine
+
+Complete state machine showing all transitions and error handling:
+
+![SDLC State Machine](https://raw.githubusercontent.com/truongnat/agentic-sdlc/main/docs/diagrams/sdlc_state_machine.png)
+
+**States & Transitions:**
+- **IDLE** → `brain init` → **PLANNING**
+- **PLANNING** (@PM, @BA, @PO) → User Approval → **DESIGN**
+- **DESIGN** (@SA, @UIUX) → HITL Approval → **VERIFICATION**
+- **VERIFICATION** (@TESTER, @SECA) → Passed → **DEVELOPMENT**
+- **DEVELOPMENT** (@DEV, @DEVOPS) → HITL Code Review → **TESTING**
+- **TESTING** (@TESTER) → Tests Passed → **DEPLOYMENT**
+  - Tests Failed → Self-Healing → Back to **DEVELOPMENT**
+- **DEPLOYMENT** (@DEVOPS) → HITL Production Approval → **REPORTING**
+- **REPORTING** (@PM, @REPORTER) → Complete → **LEARNING**
+- **LEARNING** (@BRAIN) → Done → **IDLE**
+
+**Error Handling:**
+- Any State → ERROR → HALTED
+- HALTED → Fix Issue → Resume → Previous State
+
+**Checkpoints:**
+- Planning, Design, Development, Deployment
+
 ## 🧠 The Brain System
 
 At the core of Agentic SDLC is the **Brain** - an intelligent knowledge management system that:

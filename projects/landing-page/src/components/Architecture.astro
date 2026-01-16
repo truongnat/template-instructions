@@ -1,25 +1,58 @@
 ---
 /**
- * Architecture Section - 3-Layer Brain diagram
+ * Architecture Section - 3-Layer Concentric Architecture
  */
 const layers = [
   {
-    name: 'Layer 1: Root (Brain)',
-    description: '6 Enforcement Gates + Brain components for quality control',
-    components: ['Observer', 'Judge', 'Learner', 'A/B Tester', 'Model Optimizer', 'Self-Improver'],
-    color: 'from-purple-500 to-indigo-500',
+    name: 'Layer 1: Core',
+    description: 'Stable foundation that rarely changes',
+    components: ['GEMINI.md', 'Skills (17 Roles)', 'Templates (20+)', 'Rules (8)', 'Workflows (23)'],
+    color: 'from-blue-600 to-blue-400',
   },
   {
-    name: 'Layer 2: Workflow',
-    description: '15 automated workflows for complete SDLC automation',
-    components: ['/orchestrator', '/cycle', '/debug', '/review', '/refactor'],
-    color: 'from-blue-500 to-cyan-500',
+    name: 'Layer 2: Intelligence',
+    description: 'Brain System with 21 specialized sub-agents',
+    components: ['Observer', 'Judge', 'Self-Learning', 'HITL', 'Proxy', 'Monitor', 'A/B Test', 'DSPy', 'Self-Healing'],
+    color: 'from-purple-600 to-pink-500',
   },
   {
-    name: 'Layer 3: Execution',
-    description: '14 specialized AI roles and Python tools',
-    components: ['@PM', '@SA', '@DEV', '@TESTER', '@DEVOPS', 'Scripts'],
+    name: 'Layer 3: Infrastructure',
+    description: 'External interfaces and tools',
+    components: ['CLI', 'MCP Connectors', 'Neo4j', 'GitHub', 'Workflows', 'Docs'],
     color: 'from-cyan-500 to-green-500',
+  },
+];
+
+const intelligenceGroups = [
+  {
+    name: 'Monitoring & Compliance',
+    agents: ['Observer', 'Monitor', 'Workflow Validator'],
+    color: 'text-red-400',
+  },
+  {
+    name: 'Quality & Scoring',
+    agents: ['Judge', 'Scorer', 'Evaluation'],
+    color: 'text-yellow-400',
+  },
+  {
+    name: 'Learning & Optimization',
+    agents: ['Self-Learning', 'DSPy', 'A/B Test'],
+    color: 'text-purple-400',
+  },
+  {
+    name: 'Execution & Safety',
+    agents: ['HITL', 'Sandbox', 'Self-Healing'],
+    color: 'text-blue-400',
+  },
+  {
+    name: 'Intelligence & Routing',
+    agents: ['Proxy', 'Router', 'Task Manager', 'Research'],
+    color: 'text-green-400',
+  },
+  {
+    name: 'Generation & Tracking',
+    agents: ['Artifact Gen', 'Cost', 'Performance'],
+    color: 'text-cyan-400',
   },
 ];
 ---
@@ -28,15 +61,15 @@ const layers = [
   <div class="container">
     <div class="text-center mb-12">
       <h2 class="text-3xl md:text-4xl font-bold mb-4">
-        3-Layer Brain Architecture
+        3-Layer Concentric Architecture
       </h2>
       <p class="text-muted-foreground max-w-2xl mx-auto">
-        Intelligent knowledge management with self-learning capabilities
+        Dependencies flow inward (Layer 3 → Layer 2 → Layer 1), ensuring a stable core with intelligent automation
       </p>
     </div>
 
-    <!-- Architecture Diagram -->
-    <div class="max-w-4xl mx-auto space-y-4">
+    <!-- Architecture Layers -->
+    <div class="max-w-4xl mx-auto space-y-4 mb-12">
       {layers.map((layer, index) => (
         <div 
           class="card group relative overflow-hidden"
@@ -62,24 +95,105 @@ const layers = [
           </div>
         </div>
       ))}
+    </div>
 
-      <!-- Connection arrows -->
-      <div class="flex justify-center py-2">
-        <svg class="w-6 h-12 text-muted-foreground" fill="none" viewBox="0 0 24 48">
-          <path d="M12 0v48M12 48l-6-6M12 48l6-6" stroke="currentColor" stroke-width="2"/>
-        </svg>
-      </div>
-
-      <!-- Neo4j Brain -->
-      <div class="card border-primary/30 bg-primary/5 hover:border-primary/50 transition-colors group relative overflow-hidden">
-        <div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-        <div class="text-center relative z-10">
-          <span class="text-2xl mb-2 block animate-pulse">🧠</span>
-          <h4 class="font-semibold mb-1">Neo4j Brain</h4>
+    <!-- Intelligence Sub-Agents -->
+    <div class="max-w-4xl mx-auto mb-12">
+      <div class="card border-primary/30 bg-primary/5">
+        <div class="text-center mb-6">
+          <span class="text-3xl mb-2 block animate-pulse">🧠</span>
+          <h3 class="text-xl font-semibold mb-2">21 Intelligence Sub-Agents</h3>
           <p class="text-sm text-muted-foreground">
-            Knowledge Graph storing project intelligence from every task
+            Specialized agents working in harmony to create compound intelligence
           </p>
         </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {intelligenceGroups.map((group) => (
+            <div class="p-4 bg-background/50 rounded-lg border border-border/50">
+              <h4 class={`text-sm font-semibold mb-2 ${group.color}`}>{group.name}</h4>
+              <div class="space-y-1">
+                {group.agents.map((agent) => (
+                  <div class="text-xs text-muted-foreground font-mono">• {agent}</div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- Diagrams Section -->
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-8">
+        <h3 class="text-2xl font-bold mb-2">Architecture Diagrams</h3>
+        <p class="text-muted-foreground">
+          Visual representations of system flows and interactions
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Diagram Cards -->
+        <a 
+          href="https://github.com/truongnat/agentic-sdlc/blob/main/docs/diagrams/architecture_3_layers.png" 
+          target="_blank"
+          class="card group hover:border-primary/50 transition-all"
+        >
+          <div class="aspect-video bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-lg mb-4 flex items-center justify-center">
+            <span class="text-4xl">🏗️</span>
+          </div>
+          <h4 class="font-semibold mb-1 group-hover:text-primary transition-colors">3-Layer Architecture</h4>
+          <p class="text-sm text-muted-foreground">Core → Intelligence → Infrastructure</p>
+        </a>
+
+        <a 
+          href="https://github.com/truongnat/agentic-sdlc/blob/main/docs/diagrams/orchestrator_workflow_flow.png" 
+          target="_blank"
+          class="card group hover:border-primary/50 transition-all"
+        >
+          <div class="aspect-video bg-gradient-to-br from-green-500/10 to-cyan-500/10 rounded-lg mb-4 flex items-center justify-center">
+            <span class="text-4xl">🔄</span>
+          </div>
+          <h4 class="font-semibold mb-1 group-hover:text-primary transition-colors">Orchestrator Workflow</h4>
+          <p class="text-sm text-muted-foreground">11 phases with HITL gates</p>
+        </a>
+
+        <a 
+          href="https://github.com/truongnat/agentic-sdlc/blob/main/docs/diagrams/brain_intelligence_subagents.png" 
+          target="_blank"
+          class="card group hover:border-primary/50 transition-all"
+        >
+          <div class="aspect-video bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-lg mb-4 flex items-center justify-center">
+            <span class="text-4xl">🧠</span>
+          </div>
+          <h4 class="font-semibold mb-1 group-hover:text-primary transition-colors">Intelligence Network</h4>
+          <p class="text-sm text-muted-foreground">21 sub-agents interaction</p>
+        </a>
+
+        <a 
+          href="https://github.com/truongnat/agentic-sdlc/blob/main/docs/diagrams/brain_learning_loop.png" 
+          target="_blank"
+          class="card group hover:border-primary/50 transition-all"
+        >
+          <div class="aspect-video bg-gradient-to-br from-yellow-500/10 to-orange-500/10 rounded-lg mb-4 flex items-center justify-center">
+            <span class="text-4xl">♻️</span>
+          </div>
+          <h4 class="font-semibold mb-1 group-hover:text-primary transition-colors">Learning Loop</h4>
+          <p class="text-sm text-muted-foreground">8-step compound learning</p>
+        </a>
+      </div>
+
+      <div class="text-center mt-8">
+        <a 
+          href="https://github.com/truongnat/agentic-sdlc#-architecture--flows" 
+          target="_blank"
+          class="btn-primary inline-flex items-center gap-2"
+        >
+          View All Diagrams
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+        </a>
       </div>
     </div>
   </div>
