@@ -1,0 +1,140 @@
+---
+/**
+ * Image Preview Modal Component
+ * Shows full-size image in a modal overlay
+ */
+---
+
+<div id="imagePreviewModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-sm">
+  <div class="relative max-w-7xl max-h-[90vh] w-full mx-4">
+    <!-- Close button -->
+    <button 
+      id="closeModal"
+      class="absolute -top-12 right-0 text-white hover:text-primary transition-colors"
+      aria-label="Close preview"
+    >
+      <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+
+    <!-- Image container -->
+    <div class="bg-background rounded-lg overflow-hidden border border-border shadow-2xl">
+      <img 
+        id="previewImage" 
+        src="" 
+        alt="" 
+        class="w-full h-auto max-h-[85vh] object-contain"
+      />
+      
+      <!-- Image info -->
+      <div class="p-4 border-t border-border">
+        <h3 id="previewTitle" class="font-semibold mb-1"></h3>
+        <p id="previewDescription" class="text-sm text-muted-foreground mb-3"></p>
+        <a 
+          id="viewOnGithub" 
+          href="" 
+          target="_blank"
+          class="inline-flex items-center gap-2 text-sm text-primary hover:underline"
+        >
+          View on GitHub
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Image preview functionality
+  const modal = document.getElementById('imagePreviewModal');
+  const previewImage = document.getElementById('previewImage') as HTMLImageElement;
+  const previewTitle = document.getElementById('previewTitle');
+  const previewDescription = document.getElementById('previewDescription');
+  const viewOnGithub = document.getElementById('viewOnGithub') as HTMLAnchorElement;
+  const closeButton = document.getElementById('closeModal');
+
+  // Function to open modal
+  function openPreview(imageSrc: string, title: string, description: string, githubUrl: string) {
+    if (previewImage && previewTitle && previewDescription && viewOnGithub && modal) {
+      previewImage.src = imageSrc;
+      previewImage.alt = title;
+      previewTitle.textContent = title;
+      previewDescription.textContent = description;
+      viewOnGithub.href = githubUrl;
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  // Function to close modal
+  function closePreview() {
+    if (modal) {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.style.overflow = '';
+    }
+  }
+
+  // Close on button click
+  closeButton?.addEventListener('click', closePreview);
+
+  // Close on backdrop click
+  modal?.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      closePreview();
+    }
+  });
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal && !modal.classList.contains('hidden')) {
+      closePreview();
+    }
+  });
+
+  // Attach click handlers to all diagram cards
+  document.querySelectorAll('[data-diagram-preview]').forEach(card => {
+    card.addEventListener('click', (e) => {
+      e.preventDefault();
+      const imageSrc = card.getAttribute('data-image-src') || '';
+      const title = card.getAttribute('data-title') || '';
+      const description = card.getAttribute('data-description') || '';
+      const githubUrl = card.getAttribute('href') || '';
+      openPreview(imageSrc, title, description, githubUrl);
+    });
+  });
+</script>
+
+<style>
+  #imagePreviewModal {
+    animation: fadeIn 0.2s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  #previewImage {
+    animation: scaleIn 0.3s ease-out;
+  }
+
+  @keyframes scaleIn {
+    from {
+      transform: scale(0.95);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+</style>

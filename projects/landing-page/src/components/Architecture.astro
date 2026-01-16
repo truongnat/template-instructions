@@ -2,6 +2,8 @@
 /**
  * Architecture Section - 3-Layer Concentric Architecture
  */
+import ImagePreview from './ImagePreview.astro';
+
 const layers = [
   {
     name: 'Layer 1: Core',
@@ -136,11 +138,18 @@ const intelligenceGroups = [
         <!-- Diagram Cards -->
         <a 
           href="https://github.com/truongnat/agentic-sdlc/blob/main/docs/diagrams/architecture_3_layers.png" 
-          target="_blank"
-          class="card group hover:border-primary/50 transition-all"
+          data-diagram-preview
+          data-image-src="/diagrams/architecture_3_layers.png"
+          data-title="3-Layer Architecture"
+          data-description="Core → Intelligence → Infrastructure"
+          class="card group hover:border-primary/50 transition-all overflow-hidden cursor-pointer"
         >
-          <div class="aspect-video bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-lg mb-4 flex items-center justify-center">
-            <span class="text-4xl">🏗️</span>
+          <div class="aspect-video bg-background rounded-lg mb-4 overflow-hidden border border-border/50">
+            <img 
+              src="/diagrams/architecture_3_layers.png" 
+              alt="3-Layer Architecture Diagram"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            />
           </div>
           <h4 class="font-semibold mb-1 group-hover:text-primary transition-colors">3-Layer Architecture</h4>
           <p class="text-sm text-muted-foreground">Core → Intelligence → Infrastructure</p>
@@ -148,11 +157,18 @@ const intelligenceGroups = [
 
         <a 
           href="https://github.com/truongnat/agentic-sdlc/blob/main/docs/diagrams/orchestrator_workflow_flow.png" 
-          target="_blank"
-          class="card group hover:border-primary/50 transition-all"
+          data-diagram-preview
+          data-image-src="/diagrams/orchestrator_workflow_flow.png"
+          data-title="Orchestrator Workflow"
+          data-description="11 phases with HITL gates"
+          class="card group hover:border-primary/50 transition-all overflow-hidden cursor-pointer"
         >
-          <div class="aspect-video bg-gradient-to-br from-green-500/10 to-cyan-500/10 rounded-lg mb-4 flex items-center justify-center">
-            <span class="text-4xl">🔄</span>
+          <div class="aspect-video bg-background rounded-lg mb-4 overflow-hidden border border-border/50">
+            <img 
+              src="/diagrams/orchestrator_workflow_flow.png" 
+              alt="Orchestrator Workflow Diagram"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            />
           </div>
           <h4 class="font-semibold mb-1 group-hover:text-primary transition-colors">Orchestrator Workflow</h4>
           <p class="text-sm text-muted-foreground">11 phases with HITL gates</p>
@@ -160,11 +176,18 @@ const intelligenceGroups = [
 
         <a 
           href="https://github.com/truongnat/agentic-sdlc/blob/main/docs/diagrams/brain_intelligence_subagents.png" 
-          target="_blank"
-          class="card group hover:border-primary/50 transition-all"
+          data-diagram-preview
+          data-image-src="/diagrams/brain_intelligence_subagents.png"
+          data-title="Intelligence Network"
+          data-description="21 sub-agents interaction"
+          class="card group hover:border-primary/50 transition-all overflow-hidden cursor-pointer"
         >
-          <div class="aspect-video bg-gradient-to-br from-purple-500/10 to-pink-500/10 rounded-lg mb-4 flex items-center justify-center">
-            <span class="text-4xl">🧠</span>
+          <div class="aspect-video bg-background rounded-lg mb-4 overflow-hidden border border-border/50">
+            <img 
+              src="/diagrams/brain_intelligence_subagents.png" 
+              alt="Brain Intelligence Sub-Agents Network Diagram"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            />
           </div>
           <h4 class="font-semibold mb-1 group-hover:text-primary transition-colors">Intelligence Network</h4>
           <p class="text-sm text-muted-foreground">21 sub-agents interaction</p>
@@ -172,11 +195,18 @@ const intelligenceGroups = [
 
         <a 
           href="https://github.com/truongnat/agentic-sdlc/blob/main/docs/diagrams/brain_learning_loop.png" 
-          target="_blank"
-          class="card group hover:border-primary/50 transition-all"
+          data-diagram-preview
+          data-image-src="/diagrams/brain_learning_loop.png"
+          data-title="Learning Loop"
+          data-description="8-step compound learning"
+          class="card group hover:border-primary/50 transition-all overflow-hidden cursor-pointer"
         >
-          <div class="aspect-video bg-gradient-to-br from-yellow-500/10 to-orange-500/10 rounded-lg mb-4 flex items-center justify-center">
-            <span class="text-4xl">♻️</span>
+          <div class="aspect-video bg-background rounded-lg mb-4 overflow-hidden border border-border/50">
+            <img 
+              src="/diagrams/brain_learning_loop.png" 
+              alt="Brain Learning Loop Diagram"
+              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            />
           </div>
           <h4 class="font-semibold mb-1 group-hover:text-primary transition-colors">Learning Loop</h4>
           <p class="text-sm text-muted-foreground">8-step compound learning</p>
@@ -197,4 +227,7 @@ const intelligenceGroups = [
       </div>
     </div>
   </div>
+
+  <!-- Image Preview Modal -->
+  <ImagePreview />
 </section>
