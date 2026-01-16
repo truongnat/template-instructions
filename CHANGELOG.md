@@ -6,6 +6,17 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [2.0.0] - 2026-01-16
+
+### Changed
+- [Cli] migrate to unified Python CLI and add 8 intelligence modules
+
+### Other
+- update (workflow): fix errrors and impprove workflow
+
+
+---
+
 ## [1.10.0] - 2026-01-10 (Sprint 6)
 
 ### Added
