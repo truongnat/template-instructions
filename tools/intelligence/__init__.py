@@ -45,6 +45,42 @@ from .performance import MetricsCollector, FlowOptimizer
 # Judge Module
 from .judge import Judge
 
+# HITL Module (Human-in-the-Loop)
+try:
+    from .hitl import HITLManager, ApprovalGate, ApprovalRequest, ApprovalResult
+except ImportError:
+    pass
+
+# State Module (Workflow State Persistence)
+try:
+    from .state import StateManager, WorkflowSession, Checkpoint
+except ImportError:
+    pass
+
+# DSPy Integration Module
+try:
+    from .dspy_integration import DSPY_AVAILABLE, AgentOptimizer, DSPyLearningBridge
+except ImportError:
+    DSPY_AVAILABLE = False
+
+# Self-Healing Module
+try:
+    from .self_healing import FeedbackLoop, SelfHealingOrchestrator, Issue, HealingResult
+except ImportError:
+    pass
+
+# Cost Tracking Module
+try:
+    from .cost import CostTracker as NewCostTracker, CostReport, UsageRecord
+except ImportError:
+    pass
+
+# Evaluation Module
+try:
+    from .evaluation import BenchmarkRunner, TestCase, EvaluationResult
+except ImportError:
+    pass
+
 
 __all__ = [
     # Scorer
@@ -67,6 +103,18 @@ __all__ = [
     'MetricsCollector', 'FlowOptimizer',
     # Judge
     'Judge',
+    # NEW: HITL
+    'HITLManager', 'ApprovalGate', 'ApprovalRequest', 'ApprovalResult',
+    # NEW: State
+    'StateManager', 'WorkflowSession', 'Checkpoint',
+    # NEW: DSPy
+    'DSPY_AVAILABLE', 'AgentOptimizer', 'DSPyLearningBridge',
+    # NEW: Self-Healing
+    'FeedbackLoop', 'SelfHealingOrchestrator', 'Issue', 'HealingResult',
+    # NEW: Cost
+    'NewCostTracker', 'CostReport', 'UsageRecord',
+    # NEW: Evaluation
+    'BenchmarkRunner', 'TestCase', 'EvaluationResult',
 ]
 
 

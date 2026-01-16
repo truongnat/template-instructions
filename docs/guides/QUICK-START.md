@@ -6,29 +6,33 @@ Get started with `agentic-sdlc` in 5 minutes.
 
 ## 🚀 Installation
 
-```bash
-# Install CLI globally
-npm install -g agentic-sdlc
+### Windows
+```powershell
+.\bin\setup.ps1
+```
 
-# Install Python tools (required for KB, Research Agent, Health Check)
-pip install -r tools/requirements.txt
+### Linux / macOS
+```bash
+chmod +x ./bin/setup.sh
+./bin/setup.sh
 ```
 
 ---
 
 ## ⚡ 3 Steps to Start
 
-### Step 1: Create Project (30 seconds)
+### Step 1: Initialize (30 seconds)
 
+Configure your `.env` file with API keys:
 ```bash
-agentic-sdlc create my-project
-cd my-project
+cp .env.template .env
 ```
 
-### Step 2: Setup IDE (15 seconds)
+### Step 2: Open Dashboard (15 seconds)
 
+View your agents and system status:
 ```bash
-agentic-sdlc ide cursor
+python asdlc.py dashboard
 ```
 
 ### Step 3: Start Building (Instant)
@@ -46,15 +50,15 @@ Open your IDE and type:
 
 After setup, you have:
 
-✅ **12 AI Roles** ready to use:
+✅ **17 AI Roles** ready to use:
 - `/pm` - Project Manager
 - `/sa` - System Analyst  
 - `/uiux` - UI/UX Designer
 - `/dev` - Developer
 - `/tester` - Tester
-- And 7 more...
+- And 12 more...
 
-✅ **16 Templates** for documentation
+✅ **23 Automated Workflows** with slash commands
 
 ✅ **Knowledge Base** for learning
 
@@ -94,13 +98,13 @@ After setup, you have:
 
 ```bash
 # Show all commands
-agentic-sdlc --help
+python asdlc.py --help
 
-# List available resources
-agentic-sdlc list
+# Check brain status
+python asdlc.py brain status
 
-# Check version
-agentic-sdlc --version
+# Run system health check
+python asdlc.py health
 ```
 
 ---

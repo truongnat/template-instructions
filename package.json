@@ -12,9 +12,6 @@
     "projects/ffmpeg-editor",
     "projects/telegram-file-manager"
   ],
-  "bin": {
-    "agentic-sdlc": "bin/cli.js"
-  },
   "scripts": {
     "test": "pytest tests/ -v",
     "test:cov": "pytest tests/ -v --cov=tools --cov-report=html",
@@ -22,6 +19,7 @@
     "workflow:housekeeping": "python tools/infrastructure/workflows/housekeeping.py",
     "brain": "python tools/core/brain/brain_cli.py",
     "brain:status": "python tools/core/brain/brain_cli.py status",
+    "dashboard": "streamlit run tools/intelligence/dashboard/app.py",
     "brain:sync": "python tools/intelligence/knowledge_graph/brain_parallel.py --sync",
     "brain:full": "python tools/intelligence/knowledge_graph/brain_parallel.py --full",
     "brain:stats": "python tools/intelligence/knowledge_graph/brain_parallel.py --stats",
@@ -58,7 +56,7 @@
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",
     "clean": "turbo run clean",
-    "clean:all": "turbo run clean && rimraf node_modules/.cache .turbo",
+    "clean:all": "turbo run clean && python -c \"import shutil; shutil.rmtree('node_modules/.cache', ignore_errors=True); shutil.rmtree('.turbo', ignore_errors=True)\"",
     "preview:todo:fe": "turbo run preview --filter=todo-app-frontend",
     "preview:landing": "turbo run preview --filter=landing-page",
     "preview:ffmpeg": "turbo run preview --filter=ffmpeg-editor",
@@ -96,11 +94,8 @@
     "CHANGELOG.md",
     "package.json"
   ],
-  "dependencies": {
-    "fs-extra": "^11.2.0"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "rimraf": "^6.1.2",
     "turbo": "^2.7.2"
   }
 }

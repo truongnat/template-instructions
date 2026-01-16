@@ -13,13 +13,10 @@ Check overall system health, identify missing documentation, detect obsolete cod
 
 ```bash
 # Full health check
-python tools/intelligence/monitor/health_monitor.py --check
+python asdlc.py health
 
-# Get improvement suggestions
-python tools/intelligence/monitor/health_monitor.py --suggest
-
-# Check via Brain CLI
-python tools/core/brain/brain_cli.py health
+# Detailed brain/intelligence health
+python asdlc.py brain health
 ```
 
 ## When to Use
@@ -33,7 +30,7 @@ python tools/core/brain/brain_cli.py health
 
 ### 1. Run Health Check
 ```bash
-python tools/intelligence/monitor/health_monitor.py --check
+python asdlc.py health
 ```
 
 ### 2. Review Health Status
@@ -54,9 +51,9 @@ The monitor checks:
 - **Compliance Trends** - Observer violation rate over time
 - **Performance Issues** - Slow functions, memory leaks
 
-### 4. Get Suggestions
+### 4. Get Detailed Brain Health
 ```bash
-python tools/intelligence/monitor/health_monitor.py --suggest
+python asdlc.py brain health
 ```
 
 ### 5. Address Issues

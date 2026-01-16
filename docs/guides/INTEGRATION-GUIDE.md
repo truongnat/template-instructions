@@ -24,10 +24,23 @@ TeamLifecycle works perfectly with existing projects. You can add it to:
 cd /path/to/your-existing-project
 ```
 
-### Step 2: Install Instructions
+### Step 2: Initialize System
 
+Environment initialization and dependency installation:
+
+**Windows:**
+```powershell
+.\bin\setup.ps1
+```
+
+**Unix:**
 ```bash
-agentic-sdlc install
+./bin/setup.sh
+```
+
+**Or run setup check:**
+```bash
+python asdlc.py setup
 ```
 
 **Output:**
@@ -41,10 +54,12 @@ agentic-sdlc install
 
 Location: /path/to/your-project/.agent
 
+Location: /path/to/your-project/.agent
+
 Next Steps:
-  • Setup IDE: agentic-sdlc ide cursor
-  • Review: .agent/usage.md
-  • Start: /pm Build your project
+  • Review: .agent/workflows/
+  • Configure: .env
+  • Start: python asdlc.py dashboard
 ```
 
 ### Step 3: Setup IDE
@@ -93,8 +108,7 @@ your-existing-project/
 cd ~/projects/my-blog
 
 # Add TeamLifecycle
-agentic-sdlc install
-agentic-sdlc ide cursor
+python asdlc.py setup
 
 # Start improving
 # In IDE: /pm Review current architecture and suggest improvements
@@ -112,9 +126,8 @@ git clone https://github.com/team/project.git
 cd project
 
 # Add TeamLifecycle
-agentic-sdlc install
-agentic-sdlc ide all
-agentic-sdlc init-kb
+python asdlc.py setup
+python asdlc.py brain sync
 
 # Commit changes
 git add .agent .cursorrules .github/copilot-instructions.md

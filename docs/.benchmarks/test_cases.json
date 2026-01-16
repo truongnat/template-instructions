@@ -1,0 +1,61 @@
+[
+  {
+    "id": "pm-01",
+    "role": "PM",
+    "name": "New Product Plan",
+    "description": "Plan for a basic task management app",
+    "input": "I want to build a simple task management app for personal use with login and cloud sync.",
+    "expected_output": null,
+    "expected_criteria": [
+      "milestones",
+      "risks",
+      "resource allocation",
+      "MVP definition"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "sa-01",
+    "role": "SA",
+    "name": "System Architecture Design",
+    "description": "Architecture for a REST API with Auth",
+    "input": "Design a scalable backend architecture for a task app with JWT auth and PostgreSQL.",
+    "expected_output": null,
+    "expected_criteria": [
+      "database schema",
+      "API endpoints",
+      "security layer",
+      "scalability"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "dev-01",
+    "role": "DEV",
+    "name": "API Implementation",
+    "description": "Implement a simple CRUD API",
+    "input": "Write a Python FastAPI service for task management (GET/POST/PUT/DELETE tasks).",
+    "expected_output": null,
+    "expected_criteria": [
+      "FastAPI usage",
+      "pydantic models",
+      "error handling",
+      "unit tests"
+    ],
+    "metadata": {}
+  },
+  {
+    "id": "qa-01",
+    "role": "QA",
+    "name": "Security & Quality Review",
+    "description": "Find issues in a vulnerable script",
+    "input": "Review this code for issues: def login(u, p): db.exec(f'SELECT * FROM users WHERE user=\"{u}\" AND pass=\"{p}\"')",
+    "expected_output": null,
+    "expected_criteria": [
+      "SQL injection",
+      "plain text password",
+      "input validation"
+    ],
+    "metadata": {}
+  }
+]

@@ -9,12 +9,12 @@
 **Agentic SDLC** is an intelligent, self-learning software development lifecycle system powered by AI agents. It provides:
 
 1. **3-Layer Concentric Architecture** - Core → Intelligence → Infrastructure
-2. **14 Intelligence Sub-Agents** - Observer, A/B Test, Judge, Self-Learning, Proxy, Artifact Gen, Monitor, Knowledge Graph, Performance, Research, Router, Scorer, Task Manager, and integration modules
-3. **17 Specialized AI Roles** - PM, BA, SA, UIUX, DEV, MOBILE, GAME, CLOUD, TESTER, SECA, DEVOPS, ORCHESTRATOR, REPORTER, RESEARCH
+2. **21 Intelligence Sub-Agents** - HITL, State, Self-Healing, DSPy, Cost, Sandbox, Evaluation, Observer, and more.
+3. **17 Specialized AI Roles** - PM, BA, PO, SA, UIUX, DEV, TESTER, SECA, DEVOPS, MOBILE, GAME, CLOUD, ORCHESTRATOR, REPORTER, RESEARCH, STAKEHOLDER, BRAIN
 4. **23 Automated Workflows** - Complete task lifecycle automation
 5. **Cross-IDE Compatibility** - Works everywhere through markdown files
-6. **Self-Learning Knowledge Base** - Neo4j graph + LEANN vector search
-7. **Compound Learning** - Every task improves the system
+6. **Self-Learning Knowledge Base** - Neo4j graph + SQLite State + LEANN vector search
+7. **Compound Learning** - Every task improves the system via DSPy optimization models.
 
 ---
 
@@ -119,7 +119,7 @@ Before starting ANY work, complete these steps IN ORDER:
 
 1. **READ THE WORKFLOW FILE** - If user mentions `/slash`, read `.agent/workflows/[slash].md` FIRST
 2. **IDENTIFY ROLES** - Determine which `@ROLE` agents should be activated
-3. **INITIALIZE STATE** - Run `python tools/core/brain/brain_cli.py status` to check current state
+3. **INITIALIZE STATE** - Run `python asdlc.py brain status` to check current state
 4. **ANNOUNCE START** - Use task_boundary to log the task start
 
 ### Slash Command Interpretation
@@ -130,16 +130,9 @@ When user types a slash command, you MUST:
 |------------|-----------------|
 | `/auto` or `/orchestrator` | Read `.agent/workflows/orchestrator.md` and follow ALL phases |
 | `/cycle` | Read `.agent/workflows/cycle.md` and follow ALL steps |
-| `/brain` | Read `.agent/workflows/brain.md` and execute commands |
+| `/brain` | Read `.agent/workflows/brain.md` and execute via `python asdlc.py brain` |
 | `/explore` | Read `.agent/workflows/explore.md` for deep investigation |
-| `/sprint` | Read `.agent/workflows/sprint.md` for sprint management |
-| `/emergency` | Read `.agent/workflows/emergency.md` for hotfix |
-| `/commit` | Read `.agent/workflows/commit.md` for git commit |
-| `/autogen` | Read `.agent/workflows/autogen.md` for multi-agent teams |
-| `/observe` | Trigger Observer for rule compliance check |
-| `/ab <prompt>` | Run A/B test to generate alternatives |
-| `/score <file>` | Get quality score from Judge |
-| `/monitor` | Check system health |
+| `/monitor` | Check system via `python asdlc.py dashboard` |
 | Any `/command` | Read `.agent/workflows/[command].md` BEFORE doing anything |
 
 ### Role Activation Matrix
@@ -170,13 +163,13 @@ For ANY task, activate the appropriate roles based on task type:
 
 ```bash
 # 1. Check brain state
-python tools/core/brain/brain_cli.py status
+python asdlc.py brain status
 
 # 2. Get model recommendation
-python tools/intelligence/knowledge_graph/brain_parallel.py --recommend "[task description]"
+python asdlc.py brain recommend "[task description]"
 
 # 3. Optional: Get A/B alternatives for complex decisions
-python tools/intelligence/ab_test/ab_tester.py --prompt "[decision]"
+python asdlc.py brain ab-test "[decision]"
 ```
 
 ### Gate 2: PLANNING (Before Code)
@@ -194,27 +187,27 @@ If ANY script or command fails:
 ```bash
 # 1. STOP immediately - do NOT continue
 # 2. Halt the system (Observer triggers)
-python tools/core/brain/brain_cli.py halt "[error description]"
+python asdlc.py brain transition halt --reason "[error description]"
 
 # 3. Fix the issue
 # 4. Resume only after fix verified
-python tools/core/brain/brain_cli.py resume
+python asdlc.py brain transition active
 ```
 
 ### Gate 4: POST-TASK (After Completion)
 
 ```bash
 # 1. Trigger learning
-python tools/intelligence/self_learning/learner.py --learn "[task description]"
+python asdlc.py brain learn "[task description]"
 
 # 2. Score output (if applicable)
-python tools/intelligence/judge/scorer.py --score "[artifact path]"
+python asdlc.py brain score "[artifact path]"
 
 # 3. Sync to Neo4j
-python tools/intelligence/knowledge_graph/brain_parallel.py --sync
+python asdlc.py brain sync
 
 # 4. Monitor health
-python tools/intelligence/monitor/health_monitor.py --check
+python asdlc.py brain health
 ```
 
 ### Gate 5: REPORTING (Mandatory Artifacts)
@@ -230,7 +223,7 @@ python tools/intelligence/monitor/health_monitor.py --check
 
 ```bash
 # Run housekeeping
-python tools/infrastructure/workflows/housekeeping.py
+python asdlc.py workflow housekeeping
 ```
 
 ---
@@ -239,102 +232,87 @@ python tools/infrastructure/workflows/housekeeping.py
 
 The brain system consists of 7 specialized sub-agents:
 
-### 1. Observer (Rule Compliance Monitor)
+### 1. HITL (Human-in-the-Loop) - Mandatory Gates
+**Location:** `tools/intelligence/hitl/`
+**Importance:** Critical for Preventing Hallucinations in Production.
+- Implements mandatory approval gates: `PLANNING`, `DESIGN`, `SECURITY`, `CODE_REVIEW`, `DEPLOY`.
+- CLI: `python tools/intelligence/hitl/hitl_manager.py request --gate code_review`
 
+### 2. State Manager - Persistence & Recovery
+**Location:** `tools/intelligence/state/`
+**Importance:** System Stability & Crash Recovery.
+- SQLite-based persistent storage for workflow sessions.
+- Checkpointing for long-running multi-agent tasks (e.g., Phase-based state saving).
+
+### 3. Self-Healing (QA → DEV Feedback Loop)
+**Location:** `tools/intelligence/self_healing/`
+**Importance:** Automated Quality Assurance.
+- Iterative fix/retry loop until all tests/validations pass.
+- Learns from error messages to suggest optimized fixes.
+
+### 4. DSPy Integration (Programmatic Optimization)
+**Location:** `tools/intelligence/dspy_integration/`
+**Importance:** Self-Improving Agent Prompting.
+- Replaces brittle prompting with compositional Python code.
+- `AgentOptimizer` improves prompt performance based on successful task outcomes.
+
+### 5. Cost Monitoring (Token Tracker)
+**Location:** `tools/intelligence/cost/`
+**Importance:** Operational Efficiency.
+- Real-time token usage and cost tracking ($) per task and model.
+- Budget alerts and model comparison tools.
+
+### 6. Evaluation Framework (Benchmarking)
+**Location:** `tools/intelligence/evaluation/`
+**Importance:** Performance Verification.
+- Benchmark agents against curated test cases (PM-01, DEV-01, etc.).
+- Regression tracking to ensure updates improve (not degrade) agent quality.
+
+### 7. Observer (Rule Compliance Monitor)
 **Location:** `tools/intelligence/observer/`
+- Real-time monitoring of agent actions against project rules (.cursorrules, etc.).
 
-**Responsibilities:**
-- Monitor ALL agent actions in real-time
-- Check compliance with rules (code quality, naming, templates, steps)
-- Detect violations: code style, naming conventions, missing steps, template deviations
-- Generate violation reports to `docs/reports/observer/`
-- Track compliance metrics over time
-- Auto-correct minor violations
-- Escalate major violations to user
+### 8. Knowledge Graph (Neo4j Integration)
+**Location:** `tools/intelligence/knowledge_graph/`
+- Maps complex relationships between tasks, skills, and learned solutions.
 
-**Actions:**
-- `observe_action(agent, action, context)` - Monitor an action
-- `check_compliance(action, rules)` - Validate against rules
-- `report_violation(violation)` - Generate report
-- `get_compliance_score()` - Get system compliance %
-
-**Usage:**
-```bash
-# Start observing
-python tools/intelligence/observer/observer.py --start
-
-# Get compliance report
-python tools/intelligence/observer/observer.py --report
-
-# Check specific action
-python tools/intelligence/observer/observer.py --check-action "create file foo.py"
-```
-
-### 2. A/B Test (Alternative Generator)
-
+### 9. A/B Test (Alternative Generator)
 **Location:** `tools/intelligence/ab_test/`
+- Generates 2 distinct approaches for any task to ensure architectural variety.
 
-**Responsibilities:**
-- Accept ANY user input (task, feature, decision, architecture choice)
-- Generate 2 alternative approaches
-- Search KB for past similar solutions
-- Query Neo4j graph for related patterns
-- Use MCP connectors for external research
-- Score each option (time, complexity, reliability, maintainability)
-- Generate structured comparison report
-
-**Actions:**
-- `generate_alternatives(prompt)` - Create A & B options
-- `research_past_solutions(prompt)` - Search KB + Neo4j
-- `score_alternatives(A, B)` - Compare and score
-- `generate_report(A, B, scores)` - Create comparison document
-
-**Usage:**
-```bash
-# Generate alternatives
-python tools/intelligence/ab_test/ab_tester.py --prompt "implement user authentication"
-
-# Output: docs/reports/ab_tests/YYYY-MM-DD-authentication-alternatives.md
-```
-
-### 3. Judge (Quality Scorer)
-
+### 10. Judge (Quality Scorer)
 **Location:** `tools/intelligence/judge/`
+- Cross-validates outputs from other agents and scores them (0-100).
 
-**Responsibilities:**
-- Score A/B test results
-- Score code quality (complexity, readability, security, performance, maintainability)
-- Score report quality (completeness, clarity, accuracy, actionability)
-- Score documentation quality
-- Generate improvement suggestions
-- Track quality trends over time
+### 11-21. Specialized Intelligence Sub-Agents
+- **Proxy:** AI Model Router based on task complexity.
+- **Artifact Gen:** Intelligent document generation from 20+ templates.
+- **Monitor:** Continuous health checks for missing components or coverage gaps.
+- **Performance:** Execution metrics and workflow bottleneck identification.
+- **Research:** Technical discovery via Web APIs and KB search.
+- **Router:** Workflow & Agent routing logic.
+- **Scorer:** In-depth quality metrics for inputs and outputs.
+- **Task Manager:** Coordination for multi-agent autonomous tasks.
+- **Workflow Validator:** Post-execution compliance checker.
 
-**Scoring Dimensions:**
+---
 
-**Code (0-100):**
-- Complexity (cyclomatic, nesting depth)
-- Readability (naming, comments, structure)
-- Security (vulnerabilities, best practices)
-- Performance (efficiency, optimization)
-- Maintainability (modularity, DRY, SOLID)
+## 🏗️ Layer 3: Infrastructure (Modern Capabilities)
 
-**Reports (0-100):**
-- Completeness (all sections present)
-- Clarity (well-written, understandable)
-- Accuracy (correct information)
-- Actionability (clear next steps)
+### 1. Sandboxing (Secure Execution)
+**Location:** `tools/infrastructure/sandbox/`
+- Docker-based isolated execution for agent code.
+- Resource limits (CPU/Memory) and network lockdown for safety.
 
-**Usage:**
-```bash
-# Score code file
-python tools/intelligence/judge/scorer.py --code src/app.py
+### 2. Local LLM Hub (Ollama)
+**Location:** `tools/infrastructure/local_llm/`
+- Unified client for interacting with local LLMs (Llama3, CodeLlama).
+- Provides privacy and zero-cost execution for routine tasks.
 
-# Score report
-python tools/intelligence/judge/scorer.py--report docs/walkthroughs/2026-01-07-feature.md
-
-# Score A/B alternatives
-python tools/intelligence/judge/scorer.py --ab-test docs/reports/ab_tests/YYYY-MM-DD-auth.md
-```
+### 3. Dashboard (Visual Control Panel)
+**Location:** `tools/intelligence/dashboard/`
+- Streamlit-powered UI for real-time monitoring.
+- Command: `python asdlc.py dashboard`
 
 ### 4. Self-Learning (Learning Engine)
 
@@ -360,16 +338,10 @@ python tools/intelligence/judge/scorer.py --ab-test docs/reports/ab_tests/YYYY-M
 **Usage:**
 ```bash
 # Record successful task
-python tools/intelligence/self_learning/learner.py --record-success "task-123" --approach "JWT auth"
-
-# Record error pattern
-python tools/intelligence/self_learning/learner.py --record-error "TypeError" --resolution "Added null check"
-
-# Generate learning digest
-python tools/intelligence/self_learning/learner.py --digest
+python asdlc.py brain learn "implemented JWT auth"
 
 # Get recommendations
-python tools/intelligence/self_learning/learner.py --recommend "implement caching"
+python asdlc.py brain recommend "implement caching"
 ```
 
 ### 5. Proxy (AI Model Router)
@@ -394,13 +366,7 @@ python tools/intelligence/self_learning/learner.py --recommend "implement cachin
 **Usage:**
 ```bash
 # Route a prompt
-python tools/intelligence/proxy/router.py --prompt "refactor this function" --analyze
-
-# Get cost report
-python tools/intelligence/proxy/router.py --cost-report
-
-# Optimize routing
-python tools/intelligence/proxy/router.py --optimize
+python asdlc.py brain route "refactor this function"
 ```
 
 ### 6. Artifact Gen (Document Generator)
@@ -424,13 +390,7 @@ python tools/intelligence/proxy/router.py --optimize
 **Usage:**
 ```bash
 # Generate from template
-python tools/intelligence/artifact_gen/generator.py --template project-plan --context "Build todo app"
-
-# Auto-fill template
-python tools/intelligence/artifact_gen/generator.py --template architecture --auto-fill
-
-# Validate artifact
-python tools/intelligence/artifact_gen/generator.py --validate docs/planning/project-plan.md
+python asdlc.py brain gen project-plan '{"title": "Build todo app"}'
 ```
 
 ### 7. Monitor (System Health Monitor)
@@ -457,13 +417,7 @@ python tools/intelligence/artifact_gen/generator.py --validate docs/planning/pro
 **Usage:**
 ```bash
 # Full health check
-python tools/intelligence/monitor/health_monitor.py --check
-
-# Check specific area
-python tools/intelligence/monitor/health_monitor.py --check-coverage
-
-# Get improvement suggestions
-python tools/intelligence/monitor/health_monitor.py --suggest
+python asdlc.py brain health
 ```
 
 ### 8. Knowledge Graph (Neo4j Integration)
@@ -487,13 +441,7 @@ python tools/intelligence/monitor/health_monitor.py --suggest
 **Usage:**
 ```bash
 # Sync to Neo4j
-python tools/intelligence/knowledge_graph/brain_parallel.py --sync
-
-# Query skills
-python tools/intelligence/knowledge_graph/query_skills_neo4j.py --all-skills
-
-# Get recommendations
-python tools/intelligence/knowledge_graph/brain_parallel.py --recommend "implement OAuth"
+python asdlc.py brain sync
 ```
 
 ### 9. Performance (Execution Metrics)
@@ -577,10 +525,7 @@ python tools/intelligence/router/workflow_router.py --task "implement login feat
 **Usage:**
 ```bash
 # Score input
-python tools/intelligence/scorer/input_scorer.py --prompt "build a todo app"
-
-# Score output
-python tools/intelligence/scorer/output_scorer.py --artifact docs/planning/project-plan.md
+python asdlc.py brain score src/app.py
 ```
 
 ### 13. Task Manager (Task Coordination)
@@ -597,10 +542,10 @@ python tools/intelligence/scorer/output_scorer.py --artifact docs/planning/proje
 **Usage:**
 ```bash
 # Create task
-python tools/intelligence/task_manager/manager.py --create "implement authentication"
+python asdlc.py brain task create "implement authentication"
 
-# GetTask status
-python tools/intelligence/task_manager/manager.py --status task-123
+# Get task status
+python asdlc.py brain task status task-123
 ```
 
 ### 14. Workflow Validator (Execution Compliance)
@@ -651,6 +596,54 @@ python tools/core/brain/brain_cli.py validate-workflow --end
 
 **Report Location:** `docs/reports/workflow_compliance/`
 
+
+
+## 🚀 Advanced Agentic SDLC (Reinforced Intelligence)
+
+The system has been enhanced with advanced reliability and self-improvement capabilities.
+
+### 15. HITL (Human-in-the-Loop)
+**Location:** `tools/intelligence/hitl/`
+- Implements mandatory approval gates at critical SDLC phases.
+- Supported Gates: `PLANNING`, `DESIGN_REVIEW`, `CODE_REVIEW`, `SECURITY_REVIEW`, `DEPLOYMENT`.
+- CLI: `python tools/intelligence/hitl/hitl_manager.py request --gate code_review`
+
+### 16. State Manager (Persistence & Recovery)
+**Location:** `tools/intelligence/state/`
+- SQLite-based workflow session persistence.
+- Checkpointing for long-running multi-agent tasks.
+- Crash recovery and session archival.
+- CLI: `python tools/intelligence/state/state_manager.py checkpoint $SESSION_ID $PHASE`
+
+### 17. DSPy Integration (Programmatic Optimization)
+**Location:** `tools/intelligence/dspy_integration/`
+- Moves from "prompting" to "programming" language models.
+- Signatures for PM, SA, DEV, QA, and SECA roles.
+- `AgentOptimizer` using `BootstrapFewShot` to improve prompt effectiveness based on successes.
+
+### 18. Self-Healing (QA → DEV Feedback Loop)
+**Location:** `tools/intelligence/self_healing/`
+- Automated iterative fix/retry loop until all tests pass.
+- Learns from error patterns to suggest faster fixes in future.
+- CLI: `python tools/intelligence/self_healing/self_healer.py run --code src/`
+
+### 19. Cost Monitoring (Token Tracker)
+**Location:** `tools/intelligence/cost/`
+- Tracks token usage and real-time cost per task/model.
+- Daily budget alerts and cost optimization suggestions.
+- CLI: `python tools/intelligence/cost/cost_tracker.py report --period weekly`
+
+### 20. Sandboxing (Secure Execution)
+**Location:** `tools/infrastructure/sandbox/`
+- Docker-based isolated environment for agent-generated code.
+- Resource limits (CPU/Memory) and network isolation.
+- CLI: `python tools/infrastructure/sandbox/sandbox_executor.py --lang python --code "print('hello')"`
+
+### 21. Evaluation Framework (Benchmarking)
+**Location:** `tools/intelligence/evaluation/`
+- Automated benchmarking of agent roles against known test cases.
+- Performance statistics and regression tracking.
+- CLI: `python tools/intelligence/evaluation/benchmark.py run --role DEV`
 
 
 ## 👥 Layer 1: Skills (17 AI Roles)

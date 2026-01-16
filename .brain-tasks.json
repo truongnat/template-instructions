@@ -1,0 +1,33 @@
+{
+  "tasks": [
+    {
+      "id": "TASK-DD65CCE6",
+      "title": "Test Task",
+      "description": "",
+      "status": "todo",
+      "priority": 3,
+      "assignee": null,
+      "labels": [],
+      "created_at": "2026-01-16T15:22:35.152983",
+      "updated_at": "2026-01-16T15:22:35.153005",
+      "due_date": null,
+      "parent_id": null,
+      "metadata": {}
+    },
+    {
+      "id": "TASK-ED2570E5",
+      "title": "Direct Task",
+      "description": "",
+      "status": "todo",
+      "priority": 3,
+      "assignee": null,
+      "labels": [],
+      "created_at": "2026-01-16T15:22:52.012260",
+      "updated_at": "2026-01-16T15:22:52.012283",
+      "due_date": null,
+      "parent_id": null,
+      "metadata": {}
+    }
+  ],
+  "updated_at": "2026-01-16T15:22:52.012299"
+}

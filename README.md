@@ -6,9 +6,9 @@
 
 **Agentic SDLC** is an AI-powered development framework that simulates a complete software development team within your IDE. It provides:
 
-- **14 Specialized AI Roles** - PM, BA, SA, UI/UX, QA, Security, Dev, DevOps, Tester, Reporter, and more
-- **18 Automated Workflows** - From planning to deployment with `/slash` commands
-- **Intelligent Brain System** - 3-Layer architecture with state management and self-learning
+- **17 Specialized AI Roles** - PM, BA, SA, UI/UX, QA, Security, Dev, DevOps, Tester, Reporter, and more
+- **23 Automated Workflows** - From planning to deployment with `/slash` commands
+- **Reinforced Brain System** - 21 Intelligence sub-agents including HITL, Sandbox, and Self-Healing
 - **Multi-Agent Teams** - AutoGen-powered autonomous agent collaboration
 - **Cross-IDE Compatibility** - Works with Cursor, Windsurf, Cline, Aider, Gemini, and any AI-powered IDE
 - **Monorepo Architecture** - Shared brain system across multiple projects
@@ -27,67 +27,61 @@ At the core of Agentic SDLC is the **Brain** - an intelligent knowledge manageme
 ## ✨ Quick Start
 
 ### Installation
- 
- ```bash
- # Install globally
- npm install -g agentic-sdlc
- 
- # Or with bun
- bun install -g agentic-sdlc
- ```
- 
- ### Installation from Source (GitHub)
- 
- If you prefer to run directly from source or update frequently:
- 
- ```bash
- # Clone repository
- git clone https://github.com/truongnat/agentic-sdlc.git
- cd agentic-sdlc
- 
- # Install dependencies
- bun install  # or npm install
- ```
- 
- ### keeping Updated
- 
- If you installed from source, use the built-in updater:
- 
- ```bash
- # Check and install updates
- python tools/infrastructure/update/updater.py
- ```
 
-### Create New Project
+The project provides automated setup scripts for both Windows and Unix-based systems. These scripts handle Python virtual environments, dependency installation (Python & JS), and brain system initialization.
 
-```bash
-# Create project with brain system
-agentic-sdlc create my-project
-cd my-project
-
-# Setup your IDE
-agentic-sdlc ide cursor  # or windsurf, cline, etc.
-
-# Start building
-/pm Build a todo app with authentication
+#### Windows (PowerShell)
+```powershell
+.\bin\setup.ps1
 ```
 
-### Add to Existing Project
-
+#### Linux / macOS (Bash)
 ```bash
-# Install brain system in current directory
-agentic-sdlc install
-
-# Setup IDE integration
-agentic-sdlc ide cursor
-
-# Initialize knowledge base
-agentic-sdlc init-kb
+chmod +x ./bin/setup.sh
+./bin/setup.sh
 ```
+
+### Configuration
+
+Copy `.env.template` to `.env` and configure your API keys:
+```bash
+cp .env.template .env
+```
+
+### 🧠 System Commands
+All operations are centralized through the `asdlc` script.
+
+#### Windows (PowerShell)
+```powershell
+.\bin\asdlc.ps1 <command>
+```
+
+#### Linux / macOS (Bash)
+```bash
+./bin/asdlc.sh <command>
+```
+
+### 📊 System Dashboard
+Monitor agents, costs, and approvals via the real-time dashboard:
+```bash
+python asdlc.py dashboard
+```
+
+## 🚀 Reinforced Intelligence Features
+
+The system has been enhanced with enterprise-grade reliability:
+
+- **🛡️ Sandboxing:** Securely execute agent-generated code in isolated Docker containers.
+- **🛑 HITL (Human-in-the-Loop):** Mandatory approval gates for critical phases (Deploy, Security, Code Review).
+- **🔄 Persistence & Recovery:** Workflow session state management with SQLite-based checkpointing.
+- **🩹 Self-Healing:** Automated QA→DEV feedback loops that learn from error patterns.
+- **💰 Cost Monitoring:** Real-time token tracking and budget alerts per model/task.
+- **🏆 Evaluation:** Robust benchmarking framework to measure and improve agent performance.
+- **🏠 Local LLM Support:** Privacy-first execution using Ollama for local model hosting.
 
 ## 🚀 Core Features
 
-### 1. AI Role System (14 Roles)
+### 1. AI Role System (17 Roles)
 
 Specialized AI agents for every SDLC phase:
 
@@ -101,29 +95,22 @@ Delivery    → @REPORTER, @STAKEHOLDER
 Meta        → @BRAIN, @ORCHESTRATOR
 ```
 
-### 2. Slash Commands (18 Workflows)
+### 2. Slash Commands (23 Workflows)
 
-Execute complete workflows with simple commands:
+Execute complete workflows with simple commands (mapped to `asdlc workflow <name>`):
 
 ```bash
-/brain           # Brain system management (sync, stats)
+/brain           # Brain system management (asdlc brain status)
 /cycle           # Complete task lifecycle
 /explore         # Deep investigation
 /orchestrator    # Full SDLC automation
 /sprint          # Sprint management
+/monitor         # System dashboard
 /validate        # System validation
 /metrics         # View metrics dashboard
 /release         # Release management
 /emergency       # Critical incident response
 /housekeeping    # Cleanup & maintenance
-/review          # Code review workflow (NEW)
-/debug           # Systematic debugging (NEW)
-/refactor        # Safe refactoring (NEW)
-/onboarding      # Agent ramp-up (NEW)
-/docs            # Documentation creation (NEW)
-/commit          # Smart git commit (NEW)
-/worktree        # Parallel AI agent workflows (NEW)
-/autogen         # Multi-agent task execution (NEW)
 ```
 
 ### 3. Monorepo Architecture
@@ -186,14 +173,14 @@ agentic-sdlc/              # 🧠 Brain (Root)
 ### Team Development
 ```bash
 # Each team member uses the same brain
-agentic-sdlc ide all
+python asdlc.py brain sync
 git pull  # Share knowledge base
 /pm Start Sprint 3
 ```
 
 ### Existing Large Project
 ```bash
-agentic-sdlc install
+python asdlc.py setup
 /brain  # Index and analyze codebase
 /pm Migrate authentication to OAuth2
 ```
@@ -201,26 +188,21 @@ agentic-sdlc install
 ## 🔧 Available Commands
 
 ```bash
-# Project Management
-agentic-sdlc create <name>      # Create new project
-agentic-sdlc install            # Add to existing project
+# System Dashboard
+python asdlc.py dashboard       # Start the UI monitoring
 
-# IDE Integration
-agentic-sdlc ide cursor         # Setup Cursor IDE
-agentic-sdlc ide all            # Setup all supported IDEs
+# Brain & Intelligence
+python asdlc.py brain status    # Check system state
+python asdlc.py brain health    # Full health check
+python asdlc.py brain sync      # Sync knowledge graph
 
-# Knowledge Base
-agentic-sdlc init-kb            # Initialize KB
-agentic-sdlc list               # List roles & workflows
-agentic-sdlc kb search "query"  # Search KB
+# Workflows
+python asdlc.py workflow cycle  # Run task lifecycle
+python asdlc.py workflow orchestrator  # Full automation
 
 # Release Management
-agentic-sdlc release preview    # Preview changes
-agentic-sdlc release release    # Full release cycle
-
-# Brain System
-agentic-sdlc agent              # Run default agent
-python tools/neo4j/brain_parallel.py --sync      # Sync brain
+python asdlc.py release preview # Preview changes
+python asdlc.py release release # Full release cycle
 ```
 
 ## 🌟 Why Agentic SDLC?
@@ -233,7 +215,7 @@ python tools/neo4j/brain_parallel.py --sync      # Sync brain
 | Lost knowledge | Compound learning brain |
 | Repetitive tasks | Automated with @AUTO |
 | Single-agent limits | Multi-agent teams with AutoGen |
-| Solo problem-solving | 13+ AI experts available |
+| Solo problem-solving | 17+ AI experts available |
 
 ## 🔗 Links
 

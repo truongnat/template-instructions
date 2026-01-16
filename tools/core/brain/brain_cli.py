@@ -48,6 +48,8 @@ try:
     from tools.intelligence.workflow_validator.tracker import get_tracker
     from tools.intelligence.workflow_validator.validator import ComplianceValidator
     from tools.intelligence.workflow_validator.reporter import ComplianceReporter
+    from tools.intelligence.task_manager import task_board
+    from tools.intelligence.task_manager import sprint_manager
 except ImportError as e:
     print(f"❌ Import Error: {e}")
     sys.exit(1)
@@ -238,6 +240,20 @@ def cmd_learn(args):
     result = learner.learn(parsed_args.description)
     print(f"Recorded. Patterns found: {result['patterns_found']}")
 
+def cmd_task(args):
+    """Delegate to task_board.py"""
+    # task_board.main expects sys.argv[1:] to be flags
+    # We need to pass args to it
+    import sys
+    sys.argv = [sys.argv[0]] + args
+    task_board.main()
+
+def cmd_sprint(args):
+    """Delegate to sprint_manager.py"""
+    import sys
+    sys.argv = [sys.argv[0]] + args
+    sprint_manager.main()
+
 def cmd_validate_workflow(args):
     """Validate workflow execution."""
     print("✓ @BRAIN /validate-workflow")
@@ -336,6 +352,8 @@ def cmd_help(args):
     print("  route               Route to AI model")
     print("  learn               Record learning")
     print("  recommend           Get task recommendation")
+    print("  task                Manage tasks (Kanban)")
+    print("  sprint              Manage sprints")
     print("  validate-workflow   Validate workflow execution")
     print()
 
@@ -362,6 +380,8 @@ def main():
         "route": cmd_route_req,
         "learn": cmd_learn,
         "recommend": cmd_recommend,
+        "task": cmd_task,
+        "sprint": cmd_sprint,
         "validate-workflow": cmd_validate_workflow,
         "help": cmd_help,
         "--help": cmd_help,
