@@ -1,0 +1,429 @@
+Metadata-Version: 2.4
+Name: agentic-sdlc
+Version: 1.0.0
+Summary: AI-powered SDLC framework with self-learning brain, automated workflows, and intelligent knowledge management
+Home-page: https://github.com/truongnat/agentic-sdlc
+Author: Dao Quang Truong
+Author-email: Dao Quang Truong <truongnat@gmail.com>
+License: MIT
+Project-URL: Homepage, https://github.com/truongnat/agentic-sdlc
+Project-URL: Documentation, https://github.com/truongnat/agentic-sdlc#readme
+Project-URL: Repository, https://github.com/truongnat/agentic-sdlc
+Project-URL: Issues, https://github.com/truongnat/agentic-sdlc/issues
+Keywords: ai,sdlc,workflow,automation,agent,brain,knowledge-management
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Classifier: Topic :: Software Development :: Quality Assurance
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: click>=8.1.0
+Requires-Dist: rich>=13.0.0
+Requires-Dist: pydantic>=2.0.0
+Requires-Dist: python-dotenv>=1.0.0
+Requires-Dist: requests>=2.31.0
+Requires-Dist: neo4j>=5.14.0
+Requires-Dist: openai>=1.0.0
+Requires-Dist: anthropic>=0.7.0
+Requires-Dist: streamlit>=1.28.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7.4.0; extra == "dev"
+Requires-Dist: black>=23.0.0; extra == "dev"
+Requires-Dist: ruff>=0.1.0; extra == "dev"
+Requires-Dist: mypy>=1.5.0; extra == "dev"
+Dynamic: author
+Dynamic: home-page
+Dynamic: requires-python
+
+# Agentic SDLC
+
+> Transform your IDE into a complete Software Development Lifecycle team with AI-powered agents, automated workflows, and intelligent knowledge management.
+
+## 🎯 What is Agentic SDLC?
+
+**Agentic SDLC** is an AI-powered development framework that simulates a complete software development team within your IDE. It provides:
+
+- **17 Specialized AI Roles** - PM, BA, SA, UI/UX, QA, Security, Dev, DevOps, Tester, Reporter, and more
+- **23 Automated Workflows** - From planning to deployment with `/slash` commands
+- **Reinforced Brain System** - 21 Intelligence sub-agents including HITL, Sandbox, and Self-Healing
+- **Multi-Agent Teams** - AutoGen-powered autonomous agent collaboration
+- **Cross-IDE Compatibility** - Works with Cursor, Windsurf, Cline, Aider, Gemini, and any AI-powered IDE
+- **Monorepo Architecture** - Shared brain system across multiple projects
+
+## 🏗️ Architecture & Flows
+
+### 3-Layer Concentric Architecture
+
+The system is built on a robust 3-layer architecture where dependencies flow inward (Layer 3 → Layer 2 → Layer 1):
+
+![3-Layer Architecture](https://raw.githubusercontent.com/truongnat/agentic-sdlc/main/docs/diagrams/architecture_3_layers.png)
+
+**Layer 1 (Core)** - The stable foundation that rarely changes:
+- GEMINI.md - Universal guide and single source of truth
+- Skills - 17 AI role definitions
+- Templates - 20+ document templates
+- Rules - 8 rule files for enforcement
+- Workflows - 23 workflow definitions
+
+**Layer 2 (Intelligence)** - The brain system with 21 sub-agents:
+- **Monitoring & Compliance**: Observer, Monitor, Workflow Validator
+- **Quality & Scoring**: Judge, Scorer, Evaluation
+- **Learning & Optimization**: Self-Learning, DSPy, A/B Test
+- **Execution & Safety**: HITL, Sandbox, Self-Healing
+- **Intelligence & Routing**: Proxy, Router, Task Manager, Research
+- **Generation & Tracking**: Artifact Gen, Cost, Performance
+
+**Layer 3 (Infrastructure)** - External interfaces and tools:
+- CLI, MCP Connectors, GitHub Integration
+- Neo4j Knowledge Graph, Documentation
+- Workflow Scripts, Communication Tools
+
+### Orchestrator Workflow with HITL Gates
+
+The orchestrator workflow manages the complete SDLC lifecycle with mandatory human approval gates:
+
+![Orchestrator Workflow](https://raw.githubusercontent.com/truongnat/agentic-sdlc/main/docs/diagrams/orchestrator_workflow_flow.png)
+
+**Key Features:**
+- **11 Phases**: From Planning to Self-Learning
+- **3 HITL Gates**: Design Approval, Code Review, Deployment Approval
+- **4 Checkpoints**: State persistence at critical phases
+- **Self-Healing Loop**: Automatic fix/retry on test failures
+- **Brain Status Checks**: Validation at start and end
+
+**Flow:**
+1. **Planning** (@PM) → Create project plan
+2. **Requirements** (@BA) → Define user stories
+3. **Design** (@SA + @UIUX) → Architecture & UI/UX specs
+4. 🛑 **HITL Gate 1** → Human approval required
+5. **Verification** (@TESTER + @SECA) → Quality & security review
+6. **Development** (@DEV + @DEVOPS) → Feature implementation
+7. 🛑 **HITL Gate 2** → Code review & PR approval
+8. **Testing** (@TESTER) → E2E testing with self-healing
+9. **Bug Fixing** (@DEV) → Issue resolution
+10. **Deployment** (@DEVOPS) → Production deployment
+11. 🛑 **HITL Gate 3** → Production approval
+12. **Reporting** (@PM) → CHANGELOG & review
+13. **Self-Learning** (@BRAIN) → KB sync & archive
+
+### Brain Intelligence Sub-Agents Network
+
+The brain system consists of 21 specialized sub-agents working in harmony:
+
+![Brain Intelligence Sub-Agents](https://raw.githubusercontent.com/truongnat/agentic-sdlc/main/docs/diagrams/brain_intelligence_subagents.png)
+
+**Data Flow Patterns:**
+- **Compliance Feedback Loop**: Observer → Judge → Self-Learning
+- **Quality Improvement Loop**: A/B Test → Judge → Self-Learning
+- **Persistence**: All agents → State Manager
+- **Learning**: All agents → Knowledge Graph (Neo4j)
+- **Approval Gates**: HITL ↔ Critical phases
+- **Auto-Fix**: Self-Healing ↔ Testing
+- **Model Routing**: Proxy → All agents
+- **Cost Tracking**: Cost → All agents
+
+### Brain Learning Loop
+
+Every task execution improves the system through compound learning:
+
+![Brain Learning Loop](https://raw.githubusercontent.com/truongnat/agentic-sdlc/main/docs/diagrams/brain_learning_loop.png)
+
+**8-Step Learning Cycle:**
+1. **Execute Task** - Any SDLC phase
+2. **Observer Monitors** - Track actions & violations
+3. **Judge Scores** - Quality assessment (0-100)
+4. **A/B Testing** - Generate alternatives
+5. **Self-Learning** - Extract patterns:
+   - Observer violations → New rules
+   - Judge scores → Quality patterns
+   - A/B results → Best solutions
+   - Completed tasks → Reusable solutions
+   - Fixed bugs → Anti-patterns
+6. **Knowledge Storage** - Neo4j Graph + SQLite State + LEANN Vector Search
+7. **Context-Aware Suggestions** - Smart recommendations
+8. **DSPy Optimization** - Improve prompts
+
+**Side Flows:**
+- **Error Path**: Self-Healing → Fix → Back to execution
+- **Cost Path**: Cost Monitor → Budget alerts
+- **State Path**: State Manager → Checkpoints
+
+### SDLC State Machine
+
+Complete state machine showing all transitions and error handling:
+
+![SDLC State Machine](https://raw.githubusercontent.com/truongnat/agentic-sdlc/main/docs/diagrams/sdlc_state_machine.png)
+
+**States & Transitions:**
+- **IDLE** → `brain init` → **PLANNING**
+- **PLANNING** (@PM, @BA, @PO) → User Approval → **DESIGN**
+- **DESIGN** (@SA, @UIUX) → HITL Approval → **VERIFICATION**
+- **VERIFICATION** (@TESTER, @SECA) → Passed → **DEVELOPMENT**
+- **DEVELOPMENT** (@DEV, @DEVOPS) → HITL Code Review → **TESTING**
+- **TESTING** (@TESTER) → Tests Passed → **DEPLOYMENT**
+  - Tests Failed → Self-Healing → Back to **DEVELOPMENT**
+- **DEPLOYMENT** (@DEVOPS) → HITL Production Approval → **REPORTING**
+- **REPORTING** (@PM, @REPORTER) → Complete → **LEARNING**
+- **LEARNING** (@BRAIN) → Done → **IDLE**
+
+**Error Handling:**
+- Any State → ERROR → HALTED
+- HALTED → Fix Issue → Resume → Previous State
+
+**Checkpoints:**
+- Planning, Design, Development, Deployment
+
+## 🧠 The Brain System
+
+At the core of Agentic SDLC is the **Brain** - an intelligent knowledge management system that:
+
+- **Learns from every task** - Automatically captures patterns from bugs, features, and solutions
+- **Provides recommendations** - Suggests approaches based on past successes
+- **Builds knowledge graphs** - Maps relationships between skills, technologies, and solutions
+- **Enables compound intelligence** - Each project's knowledge benefits all others
+
+→ See **[GEMINI.md](GEMINI.md)** for complete Brain documentation
+
+## ✨ Installation
+
+### 🚀 Quick Install
+
+Install directly from GitHub:
+
+```bash
+pip install git+https://github.com/truongnat/agentic-sdlc.git
+```
+
+### 📦 Initialize in Your Project
+
+Navigate to your project and initialize:
+
+```bash
+cd your-project
+agentic-sdlc init
+```
+
+This will:
+- Create `.agent/` directory with workflows, skills, and templates
+- Set up brain system configuration
+- Initialize knowledge base
+- Create `.env.template` for API keys
+
+### ⚙️ Configuration
+
+After initialization, configure your API keys (optional):
+
+```bash
+cp .env.template .env
+# Edit .env with your credentials
+```
+
+### 🔧 Development Setup (From Source)
+
+For contributing or development:
+
+```bash
+git clone https://github.com/truongnat/agentic-sdlc.git
+cd agentic-sdlc
+
+# Run setup script
+./bin/setup.sh  # Linux/macOS
+.\bin\setup.ps1  # Windows
+
+# Or install in editable mode
+pip install -e .
+```
+
+### 🧠 System Commands
+All operations are centralized through the `asdlc` script.
+
+#### Windows (PowerShell)
+```powershell
+.\bin\asdlc.ps1 <command>
+```
+
+#### Linux / macOS (Bash)
+```bash
+./bin/asdlc.sh <command>
+```
+
+### 📊 System Dashboard
+Monitor agents, costs, and approvals via the real-time dashboard:
+```bash
+python asdlc.py dashboard
+```
+
+## 🚀 Reinforced Intelligence Features
+
+The system has been enhanced with enterprise-grade reliability:
+
+- **🛡️ Sandboxing:** Securely execute agent-generated code in isolated Docker containers.
+- **🛑 HITL (Human-in-the-Loop):** Mandatory approval gates for critical phases (Deploy, Security, Code Review).
+- **🔄 Persistence & Recovery:** Workflow session state management with SQLite-based checkpointing.
+- **🩹 Self-Healing:** Automated QA→DEV feedback loops that learn from error patterns.
+- **💰 Cost Monitoring:** Real-time token tracking and budget alerts per model/task.
+- **🏆 Evaluation:** Robust benchmarking framework to measure and improve agent performance.
+- **🏠 Local LLM Support:** Privacy-first execution using Ollama for local model hosting.
+
+## 🚀 Core Features
+
+### 1. AI Role System (17 Roles)
+
+Specialized AI agents for every SDLC phase:
+
+```
+Planning    → @PM, @BA, @PO
+Design      → @SA, @UIUX
+Review      → @QA, @SECA
+Development → @DEV, @DEVOPS
+Testing     → @TESTER
+Delivery    → @REPORTER, @STAKEHOLDER
+Meta        → @BRAIN, @ORCHESTRATOR
+```
+
+### 2. Slash Commands (23 Workflows)
+
+Execute complete workflows with simple commands (mapped to `asdlc workflow <name>`):
+
+```bash
+/brain           # Brain system management (asdlc brain status)
+/cycle           # Complete task lifecycle
+/explore         # Deep investigation
+/orchestrator    # Full SDLC automation
+/sprint          # Sprint management
+/monitor         # System dashboard
+/validate        # System validation
+/metrics         # View metrics dashboard
+/release         # Release management
+/emergency       # Critical incident response
+/housekeeping    # Cleanup & maintenance
+```
+
+### 3. Monorepo Architecture
+
+```
+agentic-sdlc/              # 🧠 Brain (Root)
+├── .agent/                # AI workflows, skills, KB
+├── tools/                 # Neo4j, research, utilities
+├── docs/                  # Documentation
+└── projects/              # Your projects
+    ├── project-1/
+    ├── project-2/
+    └── [add-yours]/
+```
+
+**Benefits:**
+- ✅ Shared brain across all projects
+- ✅ Compound learning from every solution
+- ✅ Consistent workflows and quality
+- ✅ Centralized knowledge management
+
+### 4. Knowledge Management
+
+**Automated Learning:**
+- Records error patterns and solutions
+- Captures successful implementation approaches
+- Builds skill and technology graphs
+- Provides context-aware recommendations
+
+**Three-Layer System:**
+1. **LEANN** - Vector-based semantic search
+2. **Neo4j** - Knowledge graph with relationships
+3. **File-based KB** - Categorized markdown entries
+
+## 📖 Documentation
+
+### Getting Started
+- **[GEMINI.md](GEMINI.md)** - Complete brain system guide (IDE-agnostic)
+- **[Quick Start](docs/guides/QUICK-START.md)** - 5-minute setup guide
+- **[CLI Examples](docs/guides/CLI-EXAMPLES.md)** - Command usage examples
+
+### Architecture
+- **[Monorepo Architecture](docs/MONOREPO-ARCHITECTURE.md)** - System design
+- **[Project Structure](PROJECT-STRUCTURE.md)** - Directory organization
+- **[Documentation Index](docs/PROJECT-DOCUMENTATION-INDEX.md)** - All docs
+
+### Tools & Setup
+- **[Neo4j Tools](tools/neo4j/README.md)** - Knowledge graph system
+- **[Research Agent](tools/research/README.md)** - Automated research
+- **[MCP Setup](docs/guides/MCP-SETUP.md)** - Model Context Protocol
+
+## 🎯 Use Cases
+
+### Solo Developer
+```bash
+/auto Create a SaaS platform with authentication and billing
+# Complete automation from planning to deployment
+```
+
+### Team Development
+```bash
+# Each team member uses the same brain
+python asdlc.py brain sync
+git pull  # Share knowledge base
+/pm Start Sprint 3
+```
+
+### Existing Large Project
+```bash
+python asdlc.py setup
+/brain  # Index and analyze codebase
+/pm Migrate authentication to OAuth2
+```
+
+## 🔧 Available Commands
+
+```bash
+# System Dashboard
+python asdlc.py dashboard       # Start the UI monitoring
+
+# Brain & Intelligence
+python asdlc.py brain status    # Check system state
+python asdlc.py brain health    # Full health check
+python asdlc.py brain sync      # Sync knowledge graph
+
+# Workflows
+python asdlc.py workflow cycle  # Run task lifecycle
+python asdlc.py workflow orchestrator  # Full automation
+
+# Release Management
+python asdlc.py release preview # Preview changes
+python asdlc.py release release # Full release cycle
+```
+
+## 🌟 Why Agentic SDLC?
+
+| Traditional Development | With Agentic SDLC |
+|------------------------|-------------------|
+| Manual planning | Automated with @PM |
+| Ad-hoc architecture | Structured with @SA, @UIUX |
+| Inconsistent code quality | Enforced by @QA, @SECA |
+| Lost knowledge | Compound learning brain |
+| Repetitive tasks | Automated with @AUTO |
+| Single-agent limits | Multi-agent teams with AutoGen |
+| Solo problem-solving | 17+ AI experts available |
+
+## 🔗 Links
+
+- **Repository:** https://github.com/truongnat/agentic-sdlc
+- **NPM Package:** https://www.npmjs.com/package/agentic-sdlc
+- **Issues:** https://github.com/truongnat/agentic-sdlc/issues
+- **Documentation:** [docs/](docs/)
+
+## 📄 License
+
+MIT License - See [LICENSE](LICENSE) for details
+
+---
+
+**Next Steps:**
+1. Read [GEMINI.md](GEMINI.md) to understand the brain system
+2. Follow [Quick Start](docs/guides/QUICK-START.md) to get started
+3. Explore [workflows](.agent/workflows/) to see available automations
+
+**Questions?** Check the [documentation](docs/) or [open an issue](https://github.com/truongnat/agentic-sdlc/issues).
