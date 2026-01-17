@@ -151,10 +151,10 @@ At the core of Agentic SDLC is the **Brain** - an intelligent knowledge manageme
 
 ### 🚀 Quick Install
 
-Install directly from GitHub:
+Install from PyPI:
 
 ```bash
-pip install git+https://github.com/truongnat/agentic-sdlc.git
+pip install agentic-sdlc
 ```
 
 ### 📦 Initialize in Your Project

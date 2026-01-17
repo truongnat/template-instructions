@@ -902,9 +902,9 @@ Use /explore workflow to investigate options.
 
 ### Option 4: CLI (Package Installation)
 
-**Install from GitHub:**
+**Install from PyPI:**
 ```bash
-pip install git+https://github.com/truongnat/agentic-sdlc.git
+pip install agentic-sdlc
 ```
 
 **Initialize in your project:**
