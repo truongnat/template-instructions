@@ -98,29 +98,44 @@ PS> .\tools\setup\standardize_filenames.ps1 -Path "docs" -DryRun
 
 ## Setup Workflows
 
-### Initial Project Setup
+### Package Installation (Recommended)
+
+Install directly from GitHub:
 
 ```bash
-# 1. Clone repository
-git clone <repo-url>
-cd agentic-sdlc
+# Install the package
+pip install git+https://github.com/truongnat/agentic-sdlc.git
 
-# 2. Install dependencies
-npm install
-pip install -r tools/requirements.txt
+# Initialize in your project
+cd your-project
+agentic-sdlc init
 
-# 3. Setup research hooks (optional)
-bash tools/setup/setup_research_hooks.sh
-
-# 4. Configure environment
+# Configure environment
 cp .env.template .env
 # Edit .env with your credentials
 
-# 5. Initialize knowledge base
-node bin/agentic-sdlc/cli.js init-kb
+# Verify setup
+agentic-sdlc brain status
+```
 
-# 6. Verify setup
-./bin/kb/kb stats
+### Development Setup (From Source)
+
+For contributing or development:
+
+```bash
+# Clone repository
+git clone https://github.com/truongnat/agentic-sdlc.git
+cd agentic-sdlc
+
+# Run setup script
+./bin/setup.sh  # Linux/macOS
+.\bin\setup.ps1  # Windows
+
+# Or install in editable mode
+pip install -e .
+
+# Verify setup
+python asdlc.py brain status
 ```
 
 ### IDE Integration Setup

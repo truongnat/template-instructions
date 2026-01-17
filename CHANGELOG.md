@@ -6,6 +6,28 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [2.1.0] - 2026-01-17
+
+### Added
+- [Package] PyPI package infrastructure with `pyproject.toml`
+- [Package] CLI entry points: `agentic-sdlc` and `asdlc`
+- [Package] `agentic_sdlc` Python package module
+- [Docs] `PUBLISHING.md` guide for PyPI publishing
+
+### Changed
+- [Installation] Updated all documentation to use GitHub installation method
+- [Installation] Primary method: `pip install git+https://github.com/truongnat/agentic-sdlc.git`
+- [Docs] Simplified installation instructions across all READMEs
+- [Docs] Updated landing page components (Hero, CTA) with new installation command
+- [Docs] Updated GEMINI.md, README.md, and setup documentation
+
+### Documentation
+- Unified installation method across all documentation
+- Removed UV prerequisites (simplified approach)
+- Added clear development setup instructions
+
+---
+
 ## [2.0.0] - 2026-01-16
 
 ### Changed

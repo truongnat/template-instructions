@@ -147,28 +147,54 @@ At the core of Agentic SDLC is the **Brain** - an intelligent knowledge manageme
 
 → See **[GEMINI.md](GEMINI.md)** for complete Brain documentation
 
-## ✨ Quick Start
+## ✨ Installation
 
-### Installation
+### 🚀 Quick Install
 
-The project provides automated setup scripts for both Windows and Unix-based systems. These scripts handle Python virtual environments, dependency installation (Python & JS), and brain system initialization.
+Install directly from GitHub:
 
-#### Windows (PowerShell)
-```powershell
-.\bin\setup.ps1
-```
-
-#### Linux / macOS (Bash)
 ```bash
-chmod +x ./bin/setup.sh
-./bin/setup.sh
+pip install git+https://github.com/truongnat/agentic-sdlc.git
 ```
 
-### Configuration
+### 📦 Initialize in Your Project
 
-Copy `.env.template` to `.env` and configure your API keys:
+Navigate to your project and initialize:
+
+```bash
+cd your-project
+agentic-sdlc init
+```
+
+This will:
+- Create `.agent/` directory with workflows, skills, and templates
+- Set up brain system configuration
+- Initialize knowledge base
+- Create `.env.template` for API keys
+
+### ⚙️ Configuration
+
+After initialization, configure your API keys (optional):
+
 ```bash
 cp .env.template .env
+# Edit .env with your credentials
+```
+
+### 🔧 Development Setup (From Source)
+
+For contributing or development:
+
+```bash
+git clone https://github.com/truongnat/agentic-sdlc.git
+cd agentic-sdlc
+
+# Run setup script
+./bin/setup.sh  # Linux/macOS
+.\bin\setup.ps1  # Windows
+
+# Or install in editable mode
+pip install -e .
 ```
 
 ### 🧠 System Commands

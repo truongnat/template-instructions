@@ -900,20 +900,30 @@ Act as @SA and help me design system architecture.
 Use /explore workflow to investigate options.
 ```
 
-### Option 4: CLI
+### Option 4: CLI (Package Installation)
 
+**Install from GitHub:**
 ```bash
-# Install CLI
-npm install -g agentic-sdlc
+pip install git+https://github.com/truongnat/agentic-sdlc.git
+```
 
-# Run workflows
+**Initialize in your project:**
+```bash
+cd your-project
+agentic-sdlc init
+```
+
+**Run workflows:**
+```bash
 agentic-sdlc cycle --task "Add dark mode"
 agentic-sdlc observe --check
 agentic-sdlc ab "implement authentication"
 agentic-sdlc score src/app.py
 agentic-sdlc monitor --health
+```
 
-# Brain commands
+**Brain commands:**
+```bash
 agentic-sdlc brain status
 agentic-sdlc brain sync
 agentic-sdlc brain recommend "implement caching"
