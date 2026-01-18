@@ -432,7 +432,7 @@ class StateManager:
             
         # Reactivate session if it was paused/failed
         if session.status in ["paused", "failed"]:
-            self.update_session(session_id, status="active")
+            session = self.update_session(session_id, status="active")
             
         print(f"🔄 Recovered session {session_id} at phase '{checkpoint.phase}'")
         

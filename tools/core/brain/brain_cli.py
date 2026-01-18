@@ -50,6 +50,8 @@ try:
     from tools.intelligence.workflow_validator.reporter import ComplianceReporter
     from tools.intelligence.task_manager import task_board
     from tools.intelligence.task_manager import sprint_manager
+    from tools.intelligence.hitl.hitl_manager import HITLManager, ApprovalGate, ApprovalStatus
+    from tools.intelligence.self_healing.self_healer import SelfHealingOrchestrator, HealingResult
 except ImportError as e:
     print(f"❌ Import Error: {e}")
     sys.exit(1)
@@ -331,6 +333,166 @@ def cmd_validate_workflow(args):
             print(full_report)
 
 
+def cmd_gate(args):
+    """Manage approval gates."""
+    print("🛑 @BRAIN /gate")
+    parser = argparse.ArgumentParser(description="HITL Gate Manager")
+    subparsers = parser.add_subparsers(dest="subcommand", help="Available commands")
+    
+    # Request approval
+    request_parser = subparsers.add_parser("request", help="Create approval request")
+    request_parser.add_argument("--gate", required=True, choices=[g.value for g in ApprovalGate], help="Approval gate type")
+    request_parser.add_argument("--session", required=True, help="Session ID")
+    request_parser.add_argument("--artifacts", nargs="+", default=[], help="Artifact paths to review")
+    
+    # Approve
+    approve_parser = subparsers.add_parser("approve", help="Approve a request")
+    approve_parser.add_argument("request_id", help="Request ID to approve")
+    approve_parser.add_argument("--reviewer", default="human", help="Reviewer name")
+    approve_parser.add_argument("--reason", default="Approved", help="Approval reason")
+    
+    # Reject
+    reject_parser = subparsers.add_parser("reject", help="Reject a request")
+    reject_parser.add_argument("request_id", help="Request ID to reject")
+    reject_parser.add_argument("--reviewer", default="human", help="Reviewer name")
+    reject_parser.add_argument("--reason", required=True, help="Rejection reason")
+    
+    # List pending
+    subparsers.add_parser("list", help="List pending requests")
+    
+    # Status
+    status_parser = subparsers.add_parser("status", help="Check request status")
+    status_parser.add_argument("request_id", help="Request ID")
+    
+    # Stats
+    subparsers.add_parser("stats", help="Show approval statistics")
+    
+    parsed_args = parser.parse_args(args)
+    manager = HITLManager()
+    
+    if parsed_args.subcommand == "request":
+        manager.request_approval(
+            gate=ApprovalGate(parsed_args.gate),
+            session_id=parsed_args.session,
+            artifact_paths=parsed_args.artifacts
+        )
+        
+    elif parsed_args.subcommand == "approve":
+        manager.approve(parsed_args.request_id, parsed_args.reviewer, parsed_args.reason)
+        
+    elif parsed_args.subcommand == "reject":
+        manager.reject(parsed_args.request_id, parsed_args.reviewer, parsed_args.reason)
+        
+    elif parsed_args.subcommand == "list":
+        pending = manager.list_pending()
+        if not pending:
+            print("📭 No pending approval requests")
+        else:
+            print(f"📋 Pending Approval Requests ({len(pending)}):\n")
+            for req in pending:
+                print(f"  [{req.id}] {req.gate.value}")
+                print(f"      Session: {req.session_id}")
+                print(f"      Created: {req.created_at}")
+                print(f"      Timeout: {req.timeout_minutes} minutes")
+                print()
+                
+    elif parsed_args.subcommand == "status":
+        req = manager.check_status(parsed_args.request_id)
+        if req:
+            print(f"Request {req.id}:")
+            print(f"  Gate: {req.gate.value}")
+            print(f"  Status: {req.status.value}")
+            print(f"  Created: {req.created_at}")
+            if req.resolved_at:
+                print(f"  Resolved: {req.resolved_at}")
+                print(f"  Reviewer: {req.reviewer}")
+                print(f"  Reason: {req.decision_reason}")
+        else:
+            print(f"Request {parsed_args.request_id} not found")
+            
+    elif parsed_args.subcommand == "stats":
+        stats = manager.get_gate_stats()
+        print("📊 Approval Gate Statistics:\n")
+        print(f"  Total Requests: {stats['total_requests']}")
+        print(f"  Avg Resolution Time: {stats['avg_resolution_time_minutes']:.1f} minutes")
+        print("\n  By Gate:")
+        for gate, count in stats["by_gate"].items():
+            print(f"    {gate}: {count}")
+        print("\n  By Status:")
+        for status, count in stats["by_status"].items():
+            print(f"    {status}: {count}")
+            
+    else:
+        parser.print_help()
+
+
+def cmd_heal(args):
+    """Run self-healing loop."""
+    print("🩹 @BRAIN /heal")
+    parser = argparse.ArgumentParser(description="Self-Healing Loop")
+    parser.add_argument("--code", required=True, help="Code to heal (or path to file)")
+    parser.add_argument("--requirements", default="", help="Requirements to validate against")
+    parser.add_argument("--max-iterations", type=int, default=3, help="Max iterations")
+    parser.add_argument("--session", help="Session ID for checkpointing")
+    
+    parsed_args = parser.parse_args(args)
+    
+    # Load code from file if path provided
+    code_content = parsed_args.code
+    code_path = Path(parsed_args.code)
+    if code_path.exists() and code_path.is_file():
+        try:
+            code_content = code_path.read_text(encoding='utf-8')
+            print(f"📄 Loaded code from: {parsed_args.code}")
+        except Exception as e:
+            print(f"❌ Error reading file: {e}")
+            return
+            
+    orchestrator = SelfHealingOrchestrator()
+    
+    # Integrate with State Manager if possible
+    try:
+        from tools.intelligence.state.state_manager import StateManager
+        orchestrator.set_state_manager(StateManager())
+        print("✓ State Manager integrated")
+    except ImportError:
+        pass
+        
+    # Integrate with HITL if possible
+    try:
+        from tools.intelligence.hitl.hitl_manager import HITLManager
+        orchestrator.set_hitl_manager(HITLManager())
+        print("✓ HITL Manager integrated")
+    except ImportError:
+        pass
+        
+    result = orchestrator.heal(
+        code=code_content,
+        requirements=parsed_args.requirements,
+        session_id=parsed_args.session
+    )
+    
+    print(f"\n📊 Healing Result:")
+    print(f"   Success: {result.success}")
+    print(f"   Iterations: {result.iterations}")
+    print(f"   Issues Found: {result.issues_found}")
+    print(f"   Issues Fixed: {result.issues_fixed}")
+    if result.escalated:
+        print(f"   🚨 ESCALATED: {result.escalation_reason}")
+    if result.final_code and result.final_code != code_content:
+        # If file was provided, offer to write back
+        if code_path.exists() and code_path.is_file():
+            print(f"\nFixed code is ready.") 
+            # In a real CLI we might ask for confirmation, but here we just show it
+            # or maybe save to a new file to be safe
+            new_path = code_path.with_suffix(code_path.suffix + ".fixed")
+            try:
+                new_path.write_text(result.final_code, encoding='utf-8')
+                print(f"💾 Saved fixed code to: {new_path}")
+            except Exception as e:
+                print(f"❌ Error saving fixed code: {e}")
+
+
 # --- Main Dispatcher ---
 
 def cmd_help(args):
@@ -343,6 +505,8 @@ def cmd_help(args):
     print("  validate            Validate phase")
     print("  transition          Transition state")
     print("  init                Initialize sprint")
+    print("  gate                Manage approval gates")
+    print("  heal                Run self-healing loop")
     print("  health              Check system health")
     print("  sync                Sync knowledge base")
     print("  observe             Check compliance")
@@ -370,6 +534,8 @@ def main():
         "validate": cmd_validate,
         "transition": cmd_transition,
         "init": cmd_init,
+        "gate": cmd_gate,
+        "heal": cmd_heal,
         "sync": cmd_sync,
         "full-sync": cmd_full_sync,
         "health": cmd_health,
