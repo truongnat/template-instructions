@@ -6,7 +6,7 @@ from pathlib import Path
 # Add tools to path
 sys.path.append(str(Path(__file__).parent.parent / "tools"))
 
-from release.release import ReleaseManager
+from infrastructure.release.release import ReleaseManager
 
 @pytest.fixture
 def release_manager():
