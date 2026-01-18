@@ -59,6 +59,16 @@ git log -1 --oneline
   ```
   *Or manually:* `git push`
 
+### 7. Cleanup (If Task Done)
+- **If this completes the feature/fix:**
+  ```bash
+  git checkout main
+  git pull origin main
+  git merge <branch-name>
+  git push origin main
+  git branch -d <branch-name>
+  ```
+
 ## ⏭️ Next Steps
 - **If Success:** Return to previous workflow (e.g., `/cycle`).
 

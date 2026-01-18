@@ -55,10 +55,18 @@ git push -u origin feat/TASK-ID-name
   python tools/core/brain/brain_cli.py observe
   ```
 
-### 6. Merge
+### 6. Merge & Cleanup (MANDATORY)
 - Create PR, tag @TESTER.
 - Wait for `#testing-passed`.
-- Merge via @DEVOPS or @SA.
+- **Merge locally and cleanup:**
+  ```bash
+  git checkout main
+  git pull origin main
+  git merge feat/TASK-ID-name
+  git push origin main
+  git branch -d feat/TASK-ID-name
+  ```
+- Notify Team: `agentic-sdlc run tools/infrastructure/communication/cli.py send --channel general --content "Merged [task] to main and cleaned up branches."`
 
 ### 7. Self-Learning (MANDATORY)
 ```bash

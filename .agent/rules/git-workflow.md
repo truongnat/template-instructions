@@ -43,3 +43,11 @@ We follow [Conventional Commits](https://www.conventionalcommits.org/) to enable
 - `chore`: Build process, auxiliary tools, libraries updates
 **Breaking Changes:**
 Append `!` after type/scope (e.g., `feat!: drop support for Node 12`) for MAJOR bump.
+## E. Post-Task Completion (MANDATORY)
+After a task is completed, committed, and pushed:
+1. **Checkout Main:** `git checkout main`
+2. **Pull Latest:** `git pull origin main`
+3. **Merge Feature:** `git merge prefix/TASK-ID-name`
+4. **Push Main:** `git push origin main`
+5. **Delete Local Branch:** `git branch -d prefix/TASK-ID-name`
+6. **Delete Remote Branch (Optional):** `git push origin --delete prefix/TASK-ID-name`

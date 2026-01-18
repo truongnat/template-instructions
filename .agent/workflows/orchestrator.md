@@ -78,7 +78,14 @@ python tools/intelligence/hitl/hitl_manager.py request \
 - Fix bugs, update KB.
 
 ### Phase 8: Deployment (@DEVOPS)
-- Merge to main, deploy to staging/production.
+- **Merge to main and cleanup:**
+  ```bash
+  git checkout main
+  git pull origin main
+  git merge <feature-branch>
+  git push origin main
+  ```
+- Deploy to staging/production.
 - **Checkpoint:** `python tools/intelligence/state/state_manager.py checkpoint $SESSION_ID deployment`
 
 ### 🛑 Phase 8.5: Deployment Approval Gate (HITL)
