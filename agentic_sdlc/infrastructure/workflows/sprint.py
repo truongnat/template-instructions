@@ -32,8 +32,8 @@ if sys.platform == 'win32':
 sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
 
 try:
-    from tools.core.utils.common import print_success, print_error, print_warning, print_info, print_header, get_project_root
-    from tools.core.utils.artifact_manager import get_current_sprint, set_current_sprint
+    from agentic_sdlc.core.utils.common import print_success, print_error, print_warning, print_info, print_header, get_project_root
+    from agentic_sdlc.core.utils.artifact_manager import get_current_sprint, set_current_sprint
 except ImportError:
     def print_success(msg): print(f"[OK] {msg}")
     def print_error(msg): print(f"[ERR] {msg}", file=sys.stderr)

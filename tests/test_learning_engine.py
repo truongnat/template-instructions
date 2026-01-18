@@ -16,7 +16,7 @@ sys.path.insert(0, str(PROJECT_ROOT / "tools"))
 
 # Import after path setup
 try:
-    from tools.knowledge_graph.learning_engine import LearningEngine
+    from agentic_sdlc.knowledge_graph.learning_engine import LearningEngine
 except ImportError:
     try:
         # Alternate import path

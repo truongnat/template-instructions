@@ -24,12 +24,12 @@ if sys.platform == 'win32':
 sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
 
 try:
-    from tools.core.utils.common import (
+    from agentic_sdlc.core.utils.common import (
         print_header, print_success, print_error, print_info, print_warning,
         get_project_root, ensure_dir
     )
-    from tools.core.utils.kb_manager import search_kb, create_kb_entry
-    from tools.core.utils.artifact_manager import get_current_sprint
+    from agentic_sdlc.core.utils.kb_manager import search_kb, create_kb_entry
+    from agentic_sdlc.core.utils.artifact_manager import get_current_sprint
 except ImportError as e:
     print(f"Error: Required utility modules not found: {e}")
     print("Run setup first or check your PYTHONPATH.")

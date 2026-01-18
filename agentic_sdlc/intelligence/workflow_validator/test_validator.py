@@ -9,10 +9,10 @@ from pathlib import Path
 # Add project root to path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
 
-from tools.intelligence.workflow_validator.parser import parse_workflow
-from tools.intelligence.workflow_validator.tracker import ExecutionTracker, ActionType
-from tools.intelligence.workflow_validator.validator import ComplianceValidator
-from tools.intelligence.workflow_validator.reporter import ComplianceReporter
+from agentic_sdlc.intelligence.workflow_validator.parser import parse_workflow
+from agentic_sdlc.intelligence.workflow_validator.tracker import ExecutionTracker, ActionType
+from agentic_sdlc.intelligence.workflow_validator.validator import ComplianceValidator
+from agentic_sdlc.intelligence.workflow_validator.reporter import ComplianceReporter
 
 
 def test_commit_workflow():

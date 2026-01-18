@@ -14,12 +14,12 @@ from datetime import datetime
 sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
 
 try:
-    from tools.core.utils.common import (
+    from agentic_sdlc.core.utils.common import (
         print_header, print_success, print_error, print_info,
         get_project_root, ensure_dir
     )
-    from tools.intelligence.performance.metrics_collector import MetricsCollector
-    from tools.core.utils.artifact_manager import get_current_sprint
+    from agentic_sdlc.intelligence.performance.metrics_collector import MetricsCollector
+    from agentic_sdlc.core.utils.artifact_manager import get_current_sprint
 except ImportError:
     print("Error: Required utility modules not found.")
     sys.exit(1)

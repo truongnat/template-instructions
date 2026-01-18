@@ -31,7 +31,7 @@ from typing import List, Dict, Tuple, Optional
 
 # Add project root to path for imports
 sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
-from tools.core.utils.common import (
+from agentic_sdlc.core.utils.common import (
     print_header, print_success, print_error, print_warning, print_info,
     get_project_root, read_file, write_file, get_date
 )

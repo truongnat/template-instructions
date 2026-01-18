@@ -18,9 +18,9 @@ sys.path.insert(0, str(Path(__file__).parents[1]))
 # Current file is tests/test_brain_components.py (level 1)
 # Root is parents[1] -> D:\dev\agentic-sdlc
 
-from tools.intelligence.observer.observer import Observer, Violation
-from tools.intelligence.judge.scorer import Judge, ScoreResult
-from tools.intelligence.self_learning.learner import Learner, PatternType
+from agentic_sdlc.intelligence.observer.observer import Observer, Violation
+from agentic_sdlc.intelligence.judge.scorer import Judge, ScoreResult
+from agentic_sdlc.intelligence.self_learning.learner import Learner, PatternType
 
 class TestObserver:
     """Tests for Observer component."""

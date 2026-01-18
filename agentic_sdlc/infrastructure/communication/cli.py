@@ -8,7 +8,7 @@ parent_dir = os.path.dirname(os.path.dirname(current_dir))
 sys.path.append(parent_dir)
 
 try:
-    from tools.infrastructure.communication.chat_manager import ChatManager
+    from agentic_sdlc.infrastructure.communication.chat_manager import ChatManager
 except ImportError:
     # Try relative import if running directly from directory
     sys.path.append(os.path.dirname(current_dir))

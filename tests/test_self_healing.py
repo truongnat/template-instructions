@@ -15,7 +15,7 @@ from unittest.mock import patch, MagicMock
 # Add tools to path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from tools.intelligence.self_healing.self_healer import (
+from agentic_sdlc.intelligence.self_healing.self_healer import (
     FeedbackLoop, HealingResult, Issue, IssueSeverity, FixStatus
 )
 

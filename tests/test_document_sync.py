@@ -16,7 +16,7 @@ sys.path.insert(0, str(PROJECT_ROOT / "tools"))
 
 # Import after path setup
 try:
-    from tools.knowledge_graph.document_sync import DocumentSyncNeo4j, find_documents, DOCUMENT_TYPES
+    from agentic_sdlc.knowledge_graph.document_sync import DocumentSyncNeo4j, find_documents, DOCUMENT_TYPES
 except ImportError:
     try:
         # Alternate import path

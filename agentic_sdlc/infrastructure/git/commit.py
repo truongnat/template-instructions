@@ -14,7 +14,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 try:
-    from tools.core.utils.common import (
+    from agentic_sdlc.core.utils.common import (
         print_header, print_success, print_error, print_info, print_warning,
         SYM_CHECK, SYM_CROSS
     )

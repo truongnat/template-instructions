@@ -7,7 +7,7 @@ from pathlib import Path
 import sys
 
 # imports should work via conftest path setup, but we need correct module path
-from tools.core.utils.common import (
+from agentic_sdlc.core.utils.common import (
     get_project_root,
     ensure_dir,
     file_exists,

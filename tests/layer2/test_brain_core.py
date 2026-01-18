@@ -13,14 +13,14 @@ sys.path.insert(0, str(Path(__file__).parents[2] / "tools"))
 
 def test_brain_cli_import():
     try:
-        from tools.brain import brain_cli
+        from agentic_sdlc.brain import brain_cli
         assert brain_cli is not None
     except ImportError as e:
         pytest.fail(f"Failed to import brain_cli: {e}")
 
-@patch('tools.brain.brain_cli.state_manager')
+@patch('agentic_sdlc.brain.brain_cli.state_manager')
 def test_brain_status_command(mock_state_manager):
-    from tools.brain.brain_cli import cmd_status
+    from agentic_sdlc.brain.brain_cli import cmd_status
     
     # Run status
     cmd_status([])

@@ -4,15 +4,18 @@ setup(
     name="agentic-sdlc",
     version="2.1.0",
     packages=find_packages(include=['agentic_sdlc', 'agentic_sdlc.*']),
+    include_package_data=True,
     install_requires=[
         "click>=8.1.0",
         "rich>=13.0.0",
         "pydantic>=2.0.0",
         "python-dotenv>=1.0.0",
         "requests>=2.31.0",
+        "neo4j>=5.0.0",
     ],
     entry_points={
         'console_scripts': [
+            'agentic=agentic_sdlc.cli:main',
             'agentic-sdlc=agentic_sdlc.cli:main',
             'asdlc=agentic_sdlc.cli:main',
         ],

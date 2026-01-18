@@ -21,9 +21,9 @@ try:
     # Try relative import first (when in same directory)
     from research_agent import ResearchAgent
 except ImportError:
-    # Try absolute import from tools.research
+    # Try absolute import from agentic_sdlc.research
     try:
-        from tools.intelligence.research.research_agent import ResearchAgent
+        from agentic_sdlc.intelligence.research.research_agent import ResearchAgent
     except ImportError:
         print("⚠️  Cannot import research_agent.py")
         print("    Make sure you're running from project root or tools/research/ directory")

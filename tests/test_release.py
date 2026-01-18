@@ -3,10 +3,10 @@ import sys
 from unittest.mock import MagicMock, patch, mock_open
 from pathlib import Path
 
-# Add tools to path
-sys.path.append(str(Path(__file__).parent.parent / "tools"))
+# Add project root to path (so we can import agentic_sdlc)
+sys.path.append(str(Path(__file__).parent.parent))
 
-from infrastructure.release.release import ReleaseManager
+from agentic_sdlc.infrastructure.release.release import ReleaseManager
 
 @pytest.fixture
 def release_manager():

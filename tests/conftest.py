@@ -10,7 +10,6 @@ from pathlib import Path
 # Add project root to path
 PROJECT_ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
-sys.path.insert(0, str(PROJECT_ROOT / "tools"))
 
 
 @pytest.fixture
@@ -33,5 +32,5 @@ def kb_dir(agent_dir):
 
 @pytest.fixture
 def tools_dir(project_root):
-    """Return tools directory path."""
-    return project_root / "tools"
+    """Return agentic_sdlc directory path (formerly tools)."""
+    return project_root / "agentic_sdlc"

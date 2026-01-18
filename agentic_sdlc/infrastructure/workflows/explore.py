@@ -10,7 +10,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
 
-from tools.core.utils.console import print_header, print_step, print_success, print_info, print_warning
+from agentic_sdlc.core.utils.console import print_header, print_step, print_success, print_info, print_warning
 
 ORDERS = [
     ("First-Order", "Surface Level", "What does the user want?"),

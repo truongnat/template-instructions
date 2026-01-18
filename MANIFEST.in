@@ -1,0 +1,6 @@
+include README.md
+include requirements.txt
+recursive-include agentic_sdlc/defaults *
+recursive-include agentic_sdlc/requirements_tools.txt
+global-exclude __pycache__
+global-exclude *.py[cod]

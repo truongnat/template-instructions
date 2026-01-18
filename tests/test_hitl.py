@@ -18,7 +18,7 @@ from unittest.mock import patch, MagicMock
 # relative to the execution context.
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from tools.intelligence.hitl.hitl_manager import HITLManager, ApprovalGate, ApprovalStatus, ApprovalRequest
+from agentic_sdlc.intelligence.hitl.hitl_manager import HITLManager, ApprovalGate, ApprovalStatus, ApprovalRequest
 
 class TestHITLManager:
     """Tests for HITL Manager component."""

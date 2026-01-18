@@ -18,11 +18,11 @@ if sys.platform == 'win32':
 # Add project root to path
 sys.path.insert(0, str(Path(__file__).resolve().parents[3]))
 
-from tools.core.utils.common import (
+from agentic_sdlc.core.utils.common import (
     print_header, print_success, print_error, print_warning,
     get_project_root, file_exists
 )
-from tools.core.utils.artifact_manager import get_current_sprint, get_sprint_dir
+from agentic_sdlc.core.utils.artifact_manager import get_current_sprint, get_sprint_dir
 
 
 def check_directory_structure():

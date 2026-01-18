@@ -15,12 +15,12 @@ from datetime import datetime
 sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
 
 try:
-    from tools.core.utils.common import (
+    from agentic_sdlc.core.utils.common import (
         print_header, print_success, print_error, print_info,
         get_project_root, ensure_dir, load_config
     )
-    from tools.core.utils.kb_manager import search_kb, create_kb_entry
-    from tools.core.utils.artifact_manager import get_current_sprint
+    from agentic_sdlc.core.utils.kb_manager import search_kb, create_kb_entry
+    from agentic_sdlc.core.utils.artifact_manager import get_current_sprint
 except ImportError:
     print("Error: Required utility modules not found. Run setup first.")
     sys.exit(1)

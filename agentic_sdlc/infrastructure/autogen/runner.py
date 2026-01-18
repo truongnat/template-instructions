@@ -25,13 +25,13 @@ sys.path.insert(0, str(PROJECT_ROOT))
 async def run_single_agent(task: str, role: str, model: str, max_turns: int):
     """Run a single agent to complete a task."""
     from autogen_agentchat.agents import AssistantAgent
-    from tools.infrastructure.autogen.config import get_model_client
-    from tools.infrastructure.autogen.agents import (
+    from agentic_sdlc.infrastructure.autogen.config import get_model_client
+    from agentic_sdlc.infrastructure.autogen.agents import (
         create_developer_agent,
         create_tester_agent,
         create_orchestrator_agent,
     )
-    from tools.infrastructure.autogen.tools_registry import get_tools_for_role
+    from agentic_sdlc.infrastructure.autogen.tools_registry import get_tools_for_role
     
     print(f"\n[AGENT] Initializing {role} agent with {model}...")
     
@@ -79,9 +79,9 @@ async def run_multi_agent(task: str, team: list[str], model: str, max_turns: int
     from autogen_agentchat.conditions import MaxMessageTermination, TextMentionTermination
     from autogen_agentchat.ui import Console
     
-    from tools.infrastructure.autogen.config import get_model_client
-    from tools.infrastructure.autogen.agents import create_agent_by_role
-    from tools.infrastructure.autogen.tools_registry import get_tools_for_role
+    from agentic_sdlc.infrastructure.autogen.config import get_model_client
+    from agentic_sdlc.infrastructure.autogen.agents import create_agent_by_role
+    from agentic_sdlc.infrastructure.autogen.tools_registry import get_tools_for_role
     
     print(f"\n[TEAM] Initializing team: {', '.join(team)} with {model}...")
     

@@ -19,12 +19,12 @@ sys.path.append(str(root_dir))
 
 # Import brain modules
 try:
-    from tools.intelligence.hitl.hitl_manager import HITLManager, ApprovalGate
-    from tools.intelligence.state.state_manager import StateManager
-    from tools.intelligence.cost.cost_tracker import CostTracker
-    from tools.intelligence.evaluation.benchmark import BenchmarkRunner
-    from tools.intelligence.self_healing.self_healer import FeedbackLoop
-    from tools.intelligence.monitor.health_monitor import HealthMonitor
+    from agentic_sdlc.intelligence.hitl.hitl_manager import HITLManager, ApprovalGate
+    from agentic_sdlc.intelligence.state.state_manager import StateManager
+    from agentic_sdlc.intelligence.cost.cost_tracker import CostTracker
+    from agentic_sdlc.intelligence.evaluation.benchmark import BenchmarkRunner
+    from agentic_sdlc.intelligence.self_healing.self_healer import FeedbackLoop
+    from agentic_sdlc.intelligence.monitor.health_monitor import HealthMonitor
 except ImportError as e:
     st.error(f"Failed to import brain modules: {e}")
 

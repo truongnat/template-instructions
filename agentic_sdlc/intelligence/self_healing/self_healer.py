@@ -441,7 +441,7 @@ class SelfHealingOrchestrator:
             
         # Escalate to HITL if needed
         if result.escalated and self._hitl_manager:
-            from tools.intelligence.hitl import ApprovalGate
+            from agentic_sdlc.intelligence.hitl import ApprovalGate
             
             self._hitl_manager.request_approval(
                 gate=ApprovalGate.CODE_REVIEW,

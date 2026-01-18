@@ -35,23 +35,23 @@ def get_project_root() -> Path:
 sys.path.insert(0, str(get_project_root()))
 
 try:
-    from tools.core.brain import state_manager
-    from tools.intelligence.knowledge_graph import brain_parallel
-    from tools.intelligence.observer.observer import Observer
-    from tools.intelligence.judge.scorer import Judge
-    from tools.intelligence.ab_test.ab_tester import ABTester
-    from tools.intelligence.self_learning.learner import Learner
-    from tools.intelligence.artifact_gen.generator import ArtifactGenerator
-    from tools.intelligence.monitor.health_monitor import HealthMonitor
-    from tools.intelligence.proxy.router import Router
-    from tools.intelligence.workflow_validator.parser import parse_workflow
-    from tools.intelligence.workflow_validator.tracker import get_tracker
-    from tools.intelligence.workflow_validator.validator import ComplianceValidator
-    from tools.intelligence.workflow_validator.reporter import ComplianceReporter
-    from tools.intelligence.task_manager import task_board
-    from tools.intelligence.task_manager import sprint_manager
-    from tools.intelligence.hitl.hitl_manager import HITLManager, ApprovalGate, ApprovalStatus
-    from tools.intelligence.self_healing.self_healer import SelfHealingOrchestrator, HealingResult
+    from agentic_sdlc.core.brain import state_manager
+    from agentic_sdlc.intelligence.knowledge_graph import brain_parallel
+    from agentic_sdlc.intelligence.observer.observer import Observer
+    from agentic_sdlc.intelligence.judge.scorer import Judge
+    from agentic_sdlc.intelligence.ab_test.ab_tester import ABTester
+    from agentic_sdlc.intelligence.self_learning.learner import Learner
+    from agentic_sdlc.intelligence.artifact_gen.generator import ArtifactGenerator
+    from agentic_sdlc.intelligence.monitor.health_monitor import HealthMonitor
+    from agentic_sdlc.intelligence.proxy.router import Router
+    from agentic_sdlc.intelligence.workflow_validator.parser import parse_workflow
+    from agentic_sdlc.intelligence.workflow_validator.tracker import get_tracker
+    from agentic_sdlc.intelligence.workflow_validator.validator import ComplianceValidator
+    from agentic_sdlc.intelligence.workflow_validator.reporter import ComplianceReporter
+    from agentic_sdlc.intelligence.task_manager import task_board
+    from agentic_sdlc.intelligence.task_manager import sprint_manager
+    from agentic_sdlc.intelligence.hitl.hitl_manager import HITLManager, ApprovalGate, ApprovalStatus
+    from agentic_sdlc.intelligence.self_healing.self_healer import SelfHealingOrchestrator, HealingResult
 except ImportError as e:
     print(f"❌ Import Error: {e}")
     sys.exit(1)
@@ -452,7 +452,7 @@ def cmd_heal(args):
     
     # Integrate with State Manager if possible
     try:
-        from tools.intelligence.state.state_manager import StateManager
+        from agentic_sdlc.intelligence.state.state_manager import StateManager
         orchestrator.set_state_manager(StateManager())
         print("✓ State Manager integrated")
     except ImportError:
@@ -460,7 +460,7 @@ def cmd_heal(args):
         
     # Integrate with HITL if possible
     try:
-        from tools.intelligence.hitl.hitl_manager import HITLManager
+        from agentic_sdlc.intelligence.hitl.hitl_manager import HITLManager
         orchestrator.set_hitl_manager(HITLManager())
         print("✓ HITL Manager integrated")
     except ImportError:

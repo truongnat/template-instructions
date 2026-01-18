@@ -13,11 +13,11 @@ from pathlib import Path
 ROOT_DIR = Path(__file__).parent.parent.parent.parent
 sys.path.insert(0, str(ROOT_DIR))
 
-from tools.core.utils.common import print_header, print_success, print_info, print_error, confirm
-from tools.core.utils.artifact_manager import get_current_sprint
+from agentic_sdlc.core.utils.common import print_header, print_success, print_info, print_error, confirm
+from agentic_sdlc.core.utils.artifact_manager import get_current_sprint
 # Import brain_parallel for indexing and stats
 try:
-    from tools.intelligence.knowledge_graph import brain_parallel
+    from agentic_sdlc.intelligence.knowledge_graph import brain_parallel
 except ImportError:
     pass
 
