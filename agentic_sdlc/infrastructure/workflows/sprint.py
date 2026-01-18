@@ -27,22 +27,8 @@ if sys.platform == 'win32':
     except (AttributeError, OSError):
         pass
 
-# Add parent directory to path
-# Add project root to path
-sys.path.insert(0, str(Path(__file__).parent.parent.parent.parent))
-
-try:
-    from agentic_sdlc.core.utils.common import print_success, print_error, print_warning, print_info, print_header, get_project_root
-    from agentic_sdlc.core.utils.artifact_manager import get_current_sprint, set_current_sprint
-except ImportError:
-    def print_success(msg): print(f"[OK] {msg}")
-    def print_error(msg): print(f"[ERR] {msg}", file=sys.stderr)
-    def print_warning(msg): print(f"[WARN] {msg}")
-    def print_info(msg): print(f"[INFO] {msg}")
-    def print_header(msg): print(f"\n{'='*60}\n{msg}\n{'='*60}")
-    def get_project_root(): return Path.cwd()
-    def get_current_sprint(): return "sprint-1"
-    def set_current_sprint(s): pass
+from agentic_sdlc.core.utils.common import print_success, print_error, print_warning, print_info, print_header, get_project_root
+from agentic_sdlc.core.utils.artifact_manager import get_current_sprint, set_current_sprint
 
 
 SPRINT_FOLDERS = ['plans', 'designs', 'logs', 'reviews', 'reports']

@@ -24,16 +24,7 @@ if sys.platform == 'win32':
     except:
         pass
 
-def get_project_root() -> Path:
-    """Get the project root directory."""
-    # current: tools/core/brain/brain_cli.py
-    # root: ../../../
-    return Path(__file__).resolve().parent.parent.parent.parent
-
 # Import Intelligence Components
-# Use sys.path hack to ensure we can import from tools root
-sys.path.insert(0, str(get_project_root()))
-
 try:
     from agentic_sdlc.core.brain import state_manager
     from agentic_sdlc.intelligence.knowledge_graph import brain_parallel
@@ -533,7 +524,7 @@ def main():
         "status": cmd_status,
         "validate": cmd_validate,
         "transition": cmd_transition,
-        "init": cmd_init,
+        "init-state": cmd_init,
         "gate": cmd_gate,
         "heal": cmd_heal,
         "sync": cmd_sync,

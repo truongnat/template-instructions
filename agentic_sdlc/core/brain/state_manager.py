@@ -75,9 +75,7 @@ REQUIRED_ARTIFACTS = {
 }
 
 
-def get_project_root() -> Path:
-    """Get the project root directory."""
-    return Path(__file__).parent.parent.parent
+from agentic_sdlc.core.utils.common import get_project_root
 
 
 def get_state_file_path(sprint: int) -> Path:

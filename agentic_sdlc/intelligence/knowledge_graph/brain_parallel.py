@@ -124,9 +124,7 @@ def get_tools_dir() -> Path:
     """Get the tools directory path"""
     return Path(__file__).parent
 
-def get_project_root() -> Path:
-    """Get the project root directory"""
-    return Path(__file__).parent.parent.parent
+from agentic_sdlc.core.utils.common import get_project_root
 
 def check_dependencies() -> bool:
     """Check if required dependencies are installed"""

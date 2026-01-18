@@ -28,9 +28,7 @@ if sys.platform == 'win32':
         pass
 
 
-def get_project_root() -> Path:
-    """Get project root directory."""
-    return Path(__file__).resolve().parent.parent.parent
+from agentic_sdlc.core.utils.common import get_project_root
 
 
 class WorkflowTestRunner:

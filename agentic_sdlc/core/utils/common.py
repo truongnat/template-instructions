@@ -10,34 +10,28 @@ import json
 from pathlib import Path
 from datetime import datetime
 
-# Fix Windows console encoding - must be done before any print statements
+# Fix Windows console encoding
 if sys.platform == 'win32':
     try:
-        # Try to set UTF-8 mode for Windows console
         sys.stdout.reconfigure(encoding='utf-8', errors='replace')
         sys.stderr.reconfigure(encoding='utf-8', errors='replace')
     except (AttributeError, OSError):
-        # Python < 3.7 or reconfigure not available
         pass
 
-# Symbols with ASCII fallback for Windows compatibility
+# Symbols with ASCII fallback
 def _get_symbol(unicode_char, ascii_fallback):
-    """Get symbol with fallback for encoding issues"""
     try:
-        # Test if we can encode the character
         unicode_char.encode(sys.stdout.encoding or 'utf-8')
         return unicode_char
     except (UnicodeEncodeError, LookupError):
         return ascii_fallback
 
-# Define symbols with fallbacks
 SYM_CHECK = _get_symbol('✓', '[OK]')
 SYM_CROSS = _get_symbol('✗', '[ERR]')
 SYM_WARN = _get_symbol('⚠', '[WARN]')
 SYM_INFO = _get_symbol('ℹ', '[INFO]')
 
 
-# ANSI color codes (work on Windows 10+, macOS, Linux)
 class Colors:
     HEADER = '\033[95m'
     BLUE = '\033[94m'
@@ -50,7 +44,6 @@ class Colors:
     UNDERLINE = '\033[4m'
 
 
-# Enable ANSI colors on Windows
 if sys.platform == 'win32':
     try:
         import ctypes
@@ -61,91 +54,98 @@ if sys.platform == 'win32':
 
 
 def print_header(message):
-    """Print header message"""
     print(f"\n{Colors.BOLD}{Colors.CYAN}{'='*60}{Colors.ENDC}")
     print(f"{Colors.BOLD}{Colors.CYAN}{message}{Colors.ENDC}")
     print(f"{Colors.BOLD}{Colors.CYAN}{'='*60}{Colors.ENDC}\n")
 
 
 def print_success(message):
-    """Print success message"""
     print(f"{Colors.GREEN}{SYM_CHECK} {message}{Colors.ENDC}")
 
 
 def print_error(message):
-    """Print error message"""
     print(f"{Colors.RED}{SYM_CROSS} {message}{Colors.ENDC}", file=sys.stderr)
 
 
 def print_warning(message):
-    """Print warning message"""
     print(f"{Colors.YELLOW}{SYM_WARN} {message}{Colors.ENDC}")
 
 
 def print_info(message):
-    """Print info message"""
     print(f"{Colors.BLUE}{SYM_INFO} {message}{Colors.ENDC}")
 
 
 def get_project_root():
-    """Get project root directory"""
-    # Start from script location and go up to find .agent directory
-    current = Path(__file__).resolve()
+    """
+    Get project root directory by searching for .agent directory or agentic.yaml.
+    Starts from current working directory (runtime context).
+    """
+    current = Path.cwd().resolve()
     
-    while current != current.parent:
-        if (current / '.agent').exists():
-            return current
-        current = current.parent
-    
-    # Fallback to current working directory
-    return Path.cwd()
-
+    # Check current and parents
+    for path in [current] + list(current.parents):
+        if (path / '.agent').exists() or (path / 'agentic.yaml').exists():
+            return path
+            
+    # Fallback to current working directory if no marker found
+    return current
 
 def ensure_dir(path):
-    """Ensure directory exists"""
     Path(path).mkdir(parents=True, exist_ok=True)
     return Path(path)
 
-
 def load_config():
-    """Load project configuration"""
+    """
+    Load project configuration from agentic.yaml or .agent/config.json.
+    """
     root = get_project_root()
-    config_file = root / '.agent' / 'config.json'
     
-    if config_file.exists():
-        with open(config_file, 'r') as f:
-            return json.load(f)
+    # Priority 1: agentic.yaml
+    yaml_config = root / 'agentic.yaml'
+    if yaml_config.exists():
+        try:
+            import yaml
+            with open(yaml_config, 'r', encoding='utf-8') as f:
+                return yaml.safe_load(f) or {}
+        except ImportError:
+            print_warning("PyYAML not installed, skipping agentic.yaml")
+        except Exception as e:
+            print_error(f"Error loading agentic.yaml: {e}")
+    
+    # Priority 2: .agent/config.json
+    json_config = root / '.agent' / 'config.json'
+    if json_config.exists():
+        try:
+            with open(json_config, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except Exception as e:
+            print_error(f"Error loading config.json: {e}")
     
     # Default config
     return {
-        "project_name": "TeamLifecycle Project",
-        "current_sprint": "sprint-1",
+        "project_name": root.name,
         "kb_enabled": True,
         "auto_compound": True
     }
 
-
 def save_config(config):
-    """Save project configuration"""
+    """Save project configuration to .agent/config.json"""
     root = get_project_root()
-    config_file = root / '.agent' / 'config.json'
+    config_dir = root / '.agent'
+    ensure_dir(config_dir)
     
-    with open(config_file, 'w') as f:
+    config_file = config_dir / 'config.json'
+    
+    with open(config_file, 'w', encoding='utf-8') as f:
         json.dump(config, f, indent=2)
 
-
 def get_timestamp():
-    """Get current timestamp in ISO format"""
     return datetime.now().isoformat()
 
-
 def get_date():
-    """Get current date in YYYY-MM-DD format"""
     return datetime.now().strftime("%Y-%m-%d")
 
-
 def read_file(filepath):
-    """Read file content"""
     try:
         with open(filepath, 'r', encoding='utf-8') as f:
             return f.read()
@@ -153,9 +153,7 @@ def read_file(filepath):
         print_error(f"Failed to read {filepath}: {str(e)}")
         return None
 
-
 def write_file(filepath, content):
-    """Write content to file"""
     try:
         ensure_dir(Path(filepath).parent)
         with open(filepath, 'w', encoding='utf-8') as f:
@@ -165,9 +163,7 @@ def write_file(filepath, content):
         print_error(f"Failed to write {filepath}: {str(e)}")
         return False
 
-
 def append_file(filepath, content):
-    """Append content to file"""
     try:
         ensure_dir(Path(filepath).parent)
         with open(filepath, 'a', encoding='utf-8') as f:
@@ -177,23 +173,17 @@ def append_file(filepath, content):
         print_error(f"Failed to append to {filepath}: {str(e)}")
         return False
 
-
 def list_files(directory, pattern="*"):
-    """List files in directory matching pattern"""
     try:
         return list(Path(directory).glob(pattern))
     except Exception as e:
         print_error(f"Failed to list files in {directory}: {str(e)}")
         return []
 
-
 def file_exists(filepath):
-    """Check if file exists"""
     return Path(filepath).exists()
 
-
 def confirm(message, default=False):
-    """Ask user for confirmation"""
     default_str = "Y/n" if default else "y/N"
     response = input(f"{message} ({default_str}): ").strip().lower()
     
@@ -202,9 +192,7 @@ def confirm(message, default=False):
     
     return response in ['y', 'yes']
 
-
 def select_option(message, options):
-    """Let user select from options"""
     print(f"\n{message}")
     for i, option in enumerate(options, 1):
         print(f"  {i}. {option}")
@@ -223,9 +211,7 @@ def select_option(message, options):
             print_error("\nCancelled by user.")
             sys.exit(1)
 
-
 def format_duration(seconds):
-    """Format duration in human-readable format"""
     if seconds < 60:
         return f"{seconds}s"
     elif seconds < 3600:
@@ -236,21 +222,12 @@ def format_duration(seconds):
         minutes = (seconds % 3600) // 60
         return f"{hours}h {minutes}m"
 
-
 def truncate_string(text, max_length=80):
-    """Truncate string to max length"""
     if len(text) <= max_length:
         return text
     return text[:max_length-3] + "..."
 
 
 if __name__ == "__main__":
-    # Test utilities
     print_header("Testing Common Utilities")
-    print_success("Success message")
-    print_error("Error message")
-    print_warning("Warning message")
-    print_info("Info message")
     print(f"\nProject root: {get_project_root()}")
-    print(f"Timestamp: {get_timestamp()}")
-    print(f"Date: {get_date()}")

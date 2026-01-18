@@ -28,11 +28,7 @@ if sys.platform == 'win32':
         pass
 
 
-def get_project_root() -> Path:
-    """Get the project root directory."""
-    # Assuming this file is in tools/intelligence/judge/scorer.py
-    # Root is ../../../
-    return Path(__file__).resolve().parent.parent.parent.parent
+from agentic_sdlc.core.utils.common import get_project_root
 
 
 def get_scores_path() -> Path:

@@ -13,14 +13,7 @@ from datetime import datetime
 from typing import List, Dict, Tuple
 
 
-def get_project_root() -> Path:
-    """Get project root directory."""
-    current = Path(__file__).resolve()
-    while current.parent != current:
-        if (current / ".agent").exists():
-            return current
-        current = current.parent
-    return Path.cwd()
+from agentic_sdlc.core.utils.common import get_project_root
 
 
 def scan_workflows(workflows_dir: Path) -> List[Path]:
