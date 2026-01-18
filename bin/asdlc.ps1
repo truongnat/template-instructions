@@ -8,4 +8,4 @@ if (Test-Path "$Root\.venv\Scripts\python.exe") {
     $Python = "python"
 }
 
-& $Python "$Root\tools\core\cli\main.py" @args
+& $Python -m agentic_sdlc.cli @args

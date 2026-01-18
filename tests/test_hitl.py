@@ -13,10 +13,7 @@ import shutil
 from pathlib import Path
 from unittest.mock import patch, MagicMock
 
-# Add tools to path
-# This is required because the project structure relies on 'tools' being in the path
-# relative to the execution context.
-sys.path.insert(0, str(Path(__file__).parent.parent))
+# imports should work via conftest path setup
 
 from agentic_sdlc.intelligence.hitl.hitl_manager import HITLManager, ApprovalGate, ApprovalStatus, ApprovalRequest
 

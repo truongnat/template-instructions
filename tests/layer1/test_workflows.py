@@ -3,7 +3,7 @@ import pytest
 import yaml
 from pathlib import Path
 
-WORKFLOWS_DIR = Path(".agent/workflows")
+WORKFLOWS_DIR = Path("agentic_sdlc/defaults/workflows")
 
 def test_workflows_directory_exists():
     assert WORKFLOWS_DIR.exists()

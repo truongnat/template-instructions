@@ -1,10 +1,10 @@
 [build-system]
-requires = ["hatchling"]
-build-backend = "hatchling.build"
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "agentic-sdlc"
-version = "1.0.0"
+version = "2.1.0"
 description = "AI-powered SDLC framework with self-learning brain, automated workflows, and intelligent knowledge management"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -12,7 +12,7 @@ license = {text = "MIT"}
 authors = [
     {name = "Dao Quang Truong", email = "truongnat@gmail.com"}
 ]
-keywords = ["ai", "sdlc", "workflow", "automation", "agent", "brain", "knowledge-management"]
+keywords = ["ai", "sdlc", "workflow", "automation", "agent", "brain", "knowledge-management", "kit", "sdk"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
@@ -35,11 +35,16 @@ dependencies = [
     "openai>=1.0.0",
     "anthropic>=0.7.0",
     "streamlit>=1.28.0",
+    "PyYAML>=6.0",
+    "dspy>=2.1.0",
+    "docker>=6.1.0",
+    "googlesearch-python>=1.2.0"
 ]
 
 [project.optional-dependencies]
 dev = [
     "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
     "black>=23.0.0",
     "ruff>=0.1.0",
     "mypy>=1.5.0",
@@ -52,11 +57,15 @@ Repository = "https://github.com/truongnat/agentic-sdlc"
 Issues = "https://github.com/truongnat/agentic-sdlc/issues"
 
 [project.scripts]
+agentic = "agentic_sdlc.cli:main"
 agentic-sdlc = "agentic_sdlc.cli:main"
 asdlc = "agentic_sdlc.cli:main"
 
-[tool.hatch.build.targets.wheel]
-packages = ["agentic_sdlc"]
+[tool.setuptools.packages.find]
+include = ["agentic_sdlc", "agentic_sdlc.*"]
+
+[tool.setuptools.package-data]
+agentic_sdlc = ["defaults/**/*", "requirements_tools.txt"]
 
 [tool.black]
 line-length = 100

@@ -11,8 +11,7 @@ import sys
 from unittest.mock import patch, MagicMock
 from pathlib import Path
 
-# Add tools to path
-sys.path.insert(0, str(Path(__file__).parent.parent))
+# imports should work via conftest path setup
 
 # Mock neo4j driver before importing module
 sys.modules['neo4j'] = MagicMock()

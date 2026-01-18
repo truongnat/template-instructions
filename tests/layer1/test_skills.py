@@ -3,7 +3,7 @@ import pytest
 import os
 from pathlib import Path
 
-SKILLS_DIR = Path(".agent/skills")
+SKILLS_DIR = Path("agentic_sdlc/defaults/skills")
 
 def test_skills_directory_exists():
     assert SKILLS_DIR.exists()

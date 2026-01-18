@@ -20,8 +20,8 @@ def project_root():
 
 @pytest.fixture
 def agent_dir(project_root):
-    """Return .agent directory path."""
-    return project_root / ".agent"
+    """Return defaults directory path."""
+    return project_root / "agentic_sdlc" / "defaults"
 
 
 @pytest.fixture

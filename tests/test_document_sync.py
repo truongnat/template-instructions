@@ -1,8 +1,3 @@
-"""
-Unit tests for Neo4j Document Sync functionality.
-Tests document parsing, metadata extraction, and sync operations.
-"""
-
 import pytest
 import sys
 from pathlib import Path
@@ -12,21 +7,14 @@ from datetime import datetime
 # Add project root to path
 PROJECT_ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
-sys.path.insert(0, str(PROJECT_ROOT / "tools"))
 
 # Import after path setup
 try:
-    from agentic_sdlc.knowledge_graph.document_sync import DocumentSyncNeo4j, find_documents, DOCUMENT_TYPES
+    from agentic_sdlc.intelligence.knowledge_graph.document_sync import DocumentSyncNeo4j, find_documents, DOCUMENT_TYPES
 except ImportError:
-    try:
-        # Alternate import path
-        import sys
-        sys.path.insert(0, str(PROJECT_ROOT / "tools" / "knowledge_graph"))
-        from document_sync import DocumentSyncNeo4j, find_documents, DOCUMENT_TYPES
-    except ImportError:
-        DocumentSyncNeo4j = None
-        find_documents = None
-        DOCUMENT_TYPES = {}
+    DocumentSyncNeo4j = None
+    find_documents = None
+    DOCUMENT_TYPES = {}
 
 
 class TestDocumentParsing:
@@ -241,7 +229,3 @@ class TestNeo4jIntegration:
             assert 'reports' in stats
         finally:
             sync.close()
-
-
-if __name__ == "__main__":
-    pytest.main([__file__, "-v"])

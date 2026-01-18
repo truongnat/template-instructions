@@ -11,4 +11,5 @@ else
     PYTHON="python3"
 fi
 
-$PYTHON "$ROOT_DIR/tools/core/cli/main.py" "$@"
+# Run via module
+$PYTHON -m agentic_sdlc.cli "$@"

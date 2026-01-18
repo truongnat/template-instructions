@@ -1,8 +1,3 @@
-#!/usr/bin/env python3
-"""
-Tests for tools/infrastructure/workflows/emergency.py
-Emergency incident response workflow tests
-"""
 
 import sys
 import pytest
@@ -16,7 +11,7 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 # Helper to verify file exists
 def test_emergency_file_exists():
-    path = PROJECT_ROOT / "tools/infrastructure/workflows/emergency.py"
+    path = PROJECT_ROOT / "agentic_sdlc/infrastructure/workflows/emergency.py"
     assert path.exists()
 
 class TestEmergencySeverityLevels:
@@ -52,8 +47,6 @@ class TestEmergencySeverityLevels:
         
         # P0 should have fastest response time
         p0_time = SEVERITY_LEVELS['P0']['response_time']
-        p1_time = SEVERITY_LEVELS['P1']['response_time']
-        
         assert '15 min' in p0_time or '15 minute' in p0_time
 
 
@@ -105,9 +98,7 @@ class TestEmergencyArgParser:
     """Tests for emergency workflow command line arguments"""
     
     def test_argparser_requires_issue(self):
-        """Test that --issue is required"""
-        # We can't easily test argparse without mocking sys.argv and catching SystemExit
-        # The original test logic was flaky. Let's just test main import works.
+        """Test that main import works"""
         from agentic_sdlc.infrastructure.workflows.emergency import main
         assert callable(main)
     
@@ -123,7 +114,7 @@ class TestEmergencyIntegration:
     
     def test_emergency_py_exists(self):
         """Test that emergency.py exists"""
-        emergency_path = PROJECT_ROOT / "tools/infrastructure/workflows/emergency.py"
+        emergency_path = PROJECT_ROOT / "agentic_sdlc/infrastructure/workflows/emergency.py"
         assert emergency_path.exists()
     
     def test_emergency_py_is_executable(self):
@@ -132,7 +123,3 @@ class TestEmergencyIntegration:
             from agentic_sdlc.infrastructure.workflows.emergency import IncidentResponse, SEVERITY_LEVELS, main
         except ImportError as e:
             pytest.fail(f"Failed to import emergency module: {e}")
-
-
-if __name__ == '__main__':
-    pytest.main([__file__, '-v'])
