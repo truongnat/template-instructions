@@ -105,11 +105,24 @@ def main():
     init_parser.add_argument("--force", action="store_true", help="Overwrite existing configuration")
     init_parser.add_argument("--template", type=str, help="Start from a template (e.g., todo-app)")
     
+    # Demand command
+    demand_parser = subparsers.add_parser("demand", help="Execute a declarative task")
+    demand_parser.add_argument("name", nargs="?", help="Name of the demand to run")
+    demand_parser.add_argument("--list", action="store_true", help="List available demands")
+    
     # Check for known commands before delegating
     args, unknown = parser.parse_known_args()
     
     if args.command == "init":
         init_project(args)
+        return
+
+    if args.command == "demand":
+        from agentic_sdlc.core.brain.demand_runner import run_demand, list_demands
+        if args.list or not args.name:
+            list_demands()
+        else:
+            run_demand(args.name)
         return
 
     # Delegate to Brain CLI for everything else
