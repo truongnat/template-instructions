@@ -9,7 +9,7 @@ Comprehensive system health check.
 
 **Usage:**
 ```bash
-python tools/validation/health-check.py
+python agentic_sdlc/validation/health-check.py
 ```
 
 **Checks:**
@@ -49,5 +49,5 @@ pip install pyyaml
 
 ## See Also
 
-- **Tools Overview:** `tools/README.md`
+- **Tools Overview:** `agentic_sdlc/README.md`
 - **Critical Patterns:** `.kiro/steering/critical-patterns.md`

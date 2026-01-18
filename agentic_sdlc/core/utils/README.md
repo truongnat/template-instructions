@@ -83,4 +83,4 @@ pip install pyyaml
 
 ## See Also
 
-- **Tools Overview:** `tools/README.md`
+- **Tools Overview:** `agentic_sdlc/README.md`

@@ -19,7 +19,7 @@ A high-performance desktop media editor built with **Tauri**, **React**, and **R
 
 - [FFmpeg](https://ffmpeg.org/download.html) must be installed and added to your system PATH.
 - [Bun](https://bun.sh/) or Node.js
-- [Rust](https://www.rust-lang.org/tools/install) (for development)
+- [Rust](https://www.rust-lang.org/agentic_sdlc/install) (for development)
 
 ### Development
 

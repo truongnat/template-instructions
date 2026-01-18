@@ -16,16 +16,16 @@ List all items of a specific type:
 
 ```bash
 # List all roles
-python tools/agent/manage.py list role
+python agentic_sdlc/agent/manage.py list role
 
 # List all workflows
-python tools/agent/manage.py list workflow
+python agentic_sdlc/agent/manage.py list workflow
 
 # List all templates
-python tools/agent/manage.py list template
+python agentic_sdlc/agent/manage.py list template
 
 # List all rules
-python tools/agent/manage.py list rule
+python agentic_sdlc/agent/manage.py list rule
 ```
 
 **Output:**
@@ -47,16 +47,16 @@ Create a new item from template:
 
 ```bash
 # Create a new role
-python tools/agent/manage.py create role architect
+python agentic_sdlc/agent/manage.py create role architect
 
 # Create a new workflow
-python tools/agent/manage.py create workflow deploy
+python agentic_sdlc/agent/manage.py create workflow deploy
 
 # Create a new template
-python tools/agent/manage.py create template api-spec
+python agentic_sdlc/agent/manage.py create template api-spec
 
 # Create a new rule
-python tools/agent/manage.py create rule deployment
+python agentic_sdlc/agent/manage.py create rule deployment
 ```
 
 **What it does:**
@@ -66,7 +66,7 @@ python tools/agent/manage.py create rule deployment
 
 **Example:**
 ```bash
-python tools/agent/manage.py create role architect
+python agentic_sdlc/agent/manage.py create role architect
 # Creates: .agent/roles/role-architect.md
 ```
 
@@ -78,16 +78,16 @@ Validate an item's structure and content:
 
 ```bash
 # Validate a role
-python tools/agent/manage.py validate role dev
+python agentic_sdlc/agent/manage.py validate role dev
 
 # Validate a workflow
-python tools/agent/manage.py validate workflow cycle
+python agentic_sdlc/agent/manage.py validate workflow cycle
 
 # Validate a template
-python tools/agent/manage.py validate template project-plan
+python agentic_sdlc/agent/manage.py validate template project-plan
 
 # Validate a rule
-python tools/agent/manage.py validate rule global
+python agentic_sdlc/agent/manage.py validate rule global
 ```
 
 **Checks:**
@@ -118,16 +118,16 @@ Display information about an item:
 
 ```bash
 # Show role info
-python tools/agent/manage.py info role pm
+python agentic_sdlc/agent/manage.py info role pm
 
 # Show workflow info
-python tools/agent/manage.py info workflow cycle
+python agentic_sdlc/agent/manage.py info workflow cycle
 
 # Show template info
-python tools/agent/manage.py info template project-plan
+python agentic_sdlc/agent/manage.py info template project-plan
 
 # Show rule info
-python tools/agent/manage.py info rule global
+python agentic_sdlc/agent/manage.py info rule global
 ```
 
 **Output:**
@@ -165,7 +165,7 @@ Preview:
 
 **Example:**
 ```bash
-python tools/agent/manage.py create role architect
+python agentic_sdlc/agent/manage.py create role architect
 ```
 
 ---
@@ -185,7 +185,7 @@ python tools/agent/manage.py create role architect
 
 **Example:**
 ```bash
-python tools/agent/manage.py create workflow deploy
+python agentic_sdlc/agent/manage.py create workflow deploy
 ```
 
 ---
@@ -203,7 +203,7 @@ python tools/agent/manage.py create workflow deploy
 
 **Example:**
 ```bash
-python tools/agent/manage.py create template api-spec
+python agentic_sdlc/agent/manage.py create template api-spec
 ```
 
 ---
@@ -222,7 +222,7 @@ python tools/agent/manage.py create template api-spec
 
 **Example:**
 ```bash
-python tools/agent/manage.py create rule deployment
+python agentic_sdlc/agent/manage.py create rule deployment
 ```
 
 ---
@@ -236,10 +236,10 @@ Add to `package.json`:
 ```json
 {
   "scripts": {
-    "agent:list": "python tools/agent/manage.py list",
-    "agent:create": "python tools/agent/manage.py create",
-    "agent:validate": "python tools/agent/manage.py validate",
-    "agent:info": "python tools/agent/manage.py info"
+    "agent:list": "python agentic_sdlc/agent/manage.py list",
+    "agent:create": "python agentic_sdlc/agent/manage.py create",
+    "agent:validate": "python agentic_sdlc/agent/manage.py validate",
+    "agent:info": "python agentic_sdlc/agent/manage.py info"
   }
 }
 ```
@@ -298,24 +298,24 @@ Create workflow commands:
 
 ```bash
 # Create new role
-python tools/agent/manage.py create role architect
+python agentic_sdlc/agent/manage.py create role architect
 
 # Validate it
-python tools/agent/manage.py validate role architect
+python agentic_sdlc/agent/manage.py validate role architect
 
 # Show info
-python tools/agent/manage.py info role architect
+python agentic_sdlc/agent/manage.py info role architect
 ```
 
 ### Audit All Roles
 
 ```bash
 # List all roles
-python tools/agent/manage.py list role
+python agentic_sdlc/agent/manage.py list role
 
 # Validate each one
 for role in brain pm dev devops; do
-  python tools/agent/manage.py validate role $role
+  python agentic_sdlc/agent/manage.py validate role $role
 done
 ```
 
@@ -323,14 +323,14 @@ done
 
 ```bash
 # Create related workflows
-python tools/agent/manage.py create workflow deploy
-python tools/agent/manage.py create workflow rollback
-python tools/agent/manage.py create workflow monitor
+python agentic_sdlc/agent/manage.py create workflow deploy
+python agentic_sdlc/agent/manage.py create workflow rollback
+python agentic_sdlc/agent/manage.py create workflow monitor
 
 # Validate all
-python tools/agent/manage.py validate workflow deploy
-python tools/agent/manage.py validate workflow rollback
-python tools/agent/manage.py validate workflow monitor
+python agentic_sdlc/agent/manage.py validate workflow deploy
+python agentic_sdlc/agent/manage.py validate workflow rollback
+python agentic_sdlc/agent/manage.py validate workflow monitor
 ```
 
 ---
@@ -358,9 +358,9 @@ pip install pyyaml  # For future YAML frontmatter support
 ## See Also
 
 - **Agent Directory:** `.agent/README.md`
-- **Tools Overview:** `tools/README.md`
-- **KB Management:** `tools/kb/README.md`
-- **Validation:** `tools/validation/README.md`
+- **Tools Overview:** `agentic_sdlc/README.md`
+- **KB Management:** `agentic_sdlc/kb/README.md`
+- **Validation:** `agentic_sdlc/validation/README.md`
 
 ---
 

@@ -1,6 +1,6 @@
 # Observer - Rule Compliance Monitor
 
-**Location:** `tools/intelligence/observer/`
+**Location:** `agentic_sdlc/intelligence/observer/`
 
 ## Purpose
 
@@ -21,19 +21,19 @@ Monitor all agent actions in real-time and check compliance with rules defined i
 ### Start Observer
 
 ```bash
-python tools/intelligence/observer/observer.py --start
+python agentic_sdlc/intelligence/observer/observer.py --start
 ```
 
 ### Generate Compliance Report
 
 ```bash
-python tools/intelligence/observer/observer.py --report
+python agentic_sdlc/intelligence/observer/observer.py --report
 ```
 
 ### Check Specific Action
 
 ```bash
-python tools/intelligence/observer/observer.py --check-action "create file foo.py"
+python agentic_sdlc/intelligence/observer/observer.py --check-action "create file foo.py"
 ```
 
 ### Programmatic Use

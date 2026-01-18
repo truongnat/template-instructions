@@ -33,9 +33,9 @@ NEO4J_DATABASE=neo4j
 Syncs knowledge base entries with skills and technology extraction.
 
 ```bash
-python tools/neo4j/sync_skills_to_neo4j.py
-python tools/neo4j/sync_skills_to_neo4j.py --dry-run
-python tools/neo4j/sync_skills_to_neo4j.py --stats-only
+python agentic_sdlc/neo4j/sync_skills_to_neo4j.py
+python agentic_sdlc/neo4j/sync_skills_to_neo4j.py --dry-run
+python agentic_sdlc/neo4j/sync_skills_to_neo4j.py --stats-only
 ```
 
 ### 2. document_sync.py
@@ -43,19 +43,19 @@ Syncs ALL document types to Neo4j.
 
 ```bash
 # Sync all documents
-python tools/neo4j/document_sync.py --all
+python agentic_sdlc/neo4j/document_sync.py --all
 
 # Sync specific types
-python tools/neo4j/document_sync.py --type plans
-python tools/neo4j/document_sync.py --type reports
-python tools/neo4j/document_sync.py --type artifacts
-python tools/neo4j/document_sync.py --type workflows
+python agentic_sdlc/neo4j/document_sync.py --type plans
+python agentic_sdlc/neo4j/document_sync.py --type reports
+python agentic_sdlc/neo4j/document_sync.py --type artifacts
+python agentic_sdlc/neo4j/document_sync.py --type workflows
 
 # Preview without syncing
-python tools/neo4j/document_sync.py --dry-run
+python agentic_sdlc/neo4j/document_sync.py --dry-run
 
 # View statistics
-python tools/neo4j/document_sync.py --stats-only
+python agentic_sdlc/neo4j/document_sync.py --stats-only
 ```
 
 **Document Types:**
@@ -71,28 +71,28 @@ Self-learning engine for pattern recognition and recommendations.
 
 ```bash
 # Setup learning schema
-python tools/neo4j/learning_engine.py --setup
+python agentic_sdlc/neo4j/learning_engine.py --setup
 
 # Record error patterns
-python tools/neo4j/learning_engine.py --record-error "TypeError" "Cannot read X of undefined" \
+python agentic_sdlc/neo4j/learning_engine.py --record-error "TypeError" "Cannot read X of undefined" \
     --resolution "Added null check" --approach "defensive_coding"
 
 # Record success patterns
-python tools/neo4j/learning_engine.py --record-success "task-123" \
+python agentic_sdlc/neo4j/learning_engine.py --record-success "task-123" \
     --task-type "auth_feature" --success-approach "JWT with refresh tokens"
 
 # Get recommendations
-python tools/neo4j/learning_engine.py --recommend "implement user authentication"
+python agentic_sdlc/neo4j/learning_engine.py --recommend "implement user authentication"
 
 # Find similar errors
-python tools/neo4j/learning_engine.py --similar-errors "ConnectionError"
+python agentic_sdlc/neo4j/learning_engine.py --similar-errors "ConnectionError"
 
 # Find reasoning paths
-python tools/neo4j/learning_engine.py --reasoning-path "TypeError" "null check"
+python agentic_sdlc/neo4j/learning_engine.py --reasoning-path "TypeError" "null check"
 
 # View statistics
-python tools/neo4j/learning_engine.py --stats
-python tools/neo4j/learning_engine.py --patterns
+python agentic_sdlc/neo4j/learning_engine.py --stats
+python agentic_sdlc/neo4j/learning_engine.py --patterns
 ```
 
 ---
@@ -166,28 +166,28 @@ RETURN path
 ### Before Starting Task
 ```bash
 # Get recommendations
-python tools/neo4j/learning_engine.py --recommend "your task description"
+python agentic_sdlc/neo4j/learning_engine.py --recommend "your task description"
 ```
 
 ### After Bug Fix
 ```bash
 # Record error pattern
-python tools/neo4j/learning_engine.py --record-error "ErrorType" "Error message" \
+python agentic_sdlc/neo4j/learning_engine.py --record-error "ErrorType" "Error message" \
     --resolution "What fixed it" --approach "approach_name"
 ```
 
 ### After Task Completion
 ```bash
 # Record success pattern
-python tools/neo4j/learning_engine.py --record-success "task-id" \
+python agentic_sdlc/neo4j/learning_engine.py --record-success "task-id" \
     --task-type "task_category" --success-approach "what worked"
 ```
 
 ### Weekly Sync
 ```bash
 # Sync all documents
-python tools/neo4j/document_sync.py --all
-python tools/neo4j/sync_skills_to_neo4j.py
+python agentic_sdlc/neo4j/document_sync.py --all
+python agentic_sdlc/neo4j/sync_skills_to_neo4j.py
 ```
 
 ---

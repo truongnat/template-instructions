@@ -45,6 +45,25 @@ def init_project(args):
         return
         
     try:
+        # 0. Template instantiation
+        if args.template:
+            template_source = source_defaults / "projects" / args.template
+            if not template_source.exists():
+                print(f"❌ Template '{args.template}' not found.")
+                print("Available templates:")
+                if (source_defaults / "projects").exists():
+                    for t in (source_defaults / "projects").iterdir():
+                        if t.is_dir():
+                            print(f"  - {t.name}")
+                else:
+                    print("  (No templates found)")
+                return
+            
+            print(f"📦 Copying template: {args.template}...")
+            # Copy template files to CWD, skipping .git
+            shutil.copytree(template_source, cwd, dirs_exist_ok=True, ignore=shutil.ignore_patterns(".git"))
+            print(f"✅ Template loaded")
+
         # 1. Scaffolding .agent
         if target_agent_dir.exists() and args.force:
             shutil.rmtree(target_agent_dir)
@@ -53,7 +72,8 @@ def init_project(args):
             print(f"❌ Error: Default templates not found at {source_defaults}")
             return
 
-        shutil.copytree(source_defaults, target_agent_dir)
+        # Copy defaults (excluding projects dir to save space in user repo)
+        shutil.copytree(source_defaults, target_agent_dir, ignore=shutil.ignore_patterns("projects"))
         print(f"✅ Created .agent directory")
 
         # 2. Creating agentic.yaml
@@ -83,6 +103,7 @@ def main():
     # Init command
     init_parser = subparsers.add_parser("init", help="Initialize project scaffolding")
     init_parser.add_argument("--force", action="store_true", help="Overwrite existing configuration")
+    init_parser.add_argument("--template", type=str, help="Start from a template (e.g., todo-app)")
     
     # Check for known commands before delegating
     args, unknown = parser.parse_known_args()

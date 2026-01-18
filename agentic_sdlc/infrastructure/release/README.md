@@ -14,37 +14,37 @@ Automated changelog generation and version management for the agentic-sdlc proje
 
 ### Preview Changes
 ```bash
-python tools/release/release.py preview
+python agentic_sdlc/release/release.py preview
 ```
 
 ### Generate Changelog
 ```bash
 # Auto-detect version bump
-python tools/release/release.py changelog
+python agentic_sdlc/release/release.py changelog
 
 # Specify sprint number
-python tools/release/release.py changelog --sprint 5
+python agentic_sdlc/release/release.py changelog --sprint 5
 
 # Specific version
-python tools/release/release.py changelog --version 1.2.0
+python agentic_sdlc/release/release.py changelog --version 1.2.0
 ```
 
 ### Bump Version
 ```bash
 # Auto-detect based on commits
-python tools/release/release.py version --auto
+python agentic_sdlc/release/release.py version --auto
 
 # Specific bump type
-python tools/release/release.py version --bump minor
+python agentic_sdlc/release/release.py version --bump minor
 ```
 
 ### Full Release
 ```bash
 # Release with auto-detected version
-python tools/release/release.py release
+python agentic_sdlc/release/release.py release
 
 # Release with git tag
-python tools/release/release.py release --tag --bump minor
+python agentic_sdlc/release/release.py release --tag --bump minor
 ```
 
 ## 📝 Conventional Commits
@@ -120,10 +120,10 @@ No additional configuration required. The tool automatically:
 ### Example: Feature Release
 ```bash
 # 1. Preview what will be released
-python tools/release/release.py preview
+python agentic_sdlc/release/release.py preview
 
 # 2. Create release with changelog and tag
-python tools/release/release.py release --bump minor --tag --sprint 5
+python agentic_sdlc/release/release.py release --bump minor --tag --sprint 5
 
 # 3. Push changes
 git push && git push --tags
@@ -132,7 +132,7 @@ git push && git push --tags
 ### Example: Patch Release
 ```bash
 # Quick patch release
-python tools/release/release.py release --bump patch
+python agentic_sdlc/release/release.py release --bump patch
 git add . && git commit -m "chore: release v1.0.2"
 git push
 ```
@@ -142,6 +142,6 @@ git push
 Run with `--dry-run` to preview changes without applying:
 
 ```bash
-python tools/release/release.py changelog --dry-run
-python tools/release/release.py release --dry-run
+python agentic_sdlc/release/release.py changelog --dry-run
+python agentic_sdlc/release/release.py release --dry-run
 ```

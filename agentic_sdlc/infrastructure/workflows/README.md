@@ -9,7 +9,7 @@ Execute the full task lifecycle: Plan → Work → Review → Compound
 
 **Usage:**
 ```bash
-python tools/workflows/cycle.py --task "Add user avatar upload"
+python agentic_sdlc/workflows/cycle.py --task "Add user avatar upload"
 ```
 
 **Called by:**
@@ -30,7 +30,7 @@ Regular maintenance and cleanup tasks.
 
 **Usage:**
 ```bash
-python tools/workflows/housekeeping.py --sprint 3
+python agentic_sdlc/workflows/housekeeping.py --sprint 3
 ```
 
 **Called by:**
@@ -51,7 +51,7 @@ Handle production emergencies and critical bugs.
 
 **Usage:**
 ```bash
-python tools/workflows/emergency.py --issue "Payment gateway down"
+python agentic_sdlc/workflows/emergency.py --issue "Payment gateway down"
 ```
 
 **Called by:**
@@ -77,11 +77,11 @@ These workflows are called by:
 ## Dependencies
 
 ```bash
-pip install -r tools/requirements.txt
+pip install -r agentic_sdlc/requirements.txt
 ```
 
 ## See Also
 
 - **Workflow Documentation:** `.agent/workflows/`
-- **Tools Overview:** `tools/README.md`
+- **Tools Overview:** `agentic_sdlc/README.md`
 

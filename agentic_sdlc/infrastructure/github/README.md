@@ -22,9 +22,9 @@ This directory contains scripts for integrating GitHub with the Agentic SDLC sys
 
 **Usage:**
 ```bash
-python tools/github/sync_github.py
-python tools/github/sync_github.py --sprint 3
-python tools/github/sync_github.py --dry-run
+python agentic_sdlc/github/sync_github.py
+python agentic_sdlc/github/sync_github.py --sprint 3
+python agentic_sdlc/github/sync_github.py --dry-run
 ```
 
 **Options:**
@@ -130,7 +130,7 @@ Add to workflow files:
 # .agent/workflows/pm.md
 ## Step 5: Sync to GitHub
 ```bash
-python tools/github/sync_github.py --sprint {sprint_number}
+python agentic_sdlc/github/sync_github.py --sprint {sprint_number}
 ```
 ```
 
@@ -138,13 +138,13 @@ python tools/github/sync_github.py --sprint {sprint_number}
 
 ```bash
 # Sync current sprint
-python tools/github/sync_github.py
+python agentic_sdlc/github/sync_github.py
 
 # Sync specific sprint
-python tools/github/sync_github.py --sprint 3
+python agentic_sdlc/github/sync_github.py --sprint 3
 
 # Preview changes
-python tools/github/sync_github.py --dry-run
+python agentic_sdlc/github/sync_github.py --dry-run
 ```
 
 ## Examples
@@ -152,7 +152,7 @@ python tools/github/sync_github.py --dry-run
 ### Example 1: Sync Sprint 3
 
 ```bash
-$ python tools/github/sync_github.py --sprint 3
+$ python agentic_sdlc/github/sync_github.py --sprint 3
 
 🔄 Syncing Sprint 3 to GitHub...
 
@@ -178,7 +178,7 @@ $ python tools/github/sync_github.py --sprint 3
 ### Example 2: Dry Run
 
 ```bash
-$ python tools/github/sync_github.py --dry-run
+$ python agentic_sdlc/github/sync_github.py --dry-run
 
 🔍 DRY RUN - No changes will be made
 
@@ -204,7 +204,7 @@ pip install PyGithub python-dotenv
 
 Or install from requirements:
 ```bash
-pip install -r tools/requirements.txt
+pip install -r agentic_sdlc/requirements.txt
 ```
 
 ## Error Handling
@@ -262,7 +262,7 @@ Setup webhooks to trigger syncs:
 @app.route('/webhook', methods=['POST'])
 def handle_webhook():
     # Trigger sync on push
-    subprocess.run(['python', 'tools/github/sync_github.py'])
+    subprocess.run(['python', 'agentic_sdlc/github/sync_github.py'])
 ```
 
 ## Troubleshooting

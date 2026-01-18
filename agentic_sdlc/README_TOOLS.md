@@ -13,14 +13,14 @@ Support scripts for both `bin/` CLI and `.agent/` workflows.
         ┌─────────────────────┼─────────────────────┐
         ▼                     ▼                     ▼
    ┌─────────┐          ┌─────────┐          ┌─────────┐
-   │  bin/   │          │ tools/  │          │ .agent/ │
+   │  bin/   │          │ agentic_sdlc/  │          │ .agent/ │
    │   CLI   │◄─────────│ Scripts │─────────►│Workflows│
    └─────────┘          └─────────┘          └─────────┘
 ```
 
 ## Purpose
 
-The `tools/` directory contains backend support scripts that:
+The `agentic_sdlc/` directory contains backend support scripts that:
 - ✅ Support `bin/` CLI commands
 - ✅ Support `.agent/` workflow automation
 - ✅ Provide integration with external services
@@ -31,7 +31,7 @@ The `tools/` directory contains backend support scripts that:
 ## Directory Structure
 
 ```
-tools/
+agentic_sdlc/
 ├── agent/                    # Agent item management (NEW)
 │   ├── manage.py            # Manage roles, workflows, templates, rules
 │   └── README.md
@@ -106,16 +106,16 @@ tools/
 **Usage:**
 ```bash
 # List all roles
-python tools/agent/manage.py list role
+python agentic_sdlc/agent/manage.py list role
 
 # Create new role
-python tools/agent/manage.py create role architect
+python agentic_sdlc/agent/manage.py create role architect
 
 # Validate workflow
-python tools/agent/manage.py validate workflow cycle
+python agentic_sdlc/agent/manage.py validate workflow cycle
 
 # Show info
-python tools/agent/manage.py info template project-plan
+python agentic_sdlc/agent/manage.py info template project-plan
 ```
 
 **Documentation:** [agent/README.md](agent/README.md)
@@ -138,8 +138,8 @@ python tools/agent/manage.py info template project-plan
 
 **Usage:**
 ```bash
-python tools/workflows/cycle.py --task "Add user avatar"
-python tools/workflows/housekeeping.py --sprint 3
+python agentic_sdlc/workflows/cycle.py --task "Add user avatar"
+python agentic_sdlc/workflows/housekeeping.py --sprint 3
 ```
 
 ---
@@ -160,9 +160,9 @@ python tools/workflows/housekeeping.py --sprint 3
 
 **Usage:**
 ```bash
-python tools/kb/search.py --query "authentication"
-python tools/kb/update-index.py
-python tools/kb/stats.py
+python agentic_sdlc/kb/search.py --query "authentication"
+python agentic_sdlc/kb/update-index.py
+python agentic_sdlc/kb/stats.py
 ```
 
 ---
@@ -183,7 +183,7 @@ python tools/kb/stats.py
 
 **Usage:**
 ```bash
-python tools/validation/health-check.py
+python agentic_sdlc/validation/health-check.py
 ```
 
 ---
@@ -226,7 +226,7 @@ from tools.utils.artifact_manager import create_artifact
 
 **Usage:**
 ```bash
-python tools/github/sync_github.py --sprint 3
+python agentic_sdlc/github/sync_github.py --sprint 3
 ```
 
 **Documentation:** [github/README.md](github/README.md)
@@ -248,8 +248,8 @@ python tools/github/sync_github.py --sprint 3
 
 **Usage:**
 ```bash
-python tools/neo4j/sync_skills_to_neo4j.py
-python tools/neo4j/query_skills_neo4j.py --all-skills
+python agentic_sdlc/neo4j/sync_skills_to_neo4j.py
+python agentic_sdlc/neo4j/query_skills_neo4j.py --all-skills
 ```
 
 **Documentation:** [neo4j/README.md](neo4j/README.md)
@@ -272,7 +272,7 @@ python tools/neo4j/query_skills_neo4j.py --all-skills
 
 **Usage:**
 ```bash
-python tools/research/research_agent.py --task "authentication" --type feature
+python agentic_sdlc/research/research_agent.py --task "authentication" --type feature
 ```
 
 **Documentation:** [research/README.md](research/README.md)
@@ -293,7 +293,7 @@ python tools/research/research_agent.py --task "authentication" --type feature
 
 **Usage:**
 ```bash
-bash tools/setup/setup_research_hooks.sh
+bash agentic_sdlc/setup/setup_research_hooks.sh
 .\tools\setup\standardize_filenames.ps1
 ```
 
@@ -307,7 +307,7 @@ bash tools/setup/setup_research_hooks.sh
 
 ```bash
 # Install all tool dependencies
-pip install -r tools/requirements.txt
+pip install -r agentic_sdlc/requirements.txt
 ```
 
 ### Install Specific Tool Dependencies
@@ -336,7 +336,7 @@ source venv/bin/activate
 venv\Scripts\activate
 
 # Install dependencies
-pip install -r tools/requirements.txt
+pip install -r agentic_sdlc/requirements.txt
 ```
 
 ## Configuration
@@ -378,7 +378,7 @@ Each tool may have additional configuration:
 import { execSync } from 'child_process';
 
 export async function syncGitHub(sprint) {
-  execSync(`python tools/github/sync_github.py --sprint ${sprint}`);
+  execSync(`python agentic_sdlc/github/sync_github.py --sprint ${sprint}`);
 }
 ```
 
@@ -389,12 +389,12 @@ export async function syncGitHub(sprint) {
 
 ### Step 0: Research
 ```bash
-python tools/research/research_agent.py --task "${task}" --type general
+python agentic_sdlc/research/research_agent.py --task "${task}" --type general
 ```
 
 ### Step 5: Sync to GitHub
 ```bash
-python tools/github/sync_github.py --sprint ${sprint_number}
+python agentic_sdlc/github/sync_github.py --sprint ${sprint_number}
 ```
 ```
 
@@ -407,7 +407,7 @@ python tools/github/sync_github.py --sprint ${sprint_number}
   "condition": "message contains '@PM'",
   "action": {
     "type": "command",
-    "command": "python tools/research/research_agent.py --task \"${message}\""
+    "command": "python agentic_sdlc/research/research_agent.py --task \"${message}\""
   }
 }
 ```
@@ -420,8 +420,8 @@ python tools/github/sync_github.py --sprint ${sprint_number}
 # User runs KB CLI
 ./bin/kb/kb compound search "authentication"
 
-# KB CLI calls tools/neo4j/
-# → tools/neo4j/query_skills_neo4j.py
+# KB CLI calls agentic_sdlc/neo4j/
+# → agentic_sdlc/neo4j/query_skills_neo4j.py
 # → Returns results to CLI
 # → CLI displays to user
 ```
@@ -431,8 +431,8 @@ python tools/github/sync_github.py --sprint ${sprint_number}
 ```bash
 # User: @PM Build todo app
 
-# PM workflow calls tools/research/
-# → tools/research/research_agent.py --task "todo app"
+# PM workflow calls agentic_sdlc/research/
+# → agentic_sdlc/research/research_agent.py --task "todo app"
 # → Searches KB, Neo4j, GitHub
 # → Returns research report
 # → PM uses findings in project plan
@@ -443,8 +443,8 @@ python tools/github/sync_github.py --sprint ${sprint_number}
 ```bash
 # REPORTER workflow completes
 
-# Workflow calls tools/github/
-# → tools/github/sync_github.py --sprint 3
+# Workflow calls agentic_sdlc/github/
+# → agentic_sdlc/github/sync_github.py --sprint 3
 # → Creates GitHub issues
 # → Applies labels
 # → Links artifacts
@@ -454,11 +454,11 @@ python tools/github/sync_github.py --sprint ${sprint_number}
 
 ### Adding New Tools
 
-1. Create subdirectory: `tools/newtool/`
-2. Add scripts: `tools/newtool/script.py`
-3. Add README: `tools/newtool/README.md`
-4. Add requirements: `tools/newtool/requirements.txt`
-5. Update master requirements: `tools/requirements.txt`
+1. Create subdirectory: `agentic_sdlc/newtool/`
+2. Add scripts: `agentic_sdlc/newtool/script.py`
+3. Add README: `agentic_sdlc/newtool/README.md`
+4. Add requirements: `agentic_sdlc/newtool/requirements.txt`
+5. Update master requirements: `agentic_sdlc/requirements.txt`
 6. Update this README
 
 ### Tool Template
@@ -507,16 +507,16 @@ if __name__ == '__main__':
 
 ```bash
 # GitHub integration
-python tools/github/sync_github.py --dry-run
+python agentic_sdlc/github/sync_github.py --dry-run
 
 # Neo4j integration
-python tools/neo4j/test_neo4j_connection.py
+python agentic_sdlc/neo4j/test_neo4j_connection.py
 
 # Research agent
-python tools/research/research_agent.py --task "test" --type general
+python agentic_sdlc/research/research_agent.py --task "test" --type general
 
 # Setup utilities
-bash tools/setup/setup_research_hooks.sh
+bash agentic_sdlc/setup/setup_research_hooks.sh
 ```
 
 ### Test Integration
@@ -535,7 +535,7 @@ bash tools/setup/setup_research_hooks.sh
 
 ```bash
 # Ensure dependencies installed
-pip install -r tools/requirements.txt
+pip install -r agentic_sdlc/requirements.txt
 
 # Check Python path
 which python3
@@ -546,8 +546,8 @@ python3 --version
 
 ```bash
 # Make scripts executable (Linux/macOS)
-chmod +x tools/setup/*.sh
-chmod +x tools/research/*.py
+chmod +x agentic_sdlc/setup/*.sh
+chmod +x agentic_sdlc/research/*.py
 ```
 
 ### Configuration Errors
@@ -568,7 +568,7 @@ cat .env | grep NEO4J_URI
 python -c "from github import Github; g = Github('token'); print(g.get_user().login)"
 
 # Test Neo4j connection
-python tools/neo4j/test_neo4j_connection.py
+python agentic_sdlc/neo4j/test_neo4j_connection.py
 ```
 
 ## Performance

@@ -21,7 +21,7 @@ This directory contains setup scripts that help configure the TeamLifecycle work
 
 **Usage:**
 ```bash
-bash tools/setup/setup_research_hooks.sh
+bash agentic_sdlc/setup/setup_research_hooks.sh
 ```
 
 **What it does:**
@@ -48,7 +48,7 @@ bash tools/setup/setup_research_hooks.sh
   "condition": "message contains '@PM'",
   "action": {
     "type": "command",
-    "command": "python tools/research/research_agent.py --task \"${message}\" --type general"
+    "command": "python agentic_sdlc/research/research_agent.py --task \"${message}\" --type general"
   }
 }
 ```
@@ -154,10 +154,10 @@ node bin/agentic-sdlc/cli.js ide all
 
 ```bash
 # 1. Setup hooks
-bash tools/setup/setup_research_hooks.sh
+bash agentic_sdlc/setup/setup_research_hooks.sh
 
 # 2. Test research agent
-python tools/research/research_agent.py --task "test" --type general
+python agentic_sdlc/research/research_agent.py --task "test" --type general
 
 # 3. Verify hooks
 ls -la .kiro/hooks/
@@ -202,12 +202,12 @@ BRAVE_API_KEY=your_key
 
 **Make scripts executable:**
 ```bash
-chmod +x tools/setup/setup_research_hooks.sh
+chmod +x agentic_sdlc/setup/setup_research_hooks.sh
 ```
 
 **Run scripts:**
 ```bash
-bash tools/setup/setup_research_hooks.sh
+bash agentic_sdlc/setup/setup_research_hooks.sh
 ```
 
 ### Windows
@@ -224,14 +224,14 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 
 **Git Bash:**
 ```bash
-bash tools/setup/setup_research_hooks.sh
+bash agentic_sdlc/setup/setup_research_hooks.sh
 ```
 
 ## Troubleshooting
 
 ### Permission Denied (Linux/macOS)
 ```bash
-chmod +x tools/setup/setup_research_hooks.sh
+chmod +x agentic_sdlc/setup/setup_research_hooks.sh
 ```
 
 ### PowerShell Script Won't Run
@@ -251,10 +251,10 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 which python3
 
 # Check script exists
-ls tools/research/research_agent.py
+ls agentic_sdlc/research/research_agent.py
 
 # Test directly
-python tools/research/research_agent.py --help
+python agentic_sdlc/research/research_agent.py --help
 ```
 
 ## Adding New Setup Scripts
@@ -311,7 +311,7 @@ import { execSync } from 'child_process';
 
 export async function install() {
   // Run setup scripts
-  execSync('bash tools/setup/setup_research_hooks.sh');
+  execSync('bash agentic_sdlc/setup/setup_research_hooks.sh');
 }
 ```
 
@@ -321,7 +321,7 @@ export async function install() {
 
 ### Step 0: Setup
 ```bash
-bash tools/setup/setup_research_hooks.sh
+bash agentic_sdlc/setup/setup_research_hooks.sh
 ```
 ```
 

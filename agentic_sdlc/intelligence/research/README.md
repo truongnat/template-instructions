@@ -17,7 +17,7 @@ Research Agent System là một hệ thống tự động tìm kiếm và phân 
 
 ## 🎯 Components
 
-### 1. Core Research Agent (`tools/research/research_agent.py`)
+### 1. Core Research Agent (`agentic_sdlc/research/research_agent.py`)
 
 **Chức năng chính:**
 - Search Knowledge Base (file system)
@@ -29,16 +29,16 @@ Research Agent System là một hệ thống tự động tìm kiếm và phân 
 **Usage:**
 ```bash
 # General task
-python tools/research/research_agent.py --task "Build authentication system"
+python agentic_sdlc/research/research_agent.py --task "Build authentication system"
 
 # Bug research
-python tools/research/research_agent.py --bug "Login fails with OAuth"
+python agentic_sdlc/research/research_agent.py --bug "Login fails with OAuth"
 
 # Feature research
-python tools/research/research_agent.py --feature "Real-time notifications"
+python agentic_sdlc/research/research_agent.py --feature "Real-time notifications"
 
 # With specific type
-python tools/research/research_agent.py --task "API design" --type architecture
+python agentic_sdlc/research/research_agent.py --task "API design" --type architecture
 ```
 
 **Output:**
@@ -46,7 +46,7 @@ python tools/research/research_agent.py --task "API design" --type architecture
 - JSON report: `docs/research-reports/research-YYYYMMDD-HHMMSS.json`
 - Markdown summary: `docs/research-reports/research-YYYYMMDD-HHMMSS.md`
 
-### 2. MCP Integration (`tools/research/research_mcp.py`)
+### 2. MCP Integration (`agentic_sdlc/research/research_mcp.py`)
 
 **Extends research_agent.py với MCP tools:**
 - Web search placeholder
@@ -56,10 +56,10 @@ python tools/research/research_agent.py --task "API design" --type architecture
 
 **Usage:**
 ```bash
-python tools/research/research_mcp.py --task "Build authentication" --type feature
+python agentic_sdlc/research/research_mcp.py --task "Build authentication" --type feature
 ```
 
-### 3. Extended MCP (`tools/research/research_mcp_extended.py`)
+### 3. Extended MCP (`agentic_sdlc/research/research_mcp_extended.py`)
 
 **Full MCP integration với real API calls:**
 - ✅ Tavily AI Search API
@@ -79,7 +79,7 @@ GITHUB_TOKEN=your_token
 
 **Usage:**
 ```bash
-python tools/research/research_mcp_extended.py --task "OAuth implementation" --type feature
+python agentic_sdlc/research/research_mcp_extended.py --task "OAuth implementation" --type feature
 ```
 
 ### 4. Workflow Integration
@@ -109,7 +109,7 @@ python tools/research/research_mcp_extended.py --task "OAuth implementation" --t
 
 **Setup:**
 ```bash
-bash tools/setup/setup_research_hooks.sh
+bash agentic_sdlc/setup/setup_research_hooks.sh
 ```
 
 ---
@@ -123,10 +123,10 @@ bash tools/setup/setup_research_hooks.sh
 pip install neo4j requests
 
 # Make scripts executable
-chmod +x tools/research/research_agent.py
-chmod +x tools/research/research_mcp.py
-chmod +x tools/research/research_mcp_extended.py
-chmod +x tools/setup/setup_research_hooks.sh
+chmod +x agentic_sdlc/research/research_agent.py
+chmod +x agentic_sdlc/research/research_mcp.py
+chmod +x agentic_sdlc/research/research_mcp_extended.py
+chmod +x agentic_sdlc/setup/setup_research_hooks.sh
 ```
 
 ### 2. Configure Environment
@@ -148,14 +148,14 @@ BRAVE_API_KEY=your_brave_key            # Optional
 ### 3. Setup Hooks (Optional)
 
 ```bash
-bash tools/setup/setup_research_hooks.sh
+bash agentic_sdlc/setup/setup_research_hooks.sh
 ```
 
 ### 4. Test Research Agent
 
 ```bash
 # Basic test
-python tools/research/research_agent.py --task "test authentication" --type feature
+python agentic_sdlc/research/research_agent.py --task "test authentication" --type feature
 
 # Check output
 ls -la docs/research-reports/
@@ -173,7 +173,7 @@ ls -la docs/research-reports/
 1. User provides requirements
 2. **RESEARCH FIRST:**
    ```bash
-   python tools/research/research_agent.py --task "[project description]" --type general
+   python agentic_sdlc/research/research_agent.py --task "[project description]" --type general
    ```
 3. Review research report
 4. Check confidence level
@@ -189,7 +189,7 @@ ls -la docs/research-reports/
 1. Receive feature assignment
 2. **RESEARCH FIRST:**
    ```bash
-   python tools/research/research_agent.py --feature "[feature description]" --type feature
+   python agentic_sdlc/research/research_agent.py --feature "[feature description]" --type feature
    ```
 3. Review similar implementations
 4. Identify proven patterns
@@ -206,7 +206,7 @@ ls -la docs/research-reports/
 1. Bug discovered
 2. **RESEARCH FIRST:**
    ```bash
-   python tools/research/research_agent.py --bug "[bug description]" --type bug
+   python agentic_sdlc/research/research_agent.py --bug "[bug description]" --type bug
    ```
 3. Review similar bugs
 4. Check known solutions
@@ -518,7 +518,7 @@ Solution: Verify API key and quota
 # User: @PM Build a todo app with authentication
 
 # PM runs research:
-python tools/research/research_agent.py --task "todo app with authentication" --type general
+python agentic_sdlc/research/research_agent.py --task "todo app with authentication" --type general
 
 # Output:
 # Confidence: HIGH
@@ -536,7 +536,7 @@ python tools/research/research_agent.py --task "todo app with authentication" --
 # User: @DEV Implement OAuth login
 
 # DEV runs research:
-python tools/research/research_agent.py --feature "OAuth login" --type feature
+python agentic_sdlc/research/research_agent.py --feature "OAuth login" --type feature
 
 # Output:
 # Confidence: HIGH
@@ -554,7 +554,7 @@ python tools/research/research_agent.py --feature "OAuth login" --type feature
 # User: @TESTER Login fails with "Token expired" error
 
 # TESTER runs research:
-python tools/research/research_agent.py --bug "Token expired error" --type bug
+python agentic_sdlc/research/research_agent.py --bug "Token expired error" --type bug
 
 # Output:
 # Confidence: HIGH
@@ -592,7 +592,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Run Research
         run: |
-          python tools/research/research_agent.py --task "${{ github.event.pull_request.title }}"
+          python agentic_sdlc/research/research_agent.py --task "${{ github.event.pull_request.title }}"
 ```
 
 ### Slack/Discord Notifications
@@ -609,13 +609,13 @@ def _send_notification(self, results: Dict):
 
 ### Questions?
 - Check: `.agent/workflows/research.md`
-- Review: `tools/research/research_agent.py` comments
+- Review: `agentic_sdlc/research/research_agent.py` comments
 - Ask: @REPORTER for help
 
 ### Issues?
 - Check logs in `docs/research-reports/`
 - Verify API keys in `.env`
-- Test with: `python tools/research/research_agent.py --task "test"`
+- Test with: `python agentic_sdlc/research/research_agent.py --task "test"`
 
 ### Contributions?
 - Add new search sources

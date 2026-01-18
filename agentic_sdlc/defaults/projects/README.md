@@ -22,7 +22,7 @@ agentic-sdlc/                    # ROOT = BRAIN + MONOREPO
 ├── bun.lockb                    # Shared lockfile
 ├── .agent/                      # ✅ Shared AI workflows, KB, roles
 ├── .kiro/                       # ✅ Shared Kiro IDE settings
-├── tools/                       # ✅ Shared tools (Neo4j, research, etc.)
+├── agentic_sdlc/                       # ✅ Shared tools (Neo4j, research, etc.)
 ├── docs/                        # Brain documentation
 │
 └── projects/                    # SUB-PROJECTS (WORKSPACES)
@@ -58,7 +58,7 @@ All projects in this directory **share and use** the Brain system at root:
    - Bug patterns, architecture decisions
    - Security fixes, performance optimizations
 
-3. **Tools** (`tools/`)
+3. **Tools** (`agentic_sdlc/`)
    - Neo4j knowledge graph
    - Research agent
    - All shared utilities
@@ -86,8 +86,8 @@ sync - Sync to Neo4j KB
 #### 3. Access Shared Tools
 ```bash
 # Tools are accessible from root
-python ../../tools/neo4j/sync_skills_to_neo4j.py
-python ../../tools/research/research_agent.py --task "..."
+python ../../agentic_sdlc/neo4j/sync_skills_to_neo4j.py
+python ../../agentic_sdlc/research/research_agent.py --task "..."
 ```
 
 #### 4. Contribute to Knowledge Base
@@ -223,7 +223,7 @@ git commit -m "feat(your-project): add new feature"
 ### Brain Changes (Affects All Projects)
 ```bash
 # From root
-git add .agent/ .kiro/ tools/
+git add .agent/ .kiro/ agentic_sdlc/
 git commit -m "feat(brain): add new workflow"
 ```
 
@@ -239,7 +239,7 @@ ls ../../.agent/  # Should show Brain files
 ### Tools Not Accessible
 ```bash
 # Use relative paths from your project
-python ../../tools/neo4j/sync_skills_to_neo4j.py
+python ../../agentic_sdlc/neo4j/sync_skills_to_neo4j.py
 ```
 
 ### KB Not Syncing
@@ -254,7 +254,7 @@ sync
 - **Brain Overview:** `../.agent/README.md`
 - **Workflows:** `../.agent/workflows/`
 - **Knowledge Base:** `../.agent/knowledge-base/`
-- **Tools:** `../tools/`
+- **Tools:** `../agentic_sdlc/`
 - **Steering:** `../.kiro/steering/`
 
 ---
