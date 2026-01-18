@@ -324,7 +324,7 @@ def main():
     if not all([uri, username, password]):
         print("❌ Error: Neo4j credentials not found in .env file")
         print("   Required: NEO4J_URI, NEO4J_USERNAME, NEO4J_PASSWORD")
-        return
+        sys.exit(1)
     
     # Initialize Neo4j sync
     sync = Neo4jSkillSync(uri, username, password, database)
