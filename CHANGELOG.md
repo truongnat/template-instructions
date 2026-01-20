@@ -6,6 +6,40 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [2.2.0] - 2026-01-20
+
+### Added
+- [Cli] fix command delegation, handle missing dspy, and add asdlc.py wrapper
+- [Brain] add 'Demands' system for declarative tasks
+- [Docs] update landing page to reflect SDK/Kit transformation
+- [Kit] add project templates and update docs
+- [Kit] polish scaffolding and project initialization (Phase 5)
+- [Sdk] expose public API and add examples (Phase 4)
+- [Core] implement dynamic project root detection and config loading (Step 3 of SDK transition)
+- [Cli] implement unified CLI and init command (Step 2 of SDK transition)
+- [Pypi] publish version 2.1.0 to PyPI with setup.py
+
+### Fixed
+- [Landing Page] align roles count and footer info
+- [Landing Page] repair workspaces config and update page metadata
+- [Kg] ensure neo4j sync fails gracefully when credentials are missing
+- integrate missing intelligence components (HITL, State, Self-Healing) into CLI
+
+### Documentation
+- update all documentation to use PyPI installation method
+- [Walkthrough] add installation unification walkthrough for v2.1.0
+
+### Changed
+- [Core] move tools content to agentic_sdlc package structure (Step 1 of SDK transition)
+- [Tests] fix module imports in legacy tests to match new architecture
+
+### Other
+- feat (testing): create tesing for layer
+- feat (core): update workflow and rules
+
+
+---
+
 ## [2.1.0] - 2026-01-17
 
 ### Added
