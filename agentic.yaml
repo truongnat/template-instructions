@@ -1,0 +1,16 @@
+# Agentic SDLC Configuration
+project_name: "agentic-sdlc"
+version: "1.0.0"
+
+# Paths
+paths:
+  docs: "docs"
+  artifacts: "docs/artifacts"
+  sprints: "docs/sprints"
+  kb: ".agent/knowledge-base"
+
+# Features
+features:
+  kb_enabled: true
+  auto_compound: true
+  self_healing: true

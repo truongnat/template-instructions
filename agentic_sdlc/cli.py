@@ -95,42 +95,32 @@ def init_project(args):
 
 def main():
     """Main CLI entry point"""
-    parser = argparse.ArgumentParser(description=f"Agentic SDLC Kit v{__version__}")
-    parser.add_argument("--version", action="version", version=f"%(prog)s {__version__}")
-    
-    subparsers = parser.add_subparsers(dest="command")
-    
-    # Init command
-    init_parser = subparsers.add_parser("init", help="Initialize project scaffolding")
-    init_parser.add_argument("--force", action="store_true", help="Overwrite existing configuration")
-    init_parser.add_argument("--template", type=str, help="Start from a template (e.g., todo-app)")
-    
-    # Demand command
-    demand_parser = subparsers.add_parser("demand", help="Execute a declarative task")
-    demand_parser.add_argument("name", nargs="?", help="Name of the demand to run")
-    demand_parser.add_argument("--list", action="store_true", help="List available demands")
-    
-    # Check for known commands before delegating
-    args, unknown = parser.parse_known_args()
-    
-    if args.command == "init":
-        init_project(args)
-        return
-
-    if args.command == "demand":
-        from agentic_sdlc.core.brain.demand_runner import run_demand, list_demands
-        if args.list or not args.name:
-            list_demands()
-        else:
-            run_demand(args.name)
-        return
-
-    # Delegate to Brain CLI for everything else
-    # We pass the original sys.argv[1:] to brain_main
-    sys.argv = [sys.argv[0]] + unknown
-    if args.command:
-        sys.argv.insert(1, args.command)
+    # Quick check for commands that need specific handling in this entry point
+    if len(sys.argv) > 1:
+        command = sys.argv[1]
         
+        if command == "init":
+            parser = argparse.ArgumentParser(prog="agentic init", description="Initialize project scaffolding")
+            parser.add_argument("--force", action="store_true", help="Overwrite existing configuration")
+            parser.add_argument("--template", type=str, help="Start from a template (e.g., todo-app)")
+            args = parser.parse_args(sys.argv[2:])
+            init_project(args)
+            return
+
+        if command == "demand":
+            parser = argparse.ArgumentParser(prog="agentic demand", description="Execute a declarative task")
+            parser.add_argument("name", nargs="?", help="Name of the demand to run")
+            parser.add_argument("--list", action="store_true", help="List available demands")
+            args = parser.parse_args(sys.argv[2:])
+            
+            from agentic_sdlc.core.brain.demand_runner import run_demand, list_demands
+            if args.list or not args.name:
+                list_demands()
+            else:
+                run_demand(args.name)
+            return
+
+    # For all other commands, delegate to Brain CLI
     brain_main()
 
 if __name__ == "__main__":

@@ -1,3 +1,4 @@
 [console_scripts]
+agentic = agentic_sdlc.cli:main
 agentic-sdlc = agentic_sdlc.cli:main
 asdlc = agentic_sdlc.cli:main
