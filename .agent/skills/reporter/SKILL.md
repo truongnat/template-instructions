@@ -1,5 +1,6 @@
 ---
-inclusion: manual
+name: reporter
+description: reporter role role responsible for its domain tasks. Activate when needed.
 ---
 
 # Reporter (REPORTER) Role

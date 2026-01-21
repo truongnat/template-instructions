@@ -1,5 +1,6 @@
 ---
-inclusion: manual
+name: orchestrator
+description: orchestrator role role responsible for its domain tasks. Activate when needed.
 ---
 
 # Orchestrator (ORCHESTRATOR) Role

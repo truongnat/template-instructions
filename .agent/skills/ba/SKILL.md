@@ -1,5 +1,6 @@
 ---
-inclusion: manual
+name: ba
+description: ba role role responsible for its domain tasks. Activate when needed.
 ---
 
 # @ROLE - Business Analyst (BA)
@@ -51,13 +52,13 @@ Activate when user mentions: `@BA`, "business analyst", "requirements", "user st
 4. **RESEARCH FIRST:** Step 0 is NEVER optional.
 
 ### 0.0 **Team Communication (MANDATORY):**
-   - **Check History:** `python tools/communication/cli.py history --channel general --limit 10`
-   - **Announce Start:** `python tools/communication/cli.py send --channel general --thread "SDLC-Flow" --role BA --content "Starting Requirements Gathering and User Story creation."`
+   - **Check History:** `python asdlc.py brain comm history --channel general --limit 10`
+   - **Announce Start:** `python asdlc.py brain comm send --channel general --thread "SDLC-Flow" --role BA --content "Starting Requirements Gathering and User Story creation."`
 
 ## Key Duties (Execution)
 
 ### 0. **RESEARCH FIRST (MANDATORY):**
-   - Run: `python tools/research/research_agent.py --task "requirements analysis" --type general`
+   - Run: `python asdlc.py brain research --task "requirements analysis" --type general`
    - Analyze industry standards and local Knowledge Base patterns.
 
 ### 1. **Requirements Gathering:**

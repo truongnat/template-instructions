@@ -1,9 +1,6 @@
 ---
-title: "@SECA - Security Analyst"
-version: 2.0.0
-category: role
-priority: critical
-phase: design_review
+name: seca
+description: Security Analyst role responsible for its domain tasks. Activate when needed.
 ---
 
 # Security Analyst (SECA) Role
@@ -225,7 +222,7 @@ kb compound search "OWASP vulnerability"
 # Check docs/guides/ for security standards
 
 # 3. Query Neo4j for security patterns
-python tools/neo4j/query_skills_neo4j.py --search "security"
+python asdlc.py brain research --search "security"
 ```
 
 ### During Review
@@ -270,13 +267,13 @@ kb search "vulnerability-type"
 4. **RESEARCH FIRST:** Step 0 is NEVER optional.
 
 ### 0.0 **Team Communication (MANDATORY):**
-   - **Check History:** `python tools/communication/cli.py history --channel general --limit 10`
-   - **Announce Start:** `python tools/communication/cli.py send --channel general --thread "SDLC-Flow" --role SECA --content "Starting Security Review."`
+   - **Check History:** `python asdlc.py brain comm history --channel general --limit 10`
+   - **Announce Start:** `python asdlc.py brain comm send --channel general --thread "SDLC-Flow" --role SECA --content "Starting Security Review."`
 
 ## Key Duties (Execution)
 
 ### 0. **RESEARCH FIRST (MANDATORY):**
-   - Run: `python tools/research/research_agent.py --task "security review" --type security`
+   - Run: `python asdlc.py brain research --task "security review" --type security`
    - Check OWASP Top 10.
 
 ### 1. **Threat Modeling:**
@@ -291,7 +288,7 @@ kb search "vulnerability-type"
    - Decision: APPROVED / REJECTED.
 
 ### 4. **Self-Learning:**
-   - Run: `python tools/neo4j/sync_skills_to_neo4j.py`arning
+   - Run: `python asdlc.py brain sync`arning
 
 ## ⏭️ Next Steps
 - **If Secure:** Approve for Development.

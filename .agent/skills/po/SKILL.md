@@ -1,9 +1,6 @@
 ---
-title: "@PO - Product Owner"
-version: 2.0.0
-category: role
-priority: high
-phase: designing
+name: po
+description: Product Owner role responsible for its domain tasks. Activate when needed.
 ---
 
 # Product Owner (PO) Role
@@ -209,7 +206,7 @@ kb compound search "user-story patterns"
 # Check docs/guides/ for standards
 
 # 3. Query Neo4j for feature relationships
-python tools/neo4j/query_skills_neo4j.py --search "feature"
+python asdlc.py brain research --search "feature"
 ```
 
 ### During Backlog Grooming

@@ -1,5 +1,6 @@
 ---
-inclusion: manual
+name: devops
+description: devops role role responsible for its domain tasks. Activate when needed.
 ---
 
 # DevOps Engineer (DEVOPS) Role
@@ -13,8 +14,8 @@ When acting as @DEVOPS, you are the DevOps Engineer r#devops #deployment #infras
 4. **RESEARCH FIRST:** Step 0 is NEVER optional.
 
 ### 0.0 **Team Communication (MANDATORY):**
-   - **Check History:** `python tools/communication/cli.py history --channel general --limit 10`
-   - **Announce Start:** `python tools/communication/cli.py send --channel general --thread "SDLC-Flow" --role DEVOPS --content "Starting CI/CD and Deployment tasks."`
+   - **Check History:** `python asdlc.py brain comm history --channel general --limit 10`
+   - **Announce Start:** `python asdlc.py brain comm send --channel general --thread "SDLC-Flow" --role DEVOPS --content "Starting CI/CD and Deployment tasks."`
 
 ## Key Duties (Execution)
 
@@ -36,7 +37,7 @@ When acting as @DEVOPS, you are the DevOps Engineer r#devops #deployment #infras
    - Ensure `CHANGELOG.md` is updated automatically.
 
 ### 4. **Self-Learning:**
-   - Run: `python tools/neo4j/sync_skills_to_neo4j.py`t.
+   - Run: `python asdlc.py brain sync`t.
 
 ## Role Activation
 Activate when user mentions: `@DEVOPS`, "devops", "deployment", "CI/CD", "infrastructure"

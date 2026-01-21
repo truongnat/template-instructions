@@ -1,5 +1,6 @@
 ---
-inclusion: manual
+name: stakeholder
+description: stakeholder role role responsible for its domain tasks. Activate when needed.
 ---
 
 # Stakeholder (STAKEHOLDER) Role

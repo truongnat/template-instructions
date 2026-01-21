@@ -133,6 +133,7 @@ When user types a slash command, you MUST:
 | `/brain` | Read `.agent/workflows/brain.md` and execute via `python asdlc.py brain` |
 | `/explore` | Read `.agent/workflows/explore.md` for deep investigation |
 | `/monitor` | Check system via `python asdlc.py dashboard` |
+| `/skills` | Manage skills via `python asdlc.py brain skills` |
 | Any `/command` | Read `.agent/workflows/[command].md` BEFORE doing anything |
 
 ### Role Activation Matrix
@@ -294,6 +295,41 @@ The brain system consists of 7 specialized sub-agents:
 - **Scorer:** In-depth quality metrics for inputs and outputs.
 - **Task Manager:** Coordination for multi-agent autonomous tasks.
 - **Workflow Validator:** Post-execution compliance checker.
+
+---
+
+## 🛠️ Layer 1: Skills System (OpenSkills Compatible)
+
+The Agentic SDLC uses an OpenSkills-compatible system for agent capabilities.
+
+### 1. Structure
+Skills are stored in `.agent/skills/[skill-name]/SKILL.md`. This directory-based structure allows for bundling:
+- `references/` - Documentation or code examples
+- `scripts/` - Helper scripts
+- `assets/` - Images or other files
+
+### 2. Format
+Each `SKILL.md` uses YAML frontmatter:
+```yaml
+---
+name: skill-name
+description: Brief description of capabilities
+---
+# Instructions
+...
+```
+
+### 3. Usage
+AI agents MUST check `AGENTS.md` before starting any task to discover specialized capabilities.
+
+| Command | Action |
+|---------|--------|
+| `python asdlc.py brain skills list` | List all available skills |
+| `python asdlc.py brain skills read <name>` | Load skill instructions |
+| `python asdlc.py brain skills sync` | Update `AGENTS.md` with new skills |
+
+### 4. Adding New Skills
+New skills MUST be added as directories in `.agent/skills/` containing a `SKILL.md` file with standardized frontmatter.
 
 ---
 
@@ -833,6 +869,11 @@ Located in `.agent/rules/`
 - Inter-agent communication
 - Handoff procedures
 - Escalation rules
+
+### 8. skills.md (NEW)
+- Skills System standards
+- SKILL.md format
+- New skill creation protocol
 
 ---
 

@@ -10,9 +10,11 @@ Usage:
     python tools/core/brain/brain_cli.py <command> [options]
 """
 
+import os
 import sys
 import json
 import argparse
+import subprocess
 from pathlib import Path
 from typing import List, Optional
 
@@ -43,6 +45,9 @@ try:
     from agentic_sdlc.intelligence.task_manager import sprint_manager
     from agentic_sdlc.intelligence.hitl.hitl_manager import HITLManager, ApprovalGate, ApprovalStatus
     from agentic_sdlc.intelligence.self_healing.self_healer import SelfHealingOrchestrator, HealingResult
+    from agentic_sdlc.intelligence.skills import skills_cli
+    from agentic_sdlc.intelligence.research.research_agent import ResearchAgent
+    from agentic_sdlc.infrastructure.communication.chat_manager import ChatManager
 except ImportError as e:
     print(f"❌ Import Error: {e}")
     sys.exit(1)
@@ -484,6 +489,11 @@ def cmd_heal(args):
                 print(f"❌ Error saving fixed code: {e}")
 
 
+def cmd_skills(args):
+    """Delegate to skills_cli.py"""
+    skills_cli.main(args)
+
+
 # --- Main Dispatcher ---
 
 def cmd_help(args):
@@ -510,15 +520,126 @@ def cmd_help(args):
     print("  task                Manage tasks (Kanban)")
     print("  sprint              Manage sprints")
     print("  validate-workflow   Validate workflow execution")
+    print("  skills              Manage skills (OpenSkills compatible)")
     print()
+
+def cmd_workflow(args):
+    """Execute a workflow script."""
+    if not args:
+        print("❌ Error: Must specify workflow name (e.g., housekeeping, cycle)")
+        return
+    
+    workflow_name = args[0]
+    workflow_args = args[1:]
+    
+    # Try to find the workflow script in standard locations
+    project_root = Path(os.getcwd())
+    potential_paths = [
+        project_root / f"agentic_sdlc/infrastructure/workflows/{workflow_name}.py",
+        project_root / f"agentic_sdlc/workflows/{workflow_name}.py",
+    ]
+    
+    for path in potential_paths:
+        if path.exists():
+            cmd = [sys.executable, str(path)] + workflow_args
+            print(f"🚀 Running workflow: {workflow_name}...")
+            try:
+                subprocess.run(cmd, check=True)
+            except subprocess.CalledProcessError as e:
+                print(f"❌ Workflow '{workflow_name}' failed with exit code {e.returncode}")
+                sys.exit(e.returncode)
+            return
+
+    print(f"❌ Error: Workflow '{workflow_name}' script not found.")
+    print("Available workflows:")
+    wf_dir = project_root / "agentic_sdlc/infrastructure/workflows"
+    if wf_dir.exists():
+        for wf in wf_dir.glob("*.py"):
+            print(f"  - {wf.stem}")
+
+def cmd_research(args):
+    """Execute research command."""
+    parser = argparse.ArgumentParser(description="Research Agent")
+    parser.add_argument('--task', dest='task_desc', help='Task description')
+    parser.add_argument('--bug', help='Bug description')
+    parser.add_argument('--feature', help='Feature description')
+    parser.add_argument('--type', choices=['general', 'bug', 'feature', 'architecture', 'security', 'performance'], default='general')
+    
+    parsed_args = parser.parse_args(args)
+    agent = ResearchAgent()
+    try:
+        if parsed_args.bug:
+            task = parsed_args.bug
+            task_type = 'bug'
+        elif parsed_args.feature:
+            task = parsed_args.feature
+            task_type = 'feature'
+        elif parsed_args.task_desc:
+            task = parsed_args.task_desc
+            task_type = parsed_args.type or 'general'
+        else:
+            print("❌ Error: Must specify --task, --bug, or --feature")
+            return
+            
+        agent.research(task, task_type)
+    finally:
+        agent.close()
+
+def cmd_comm(args):
+    """Execute communication command."""
+    parser = argparse.ArgumentParser(description="Communication CLI")
+    subparsers = parser.add_subparsers(dest="comm_cmd")
+    
+    send_parser = subparsers.add_parser("send")
+    send_parser.add_argument("--channel", required=True)
+    send_parser.add_argument("--thread", required=True)
+    send_parser.add_argument("--role", required=True)
+    send_parser.add_argument("--content", required=True)
+    
+    subparsers.add_parser("channels")
+    
+    thread_parser = subparsers.add_parser("threads")
+    thread_parser.add_argument("--channel", required=True)
+    
+    hist_parser = subparsers.add_parser("history")
+    hist_parser.add_argument("--channel", required=True)
+    hist_parser.add_argument("--thread")
+    hist_parser.add_argument("--limit", type=int, default=50)
+    
+    parsed_args = parser.parse_args(args)
+    cm = ChatManager()
+    if parsed_args.comm_cmd == "send":
+        cm.send_message(parsed_args.channel, parsed_args.thread, parsed_args.role, parsed_args.content)
+        print("Message sent.")
+    elif parsed_args.comm_cmd == "channels":
+        channels = cm.list_channels()
+        for c in channels:
+            print(f"- {c['name']}: {c['description']}")
+    elif parsed_args.comm_cmd == "threads":
+        threads = cm.list_threads(parsed_args.channel)
+        for t in threads:
+            print(f"- {t['title']}")
+    elif parsed_args.comm_cmd == "history":
+        msgs = cm.get_history(parsed_args.channel, parsed_args.thread, parsed_args.limit)
+        for m in msgs:
+            print(f"[{m['timestamp']}] {m['role_id']} (in {m['thread_title']}): {m['content']}")
 
 def main():
     if len(sys.argv) < 2:
         cmd_help([])
         return 0
     
-    command = sys.argv[1].lower()
-    args = sys.argv[2:]
+    # Handle 'brain' prefix (recursive to handle things like 'brain brain sync')
+    all_args = sys.argv[1:]
+    while all_args and all_args[0].lower() == "brain":
+        all_args = all_args[1:]
+    
+    if not all_args:
+        cmd_help([])
+        return 0
+        
+    command = all_args[0].lower()
+    args = all_args[1:]
     
     commands = {
         "status": cmd_status,
@@ -540,11 +661,15 @@ def main():
         "task": cmd_task,
         "sprint": cmd_sprint,
         "validate-workflow": cmd_validate_workflow,
+        "skills": cmd_skills,
+        "workflow": cmd_workflow,
+        "research": cmd_research,
+        "comm": cmd_comm,
         "help": cmd_help,
         "--help": cmd_help,
         "-h": cmd_help
     }
-    
+        
     if command in commands:
         try:
             commands[command](args)

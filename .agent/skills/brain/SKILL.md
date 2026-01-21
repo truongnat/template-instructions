@@ -1,9 +1,6 @@
 ---
-title: "@BRAIN - Meta-Level System Controller"
-version: 3.0.0
-category: role
-priority: critical
-level: meta
+name: brain
+description: Level System Controller role responsible for its domain tasks. Activate when needed.
 ---
 
 # @BRAIN - Meta-Level System Controller

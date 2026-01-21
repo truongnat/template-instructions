@@ -4,7 +4,7 @@ description: Process - Orchestrator - Full Automation Workflow
 
 # Orchestrator Workflow
 
-> **Master Controller:** [View @BRAIN Skill](../../skills/role-brain.md)
+> **Master Controller:** [View @BRAIN Skill](../../skills/brain/SKILL.md)
 > 
 > **⚠️ Supervised by @BRAIN.** Report status on each phase transition.
 

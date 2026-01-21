@@ -95,6 +95,10 @@ def init_project(args):
 
 def main():
     """Main CLI entry point"""
+    # If the first argument is 'brain', shift it out (optional prefix)
+    if len(sys.argv) > 1 and sys.argv[1].lower() == "brain":
+        sys.argv.pop(1)
+
     # Quick check for commands that need specific handling in this entry point
     if len(sys.argv) > 1:
         command = sys.argv[1]

@@ -4,7 +4,7 @@ description: Support - BRAIN Meta-Level System Controller
 
 # Brain Workflow
 
-> **Skill Definition:** [View Skill](../../skills/role-brain.md)
+> **Skill Definition:** [View Skill](../../skills/brain/SKILL.md)
 
 ## Identity
 @BRAIN is the **Meta-Level Controller** that supervises ALL workflows in the system.
