@@ -36,11 +36,18 @@ try:
     from agentic_sdlc.intelligence.self_learning.learner import Learner
     from agentic_sdlc.intelligence.artifact_gen.generator import ArtifactGenerator
     from agentic_sdlc.intelligence.monitor.health_monitor import HealthMonitor
-    from agentic_sdlc.intelligence.proxy.router import Router
+    from agentic_sdlc.intelligence.proxy.router import Router as ModelRouter
+    from agentic_sdlc.intelligence.router.workflow_router import WorkflowRouter
+    from agentic_sdlc.intelligence.concurrent_executor import ConcurrentExecutor, DesignPhaseExecutor, ReviewPhaseExecutor
+    from agentic_sdlc.intelligence.synthesizer import OutputSynthesizer
+    from agentic_sdlc.intelligence.feedback_protocol import FeedbackProtocol
+    from agentic_sdlc.intelligence.group_chat import GroupChat
     from agentic_sdlc.intelligence.workflow_validator.parser import parse_workflow
     from agentic_sdlc.intelligence.workflow_validator.tracker import get_tracker
     from agentic_sdlc.intelligence.workflow_validator.validator import ComplianceValidator
     from agentic_sdlc.intelligence.workflow_validator.reporter import ComplianceReporter
+    from agentic_sdlc.intelligence.auto_skill_builder import AutoSkillBuilder
+    from agentic_sdlc.intelligence.swarm_router import SwarmRouter
     from agentic_sdlc.intelligence.task_manager import task_board
     from agentic_sdlc.intelligence.task_manager import sprint_manager
     from agentic_sdlc.intelligence.hitl.hitl_manager import HITLManager, ApprovalGate, ApprovalStatus
@@ -215,17 +222,36 @@ def cmd_gen(args):
         print(f"Error: {e}")
 
 def cmd_route_req(args):
-    """Route a request."""
+    """Route a request with complexity analysis."""
     print("🔀 @BRAIN /route")
     parser = argparse.ArgumentParser(description="Router")
     parser.add_argument("request", help="Request description")
+    parser.add_argument("--workflow", action="store_true", help="Include workflow routing analysis")
     
     parsed_args = parser.parse_args(args)
-    router = Router()
-    result = router.route(parsed_args.request)
-    print(f"Recommended Model: {result['model']}")
-    print(f"Provider: {result['provider']}")
-    print(f"Reason: {result['reason']}")
+    
+    # Model Routing
+    model_router = ModelRouter()
+    model_result = model_router.route(parsed_args.request)
+    
+    print("\n[AI Model Recommendation]")
+    print(f"  Model: {model_result['model']}")
+    print(f"  Provider: {model_result['provider']}")
+    print(f"  Reason: {model_result['reason']}")
+    
+    # Workflow Routing & Complexity (Swarms-inspired)
+    if parsed_args.workflow:
+        print("\n[Workflow & Complexity Analysis]")
+        wf_router = WorkflowRouter()
+        wf_result = wf_router.route(parsed_args.request)
+        
+        print(f"  Recommended Workflow: {wf_result.workflow}")
+        print(f"  Confidence: {wf_result.confidence:.2f}")
+        print(f"  Task Complexity: {wf_result.complexity.score}/10")
+        print(f"  Execution Mode: {wf_result.execution_mode.value}")
+        if wf_result.complexity.recommended_roles:
+            print(f"  Recommended Roles: {', '.join(wf_result.complexity.recommended_roles)}")
+        print(f"  Reasoning: {wf_result.reason}")
 
 def cmd_learn(args):
     """Record learning."""
@@ -489,6 +515,164 @@ def cmd_heal(args):
                 print(f"❌ Error saving fixed code: {e}")
 
 
+def cmd_concurrent(args):
+    """Parallel role execution."""
+    print("⚡ @BRAIN /concurrent")
+    parser = argparse.ArgumentParser(description="Parallel Executor")
+    parser.add_argument("--task", required=True, help="The task to execute")
+    parser.add_argument("--roles", help="Comma-separated roles to run")
+    parser.add_argument("--phase", choices=["design", "review"], help="Run a pre-configured phase")
+    parser.add_argument("--command", help="Shell command template")
+    
+    parsed_args = parser.parse_args(args)
+    
+    if parsed_args.phase:
+        if parsed_args.phase == "design":
+            executor = DesignPhaseExecutor()
+            result = executor.run_design_phase(parsed_args.task, parsed_args.command)
+        else:
+            executor = ReviewPhaseExecutor()
+            result = executor.run_review_phase(parsed_args.task, parsed_args.command)
+    elif parsed_args.roles:
+        roles = [r.strip() for r in parsed_args.roles.split(',')]
+        executor = ConcurrentExecutor()
+        result = executor.run(roles, parsed_args.task, parsed_args.command)
+    else:
+        print("❌ Error: Must specify --phase or --roles")
+        return
+        
+    print(json.dumps(result.to_dict(), indent=2))
+
+def cmd_synthesize(args):
+    """Synthesize multi-agent outputs."""
+    print("🧪 @BRAIN /synthesize")
+    parser = argparse.ArgumentParser(description="Output Synthesizer")
+    parser.add_argument("--inputs", help="JSON string of inputs")
+    parser.add_argument("--file", help="JSON file containing inputs")
+    parser.add_argument("--concurrent-result", help="JSON file from /concurrent")
+    parser.add_argument("--strategy", default="concatenate", help="Synthesis strategy")
+    parser.add_argument("--template", help="Custom template")
+    
+    parsed_args = parser.parse_args(args)
+    synthesizer = OutputSynthesizer()
+    
+    if parsed_args.inputs:
+        inputs = json.loads(parsed_args.inputs)
+        for inp in inputs:
+            synthesizer.add_input(inp["role"], inp["output"], inp.get("confidence", 1.0))
+    elif parsed_args.file:
+        with open(parsed_args.file, 'r', encoding='utf-8') as f:
+            inputs = json.load(f)
+            for inp in inputs:
+                synthesizer.add_input(inp["role"], inp["output"], inp.get("confidence", 1.0))
+    elif parsed_args.concurrent_result:
+        with open(parsed_args.concurrent_result, 'r', encoding='utf-8') as f:
+            result = json.load(f)
+            synthesizer.add_inputs_from_concurrent(result)
+    else:
+        print("❌ Error: No inputs provided")
+        return
+        
+    if parsed_args.template:
+        result = synthesizer.synthesize_with_template(parsed_args.template)
+    else:
+        result = synthesizer.synthesize(strategy=parsed_args.strategy)
+    
+    print(json.dumps(result.to_dict(), indent=2))
+
+def cmd_feedback(args):
+    """Bidirectional feedback protocol."""
+    print("🔄 @BRAIN /feedback")
+    parser = argparse.ArgumentParser(description="Feedback Protocol")
+    subparsers = parser.add_subparsers(dest="subcommand")
+    
+    send_parser = subparsers.add_parser("send")
+    send_parser.add_argument("--sender", required=True)
+    send_parser.add_argument("--receiver", required=True)
+    send_parser.add_argument("--content", required=True)
+    send_parser.add_argument("--type", default="feedback")
+    
+    list_parser = subparsers.add_parser("list")
+    list_parser.add_argument("--receiver")
+    list_parser.add_argument("--sender")
+    
+    parsed_args = parser.parse_args(args)
+    protocol = FeedbackProtocol()
+    
+    if parsed_args.subcommand == "send":
+        msg = protocol.send_feedback(parsed_args.sender, parsed_args.receiver, parsed_args.content, parsed_args.type)
+        print(f"Feedback sent: {msg.id}")
+    elif parsed_args.subcommand == "list":
+        messages = protocol.get_messages(parsed_args.receiver, parsed_args.sender)
+        for m in messages:
+            print(f"[{m.timestamp}] {m.sender} -> {m.receiver} ({m.type}): {m.content}")
+
+def cmd_chat(args):
+    """Multi-agent group chat."""
+    print("💬 @BRAIN /chat")
+    parser = argparse.ArgumentParser(description="Group Chat")
+    parser.add_argument("--topic", required=True)
+    parser.add_argument("--agents", required=True, help="Comma-separated role names")
+    parser.add_argument("--turns", type=int, default=3)
+    
+    parsed_args = parser.parse_args(args)
+    agents = [r.strip() for r in parsed_args.agents.split(',')]
+    chat = GroupChat(agents=agents, max_turns=parsed_args.turns)
+    
+    # Integration note: In real usage, the CLI would need to know how to call the agents.
+    # For now, this invokes the demo mode.
+    print(f"Starting chat among: {', '.join(agents)} on topic: {parsed_args.topic}")
+    result = chat.run(parsed_args.topic)
+    print(f"Chat finished with {len(result.history)} messages.")
+    if result.summary:
+        print(f"\nSummary:\n{result.summary}")
+
+def cmd_autoskill(args):
+    """Dynamically generate SKILL.md."""
+    print("🛠️ @BRAIN /autoskill")
+    parser = argparse.ArgumentParser(description="AutoSkillBuilder")
+    parser.add_argument("--name", required=True, help="New skill/role name")
+    parser.add_argument("--objective", required=True, help="Objective/requirements")
+    
+    parsed_args = parser.parse_args(args)
+    builder = AutoSkillBuilder()
+    path = builder.build_skill(parsed_args.name, parsed_args.objective)
+    print(f"Generated skill in: {path}")
+
+def cmd_swarm(args):
+    """Universal swarm orchestrator."""
+    print("🚀 @BRAIN /swarm")
+    parser = argparse.ArgumentParser(description="SwarmRouter")
+    parser.add_argument("task", help="The task to execute")
+    parser.add_argument("--mode", choices=["sequential", "concurrent", "moa", "group_chat"], help="Force mode")
+    
+    parsed_args = parser.parse_args(args)
+    router = SwarmRouter()
+    result = router.run(parsed_args.task, parsed_args.mode)
+    print(json.dumps(result.to_dict(), indent=2))
+
+def cmd_aop(args):
+    """Agent Orchestration Protocol control."""
+    print("🌐 @BRAIN /aop")
+    parser = argparse.ArgumentParser(description="AOP Manager")
+    subparsers = parser.add_subparsers(dest="subcommand")
+    
+    subparsers.add_parser("start", help="Start AOP Server")
+    subparsers.add_parser("list", help="List remote agents")
+    
+    parsed_args = parser.parse_args(args)
+    
+    if parsed_args.subcommand == "start":
+        from agentic_sdlc.infrastructure.aop.server import run_server
+        run_server()
+    elif parsed_args.subcommand == "list":
+        from agentic_sdlc.infrastructure.aop.client import AOPClient
+        client = AOPClient()
+        agents = client.list_agents()
+        print(f"Remote Agents: {len(agents)}")
+        for a in agents:
+            print(f" - {a['id']} ({a['role']}) at {a['endpoint']}")
+
 def cmd_skills(args):
     """Delegate to skills_cli.py"""
     skills_cli.main(args)
@@ -517,6 +701,13 @@ def cmd_help(args):
     print("  route               Route to AI model")
     print("  learn               Record learning")
     print("  recommend           Get task recommendation")
+    print("  concurrent          Parallel role execution")
+    print("  synthesize          Synthesize multi-agent outputs")
+    print("  feedback            Bidirectional feedback protocol")
+    print("  chat                Agent group discussion")
+    print("  autoskill           Dynamically generate skills")
+    print("  swarm               Universal swarm orchestrator")
+    print("  aop                 Agent Orchestration Protocol")
     print("  task                Manage tasks (Kanban)")
     print("  sprint              Manage sprints")
     print("  validate-workflow   Validate workflow execution")
@@ -658,6 +849,13 @@ def main():
         "route": cmd_route_req,
         "learn": cmd_learn,
         "recommend": cmd_recommend,
+        "concurrent": cmd_concurrent,
+        "synthesize": cmd_synthesize,
+        "feedback": cmd_feedback,
+        "chat": cmd_chat,
+        "autoskill": cmd_autoskill,
+        "swarm": cmd_swarm,
+        "aop": cmd_aop,
         "task": cmd_task,
         "sprint": cmd_sprint,
         "validate-workflow": cmd_validate_workflow,

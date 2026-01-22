@@ -12,13 +12,16 @@ The Brain's intelligence layer providing:
 - Task Management (Kanban and sprints)
 - Performance (metrics and optimization)
 - Judge (quality scoring for artifacts)
+- Concurrent Execution (Swarms-inspired parallel execution)
+- Output Synthesis (MixtureOfAgents-inspired aggregation)
 """
 
 # Scorer Module
 from .scorer import InputScorer, OutputScorer, QualityMetrics
 
-# Router Module
+# Router Module (enhanced with Swarms-inspired complexity analysis)
 from .router import WorkflowRouter, AgentRouter, RulesEngine
+from .router.workflow_router import TaskComplexity, ExecutionMode, RouteResult
 
 # Monitor Module
 from .monitor import RuleChecker, AuditLogger
@@ -45,6 +48,29 @@ from .performance import MetricsCollector, FlowOptimizer
 # Judge Module
 from .judge import Judge
 
+# NEW: Concurrent Executor (Swarms-inspired)
+try:
+    from .concurrent_executor import (
+        ConcurrentExecutor, 
+        DesignPhaseExecutor, 
+        ReviewPhaseExecutor,
+        ConcurrentResult,
+        RoleResult
+    )
+except ImportError:
+    pass
+
+# NEW: Output Synthesizer (MixtureOfAgents-inspired)
+try:
+    from .synthesizer import (
+        OutputSynthesizer,
+        SynthesisResult,
+        SynthesisInput,
+        SynthesisStrategy
+    )
+except ImportError:
+    pass
+
 # HITL Module (Human-in-the-Loop)
 try:
     from .hitl import HITLManager, ApprovalGate, ApprovalRequest, ApprovalResult
@@ -54,6 +80,18 @@ except ImportError:
 # State Module (Workflow State Persistence)
 try:
     from .state import StateManager, WorkflowSession, Checkpoint
+except ImportError:
+    pass
+
+# NEW: Feedback Protocol (Bidirectional)
+try:
+    from .feedback_protocol import FeedbackProtocol, FeedbackMessage
+except ImportError:
+    pass
+
+# NEW: Group Chat (Debate/Collaboration)
+try:
+    from .group_chat import GroupChat, ChatMessage, GroupChatResult
 except ImportError:
     pass
 
@@ -81,12 +119,25 @@ try:
 except ImportError:
     pass
 
+# NEW: Auto Skill Builder (Phase 3.1)
+try:
+    from .auto_skill_builder import AutoSkillBuilder
+except ImportError:
+    pass
+
+# NEW: Swarm Router (Phase 3.2)
+try:
+    from .swarm_router import SwarmRouter, SwarmExecutionResult
+except ImportError:
+    pass
+
 
 __all__ = [
     # Scorer
     'InputScorer', 'OutputScorer', 'QualityMetrics',
-    # Router
+    # Router (enhanced)
     'WorkflowRouter', 'AgentRouter', 'RulesEngine',
+    'TaskComplexity', 'ExecutionMode', 'RouteResult',
     # Monitor
     'RuleChecker', 'AuditLogger', 'Observer',
     # A/B Test
@@ -103,18 +154,31 @@ __all__ = [
     'MetricsCollector', 'FlowOptimizer',
     # Judge
     'Judge',
-    # NEW: HITL
+    # NEW: Concurrent Executor (Swarms-inspired)
+    'ConcurrentExecutor', 'DesignPhaseExecutor', 'ReviewPhaseExecutor',
+    'ConcurrentResult', 'RoleResult',
+    # NEW: Output Synthesizer (MixtureOfAgents-inspired)
+    'OutputSynthesizer', 'SynthesisResult', 'SynthesisInput', 'SynthesisStrategy',
+    # HITL
     'HITLManager', 'ApprovalGate', 'ApprovalRequest', 'ApprovalResult',
-    # NEW: State
+    # State
     'StateManager', 'WorkflowSession', 'Checkpoint',
-    # NEW: DSPy
+    # NEW: Feedback Protocol
+    'FeedbackProtocol', 'FeedbackMessage',
+    # NEW: Group Chat
+    'GroupChat', 'ChatMessage', 'GroupChatResult',
+    # DSPy
     'DSPY_AVAILABLE', 'AgentOptimizer', 'DSPyLearningBridge',
-    # NEW: Self-Healing
+    # Self-Healing
     'FeedbackLoop', 'SelfHealingOrchestrator', 'Issue', 'HealingResult',
-    # NEW: Cost
+    # Cost
     'NewCostTracker', 'CostReport', 'UsageRecord',
-    # NEW: Evaluation
+    # Evaluation
     'BenchmarkRunner', 'TestCase', 'EvaluationResult',
+    # NEW: Auto Skill Builder
+    'AutoSkillBuilder',
+    # NEW: Swarm Router
+    'SwarmRouter', 'SwarmExecutionResult',
 ]
 
 

@@ -598,11 +598,46 @@
         "Add hashtags/tags → +3"
       ],
       "timestamp": "2026-01-12T17:57:51.229607"
+    },
+    {
+      "file": ".agent\\workflows\\explore.md",
+      "type": "report",
+      "scores": {
+        "completeness": 7.5,
+        "quality": 10.0,
+        "compliance": 7
+      },
+      "finalScore": 8.1,
+      "passed": true,
+      "threshold": 6,
+      "improvements": [
+        "Add Problem/Goal section → +2.5",
+        "Add links/references → +3"
+      ],
+      "timestamp": "2026-01-22T09:30:44.337886"
+    },
+    {
+      "file": ".agent\\workflows\\orchestrator.md",
+      "type": "report",
+      "scores": {
+        "completeness": 2.5,
+        "quality": 10.0,
+        "compliance": 10
+      },
+      "finalScore": 7.8,
+      "passed": true,
+      "threshold": 6,
+      "improvements": [
+        "Add Problem/Goal section → +2.5",
+        "Add Solution/Approach section → +2.5",
+        "Add Artifacts/Results section → +2.5"
+      ],
+      "timestamp": "2026-01-22T09:36:18.268077"
     }
   ],
-  "averageScore": 7.79,
-  "totalReviews": 36,
+  "averageScore": 7.8,
+  "totalReviews": 38,
   "passThreshold": 6,
   "createdAt": "2026-01-05T09:28:25.776862",
-  "lastUpdated": "2026-01-12T17:57:51.229877"
+  "lastUpdated": "2026-01-22T09:36:18.268508"
 }

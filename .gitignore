@@ -28,4 +28,21 @@ __pycache__/
 .pytest_cache/
 htmlcov/
 
-
+# Agentic SDLC
+.brain/
+.agent-state/
+*.txt
+debug_*.py
+pytest_*.txt
+test_*.txt
+collect.txt
+builder.txt
+concurrent_test.txt
+swarm_test.txt
+swarm_test_m.txt
+judge_out.txt
+judge_explore.txt
+git_status.txt
+version.txt
+list_intel.txt
+help_output.txt

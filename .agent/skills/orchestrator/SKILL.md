@@ -71,7 +71,8 @@ The Orchestrator can execute these compound engineering workflows:
 
 2. **Auto-Execute Phases**
    - Trigger next roles in sequence
-   - Execute parallel roles (SA+UIUX+PO)
+   - Execute parallel roles (SA+UIUX+PO) using **ConcurrentExecutor**
+   - Synthesize expert outputs using **OutputSynthesizer** (MoA)
    - Monitor progress and completion
    - Apply compound learning principles
 
@@ -105,14 +106,18 @@ The Orchestrator can execute these compound engineering workflows:
 - Proceed only after explicit approval
 
 **Design Phase (Parallel):**
+- **EXECUTE** `@BRAIN /concurrent --phase design --task "{task}"`
 - @SA creates Backend Design
 - @UIUX creates UI/UX Design
 - @PO grooms Product Backlog
-- All three work simultaneously
+- **SYNTHESIZE** `@BRAIN /synthesize --concurrent-result latest --strategy llm`
+- All three work simultaneously, then results are aggregated.
 
 **Design Verification (Parallel):**
+- **EXECUTE** `@BRAIN /concurrent --phase review --task "{task}"`
 - @QA reviews designs for quality
 - @SECA reviews for security
+- **SYNTHESIZE** `@BRAIN /synthesize --concurrent-result latest --strategy consensus`
 - Auto-approve if no critical/high issues
 - If critical issues: Wait for fixes
 

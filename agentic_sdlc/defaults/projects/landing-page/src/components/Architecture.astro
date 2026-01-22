@@ -13,8 +13,8 @@ const layers = [
   },
   {
     name: 'Layer 2: Intelligence',
-    description: 'Brain System with 21 specialized sub-agents',
-    components: ['Observer', 'Judge', 'Self-Learning', 'HITL', 'Proxy', 'Monitor', 'A/B Test', 'DSPy', 'Self-Healing'],
+    description: 'Brain System with 26 specialized sub-agents',
+    components: ['Observer', 'Judge', 'Self-Learning', 'HITL', 'Proxy', 'Router', 'Monitor', 'A/B Test', 'DSPy', 'Self-Healing', 'Swarm Router', 'Concurrent Executor'],
     color: 'from-purple-600 to-pink-500',
   },
   {
@@ -48,12 +48,17 @@ const intelligenceGroups = [
   },
   {
     name: 'Intelligence & Routing',
-    agents: ['Proxy', 'Router', 'Task Manager', 'Research'],
+    agents: ['Proxy', 'Swarm Router', 'Workflow Router', 'Task Manager', 'Research'],
     color: 'text-green-400',
   },
   {
-    name: 'Generation & Tracking',
-    agents: ['Artifact Gen', 'Cost', 'Performance'],
+    name: 'Orchestration & Swarms',
+    agents: ['Concurrent Executor', 'Synthesizer', 'Group Chat', 'Feedback Protocol', 'AutoSkill Builder'],
+    color: 'text-pink-400',
+  },
+  {
+    name: 'Generation & Infrastructure',
+    agents: ['Artifact Gen', 'Cost', 'Performance', 'AOP Protocol'],
     color: 'text-cyan-400',
   },
 ];
@@ -104,7 +109,7 @@ const intelligenceGroups = [
       <div class="card border-primary/30 bg-primary/5">
         <div class="text-center mb-6">
           <span class="text-3xl mb-2 block animate-pulse">🧠</span>
-          <h3 class="text-xl font-semibold mb-2">21 Intelligence Sub-Agents</h3>
+          <h3 class="text-xl font-semibold mb-2">26 Intelligence Sub-Agents</h3>
           <p class="text-sm text-muted-foreground">
             Specialized agents working in harmony to create compound intelligence
           </p>

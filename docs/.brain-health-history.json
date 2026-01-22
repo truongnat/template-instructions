@@ -128,5 +128,17 @@
       "plan_count": 7
     },
     "timestamp": "2026-01-16T15:26:05.028839"
+  },
+  {
+    "status": "healthy",
+    "score": 80.0,
+    "issues": [
+      "Missing tools/ directory"
+    ],
+    "metrics": {
+      "walkthrough_count": 17,
+      "plan_count": 7
+    },
+    "timestamp": "2026-01-22T09:31:07.952253"
   }
 ]

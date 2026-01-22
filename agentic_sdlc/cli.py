@@ -7,7 +7,7 @@ import shutil
 import argparse
 from pathlib import Path
 from agentic_sdlc import __version__
-from agentic_sdlc.core.brain.brain_cli import main as brain_main
+# from agentic_sdlc.core.brain.brain_cli import main as brain_main
 
 DEFAULT_CONFIG = """# Agentic SDLC Configuration
 project_name: "{project_name}"
@@ -125,6 +125,7 @@ def main():
             return
 
     # For all other commands, delegate to Brain CLI
+    from agentic_sdlc.core.brain.brain_cli import main as brain_main
     brain_main()
 
 if __name__ == "__main__":
