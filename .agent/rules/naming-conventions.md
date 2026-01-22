@@ -19,9 +19,10 @@ priority: high
 |---------|------------|---------|
 | Variables (JS/TS) | camelCase | userName, isActive |
 | Variables (Python) | snake_case | user_name, is_active |
+| Boolean Variables | Prefix with is, has, should, can | isActive, hasPermission |
 | Constants | UPPER_SNAKE_CASE | MAX_RETRIES, API_URL |
-| Functions (JS/TS) | camelCase | getUserById |
-| Functions (Python) | snake_case | get_user_by_id |
+| Functions (JS/TS) | camelCase (Verb First) | getUserById, validateToken |
+| Functions (Python) | snake_case (Verb First) | get_user_by_id, validate_token |
 | Private | Prefix with _ | _internalState |
 ### Classes and Types
 | Element | Convention | Example |
@@ -31,6 +32,12 @@ priority: high
 | Type Aliases | PascalCase | UserId, ResponseData |
 | Enums | PascalCase | UserStatus, OrderType |
 | Enum Members | UPPER_SNAKE_CASE | USER_ACTIVE |
+## Directory Naming
+| Target | Convention | Example |
+|--------|------------|---------|
+| Feature Domains | Singular noun | /src/features/auth |
+| Collections | Plural noun | /src/utils, /src/hooks |
+| Grouping | kebab-case | /src/ui-components |
 ## Database Naming
 | Element | Convention | Example |
 |---------|------------|---------|
@@ -53,3 +60,4 @@ priority: high
 | Hotfix | hotfix/description | hotfix/security-patch |
 | Release | release/version | release/1.2.0 |
 #rules #naming #conventions
+

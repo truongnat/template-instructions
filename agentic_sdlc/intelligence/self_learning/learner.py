@@ -80,7 +80,12 @@ class Learner:
     """
 
     def __init__(self, storage_file: Optional[Path] = None):
-        self.storage_file = storage_file or Path(".brain-learner-log.json")
+        if storage_file is None:
+            brain_dir = Path(".brain")
+            brain_dir.mkdir(parents=True, exist_ok=True)
+            self.storage_file = brain_dir / "learner-log.json"
+        else:
+            self.storage_file = storage_file
         self.patterns: Dict[str, Pattern] = {}
         self.events: List[LearningEvent] = []
         self._load_data()

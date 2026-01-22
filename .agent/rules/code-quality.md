@@ -29,8 +29,30 @@ priority: high
 - Cyclomatic Complexity: <= 10 per function
 - Nesting Depth: <= 4 levels
 - Function Length: <= 50 lines
-- File Length: <= 400 lines
+- File Length: <= 300 lines (Refactor recommended above 300)
 - Parameters: <= 5 per function
+
+## AI Provenance & Metadata
+Every new source file created by an AI Agent MUST include a metadata header to ensure traceability and context.
+
+### Header Template
+```javascript
+/**
+ * @file: [File Name]
+ * @purpose: [Brief description of functionality]
+ * @module: [Feature/Module Name]
+ * @author: [Agent Role]
+ * @created: [YYYY-MM-DD]
+ * @provenance: [Task ID or Prompt Hash]
+ */
+```
+
+## Engineering Principles
+- **Single Responsibility Principle (SRP)**: Each file or class MUST have one well-defined responsibility.
+- **DRY (Don't Repeat Yourself)**: Shared logic should be extracted to `shared/` or `utils/`.
+- **KISS (Keep It Simple, Stupid)**: Prioritize readability over complex optimizations or "clever" code.
+- **Test-First Shadowing**: Agents SHOULD create or outline test files alongside the source code.
+
 ## Security Standards
 - NO hardcoded secrets or API keys
 - NO SQL injection vulnerabilities

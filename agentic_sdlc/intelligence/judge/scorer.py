@@ -33,7 +33,9 @@ from agentic_sdlc.core.utils.common import get_project_root
 
 def get_scores_path() -> Path:
     """Get the scores database path."""
-    return get_project_root() / "docs" / ".brain-scores.json"
+    brain_dir = get_project_root() / ".brain"
+    brain_dir.mkdir(parents=True, exist_ok=True)
+    return brain_dir / "scores.json"
 
 
 @dataclass

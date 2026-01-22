@@ -150,11 +150,19 @@ class ConcurrentExecutor:
                 )
             
             output = callback(task)
+            
+            # Handle generators (e.g., from streaming agents)
+            if hasattr(output, '__iter__') and not isinstance(output, (str, list, dict, tuple)):
+                try:
+                    output = "".join(str(item) for item in output)
+                except Exception as gen_err:
+                    output = f"<Error consuming generator: {gen_err}>"
+
             duration = (datetime.now() - start_time).total_seconds()
             
             return RoleResult(
                 role=role,
-                output=output if output else "",
+                output=output if output is not None else "",
                 success=True,
                 duration_seconds=duration
             )
@@ -270,8 +278,9 @@ class ConcurrentExecutor:
             filepath = self.storage_dir / filename
             with open(filepath, 'w', encoding='utf-8') as f:
                 json.dump(result.to_dict(), f, indent=2, ensure_ascii=False)
-        except Exception:
-            pass  # Silently ignore storage errors
+        except Exception as e:
+            # Don't fail the whole execution if saving fails, but log it
+            print(f"⚠️  Warning: Failed to save concurrent result: {e}", file=sys.stderr)
 
     def get_stats(self) -> Dict[str, Any]:
         """Get execution statistics."""

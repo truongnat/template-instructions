@@ -113,7 +113,12 @@ class ABTester:
     """
 
     def __init__(self, storage_file: Optional[Path] = None):
-        self.storage_file = storage_file or Path(".brain-ab-tests.json")
+        if storage_file is None:
+            brain_dir = Path(".brain")
+            brain_dir.mkdir(parents=True, exist_ok=True)
+            self.storage_file = brain_dir / "ab-tests.json"
+        else:
+            self.storage_file = storage_file
         self.tests: Dict[str, ABTest] = {}
         self._load_tests()
 
