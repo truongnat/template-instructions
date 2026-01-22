@@ -17,70 +17,70 @@ Brain is NOT an executor—it monitors, detects issues, routes to handlers, scor
 ### Observer (Compliance Monitor)
 ```bash
 # Check compliance of an action
-python tools/core/brain/brain_cli.py observe --action "create file" --context '{"file": "test.py"}'
+python asdlc.py observe --action "create file" --context '{"file": "test.py"}'
 
 # Show compliance stats
-python tools/core/brain/brain_cli.py observe
+python asdlc.py observe
 ```
 
 ### Judge (Quality Scorer)
 ```bash
 # Score a file
-python tools/core/brain/brain_cli.py score "path/to/file.py"
+python asdlc.py score "path/to/file.py"
 
 # Score a report
-python tools/core/brain/brain_cli.py score "docs/reports/latest.md"
+python asdlc.py score "docs/reports/latest.md"
 ```
 
 ### Learner (Auto-Learning)
 ```bash
 # Record learning
-python tools/core/brain/brain_cli.py learn "Fixed bug in auth module by updating token expiry"
+python asdlc.py learn "Fixed bug in auth module by updating token expiry"
 
 # Get recommendations
-python tools/core/brain/brain_cli.py recommend "implement oauth"
+python asdlc.py recommend "implement oauth"
 ```
 
 ### A/B Tester (Decision Making)
 ```bash
 # Run A/B test
-python tools/core/brain/brain_cli.py ab-test "Should we use JWT or Session Auth?"
+python asdlc.py ab-test "Should we use JWT or Session Auth?"
 ```
 
 ### Router (Model Selection)
 ```bash
 # Route request to optimal AI model
-python tools/core/brain/brain_cli.py route "Generate complex architectural diagram"
+python asdlc.py route "Generate complex architectural diagram"
 ```
 
 ### Artifact Generator
 ```bash
 # Generate document from template
-python tools/core/brain/brain_cli.py gen --template "project-plan" --context '{"project": "New App"}' --output "plan.md"
+python asdlc.py gen --template "project-plan" --context '{"project": "New App"}' --output "plan.md"
 ```
 
 ### Health Monitor
 ```bash
 # Check system health
-python tools/core/brain/brain_cli.py health
+python asdlc.py health
 
 # Get improvement suggestions
-python tools/core/brain/brain_cli.py health --suggest
+python asdlc.py health --suggest
 ```
 
 ## State Management (Layer 1: Core)
 ```bash
-python tools/core/brain/brain_cli.py init 1          # Initialize sprint
-python tools/core/brain/brain_cli.py status          # Check status
-python tools/core/brain/brain_cli.py transition STATE --reason "Reason"
-python tools/core/brain/brain_cli.py validate        # Validate state
-python tools/core/brain/brain_cli.py rollback        # Rollback
+python asdlc.py init 1          # Initialize sprint
+python asdlc.py status          # Check status
+python asdlc.py transition STATE --reason "Reason"
+python asdlc.py validate        # Validate state
+python asdlc.py rollback        # Rollback
 ```
 
 ## Sync Commands
 ```bash
-python tools/core/brain/brain_cli.py sync      # Quick sync
-python tools/core/brain/brain_cli.py full-sync # Full sync
+python asdlc.py sync      # Quick sync
+python asdlc.py full-sync # Full sync
 ```
 
 #brain #root-layer #meta-controller

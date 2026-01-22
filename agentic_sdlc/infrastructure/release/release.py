@@ -10,10 +10,10 @@ Features:
 - Create git tags for releases
 
 Usage:
-    python tools/release/release.py preview          # Preview changes
-    python tools/release/release.py changelog        # Generate changelog
-    python tools/release/release.py version --auto   # Auto-bump version
-    python tools/release/release.py release          # Full release cycle
+    python agentic_sdlc/infrastructure/release/release.py preview          # Preview changes
+    python agentic_sdlc/infrastructure/release/release.py changelog        # Generate changelog
+    python agentic_sdlc/infrastructure/release/release.py version --auto   # Auto-bump version
+    python agentic_sdlc/infrastructure/release/release.py release          # Full release cycle
 
 Research: KB-2026-01-03-001 (Release Automation)
 Pattern: Conventional Commits + Semver
@@ -585,12 +585,12 @@ def main():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  python release.py preview                    Preview changes
-  python release.py changelog --sprint 5       Generate changelog for Sprint 5
-  python release.py version --auto             Auto-detect version bump
-  python release.py version --bump minor       Bump minor version
-  python release.py release --bump patch       Full release with patch bump
-  python release.py release --tag              Release and create git tag
+  python agentic_sdlc/infrastructure/release/release.py preview                    Preview changes
+  python agentic_sdlc/infrastructure/release/release.py changelog --sprint 5       Generate changelog for Sprint 5
+  python agentic_sdlc/infrastructure/release/release.py version --auto             Auto-detect version bump
+  python agentic_sdlc/infrastructure/release/release.py version --bump minor       Bump minor version
+  python agentic_sdlc/infrastructure/release/release.py release --bump patch       Full release with patch bump
+  python agentic_sdlc/infrastructure/release/release.py release --tag              Release and create git tag
         """
     )
     
