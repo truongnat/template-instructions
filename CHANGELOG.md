@@ -6,6 +6,31 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [2.3.0] - 2026-01-22
+
+### Added
+- [Intelligence] Universal **SwarmRouter** for multi-agent execution patterns
+- [Intelligence] **ConcurrentExecutor** for parallel phase execution (Design, Review)
+- [Intelligence] **OutputSynthesizer** with Mixture of Agents (MoA) synthesis
+- [Intelligence] **FeedbackProtocol** for bidirectional agent communication
+- [Intelligence] **GroupChat** for multi-agent topic discussions
+- [Intelligence] **AutoSkillBuilder** for dynamic agent skill generation
+- [Intelligence] **TaskComplexity** analysis integrated into WorkflowRouter
+- [Infrastructure] **Agent Orchestration Protocol (AOP)** for distributed agents
+- [Docs] Integrated Swarms architecture and features into Landing Page and README
+- [Roles] Added **@RESEARCH** specialist agent
+
+### Fixed
+- [Cli] move brain_cli import inside main to prevent circular dependencies
+- [Core] remove sys.stdout.reconfigure which caused hangs on Windows
+- [Router] align ExecutionMode enum with Swarms-inspired patterns
+
+### Documentation
+- Updated landing page with 26 Agents, 23 Workflows, and 18 Roles
+- Enhanced README with Swarms Orchestration and AOP sections
+
+---
+
 ## [2.2.0] - 2026-01-20
 
 ### Added
