@@ -6,6 +6,17 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [2.4.0] - 2026-01-22
+
+### Added
+- introduce a comprehensive CLI for @BRAIN intelligence operations and foundational release management utilities.
+
+### Documentation
+- [Rules] update SDLC standards for 2026 and finalize brain state migration
+
+
+---
+
 ## [2.3.0] - 2026-01-22
 
 ### Added
