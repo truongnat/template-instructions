@@ -11,12 +11,12 @@ from pathlib import Path
 from datetime import datetime
 
 # Fix Windows console encoding
-if sys.platform == 'win32':
-    try:
-        sys.stdout.reconfigure(encoding='utf-8', errors='replace')
-        sys.stderr.reconfigure(encoding='utf-8', errors='replace')
-    except (AttributeError, OSError):
-        pass
+# if sys.platform == 'win32':
+#     try:
+#         sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+#         sys.stderr.reconfigure(encoding='utf-8', errors='replace')
+#     except (AttributeError, OSError):
+#         pass
 
 # Symbols with ASCII fallback
 def _get_symbol(unicode_char, ascii_fallback):

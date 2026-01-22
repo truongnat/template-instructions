@@ -579,6 +579,7 @@ def cmd_release(manager: ReleaseManager, args):
 
 
 def main():
+    print("DEBUG: release.py main started")
     parser = argparse.ArgumentParser(
         description='Release management for agentic-sdlc',
         formatter_class=argparse.RawDescriptionHelpFormatter,
