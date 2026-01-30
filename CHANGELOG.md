@@ -6,6 +6,14 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [2.5.3] - 2026-01-30
+
+### Fixed
+- bundle env.template in package defaults for robust installed setup
+
+
+---
+
 ## [2.5.2] - 2026-01-30
 
 ### Fixed
