@@ -6,6 +6,17 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [2.5.0] - 2026-01-30
+
+### Changed
+- complete v2 kit audit and cleanup
+
+### Other
+- feat (workflows): update missing workflows
+
+
+---
+
 ## [2.4.1] - 2026-01-22
 
 ### Documentation
