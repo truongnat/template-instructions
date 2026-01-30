@@ -6,6 +6,17 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [2.6.0] - 2026-01-30
+
+### Added
+- Update landing page content for v2.5, adjusting AI role counts, revising the technology stack, and enhancing UI elements.
+
+### Fixed
+- [Intelligence] prevent dspy from polluting new projects with global cache
+
+
+---
+
 ## [2.5.7] - 2026-01-30
 
 ### Fixed
