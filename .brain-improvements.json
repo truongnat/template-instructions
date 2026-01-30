@@ -56,7 +56,15 @@
       "data_sources": [
         "default"
       ]
+    },
+    {
+      "timestamp": "2026-01-30T08:51:28.643890",
+      "findings_count": 0,
+      "findings": [],
+      "data_sources": [
+        "default"
+      ]
     }
   ],
-  "updated_at": "2026-01-30T08:31:24.983356"
+  "updated_at": "2026-01-30T08:51:28.643901"
 }
