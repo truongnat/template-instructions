@@ -73,7 +73,8 @@ def setup_env():
         pkg_template = template_files / "env.template"
         if pkg_template.is_file():
              template = pkg_template
-    except Exception:
+    except Exception as e:
+        print(f"DEBUG: Failed to load from resources: {e}")
         pass
     
     if env_file.exists():
