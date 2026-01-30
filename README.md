@@ -1,4 +1,7 @@
 # 📦 Agentic SDLC Kit
+![Version](https://img.shields.io/badge/version-2.5.0-blue.svg)
+![Build](https://img.shields.io/badge/build-passing-brightgreen.svg)
+![License](https://img.shields.io/badge/license-MIT-green.svg)
 
 > The Intelligence Layer for your Software Development Lifecycle. Installable, scalable, and self-learning.
 
@@ -23,7 +26,7 @@ bun install agentic-sdlc
 ### 2. Initialize your Project
 Navigate to your project root and run:
 ```bash
-agentic init
+asdlc init
 ```
 This scaffolds the following in your project:
 - `.agent/` - AI Expert roles, rules, and workflows.
@@ -32,7 +35,7 @@ This scaffolds the following in your project:
 
 ### 3. Start your first Sprint
 ```bash
-agentic sprint start 1
+asdlc workflow sprint start 1
 ```
 
 ---
@@ -71,10 +74,10 @@ The system follows a concentric design ensuring safety and consistency:
 ### CLI Commands
 The kit provides a unified entry point:
 ```bash
-agentic status              # View current SDLC state
-agentic init-state --sprint 1  # Initialize brain state for a sprint
-agentic heal --code src/main.py # Run self-healing on a file
-agentic gate list           # View pending human-in-the-loop approvals
+asdlc brain status              # View current SDLC state
+asdlc brain init-state --sprint 1  # Initialize brain state for a sprint
+asdlc brain heal --code src/main.py # Run self-healing on a file
+asdlc brain gate list           # View pending human-in-the-loop approvals
 ```
 
 ### IDE Integration (Slash Commands)
