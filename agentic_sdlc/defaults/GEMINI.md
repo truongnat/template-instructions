@@ -72,39 +72,20 @@ Layer 3 → Layer 2 → Layer 1 (dependencies flow INWARD only)
 ```
 agentic-sdlc/
 │
-├── .agent/                       # 🧠 LAYER 1: CORE
-│   ├── GEMINI.md                # This file - Universal guide
-│   ├── skills/                  # 17 AI role definitions
-│   ├── templates/               # 20+ document templates
-│   ├── rules/                   # 8 rule files
-│   └── workflows/               # 23 workflow definitions
+├── agentic_sdlc/                 # 📦 MAIN PACKAGE
+│   ├── core/                    # Layer 1: Core logic & utilities
+│   ├── intelligence/            # Layer 2: 21 AI Sub-agents
+│   ├── infrastructure/          # Layer 3: Bridges & connectors
+│   ├── defaults/                # "Golden Master" (skills, rules, workflows)
+│   └── cli.py                   # Main CLI entry point
 │
-├── agentic_sdlc/                 # 🧠 LAYER 2 + 3 (Core Package)
-│   ├── intelligence/            # LAYER 2: Brain sub-agents
-│   │   ├── observer/           # Rule compliance monitor
-│   │   ├── ab_test/            # A/B result generator
-│   │   ├── judge/              # Quality scorer
-│   │   ├── self_learning/      # Learning engine
-│   │   ├── proxy/              # AI model router
-│   │   ├── artifact_gen/       # Document generator
-│   │   └── monitor/            # System health monitor
-│   │
-│   ├── core/                    # Core utilities
-│   │   └── brain/              # Brain CLI
-│   │
-│   └── infrastructure/          # LAYER 3: External interfaces
-│       ├── workflows/          # Workflow scripts
-│       ├── autogen/            # Multi-agent teams
-│       ├── communication/      # Notifications
-│       ├── git/                # Git operations
-│       ├── github/             # GitHub integration
-│       ├── release/            # Release management
-│       └── validation/         # Health checks
-│
-├── bin/                          # CLI helper scripts
-├── mcp/                          # MCP connectors
-├── docs/                         # Generated documentation
-└── asdlc.py                      # Main CLI entry point
+├── bin/                          # Helper scripts
+├── docs/                         # Documentation
+├── examples/                     # Example projects (Externalized)
+├── tests/                        # Unit & Integration tests
+├── asdlc.py                      # Development entry point
+├── pyproject.toml                # Dependencies
+└── docker-compose.yml            # Container orchestration
 ```
 
 ---
