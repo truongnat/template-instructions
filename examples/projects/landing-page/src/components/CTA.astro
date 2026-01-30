@@ -21,10 +21,11 @@
             pip install agentic-sdlc
           </code>
           <button 
-            onclick="navigator.clipboard.writeText('pip install agentic-sdlc')"
-            class="p-2 hover:bg-secondary rounded transition-colors shrink-0"
+            id="copy-install-cmd"
+            class="p-2 hover:bg-secondary rounded transition-colors shrink-0 group relative"
             title="Copy to clipboard"
           >
+            <span class="absolute -top-8 left-1/2 -translate-x-1/2 bg-popover text-popover-foreground text-xs px-2 py-1 rounded opacity-0 transition-opacity" id="copy-tooltip">Copied!</span>
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
             </svg>
@@ -48,10 +49,29 @@
   </div>
 </section>
 
+<script>
+  const copyButton = document.getElementById('copy-install-cmd');
+  const tooltip = document.getElementById('copy-tooltip');
+  
+  if (copyButton && tooltip) {
+    copyButton.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText('pip install agentic-sdlc');
+        tooltip.classList.remove('opacity-0');
+        setTimeout(() => {
+          tooltip.classList.add('opacity-0');
+        }, 2000);
+      } catch (err) {
+        console.error('Failed to copy code: ', err);
+      }
+    });
+  }
+</script>
+
 <!-- Footer -->
 <footer class="py-8 border-t border-border">
   <div class="container text-center text-sm text-muted-foreground">
     <p>Built with 🧠 by <a href="https://github.com/truongnat" class="text-primary hover:underline">@truongnat</a></p>
-    <p class="mt-2">MIT License • Agentic SDLC</p>
+    <p class="mt-2">MIT License • Agentic SDLC v2.5.7</p>
   </div>
 </footer>
