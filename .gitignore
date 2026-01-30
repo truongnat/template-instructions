@@ -56,3 +56,6 @@ env/
 agentic_sdlc/lib/
 
 agentic_sdlc/lib/
+build/
+*.egg-info/
+*.egg-info.trash/

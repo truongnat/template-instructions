@@ -64,7 +64,15 @@
       "data_sources": [
         "default"
       ]
+    },
+    {
+      "timestamp": "2026-01-30T13:37:30.931505",
+      "findings_count": 0,
+      "findings": [],
+      "data_sources": [
+        "default"
+      ]
     }
   ],
-  "updated_at": "2026-01-30T08:51:28.643901"
+  "updated_at": "2026-01-30T13:37:30.931530"
 }
