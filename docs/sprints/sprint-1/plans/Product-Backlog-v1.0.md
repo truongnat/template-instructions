@@ -216,10 +216,10 @@ Interactive terminal simulation showing installation and usage with typing anima
 
 **Demo sequence:**
 ```
-$ npm install -g agentic-sdlc
+$ npm install -g sdlc-kit
 ✓ Installed successfully
 
-$ agentic-sdlc create my-app
+$ sdlc-kit create my-app
 ✓ Project created
 
 $ cd my-app && /pm Build a todo app
@@ -255,9 +255,9 @@ Step-by-step installation commands with syntax highlighting and copy buttons.
 - [ ] Proper semantic HTML
 
 **Commands to display:**
-1. `npm install -g agentic-sdlc`
-2. `agentic-sdlc create my-project`
-3. `agentic-sdlc ide cursor`
+1. `npm install -g sdlc-kit`
+2. `sdlc-kit create my-project`
+3. `sdlc-kit ide cursor`
 
 **Components:**
 - `src/components/sections/QuickStart.astro`

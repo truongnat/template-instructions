@@ -7,7 +7,7 @@
 
 ## What Was Done
 
-Updated [GEMINI.md](file:///d:/dev/agentic-sdlc/GEMINI.md) with 6 Critical Enforcement Gates:
+Updated [GEMINI.md](file:///d:/dev/sdlc-kit/GEMINI.md) with 6 Critical Enforcement Gates:
 
 | Gate | Purpose | Commands |
 |------|---------|----------|

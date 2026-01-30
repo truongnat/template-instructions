@@ -11,14 +11,14 @@ Integrated [Worktrunk](https://github.com/max-sixty/worktrunk) into Agentic SDLC
 ### Phase 1: Integration
 | File | Description |
 |------|-------------|
-| [worktree.md](file:///d:/dev/agentic-sdlc/.agent/workflows/worktree.md) | New `/worktree` workflow |
-| [role-dev.md](file:///d:/dev/agentic-sdlc/.agent/skills/role-dev.md) | Added Worktrunk section |
-| [README.md](file:///d:/dev/agentic-sdlc/README.md) | Updated to 16 workflows |
+| [worktree.md](file:///d:/dev/sdlc-kit/.agent/workflows/worktree.md) | New `/worktree` workflow |
+| [role-dev.md](file:///d:/dev/sdlc-kit/.agent/skills/role-dev.md) | Added Worktrunk section |
+| [README.md](file:///d:/dev/sdlc-kit/README.md) | Updated to 16 workflows |
 
 ### Phase 2: Testing
 | File | Description |
 |------|-------------|
-| [test_worktree.py](file:///d:/dev/agentic-sdlc/tests/layer1/test_worktree.py) | 14 test cases |
+| [test_worktree.py](file:///d:/dev/sdlc-kit/tests/layer1/test_worktree.py) | 14 test cases |
 
 ## Test Results
 ```

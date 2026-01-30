@@ -8,7 +8,7 @@
 
 ## 📋 Summary
 
-Successfully unified all installation documentation to use a single, realistic method (`pip install git+https://github.com/truongnat/agentic-sdlc.git`) and created PyPI package infrastructure for future publishing.
+Successfully unified all installation documentation to use a single, realistic method (`pip install git+https://github.com/truongnat/sdlc-kit.git`) and created PyPI package infrastructure for future publishing.
 
 ---
 
@@ -20,7 +20,7 @@ Updated installation instructions across all documentation:
 
 #### **Landing Page Components**
 - ✅ `projects/landing-page/src/components/Hero.astro`
-  - Changed to: `pip install git+https://github.com/truongnat/agentic-sdlc.git`
+  - Changed to: `pip install git+https://github.com/truongnat/sdlc-kit.git`
   
 - ✅ `projects/landing-page/src/components/CTA.astro`
   - Same installation command with copy-to-clipboard functionality
@@ -51,7 +51,7 @@ Created complete infrastructure for PyPI publishing:
 - ✅ `pyproject.toml`
   - Modern Python package configuration
   - Hatchling build system
-  - CLI entry points: `agentic-sdlc` and `asdlc`
+  - CLI entry points: `sdlc-kit` and `asdlc`
   - Dependencies and metadata
   - Development dependencies
 
@@ -85,20 +85,20 @@ Created complete infrastructure for PyPI publishing:
 
 ### Current (Recommended)
 ```bash
-pip install git+https://github.com/truongnat/agentic-sdlc.git
+pip install git+https://github.com/truongnat/sdlc-kit.git
 ```
 
 ### Future (After PyPI Publishing)
 ```bash
-pip install agentic-sdlc
+pip install sdlc-kit
 # or
-uv pip install agentic-sdlc
+uv pip install sdlc-kit
 ```
 
 ### Development
 ```bash
-git clone https://github.com/truongnat/agentic-sdlc.git
-cd agentic-sdlc
+git clone https://github.com/truongnat/sdlc-kit.git
+cd sdlc-kit
 pip install -e .
 ```
 
@@ -157,7 +157,7 @@ pip install -e .
 2. Generate API token
 3. Run `python -m build`
 4. Run `python -m twine upload dist/*`
-5. Update documentation to use `pip install agentic-sdlc`
+5. Update documentation to use `pip install sdlc-kit`
 
 ---
 
@@ -178,7 +178,7 @@ pip install -e .
 ### Why Create PyPI Infrastructure Now?
 - **Preparation:** Ready when we want to publish
 - **Professional:** Shows maturity of project
-- **CLI:** Enables `agentic-sdlc` command
+- **CLI:** Enables `sdlc-kit` command
 - **Distribution:** Standard Python package format
 
 ---

@@ -281,8 +281,8 @@ Each report contains:
 
 ## 📚 References
 
-- [Test Results JSON](file:///d:/dev/agentic-sdlc/test-results/scores/comprehensive-test-results.json)
-- [Summary Report](file:///d:/dev/agentic-sdlc/test-results/reports/summary/comprehensive-tests-summary.md)
-- [Compliance Reports](file:///d:/dev/agentic-sdlc/test-results/reports/compliance/)
-- [Learning Analysis](file:///d:/dev/agentic-sdlc/docs/reports/learnings/)
-- [Test Scripts](file:///d:/dev/agentic-sdlc/tools/testing/)
+- [Test Results JSON](file:///d:/dev/sdlc-kit/test-results/scores/comprehensive-test-results.json)
+- [Summary Report](file:///d:/dev/sdlc-kit/test-results/reports/summary/comprehensive-tests-summary.md)
+- [Compliance Reports](file:///d:/dev/sdlc-kit/test-results/reports/compliance/)
+- [Learning Analysis](file:///d:/dev/sdlc-kit/docs/reports/learnings/)
+- [Test Scripts](file:///d:/dev/sdlc-kit/tools/testing/)

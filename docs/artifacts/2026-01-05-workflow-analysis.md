@@ -77,8 +77,8 @@ Before executing, complete /preflight checks.
 **Evidence from cycle.md:**
 ```markdown
 ### 7. Self-Learning (MANDATORY)
-agentic-sdlc kb compound sync
-agentic-sdlc learn --record-success "TASK-ID" --task-type "feature"
+sdlc-kit kb compound sync
+sdlc-kit learn --record-success "TASK-ID" --task-type "feature"
 ```
 
 **Alternative:** Keep as reference but mark as "called automatically by other workflows"

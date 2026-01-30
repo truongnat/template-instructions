@@ -6,9 +6,9 @@ This guide explains how to run the full Agentic SDLC stack using Docker.
 
 The Docker setup orchestrates the following services:
 
-1.  **agentic-sdlc-core (`app`)**: The main Python application, CLI, and workflows.
-2.  **agentic-sdlc-memgraph (`memgraph`)**: The Knowledge Graph database (Memgraph Platform).
-3.  **agentic-sdlc-ollama (`ollama`)**: Local LLM server.
+1.  **sdlc-kit-core (`app`)**: The main Python application, CLI, and workflows.
+2.  **sdlc-kit-memgraph (`memgraph`)**: The Knowledge Graph database (Memgraph Platform).
+3.  **sdlc-kit-ollama (`ollama`)**: Local LLM server.
 
 ## Prerequisites
 
@@ -40,7 +40,7 @@ docker-compose up -d --build
     ```
     From here you can run CLI commands:
     ```bash
-    agentic-sdlc brain status
+    sdlc-kit brain status
     python tools/research/research_agent.py --task "Test"
     ```
 - **Streamlit Dashboard** (if running): [http://localhost:8501](http://localhost:8501)

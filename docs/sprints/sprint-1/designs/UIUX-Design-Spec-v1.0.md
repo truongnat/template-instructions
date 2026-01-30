@@ -103,7 +103,7 @@
 │         │  (Primary)   │      │ (Secondary)  │                │
 │         └──────────────┘      └──────────────┘                │
 │                                                                 │
-│              $ npm install -g agentic-sdlc                     │
+│              $ npm install -g sdlc-kit                     │
 │              [Copy button with animation]                       │
 │                                                                 │
 └────────────────────────────────────────────────────────────────┘
@@ -222,10 +222,10 @@
 │                      See It In Action                           │
 │                                                                 │
 │  ┌────────────────────────────────────────────────────────┐   │
-│  │  $ npm install -g agentic-sdlc                         │   │
+│  │  $ npm install -g sdlc-kit                         │   │
 │  │  ✓ Installed successfully                              │   │
 │  │                                                         │   │
-│  │  $ agentic-sdlc create my-app                          │   │
+│  │  $ sdlc-kit create my-app                          │   │
 │  │  ✓ Project created                                     │   │
 │  │                                                         │   │
 │  │  $ cd my-app && /pm Build a todo app                   │   │
@@ -257,17 +257,17 @@
 │                                                                 │
 │  ┌──────────────────────────────────────────────────────────┐ │
 │  │  # Install                                               │ │
-│  │  npm install -g agentic-sdlc              [Copy]        │ │
+│  │  npm install -g sdlc-kit              [Copy]        │ │
 │  └──────────────────────────────────────────────────────────┘ │
 │                                                                 │
 │  ┌──────────────────────────────────────────────────────────┐ │
 │  │  # Create project                                        │ │
-│  │  agentic-sdlc create my-project           [Copy]        │ │
+│  │  sdlc-kit create my-project           [Copy]        │ │
 │  └──────────────────────────────────────────────────────────┘ │
 │                                                                 │
 │  ┌──────────────────────────────────────────────────────────┐ │
 │  │  # Setup IDE                                             │ │
-│  │  agentic-sdlc ide cursor                  [Copy]        │ │
+│  │  sdlc-kit ide cursor                  [Copy]        │ │
 │  └──────────────────────────────────────────────────────────┘ │
 │                                                                 │
 └────────────────────────────────────────────────────────────────┘

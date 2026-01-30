@@ -190,7 +190,7 @@ export const seoConfig = {
   keywords: ['SDLC', 'AI agents', 'automation', 'Cursor', 'GitHub Copilot', 'workflow'],
   ogImage: '/og-image.png',
   twitterCard: 'summary_large_image',
-  canonicalUrl: 'https://agentic-sdlc.vercel.app',
+  canonicalUrl: 'https://sdlc-kit.vercel.app',
   author: 'truongnat',
   schema: {
     '@context': 'https://schema.org',
@@ -351,8 +351,8 @@ interface Command {
 }
 
 const demoCommands: Command[] = [
-  { input: '$ npm install -g agentic-sdlc', output: '✓ Installed successfully', delay: 1000 },
-  { input: '$ agentic-sdlc create my-app', output: '✓ Project created', delay: 1500 },
+  { input: '$ npm install -g sdlc-kit', output: '✓ Installed successfully', delay: 1000 },
+  { input: '$ sdlc-kit create my-app', output: '✓ Project created', delay: 1500 },
   { input: '$ cd my-app && /pm Build a todo app', output: '🤖 PM: Creating project plan...', delay: 2000 },
 ];
 

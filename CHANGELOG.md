@@ -196,13 +196,13 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 - [Package] PyPI package infrastructure with `pyproject.toml`
-- [Package] CLI entry points: `agentic-sdlc` and `asdlc`
+- [Package] CLI entry points: `sdlc-kit` and `asdlc`
 - [Package] `agentic_sdlc` Python package module
 - [Docs] `PUBLISHING.md` guide for PyPI publishing
 
 ### Changed
 - [Installation] Updated all documentation to use GitHub installation method
-- [Installation] Primary method: `pip install git+https://github.com/truongnat/agentic-sdlc.git`
+- [Installation] Primary method: `pip install git+https://github.com/truongnat/sdlc-kit.git`
 - [Docs] Simplified installation instructions across all READMEs
 - [Docs] Updated landing page components (Hero, CTA) with new installation command
 - [Docs] Updated GEMINI.md, README.md, and setup documentation
@@ -326,7 +326,7 @@ All notable changes to this project will be documented in this file.
 - add release management tool for automated changelog generation and version bumping based on conventional commits
 
 ### Documentation
-- [Workflows] standardize on agentic-sdlc cli and unified roles
+- [Workflows] standardize on sdlc-kit cli and unified roles
 - [Templates] update templates for unified roles and automation
 - [Skills] consolidate roles and update for release/automation
 - [Rules] update release workflow and tooling standards
@@ -479,7 +479,7 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 - [Cleanup] Removed duplicate content in `brain.md`
-- [Naming] Updated 3 files from "template-instructions" to "agentic-sdlc"
+- [Naming] Updated 3 files from "template-instructions" to "sdlc-kit"
 
 ---
 

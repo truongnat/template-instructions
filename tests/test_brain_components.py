@@ -16,7 +16,7 @@ from unittest.mock import patch, MagicMock
 sys.path.insert(0, str(Path(__file__).parents[1])) 
 
 # Current file is tests/test_brain_components.py (level 1)
-# Root is parents[1] -> D:\dev\agentic-sdlc
+# Root is parents[1] -> D:\dev\sdlc-kit
 
 from agentic_sdlc.intelligence.monitoring.observer.observer import Observer, Violation
 from agentic_sdlc.intelligence.monitoring.judge.scorer import Judge, ScoreResult

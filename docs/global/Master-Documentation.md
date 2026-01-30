@@ -273,9 +273,9 @@ Located in `docs/sprints/sprint-1/`
 ## 📞 Support & Contact
 
 ### Resources
-- **GitHub:** https://github.com/truongnat/agentic-sdlc
-- **NPM:** https://www.npmjs.com/package/agentic-sdlc
-- **Issues:** https://github.com/truongnat/agentic-sdlc/issues
+- **GitHub:** https://github.com/truongnat/sdlc-kit
+- **NPM:** https://www.npmjs.com/package/sdlc-kit
+- **Issues:** https://github.com/truongnat/sdlc-kit/issues
 
 ### Team
 - **Project Manager:** @PM

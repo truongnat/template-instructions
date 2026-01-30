@@ -65,9 +65,9 @@ Next Steps:
 ### Step 3: Setup IDE
 
 ```bash
-agentic-sdlc ide cursor
+sdlc-kit ide cursor
 # or
-agentic-sdlc ide all
+sdlc-kit ide all
 ```
 
 **That's it!** You can now use `/pm`, `/dev`, `/auto` commands in your IDE.
@@ -148,9 +148,9 @@ git push
 cd ~/old-projects/legacy-app
 
 # Add TeamLifecycle
-agentic-sdlc install
-agentic-sdlc ide cursor
-agentic-sdlc init-kb
+sdlc-kit install
+sdlc-kit ide cursor
+sdlc-kit init-kb
 
 # Start modernization
 # In IDE: /pm Analyze current codebase and create modernization plan
@@ -167,8 +167,8 @@ agentic-sdlc init-kb
 cd ~/oss/my-library
 
 # Add TeamLifecycle
-agentic-sdlc install
-agentic-sdlc ide copilot
+sdlc-kit install
+sdlc-kit ide copilot
 
 # Add to .gitignore (optional - keep instructions private)
 echo ".agent" >> .gitignore
@@ -189,14 +189,14 @@ git commit -m "Add AI-powered SDLC workflow"
 cd ~/projects/monorepo
 
 # Install at root
-agentic-sdlc install
-agentic-sdlc ide all
+sdlc-kit install
+sdlc-kit ide all
 
 # Or install per package
 cd packages/frontend
-agentic-sdlc install
+sdlc-kit install
 cd ../backend
-agentic-sdlc install
+sdlc-kit install
 
 # Use from anywhere in monorepo
 # In IDE: /pm Review frontend architecture
@@ -214,13 +214,13 @@ agentic-sdlc install
 cd your-project
 
 # Install instructions
-agentic-sdlc install
+sdlc-kit install
 
 # Setup only specific IDE
-agentic-sdlc ide cursor
+sdlc-kit ide cursor
 
 # Skip knowledge base (add later if needed)
-# agentic-sdlc init-kb
+# sdlc-kit init-kb
 ```
 
 ---
@@ -229,7 +229,7 @@ agentic-sdlc ide cursor
 
 ```bash
 # Install
-agentic-sdlc install
+sdlc-kit install
 
 # Customize roles
 nano .agent/roles/dev.md
@@ -248,15 +248,15 @@ git commit -m "Customize TeamLifecycle for our workflow"
 
 ```bash
 # Week 1: Install and learn
-agentic-sdlc install
-agentic-sdlc ide cursor
+sdlc-kit install
+sdlc-kit ide cursor
 # Use for documentation only: /reporter, /pm
 
 # Week 2: Add development
 # Use for coding: /dev, /sa
 
 # Week 3: Add testing
-agentic-sdlc init-kb
+sdlc-kit init-kb
 # Use for testing: /tester, /qa
 
 # Week 4: Full workflow
@@ -297,8 +297,8 @@ jobs:
       
       - name: Install TeamLifecycle
         run: |
-          npm install -g agentic-sdlc
-          agentic-sdlc install --quiet
+          npm install -g sdlc-kit
+          sdlc-kit install --quiet
       
       - name: Validate Documentation
         run: |
@@ -324,7 +324,7 @@ COPY package*.json ./
 RUN npm ci
 
 # Install TeamLifecycle (optional - for development)
-RUN npm install -g agentic-sdlc
+RUN npm install -g sdlc-kit
 
 COPY . .
 
@@ -401,8 +401,8 @@ your-project/
 ### Day 1: Installation & Exploration
 ```bash
 cd your-project
-agentic-sdlc install
-agentic-sdlc ide cursor
+sdlc-kit install
+sdlc-kit ide cursor
 
 # Explore
 cat .agent/usage.md
@@ -443,7 +443,7 @@ cat .agent/global.md
 
 ### Day 5: Knowledge Base
 ```bash
-agentic-sdlc init-kb
+sdlc-kit init-kb
 
 # Document existing issues
 # In IDE: /kb-add Solution for database connection pooling issue
@@ -458,11 +458,11 @@ agentic-sdlc init-kb
 
 ```bash
 # If you have existing .agent folder
-agentic-sdlc install --force
+sdlc-kit install --force
 
 # Or backup first
 mv .agent .agent.backup
-agentic-sdlc install
+sdlc-kit install
 ```
 
 ---
@@ -474,7 +474,7 @@ agentic-sdlc install
 cp .cursorrules .cursorrules.backup
 
 # Install
-agentic-sdlc ide cursor --force
+sdlc-kit ide cursor --force
 
 # Merge if needed
 cat .cursorrules.backup >> .cursorrules
@@ -486,7 +486,7 @@ cat .cursorrules.backup >> .cursorrules
 
 ```bash
 # Install normally
-agentic-sdlc install
+sdlc-kit install
 
 # Use gradually
 # Start with documentation: /reporter, /pm
@@ -502,8 +502,8 @@ agentic-sdlc install
 
 ```bash
 # Install for yourself first
-agentic-sdlc install
-agentic-sdlc ide cursor
+sdlc-kit install
+sdlc-kit ide cursor
 
 # Show results to team
 # Generate impressive documentation
@@ -527,7 +527,7 @@ echo ".cursorrules" >> .gitignore
 echo ".github/copilot-instructions.md" >> .gitignore
 
 # Install locally only
-agentic-sdlc install
+sdlc-kit install
 ```
 
 ---
@@ -598,7 +598,7 @@ echo ".agent/knowledge-base/bugs/critical/*" >> .gitignore
 
 ### 3. Build Knowledge Base
 ```bash
-agentic-sdlc init-kb
+sdlc-kit init-kb
 
 # Document existing patterns
 # In IDE: /kb-add Our authentication pattern
@@ -633,9 +633,9 @@ agentic-sdlc init-kb
 ### Example 1: E-commerce Platform (5 years old)
 ```bash
 cd ecommerce-platform
-agentic-sdlc install
-agentic-sdlc ide all
-agentic-sdlc init-kb
+sdlc-kit install
+sdlc-kit ide all
+sdlc-kit init-kb
 
 # Results after 2 months:
 # - Documented entire legacy codebase
@@ -650,8 +650,8 @@ agentic-sdlc init-kb
 ### Example 2: Startup MVP (6 months old)
 ```bash
 cd startup-mvp
-agentic-sdlc install
-agentic-sdlc ide cursor
+sdlc-kit install
+sdlc-kit ide cursor
 
 # Results after 2 weeks:
 # - Proper documentation
@@ -665,8 +665,8 @@ agentic-sdlc ide cursor
 ### Example 3: Open Source Library (3 years old)
 ```bash
 cd oss-library
-agentic-sdlc install
-agentic-sdlc ide copilot
+sdlc-kit install
+sdlc-kit ide copilot
 
 # Results after 1 month:
 # - Contributors use consistent workflow
@@ -682,18 +682,18 @@ agentic-sdlc ide copilot
 ### Questions?
 - Read: `.agent/usage.md`
 - Examples: `CLI-EXAMPLES.md`
-- Issues: https://github.com/yourusername/agentic-sdlc/issues
+- Issues: https://github.com/yourusername/sdlc-kit/issues
 
 ### Need Help?
 ```bash
 # Check installation
-agentic-sdlc list
+sdlc-kit list
 
 # Reinstall if needed
-agentic-sdlc install --force
+sdlc-kit install --force
 
 # Setup IDE again
-agentic-sdlc ide cursor --force
+sdlc-kit ide cursor --force
 ```
 
 ---
@@ -701,8 +701,8 @@ agentic-sdlc ide cursor --force
 ## ✅ Integration Checklist
 
 - [ ] Navigate to existing project
-- [ ] Run `agentic-sdlc install`
-- [ ] Run `agentic-sdlc ide <your-ide>`
+- [ ] Run `sdlc-kit install`
+- [ ] Run `sdlc-kit ide <your-ide>`
 - [ ] Test with simple command: `/pm Analyze project`
 - [ ] Review generated documentation
 - [ ] Initialize knowledge base (optional)
@@ -716,7 +716,7 @@ agentic-sdlc ide cursor --force
 
 ```bash
 cd your-project
-agentic-sdlc install
-agentic-sdlc ide cursor
+sdlc-kit install
+sdlc-kit ide cursor
 # In IDE: /pm Let's improve this project!
 ```

@@ -206,7 +206,7 @@ question.addEventListener('click', () => {
 
 **Copy to Clipboard**
 ```javascript
-navigator.clipboard.writeText('npm install -g agentic-sdlc');
+navigator.clipboard.writeText('npm install -g sdlc-kit');
 ```
 - ✅ Static text only
 - ✅ No user input
@@ -559,7 +559,7 @@ No high-risk security issues identified.
 ## Security Contact
 
 For security concerns or vulnerability reports:
-- **Email:** security@agentic-sdlc.dev (if applicable)
+- **Email:** security@sdlc-kit.dev (if applicable)
 - **GitHub:** Security tab for vulnerability reporting
 - **Response Time:** 24-48 hours for critical issues
 

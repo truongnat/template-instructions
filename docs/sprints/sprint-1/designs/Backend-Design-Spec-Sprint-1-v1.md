@@ -138,8 +138,8 @@ Agentic SDLC là một **hệ thống mô phỏng SDLC hoàn chỉnh** sử dụ
 | **Landing Page** | Astro + React + Tailwind | Marketing (separate) | `landing-page/` |
 
 **Workflow thực tế:**
-1. Developer chạy `npm install -g agentic-sdlc`
-2. Trong project, chạy `agentic-sdlc install`
+1. Developer chạy `npm install -g sdlc-kit`
+2. Trong project, chạy `sdlc-kit install`
 3. Framework copy `.agent/` vào project
 4. Developer dùng IDE với slash commands: `/pm`, `/dev`, `/auto`
 5. AI assistant đọc workflows và thực thi
@@ -154,7 +154,7 @@ Agentic SDLC là một **hệ thống mô phỏng SDLC hoàn chỉnh** sử dụ
 **Đây là cấu trúc THỰC TẾ của Agentic SDLC framework:**
 
 ```
-agentic-sdlc/                        # NPM package root
+sdlc-kit/                        # NPM package root
 ├── bin/                             # CLI implementation
 │   ├── cli.js                       # Entry point
 │   ├── commands/                    # Command handlers
@@ -285,7 +285,7 @@ agentic-sdlc/                        # NPM package root
 
 ### 2.2 User Project Structure (After Installation)
 
-**Khi user chạy `agentic-sdlc install` trong project của họ:**
+**Khi user chạy `sdlc-kit install` trong project của họ:**
 
 ```
 user-project/                        # User's existing project
@@ -305,9 +305,9 @@ user-project/                        # User's existing project
 │           ├── logs/               # DEV, DEVOPS logs
 │           └── reports/            # Final reports
 │
-├── .cursorrules                     # ← Created by `agentic-sdlc ide cursor`
+├── .cursorrules                     # ← Created by `sdlc-kit ide cursor`
 ├── .github/
-│   └── copilot-instructions.md     # ← Created by `agentic-sdlc ide copilot`
+│   └── copilot-instructions.md     # ← Created by `sdlc-kit ide copilot`
 │
 ├── src/                             # User's actual code
 ├── package.json                     # User's package.json
@@ -474,7 +474,7 @@ content:
 
 **Command Structure:**
 ```bash
-agentic-sdlc <command> [arguments] [options]
+sdlc-kit <command> [arguments] [options]
 ```
 
 **Available Commands:**
@@ -491,7 +491,7 @@ agentic-sdlc <command> [arguments] [options]
 
 **Command Details:**
 
-#### 1. `agentic-sdlc install`
+#### 1. `sdlc-kit install`
 **Purpose:** Install framework vào existing project
 
 **What it does:**
@@ -502,7 +502,7 @@ agentic-sdlc <command> [arguments] [options]
 **Example:**
 ```bash
 cd my-existing-project
-agentic-sdlc install
+sdlc-kit install
 
 # Output:
 # ✓ Copying template files...
@@ -510,7 +510,7 @@ agentic-sdlc install
 # Location: /path/to/project/.agent
 # 
 # Next Steps:
-#   • Setup IDE: agentic-sdlc ide cursor
+#   • Setup IDE: sdlc-kit ide cursor
 #   • Review: .agent/usage.md
 #   • Start: /pm Build your project
 ```
@@ -520,7 +520,7 @@ agentic-sdlc install
 - `--quiet`: Minimal output
 - `--verbose`: Detailed logging
 
-#### 2. `agentic-sdlc create <project-name>`
+#### 2. `sdlc-kit create <project-name>`
 **Purpose:** Tạo project mới với framework đã setup
 
 **What it does:**
@@ -531,7 +531,7 @@ agentic-sdlc install
 
 **Example:**
 ```bash
-agentic-sdlc create my-new-project
+sdlc-kit create my-new-project
 
 # Output:
 # ✓ Creating project directory...
@@ -541,12 +541,12 @@ agentic-sdlc create my-new-project
 # 
 # Next Steps:
 #   cd my-new-project
-#   agentic-sdlc ide cursor
+#   sdlc-kit ide cursor
 #   • Review .agent/usage.md
 #   • Start: /pm Build your project
 ```
 
-#### 3. `agentic-sdlc ide <ide-name>`
+#### 3. `sdlc-kit ide <ide-name>`
 **Purpose:** Setup IDE integration
 
 **Supported IDEs:**
@@ -559,7 +559,7 @@ agentic-sdlc create my-new-project
 
 **Example:**
 ```bash
-agentic-sdlc ide cursor
+sdlc-kit ide cursor
 
 # Output:
 # ✓ Setting up Cursor IDE...
@@ -571,7 +571,7 @@ agentic-sdlc ide cursor
 #   • Use slash commands: /pm, /dev, /auto
 ```
 
-#### 4. `agentic-sdlc init-kb`
+#### 4. `sdlc-kit init-kb`
 **Purpose:** Initialize knowledge base
 
 **What it does:**
@@ -581,18 +581,18 @@ agentic-sdlc ide cursor
 
 **Example:**
 ```bash
-agentic-sdlc init-kb
+sdlc-kit init-kb
 
 # Or with Neo4j:
-agentic-sdlc init-kb --with-neo4j
+sdlc-kit init-kb --with-neo4j
 ```
 
-#### 5. `agentic-sdlc list`
+#### 5. `sdlc-kit list`
 **Purpose:** List available templates and roles
 
 **Example:**
 ```bash
-agentic-sdlc list
+sdlc-kit list
 
 # Output:
 # Available Roles (12):
@@ -1053,10 +1053,10 @@ RETURN k
 **Package Structure:**
 ```json
 {
-  "name": "agentic-sdlc",
+  "name": "sdlc-kit",
   "version": "1.0.1",
   "bin": {
-    "agentic-sdlc": "./bin/cli.js"
+    "sdlc-kit": "./bin/cli.js"
   },
   "files": [
     "bin/",
@@ -1070,10 +1070,10 @@ RETURN k
 **Installation:**
 ```bash
 # Global install
-npm install -g agentic-sdlc
+npm install -g sdlc-kit
 
 # Local install
-npx agentic-sdlc create my-project
+npx sdlc-kit create my-project
 ```
 
 ### 8.2 Landing Page Deployment

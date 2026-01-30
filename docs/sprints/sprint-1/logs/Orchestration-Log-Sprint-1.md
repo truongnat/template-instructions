@@ -6,7 +6,7 @@
 **Mode:** Full-Auto
 
 ## Sprint Goal
-Create a high-premium landing page for the `agentic-sdlc` project using the project's own SDLC workflow and roles.
+Create a high-premium landing page for the `sdlc-kit` project using the project's own SDLC workflow and roles.
 
 ## Workflow Execution Status
 

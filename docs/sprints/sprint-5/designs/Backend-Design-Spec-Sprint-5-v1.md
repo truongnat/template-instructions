@@ -555,7 +555,7 @@ import { Button } from '@/components/ui/button';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://agentic-sdlc.com'),
+  metadataBase: new URL('https://sdlc-kit.com'),
   title: {
     default: 'Agentic SDLC - AI-Powered Software Development Lifecycle',
     template: '%s | Agentic SDLC',
@@ -567,7 +567,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'en_US',
-    url: 'https://agentic-sdlc.com',
+    url: 'https://sdlc-kit.com',
     title: 'Agentic SDLC - AI-Powered Software Development Lifecycle',
     description: 'Transform your development workflow with AI-powered agents.',
     siteName: 'Agentic SDLC',
@@ -648,13 +648,13 @@ import { MetadataRoute } from 'next';
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: 'https://agentic-sdlc.com',
+      url: 'https://sdlc-kit.com',
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 1,
     },
     {
-      url: 'https://agentic-sdlc.com/docs',
+      url: 'https://sdlc-kit.com/docs',
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.8,
@@ -675,7 +675,7 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/api/', '/admin/'],
     },
-    sitemap: 'https://agentic-sdlc.com/sitemap.xml',
+    sitemap: 'https://sdlc-kit.com/sitemap.xml',
   };
 }
 ```
@@ -1161,7 +1161,7 @@ jobs:
 **Environment Variables**
 ```
 # .env.local
-NEXT_PUBLIC_SITE_URL=https://agentic-sdlc.com
+NEXT_PUBLIC_SITE_URL=https://sdlc-kit.com
 NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
 
 # Server-only
@@ -1343,8 +1343,8 @@ const pool = new Pool({
 **Setup**
 ```bash
 # Clone repository
-git clone https://github.com/org/agentic-sdlc-landing.git
-cd agentic-sdlc-landing
+git clone https://github.com/org/sdlc-kit-landing.git
+cd sdlc-kit-landing
 
 # Install dependencies
 npm install

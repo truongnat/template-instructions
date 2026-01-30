@@ -1,8 +1,8 @@
 #!/bin/bash
-# Reinstall agentic-sdlc package
+# Reinstall sdlc-kit package
 # This script handles the reinstallation process
 
-echo "🔄 Reinstalling agentic-sdlc package..."
+echo "🔄 Reinstalling sdlc-kit package..."
 echo ""
 
 # Step 1: Clean build artifacts
