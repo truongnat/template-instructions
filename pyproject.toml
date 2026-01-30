@@ -70,6 +70,9 @@ agentic = "agentic_sdlc.cli:main"
 agentic-sdlc = "agentic_sdlc.cli:main"
 asdlc = "agentic_sdlc.cli:main"
 
+[tool.setuptools]
+include-package-data = true
+
 [tool.setuptools.packages.find]
 include = ["agentic_sdlc", "agentic_sdlc.*"]
 
