@@ -20,7 +20,7 @@ Activate when user mentions: `@TESTER`, "tester", "testing", "test the code", "r
 ```bash
 # Search for known bug patterns
 kb search "bug-type platform"
-kb compound search "testing-strategy"
+python agentic_sdlc/core/brain/brain_cli.py search "testing-strategy"
 
 # Review test docs
 # Check docs/guides/ for testing standards
@@ -92,7 +92,7 @@ kb compound search "testing-strategy"
 ```bash
 # Search for known bug patterns
 kb search "bug-type feature-name"
-kb compound search "testing-strategy"
+python agentic_sdlc/core/brain/brain_cli.py search "testing-strategy"
 
 # Review test docs
 # Check docs/guides/ for testing standards
@@ -102,7 +102,7 @@ kb compound search "testing-strategy"
 When finding recurring or non-obvious bugs:
 ```bash
 # Document the bug pattern
-kb compound add
+python agentic_sdlc/core/brain/brain_cli.py learn
 # Category: bug
 # Priority: based on severity
 # Include: Reproduction steps, root cause, fix
@@ -208,13 +208,13 @@ After testing:
 5. **RESEARCH FIRST:** Step 0 is NEVER optional.
 
 ### 0.0 **Team Communication (MANDATORY):**
-   - **Check History:** `python tools/communication/cli.py history --channel general --limit 10`
-   - **Announce Start:** `python tools/communication/cli.py send --channel general --thread "SDLC-Flow" --role TESTER --content "Starting Design Verification / Testing."`
+   - **Check History:** `python agentic_sdlc/infrastructure/communication/chat_manager.py history --channel general --limit 10`
+   - **Announce Start:** `python agentic_sdlc/infrastructure/communication/chat_manager.py send --channel general --thread "SDLC-Flow" --role TESTER --content "Starting Design Verification / Testing."`
 
 ## Key Duties (Execution)
 
 ### 0. **RESEARCH FIRST (MANDATORY):**
-   - Run: `python tools/research/research_agent.py --bug "[description]" --type bug`
+   - Run: `python agentic_sdlc/intelligence/research/researcher.py --bug "[description]" --type bug`
 
 ### 1. **Design Verification (Phase 4):**
    - **Review Artifacts:**
@@ -236,7 +236,8 @@ After testing:
 
 ### 3. **Self-Learning:**
    - After fixing bugs, create KB entry if confidence was low.
-   - Run: `python tools/neo4j/sync_skills_to_neo4j.py`
+   - Run: `# DEPRECATED: Neo4j integration removed - use SQLite KB instead
+# python tools/neo4j/sync_skills_to_neo4j.py`
 - **Shell Commands** - Run test suites
 - **getDiagnostics** - Check for code issues
 - **File Tools** - Read test files, create test reports
@@ -245,9 +246,9 @@ After testing:
 ### Knowledge Base Integration
 - **KB CLI** - Search and document bugs
   - `kb search "bug-type"` - Find known bugs
-  - `kb compound search "test-strategy"` - Search with Neo4j
-  - `kb compound add` - Document bug patterns
-  - `kb compound sync` - Sync to Neo4j Brain
+  - `python agentic_sdlc/core/brain/brain_cli.py search "test-strategy"` - Search with Neo4j
+  - `python agentic_sdlc/core/brain/brain_cli.py learn` - Document bug patterns
+  - `python agentic_sdlc/core/brain/brain_cli.py sync` - Sync to Neo4j Brain
 
 ### Bug Tracking
 - **GitHub MCP** - Create/update bug issues
@@ -259,13 +260,14 @@ After testing:
 ```bash
 # 1. Search for known bug patterns
 kb search "feature-name bug"
-kb compound search "platform-specific issues"
+python agentic_sdlc/core/brain/brain_cli.py search "platform-specific issues"
 
 # 2. Review test docs
 # Check docs/guides/ for testing standards
 
 # 3. Query Neo4j for related bugs
-python tools/neo4j/query_skills_neo4j.py --search "bug"
+# DEPRECATED: Neo4j integration removed - use SQLite KB instead
+# python tools/neo4j/query_skills_neo4j.py --search "bug"
 ```
 
 ### During Testing
@@ -276,7 +278,7 @@ python tools/neo4j/query_skills_neo4j.py --search "bug"
 ### After Testing
 ```bash
 # 1. Document recurring or non-obvious bugs
-kb compound add
+python agentic_sdlc/core/brain/brain_cli.py learn
 # Category: bug
 # Priority: based on severity
 
@@ -284,7 +286,7 @@ kb compound add
 # Add to docs/guides/ if new testing strategy
 
 # 3. Sync to Neo4j Brain
-kb compound sync
+python agentic_sdlc/core/brain/brain_cli.py sync
 
 # 4. Verify searchability
 kb search "bug-description"

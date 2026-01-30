@@ -16,7 +16,7 @@ from unittest.mock import patch, MagicMock
 # Add tools to path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from agentic_sdlc.intelligence.state.state_manager import StateManager, WorkflowSession, Checkpoint
+from agentic_sdlc.intelligence.collaborating.state.state_manager import StateManager, WorkflowSession, Checkpoint
 
 class TestStateManager:
     """Tests for State Manager component."""

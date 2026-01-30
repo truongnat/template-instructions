@@ -51,13 +51,13 @@ Activate when user mentions: `@BA`, "business analyst", "requirements", "user st
 4. **RESEARCH FIRST:** Step 0 is NEVER optional.
 
 ### 0.0 **Team Communication (MANDATORY):**
-   - **Check History:** `python tools/communication/cli.py history --channel general --limit 10`
-   - **Announce Start:** `python tools/communication/cli.py send --channel general --thread "SDLC-Flow" --role BA --content "Starting Requirements Gathering and User Story creation."`
+   - **Check History:** `python agentic_sdlc/infrastructure/communication/chat_manager.py history --channel general --limit 10`
+   - **Announce Start:** `python agentic_sdlc/infrastructure/communication/chat_manager.py send --channel general --thread "SDLC-Flow" --role BA --content "Starting Requirements Gathering and User Story creation."`
 
 ## Key Duties (Execution)
 
 ### 0. **RESEARCH FIRST (MANDATORY):**
-   - Run: `python tools/research/research_agent.py --task "requirements analysis" --type general`
+   - Run: `python agentic_sdlc/intelligence/research/researcher.py --task "requirements analysis" --type general`
    - Analyze industry standards and local Knowledge Base patterns.
 
 ### 1. **Requirements Gathering:**

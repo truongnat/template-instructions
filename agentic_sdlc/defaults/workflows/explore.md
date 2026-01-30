@@ -1,153 +1,99 @@
 ---
-description: Process - Deep Investigation Workflow
+description: Process - Deep Investigation Workflow (HeavySwarm Pattern)
 ---
 
-# /explore - Multi-Order Analysis
+# /explore - HeavySwarm Protocol
+
+The `/explore` workflow follows a 5-phase **HeavySwarm** pattern for deep investigation and complex architectural decisions.
 
 ## ⚠️ STRICT EXECUTION PROTOCOL (MANDATORY)
 1. **USE BEFORE PLANNING:** Run before major architectural decisions.
-2. **MULTI-ORDER THINKING:** Go beyond surface-level analysis.
+2. **HEAVY SWARM:** Utilize multi-agent collaboration for deep insights.
 3. **EVIDENCE-BASED:** All findings must have supporting evidence.
 4. **DOCUMENT FINDINGS:** Create exploration report.
 
-## When to Use
+---
 
-- **Complex Features:** Before implementing features with many dependencies
-- **Architecture Decisions:** Before major structural changes
-- **Unknown Territory:** When entering unfamiliar domains
-- **Risk Assessment:** Before high-impact changes
+## HeavySwarm Phases
 
-## Workflow Steps
-
-### 1. First-Order Analysis (Surface Level)
-**Question:** What does the user want?
+### Phase 1: Discovery Swarm (Parallel Research)
+**Roles:** @RESEARCH + @SA + @SECA
+**Action:** Run parallel research on the topic.
 
 ```bash
-# Basic research with research agent
-python tools/intelligence/research/research_agent.py --task "[feature]" --type general
-
-# Deep Search MCP (aggregated: DuckDuckGo + GitHub + StackOverflow)
-python mcp/connectors/deep_search.py --search "[feature]"
+agentic-sdlc brain concurrent --roles "RESEARCH,SA,SECA" --task "Research [Topic]" \
+  --command "agentic-sdlc brain research --task '{TASK}' --type general"
 ```
 
-- [ ] Understand explicit requirements
-- [ ] Identify immediate stakeholders
-- [ ] List obvious technical needs
+- [ ] Identify state-of-the-art solutions
+- [ ] List technical constraints
+- [ ] Gather security benchmarks
 
-### 2. Second-Order Analysis (Dependencies)
-**Question:** What does this depend on?
-
-- [ ] Identify technical dependencies
-- [ ] Map affected components
-- [ ] Find related existing implementations
+### Phase 2: Analysis Swarm (Multi-Order Thinking)
+**Roles:** @SA + @BA + @DEV
+**Action:** Apply multi-order analysis to discovery findings.
 
 ```bash
-# Search KB for related entries
-python bin/kb_cli.py search "[related topic]"
+agentic-sdlc brain concurrent --roles "SA,BA,DEV" --task "Analyze Findings for [Topic]"
 ```
 
-### 3. Third-Order Analysis (Implications)
-**Question:** What are the ripple effects?
+- **1st Order:** Surface requirements
+- **2nd Order:** Dependencies & ripple effects
+- **3rd Order:** Long-term maintenance & scalability
 
-- [ ] Performance implications
-- [ ] Security implications
-- [ ] Scalability considerations
-- [ ] Maintenance burden
-
-### 4. Fourth-Order Analysis (Hidden Risks)
-**Question:** What could go wrong that we haven't considered?
-
-- [ ] Edge cases
-- [ ] Failure modes
-- [ ] Integration conflicts
-- [ ] Future constraints
+### Phase 3: Debate Swarm (Multi-Agent Group Chat)
+**Roles:** @SA + @DEV + @TESTER + @PO
+**Action:** Debate the findings and proposed approaches to find edge cases.
 
 ```bash
-# Check for similar issues in KB
-python bin/kb_cli.py search "bug" --category bugs
+agentic-sdlc brain chat --topic "Debate implementation of [Topic]" --agents "SA,DEV,TESTER,PO" --turns 5
 ```
 
-### 5. Synthesis
-**Question:** What's the recommended approach?
+- [ ] Challenge assumptions
+- [ ] Identify hidden risks
+- [ ] Explore alternative perspectives
 
-Create exploration report with:
-- Key findings per order of analysis
-- Risk assessment matrix
-- Recommended approach with rationale
-- Alternative approaches considered
-- Open questions requiring stakeholder input
+### Phase 4: Synthesis Swarm (MixtureOfAgents)
+**Roles:** @BRAIN (Aggregator)
+**Action:** Synthesize all previous phases into a unified recommendation.
 
-## Output Template
-
-```markdown
-# Exploration Report: [Feature/Decision]
-
-**Date:** YYYY-MM-DD  
-**Author:** @[ROLE]
-
-## Executive Summary
-[1-2 paragraph summary]
-
-## First-Order Analysis
-### User Requirements
-- ...
-
-## Second-Order Analysis
-### Dependencies
-- ...
-
-## Third-Order Analysis
-### Implications
-- ...
-
-## Fourth-Order Analysis
-### Hidden Risks
-- ...
-
-## Risk Matrix
-| Risk | Probability | Impact | Mitigation |
-|------|------------|--------|------------|
-| ... | ... | ... | ... |
-
-## Recommendation
-[Recommended approach with rationale]
-
-## Alternatives Considered
-1. ...
-2. ...
-
-## Open Questions
-- [ ] ...
+```bash
+agentic-sdlc brain synthesize --concurrent-result latest --strategy llm
 ```
 
-## Integration
+- [ ] Resolve contradictions from debate
+- [ ] Consolidate key insights
+- [ ] Formulate final recommendations
 
-- **@PM** triggers before major planning
-- **@SA** uses for architecture decisions
-- **@SECA** incorporates in security review
-- **/cycle** may trigger for complex tasks
+### Phase 5: Conclusion & Report
+**Roles:** @REPORTER
+**Action:** Generate the official Exploration Report.
 
-## Example Usage
-
+```bash
+agentic-sdlc brain gen exploration-report '{"topic": "[Topic]", "results": "..."}'
 ```
-User: "We need to add OAuth authentication"
-
-/explore OAuth implementation
-
-First-Order: User wants social login
-Second-Order: Depends on token storage, session management, user model
-Third-Order: Affects all API endpoints, session timeout, refresh logic
-Fourth-Order: Token revocation, multi-device sessions, privacy compliance
-```
-
-#explore #analysis #research #architecture #risk-assessment
-
-## ⏭️ Next Steps
-- **If Recommendation Approved:** Trigger `/cycle` or `/sprint` to implement
-- **If Rejected:** Refine analysis or explore alternatives
-- **If Unclear:** Request stakeholder feedback
 
 ---
 
-## ENFORCEMENT REMINDER
-Search KB for related entries before deep investigation.
+## Output Template: `Exploration-Report-[Topic].md`
+
+```markdown
+# Exploration Report: [Topic]
+
+## 1. Discovery Summary
+(Synthesis of Phase 1)
+
+## 2. Multi-Order Impact Analysis
+(Synthesis of Phase 2)
+
+## 3. Debate Highlights & Risk Assessment
+(Synthesis of Phase 3)
+
+## 4. Final Recommendations
+(Synthesis of Phase 4)
+
+## 5. Implementation Roadmap
+(Actionable steps for next phases)
+```
+
+#explore #heavyswarm #multi-agent #analysis #deep-dive

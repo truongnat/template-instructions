@@ -72,7 +72,7 @@ Re-run health check to confirm improvements.
 |------|----------------|
 | Documentation | `docs/` directory, walkthroughs, plans |
 | Brain State | `.agent/` directory integrity |
-| Tools | `tools/` directory structure |
+| Tools | `agentic_sdlc/` directory structure |
 | KB Health | Entry count, category distribution |
 
 ## Integration

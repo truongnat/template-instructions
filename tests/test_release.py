@@ -6,7 +6,7 @@ from pathlib import Path
 # Add project root to path (so we can import agentic_sdlc)
 sys.path.append(str(Path(__file__).parent.parent))
 
-from agentic_sdlc.infrastructure.release.release import ReleaseManager
+from agentic_sdlc.infrastructure.lifecycle.release.release import ReleaseManager
 
 @pytest.fixture
 def release_manager():

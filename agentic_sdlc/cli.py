@@ -103,6 +103,19 @@ def main():
     if len(sys.argv) > 1:
         command = sys.argv[1]
         
+        if command in ["--help", "help"]:
+            print("Agentic SDLC CLI")
+            print("Usage: agentic <command> [options]")
+            print()
+            print("Available commands:")
+            print("  init      Initialize project scaffolding")
+            print("  demand    Execute a declarative task")
+            print("  brain     Access the Brain CLI")
+            print()
+            from agentic_sdlc.core.brain.brain_cli import main as brain_main
+            brain_main(["--help"])
+            return
+
         if command == "init":
             parser = argparse.ArgumentParser(prog="agentic init", description="Initialize project scaffolding")
             parser.add_argument("--force", action="store_true", help="Overwrite existing configuration")

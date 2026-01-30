@@ -1,0 +1,24 @@
+[
+  {
+    "id": "50c59d01",
+    "model": "gpt-4o",
+    "task_id": "task-cli-1",
+    "task_type": "general",
+    "input_tokens": 1000,
+    "output_tokens": 500,
+    "cost": 0.0125,
+    "timestamp": "2026-01-29T21:12:39.966555",
+    "metadata": {}
+  },
+  {
+    "id": "78fe10d4",
+    "model": "claude-3-opus",
+    "task_id": "task-cli-2",
+    "task_type": "general",
+    "input_tokens": 2000,
+    "output_tokens": 1000,
+    "cost": 0.105,
+    "timestamp": "2026-01-29T21:12:40.103570",
+    "metadata": {}
+  }
+]

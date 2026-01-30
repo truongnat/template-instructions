@@ -1,8 +1,8 @@
 # A/B Comparison Report
 
-**Report ID:** `[AUTO-GENERATED]`  
-**Generated:** `[TIMESTAMP]`  
-**Prompt:** `[USER_PROMPT]`
+**Report ID:** {{test_id}}  
+**Generated:** {{timestamp}}  
+**Prompt:** {{prompt}}
 
 ---
 
@@ -10,13 +10,13 @@
 
 **Decision Context:** `[Brief description of what needs to be decided]`
 
-**Recommendation:** Option A | Option B | Tie
+**Recommendation:** {{recommendation}}
 
-**Confidence Level:** High | Medium | Low
+**Confidence Level:** {{confidence_level}}
 
 ---
 
-## Alternative A: `[APPROACH_NAME]`
+## Alternative A: {{option_a_name}}
 
 ### Description
 `[Detailed description of Alternative A]`
@@ -49,21 +49,21 @@
 | **Scalability** | `[0-100]` | `[Why this score]` |
 | **Cost** | `[0-100]` | `[Why this score]` |
 
-**Total Score:** `[AVERAGE]` / 100
+**Total Score:** {{option_a_score}} / 10
 
 ### Past Similar Solutions
 `[KB search results - what we've done before that's similar]`
 - Solution 1: `[Link to KB entry]`
 - Solution 2: `[Link to KB entry]`
 
-### Related Technologies (Neo4j)
-`[Technologies/skills from Neo4j graph]`
+### Related Technologies (Memgraph)
+`[Technologies/skills from Memgraph graph]`
 - Tech 1: `[Relationship]`
 - Tech 2: `[Relationship]`
 
 ---
 
-## Alternative B: `[APPROACH_NAME]`
+## Alternative B: {{option_b_name}}
 
 ### Description
 `[Detailed description of Alternative B]`
@@ -96,15 +96,15 @@
 | **Scalability** | `[0-100]` | `[Why this score]` |
 | **Cost** | `[0-100]` | `[Why this score]` |
 
-**Total Score:** `[AVERAGE]` / 100
+**Total Score:** {{option_a_score}} / 10
 
 ### Past Similar Solutions
 `[KB search results]`
 - Solution 1: `[Link to KB entry]`
 - Solution 2: `[Link to KB entry]`
 
-### Related Technologies (Neo4j)
-`[Technologies/skills from Neo4j graph]`
+### Related Technologies (Memgraph)
+`[Technologies/skills from Memgraph graph]`
 - Tech 1: `[Relationship]`
 - Tech 2: `[Relationship]`
 
@@ -151,7 +151,7 @@
 - `[KB entry 1]` - `[Relevance]`
 - `[KB entry 2]` - `[Relevance]`
 
-### Neo4j Graph Insights
+### Memgraph Graph Insights
 - `[Graph insight 1]`
 - `[Graph insight 2]`
 
@@ -172,4 +172,4 @@
 
 **A/B Test Agent:** v1.0.0  
 **Judge Score:** `[If this report was scored]` / 100  
-**Report Generated At:** `[TIMESTAMP]`
+**Report Generated At:** {{timestamp}}

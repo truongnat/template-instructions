@@ -15,7 +15,7 @@ from unittest.mock import patch, MagicMock
 
 # imports should work via conftest path setup
 
-from agentic_sdlc.intelligence.hitl.hitl_manager import HITLManager, ApprovalGate, ApprovalStatus, ApprovalRequest
+from agentic_sdlc.intelligence.monitoring.hitl.hitl_manager import HITLManager, ApprovalGate, ApprovalStatus, ApprovalRequest
 
 class TestHITLManager:
     """Tests for HITL Manager component."""

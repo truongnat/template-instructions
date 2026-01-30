@@ -14,14 +14,14 @@ Complete Task Lifecycle workflow for small to medium tasks. This workflow guides
 5. **QUALITY CHECKS:** Run Observer and Judge before PR.
 
 ### 0.0 **Team Communication (MANDATORY):**
-   - **Check History:** `agentic-sdlc run tools/infrastructure/communication/cli.py history --channel general --limit 10`
-   - **Announce Start:** `agentic-sdlc run tools/infrastructure/communication/cli.py send --channel general --thread "SDLC-Flow" --role AGENT --content "Starting /cycle for [Task]."`
+   - **Check History:** `python asdlc.py comm history --channel general --limit 10`
+   - **Announce Start:** `python asdlc.py comm send --channel general --thread "SDLC-Flow" --role AGENT --content "Starting /cycle for [Task]."`
 
 ## Workflow Steps
 
 ### 1. Research Phase (MANDATORY)
 ```bash
-agentic-sdlc research --feature "[task]" --type feature
+python asdlc.py research --feature "[task]"
 ```
 - [ ] Search KB for similar implementations.
 - [ ] Check GitHub issues for context.
@@ -31,7 +31,7 @@ agentic-sdlc research --feature "[task]" --type feature
 - Add task to `Development-Log.md`.
 - **Observer Check:**
   ```bash
-  python tools/core/brain/brain_cli.py observe --action "planning" --context '{"task": "[task]"}'
+  python asdlc.py observe --action "planning" --context '{"task": "[task]"}'
   ```
 
 ### 3. Feature Branch
@@ -48,11 +48,11 @@ git push -u origin feat/TASK-ID-name
 - Run local tests.
 - **Judge Score (Target > 8/10):**
   ```bash
-  python tools/core/brain/brain_cli.py score "path/to/main_file.py"
+  python asdlc.py score "path/to/main_file.py"
   ```
 - **Compliance Check:**
   ```bash
-  python tools/core/brain/brain_cli.py observe
+  python asdlc.py observe
   ```
 
 ### 6. Merge & Cleanup (MANDATORY)
@@ -66,12 +66,12 @@ git push -u origin feat/TASK-ID-name
   git push origin main
   git branch -d feat/TASK-ID-name
   ```
-- Notify Team: `agentic-sdlc run tools/infrastructure/communication/cli.py send --channel general --content "Merged [task] to main and cleaned up branches."`
+- Notify Team: `python asdlc.py comm send --channel general --content "Merged [task] to main and cleaned up branches."`
 
 ### 7. Self-Learning (MANDATORY)
 ```bash
-agentic-sdlc kb compound sync
-python tools/core/brain/brain_cli.py learn "Completed [task] using [approach]"
+python asdlc.py sync
+python asdlc.py learn "Completed [task] using [approach]"
 ```
 - Update `CHANGELOG.md`.
 

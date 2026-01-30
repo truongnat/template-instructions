@@ -20,7 +20,7 @@ Activate when user mentions: `@SA`, "system analyst", "architecture", "API desig
 ```bash
 # Search for similar architectures
 kb search "architecture-pattern"
-kb compound search "API design"
+python agentic_sdlc/core/brain/brain_cli.py search "API design"
 
 # Review architecture docs
 # Check docs/ARCHITECTURE-OVERVIEW.md
@@ -76,7 +76,7 @@ kb compound search "API design"
 ```bash
 # Search for architecture patterns
 kb search "architecture microservices"
-kb compound search "API design REST"
+python agentic_sdlc/core/brain/brain_cli.py search "API design REST"
 
 # Review architecture docs
 # Read docs/ARCHITECTURE-OVERVIEW.md
@@ -88,7 +88,7 @@ kb compound search "API design REST"
 When making significant architecture decisions:
 ```bash
 # Document the decision
-kb compound add
+python agentic_sdlc/core/brain/brain_cli.py learn
 # Category: architecture
 # Include: Problem, options considered, decision, rationale
 ```
@@ -193,9 +193,9 @@ After making architecture decision:
 ### Knowledge Base Integration
 - **KB CLI** - Search and document architecture
   - `kb search "architecture-pattern"` - Find patterns
-  - `kb compound search "microservices"` - Search with Neo4j
-  - `kb compound add` - Document decisions
-  - `kb compound sync` - Sync to Neo4j Brain
+  - `python agentic_sdlc/core/brain/brain_cli.py search "microservices"` - Search with Neo4j
+  - `python agentic_sdlc/core/brain/brain_cli.py learn` - Document decisions
+  - `python agentic_sdlc/core/brain/brain_cli.py sync` - Sync to Neo4j Brain
 
 ### Documentation
 - **File Tools** - Read/update architecture docs
@@ -215,7 +215,8 @@ kb search "architecture microservices API"
 # Check docs/architecture/ for patterns
 
 # 3. Query Neo4j for relationships
-python tools/neo4j/query_skills_neo4j.py --search "architecture"
+# DEPRECATED: Neo4j integration removed - use SQLite KB instead
+# python tools/neo4j/query_skills_neo4j.py --search "architecture"
 ```
 
 ### During Design
@@ -227,7 +228,7 @@ python tools/neo4j/query_skills_neo4j.py --search "architecture"
 ### After Design
 ```bash
 # 1. Document architecture decisions
-kb compound add
+python agentic_sdlc/core/brain/brain_cli.py learn
 # Category: architecture
 # Include: ADR format
 
@@ -236,7 +237,7 @@ kb compound add
 # Add to docs/architecture/ if significant
 
 # 3. Sync to Neo4j Brain
-kb compound sync
+python agentic_sdlc/core/brain/brain_cli.py sync
 ```
 
 ## Metrics to Track
@@ -252,13 +253,13 @@ kb compound sync
 4. **RESEARCH FIRST:** Step 0 is NEVER optional.
 
 ### 0.0 **Team Communication (MANDATORY):**
-   - **Check History:** `python tools/communication/cli.py history --channel general --limit 10`
-   - **Announce Start:** `python tools/communication/cli.py send --channel general --thread "SDLC-Flow" --role SA --content "Starting Phase 3: Architecture Design."`
+   - **Check History:** `python agentic_sdlc/infrastructure/communication/chat_manager.py history --channel general --limit 10`
+   - **Announce Start:** `python agentic_sdlc/infrastructure/communication/chat_manager.py send --channel general --thread "SDLC-Flow" --role SA --content "Starting Phase 3: Architecture Design."`
 
 ## Key Duties (Execution)
 
 ### 0. **RESEARCH FIRST (MANDATORY):**
-   - Run: `python tools/research/research_agent.py --task "architecture design" --type architecture`
+   - Run: `python agentic_sdlc/intelligence/research/researcher.py --task "architecture design" --type architecture`
    - Check for existing patterns in Knowledge Base.
 
 ### 1. **Architecture Design:**

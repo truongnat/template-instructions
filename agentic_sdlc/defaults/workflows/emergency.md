@@ -12,7 +12,7 @@ description: Process - Emergency/Hotfix Response Workflow
 
 ### 0.0 **Declare Incident:**
 ```bash
-python tools/infrastructure/workflows/emergency.py --severity P0 --issue "[issue description]"
+python agentic_sdlc/infrastructure/workflows/emergency.py --severity P0 --issue "[issue description]"
 ```
 
 ## Severity Levels
@@ -34,7 +34,7 @@ python tools/infrastructure/workflows/emergency.py --severity P0 --issue "[issue
 ### 2. Rapid Assessment (5 min max)
 ```bash
 # Search KB for similar incidents
-python tools/intelligence/research/research_agent.py --task "[issue]" --type bug
+python asdlc.py research --bug "[issue]"
 ```
 **Quick Checks:**
 - [ ] Check monitoring/logs
@@ -77,11 +77,11 @@ git commit -m "hotfix: description (#INCIDENT-ID)"
 ### 7. Compound Learning (MANDATORY)
 ```bash
 # Create KB entry automatically
-python tools/infrastructure/workflows/emergency.py --severity P0 --issue "[issue]"
+python agentic_sdlc/infrastructure/workflows/emergency.py --severity P0 --issue "[issue]"
 
 # Or manually update Neo4j
-python tools/intelligence/knowledge_graph/sync_skills_to_neo4j.py
-python tools/intelligence/knowledge_graph/learning_engine.py --record-error "ErrorType" "description" --resolution "fix"
+python asdlc.py full-sync
+python asdlc.py learn "Fixed incident [issue] by [fix]"
 ```
 
 ### 8. Post-Incident
@@ -94,10 +94,10 @@ python tools/intelligence/knowledge_graph/learning_engine.py --record-error "Err
 
 ```bash
 # Interactive workflow
-python tools/infrastructure/workflows/emergency.py -s P0 -i "Payment gateway 500 errors"
+python agentic_sdlc/infrastructure/workflows/emergency.py -s P0 -i "Payment gateway 500 errors"
 
 # Non-interactive (for automation)
-python tools/infrastructure/workflows/emergency.py -s P1 -i "API timeout" --non-interactive
+python agentic_sdlc/infrastructure/workflows/emergency.py -s P1 -i "API timeout" --non-interactive
 ```
 
 ## Output Artifacts

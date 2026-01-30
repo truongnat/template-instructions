@@ -20,7 +20,7 @@ Activate when user mentions: `@PM`, "project manager", "planning phase", "create
 ```bash
 # Search for similar projects
 kb search "project-type"
-kb compound search "architecture-pattern"
+python agentic_sdlc/core/brain/brain_cli.py search "architecture-pattern"
 
 # Review docs for standards
 # Check docs/guides/ for best practices
@@ -72,7 +72,7 @@ kb compound search "architecture-pattern"
 ```bash
 # Search for similar projects
 kb search "project-type"
-kb compound search "tech-stack"
+python agentic_sdlc/core/brain/brain_cli.py search "tech-stack"
 
 # Review architecture docs
 # Check docs/ARCHITECTURE-OVERVIEW.md
@@ -88,7 +88,7 @@ When project completes, document if:
 
 ```bash
 # Document project pattern
-kb compound add
+python agentic_sdlc/core/brain/brain_cli.py learn
 # Category: architecture or feature
 # Include: Approach, challenges, solutions, metrics
 ```
@@ -170,7 +170,7 @@ When unsure which workflow to use:
 ### Knowledge Base Integration
 - **KB CLI** - Search and reference knowledge
   - `kb search "project-type"` - Find similar projects
-  - `kb compound search "architecture"` - Search with Neo4j
+  - `python agentic_sdlc/core/brain/brain_cli.py search "architecture"` - Search with Neo4j
   - `kb list` - Browse all KB entries
   - `kb stats` - View KB metrics
 
@@ -192,7 +192,8 @@ kb search "project-type tech-stack"
 # Check docs/guides/INTEGRATION-GUIDE.md
 
 # 3. Query Neo4j for patterns
-python tools/neo4j/query_skills_neo4j.py --search "architecture"
+# DEPRECATED: Neo4j integration removed - use SQLite KB instead
+# python tools/neo4j/query_skills_neo4j.py --search "architecture"
 ```
 
 ### During Planning
@@ -204,7 +205,7 @@ python tools/neo4j/query_skills_neo4j.py --search "architecture"
 ### After Project Completion
 ```bash
 # Document if novel or reusable
-kb compound add
+python agentic_sdlc/core/brain/brain_cli.py learn
 # Category: architecture or feature
 # Include: Approach, metrics, lessons learned
 ```
@@ -227,13 +228,13 @@ kb compound add
 5. **RESEARCH FIRST:** Step 0 (Research) is NEVER optional.
 
 ### 0.0 **Team Communication (MANDATORY):**
-   - **Check History:** `python tools/communication/cli.py history --channel general --limit 10`
-   - **Announce Start:** `python tools/communication/cli.py send --channel general --thread "SDLC-Flow" --role PM --content "Starting Phase 1: Planning and Task Allocation."`
+   - **Check History:** `python agentic_sdlc/infrastructure/communication/chat_manager.py history --channel general --limit 10`
+   - **Announce Start:** `python agentic_sdlc/infrastructure/communication/chat_manager.py send --channel general --thread "SDLC-Flow" --role PM --content "Starting Phase 1: Planning and Task Allocation."`
 
 ## Key Duties (Execution)
 
 ### 0. **RESEARCH FIRST (MANDATORY):**
-   - Run: `python tools/research/research_agent.py --task "[project description]" --type general`
+   - Run: `python agentic_sdlc/intelligence/research/researcher.py --task "[project description]" --type general`
    - Goal: Identify reusable patterns, technical risks, and existing KB entries.
 
 ### 1. **Project Planning (Phase 1):**
@@ -254,7 +255,8 @@ kb compound add
 ### 4. **Closure & Reporting (Phase 9 & 10):**
    - Update `CHANGELOG.md`.
    - Create `Final-Review-Report.md`.
-   - **Self-Learning:** Run `python tools/neo4j/sync_skills_to_neo4j.py` to update the project brain.
+   - **Self-Learning:** Run `# DEPRECATED: Neo4j integration removed - use SQLite KB instead
+# python tools/neo4j/sync_skills_to_neo4j.py` to update the project brain.
 
 ## ⏭️ Next Steps
 - **If Plan Approved:** Hand off to `@SA` and `@UIUX` for design.

@@ -7,13 +7,13 @@ from pathlib import Path
 
 def test_release_tool_import():
     try:
-        from agentic_sdlc.infrastructure.release import release
+        from agentic_sdlc.infrastructure.lifecycle.release import release
         assert release is not None
     except ImportError as e:
         pytest.fail(f"Failed to import release tool: {e}")
 
 def test_semver_parsing():
-    from agentic_sdlc.infrastructure.release.release import ReleaseManager
+    from agentic_sdlc.infrastructure.lifecycle.release.release import ReleaseManager
     rm = ReleaseManager()
     major, minor, patch = rm.parse_version("1.2.3")
     assert major == 1
@@ -21,7 +21,7 @@ def test_semver_parsing():
     assert patch == 3
 
 def test_version_bump_logic():
-    from agentic_sdlc.infrastructure.release.release import ReleaseManager
+    from agentic_sdlc.infrastructure.lifecycle.release.release import ReleaseManager
     rm = ReleaseManager()
     assert rm.bump_version("patch", "1.0.0") == "1.0.1"
     assert rm.bump_version("minor", "1.0.0") == "1.1.0"

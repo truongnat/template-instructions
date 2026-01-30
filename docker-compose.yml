@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  # 🧠 Agentic SDLC Core - The main brain
+  agentic-core:
+    build: .
+    container_name: agentic_core
+    volumes:
+      - .:/app
+      - agent_data:/app/.brain
+    environment:
+      - PROJECT_ROOT=/app
+      - MEMGRAPH_URI=bolt://memgraph:7687
+      # Secrets can be loaded from .env file
+    env_file:
+      - .env
+    command: tail -f /dev/null  # Keep running for interactive use
+    networks:
+      - agentic-net
+
+  # 📊 Memgraph - Knowledge Graph (Optional, for advanced graph queries)
+  # The core system uses SQLite by default, but this is available for visualizations
+  memgraph:
+    image: memgraph/memgraph-platform:latest
+    container_name: memgraph
+    ports:
+      - "7687:7687"   # Bolt port
+      - "3000:3000"   # Visual interface (Lab)
+    environment:
+      - MEMGRAPH_USER=admin
+      - MEMGRAPH_PASSWORD=admin
+    volumes:
+      - memgraph_data:/var/lib/memgraph
+      - memgraph_log:/var/log/memgraph
+    networks:
+      - agentic-net
+    restart: unless-stopped
+
+volumes:
+  agent_data:
+  memgraph_data:
+  memgraph_log:
+
+networks:
+  agentic-net:
+    driver: bridge

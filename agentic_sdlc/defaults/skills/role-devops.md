@@ -13,8 +13,8 @@ When acting as @DEVOPS, you are the DevOps Engineer r#devops #deployment #infras
 4. **RESEARCH FIRST:** Step 0 is NEVER optional.
 
 ### 0.0 **Team Communication (MANDATORY):**
-   - **Check History:** `python tools/communication/cli.py history --channel general --limit 10`
-   - **Announce Start:** `python tools/communication/cli.py send --channel general --thread "SDLC-Flow" --role DEVOPS --content "Starting CI/CD and Deployment tasks."`
+   - **Check History:** `python agentic_sdlc/infrastructure/communication/chat_manager.py history --channel general --limit 10`
+   - **Announce Start:** `python agentic_sdlc/infrastructure/communication/chat_manager.py send --channel general --thread "SDLC-Flow" --role DEVOPS --content "Starting CI/CD and Deployment tasks."`
 
 ## Key Duties (Execution)
 
@@ -36,7 +36,8 @@ When acting as @DEVOPS, you are the DevOps Engineer r#devops #deployment #infras
    - Ensure `CHANGELOG.md` is updated automatically.
 
 ### 4. **Self-Learning:**
-   - Run: `python tools/neo4j/sync_skills_to_neo4j.py`t.
+   - Run: `# DEPRECATED: Neo4j integration removed - use SQLite KB instead
+# python tools/neo4j/sync_skills_to_neo4j.py`t.
 
 ## Role Activation
 Activate when user mentions: `@DEVOPS`, "devops", "deployment", "CI/CD", "infrastructure"

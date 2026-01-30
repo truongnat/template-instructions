@@ -1,0 +1,40 @@
+# Version Control
+.git
+.gitignore
+
+# Dependencies
+node_modules/
+.venv/
+venv/
+env/
+__pycache__/
+*.pyc
+
+# Distribution
+dist/
+build/
+*.egg-info/
+*.egg
+
+# Agentic SDLC Artifacts
+.brain/
+docs/artifacts/
+docs/reports/
+
+# Large Example Projects (Exclude from build context)
+agentic_sdlc/defaults/projects/
+examples/
+
+# Environment
+.env
+.env.*
+!.env.template
+
+# IDE
+.vscode/
+.idea/
+
+# Testing
+.pytest_cache/
+htmlcov/
+coverage.xml

@@ -1,0 +1,62 @@
+{
+  "plans": [],
+  "analyses": [
+    {
+      "timestamp": "2026-01-30T07:49:44.963642",
+      "findings_count": 0,
+      "findings": [],
+      "data_sources": [
+        "default"
+      ]
+    },
+    {
+      "timestamp": "2026-01-30T07:50:55.108551",
+      "findings_count": 0,
+      "findings": [],
+      "data_sources": [
+        "default"
+      ]
+    },
+    {
+      "timestamp": "2026-01-30T07:52:15.388344",
+      "findings_count": 0,
+      "findings": [],
+      "data_sources": [
+        "default"
+      ]
+    },
+    {
+      "timestamp": "2026-01-30T07:53:04.819155",
+      "findings_count": 0,
+      "findings": [],
+      "data_sources": [
+        "default"
+      ]
+    },
+    {
+      "timestamp": "2026-01-30T07:54:18.742111",
+      "findings_count": 0,
+      "findings": [],
+      "data_sources": [
+        "default"
+      ]
+    },
+    {
+      "timestamp": "2026-01-30T08:24:14.468677",
+      "findings_count": 0,
+      "findings": [],
+      "data_sources": [
+        "default"
+      ]
+    },
+    {
+      "timestamp": "2026-01-30T08:31:24.983345",
+      "findings_count": 0,
+      "findings": [],
+      "data_sources": [
+        "default"
+      ]
+    }
+  ],
+  "updated_at": "2026-01-30T08:31:24.983356"
+}

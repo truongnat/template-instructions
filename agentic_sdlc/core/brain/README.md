@@ -13,20 +13,20 @@ Command-line interface for Brain operations and state management.
 
 ```bash
 # Check status
-python agentic_sdlc/brain/brain_cli.py status
+python agentic_sdlc/core/brain/brain_cli.py status
 
 # Transition state
-python agentic_sdlc/brain/brain_cli.py transition DESIGNING
+python agentic_sdlc/core/brain/brain_cli.py transition DESIGNING
 
 # Sync brain
-python agentic_sdlc/brain/brain_cli.py sync
+python agentic_sdlc/core/brain/brain_cli.py sync
 
 # Get recommendations
-python agentic_sdlc/brain/brain_cli.py recommend "implement feature"
+python agentic_sdlc/core/brain/brain_cli.py recommend "implement feature"
 ```
 
 ## Note
 
-Intelligence components (Observer, Judge, Learner, etc.) have been moved to `agentic_sdlc/layer2/`.
+Intelligence components (Observer, Judge, Learner, etc.) have been moved to `agentic_sdlc/intelligence/`.
 
-See [Layer 2 README](../layer2/README.md) for details.
+See [Intelligence README](../../intelligence/README.md) for details.

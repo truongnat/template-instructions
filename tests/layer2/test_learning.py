@@ -8,14 +8,14 @@ from unittest.mock import MagicMock, patch
 
 def test_learning_engine_import():
     try:
-        from agentic_sdlc.intelligence.knowledge_graph import learning_engine
+        from agentic_sdlc.intelligence.reasoning.knowledge_graph import learning_engine
         assert learning_engine is not None
     except ImportError as e:
         pytest.fail(f"Failed to import learning_engine: {e}")
 
-@patch('agentic_sdlc.intelligence.knowledge_graph.learning_engine.GraphDatabase')
+@patch('agentic_sdlc.intelligence.reasoning.knowledge_graph.learning_engine.GraphDatabase')
 def test_record_error_structure(mock_driver):
-    from agentic_sdlc.intelligence.knowledge_graph.learning_engine import LearningEngine
+    from agentic_sdlc.intelligence.reasoning.knowledge_graph.learning_engine import LearningEngine
     
     engine = LearningEngine("bolt://localhost:7687", "neo4j", "test")
     

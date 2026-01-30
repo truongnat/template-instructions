@@ -10,11 +10,14 @@
 
 ### 1. Install the Kit (via Bun or Pip)
 ```bash
-# Recommended
-bun install agentic-sdlc
+# Recommended (Docker)
+docker-compose up -d
 
-# Alternative
+# Alternative (Python)
 pip install agentic-sdlc
+
+# Alternative (Bun)
+bun install agentic-sdlc
 ```
 
 ### 2. Initialize your Project

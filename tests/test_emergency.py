@@ -19,7 +19,7 @@ class TestEmergencySeverityLevels:
     
     def test_severity_levels_defined(self):
         """Test that all severity levels are defined"""
-        from agentic_sdlc.infrastructure.workflows.emergency import SEVERITY_LEVELS
+        from agentic_sdlc.infrastructure.automation.workflows.emergency import SEVERITY_LEVELS
         
         expected_levels = ['P0', 'P1', 'P2']
         for level in expected_levels:
@@ -27,7 +27,7 @@ class TestEmergencySeverityLevels:
     
     def test_severity_level_has_required_keys(self):
         """Test that each severity level has required configuration"""
-        from agentic_sdlc.infrastructure.workflows.emergency import SEVERITY_LEVELS
+        from agentic_sdlc.infrastructure.automation.workflows.emergency import SEVERITY_LEVELS
         
         required_keys = ['name', 'response_time', 'escalation', 'examples']
         
@@ -37,13 +37,13 @@ class TestEmergencySeverityLevels:
     
     def test_p0_is_critical(self):
         """Test that P0 is labeled critical"""
-        from agentic_sdlc.infrastructure.workflows.emergency import SEVERITY_LEVELS
+        from agentic_sdlc.infrastructure.automation.workflows.emergency import SEVERITY_LEVELS
         
         assert SEVERITY_LEVELS['P0']['name'] == 'Critical'
     
     def test_response_times_ordered(self):
         """Test that response times are properly ordered"""
-        from agentic_sdlc.infrastructure.workflows.emergency import SEVERITY_LEVELS
+        from agentic_sdlc.infrastructure.automation.workflows.emergency import SEVERITY_LEVELS
         
         # P0 should have fastest response time
         p0_time = SEVERITY_LEVELS['P0']['response_time']
@@ -55,7 +55,7 @@ class TestIncidentResponse:
     
     def test_incident_response_creation(self):
         """Test creating an IncidentResponse instance"""
-        from agentic_sdlc.infrastructure.workflows.emergency import IncidentResponse
+        from agentic_sdlc.infrastructure.automation.workflows.emergency import IncidentResponse
         
         incident = IncidentResponse("P0", "Test issue")
         
@@ -66,7 +66,7 @@ class TestIncidentResponse:
     
     def test_incident_response_lowercase_severity(self):
         """Test that lowercase severity is converted to uppercase"""
-        from agentic_sdlc.infrastructure.workflows.emergency import IncidentResponse
+        from agentic_sdlc.infrastructure.automation.workflows.emergency import IncidentResponse
         
         incident = IncidentResponse("p1", "Test issue")
         
@@ -74,7 +74,7 @@ class TestIncidentResponse:
     
     def test_incident_response_timeline(self):
         """Test that timeline starts empty"""
-        from agentic_sdlc.infrastructure.workflows.emergency import IncidentResponse
+        from agentic_sdlc.infrastructure.automation.workflows.emergency import IncidentResponse
         
         incident = IncidentResponse("P0", "Test issue")
         
@@ -82,7 +82,7 @@ class TestIncidentResponse:
     
     def test_log_event(self):
         """Test logging an event to timeline"""
-        from agentic_sdlc.infrastructure.workflows.emergency import IncidentResponse
+        from agentic_sdlc.infrastructure.automation.workflows.emergency import IncidentResponse
         
         incident = IncidentResponse("P0", "Test issue")
         
@@ -99,7 +99,7 @@ class TestEmergencyArgParser:
     
     def test_argparser_requires_issue(self):
         """Test that main import works"""
-        from agentic_sdlc.infrastructure.workflows.emergency import main
+        from agentic_sdlc.infrastructure.automation.workflows.emergency import main
         assert callable(main)
     
     def test_argparser_accepts_severity_levels(self):
@@ -120,6 +120,6 @@ class TestEmergencyIntegration:
     def test_emergency_py_is_executable(self):
         """Test that emergency.py can be imported"""
         try:
-            from agentic_sdlc.infrastructure.workflows.emergency import IncidentResponse, SEVERITY_LEVELS, main
+            from agentic_sdlc.infrastructure.automation.workflows.emergency import IncidentResponse, SEVERITY_LEVELS, main
         except ImportError as e:
             pytest.fail(f"Failed to import emergency module: {e}")

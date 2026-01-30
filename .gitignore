@@ -46,3 +46,13 @@ git_status.txt
 version.txt
 list_intel.txt
 help_output.txt
+
+# Virtual Envs
+.venv/
+venv/
+env/
+
+# Libraries (if local)
+agentic_sdlc/lib/
+
+agentic_sdlc/lib/

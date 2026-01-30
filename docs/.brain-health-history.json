@@ -140,5 +140,179 @@
       "plan_count": 7
     },
     "timestamp": "2026-01-22T09:31:07.952253"
+  },
+  {
+    "status": "healthy",
+    "score": 80.0,
+    "issues": [
+      "Missing tools/ directory"
+    ],
+    "metrics": {
+      "walkthrough_count": 17,
+      "plan_count": 7
+    },
+    "timestamp": "2026-01-29T21:30:48.746760"
+  },
+  {
+    "status": "healthy",
+    "score": 80.0,
+    "issues": [
+      "Missing tools/ directory"
+    ],
+    "metrics": {
+      "walkthrough_count": 17,
+      "plan_count": 7
+    },
+    "timestamp": "2026-01-29T21:30:59.551220"
+  },
+  {
+    "status": "healthy",
+    "score": 100.0,
+    "issues": [],
+    "metrics": {
+      "walkthrough_count": 17,
+      "plan_count": 7
+    },
+    "timestamp": "2026-01-29T21:33:24.363666"
+  },
+  {
+    "status": "healthy",
+    "score": 100.0,
+    "issues": [],
+    "metrics": {
+      "walkthrough_count": 17,
+      "plan_count": 7
+    },
+    "timestamp": "2026-01-29T21:40:07.472172"
+  },
+  {
+    "status": "healthy",
+    "score": 100.0,
+    "issues": [],
+    "metrics": {
+      "walkthrough_count": 17,
+      "plan_count": 7
+    },
+    "timestamp": "2026-01-30T07:37:28.431543"
+  },
+  {
+    "status": "healthy",
+    "score": 100.0,
+    "issues": [],
+    "metrics": {
+      "walkthrough_count": 17,
+      "plan_count": 7
+    },
+    "timestamp": "2026-01-30T07:38:27.415796"
+  },
+  {
+    "status": "healthy",
+    "score": 100.0,
+    "issues": [],
+    "metrics": {
+      "walkthrough_count": 17,
+      "plan_count": 7
+    },
+    "timestamp": "2026-01-30T07:45:44.406252"
+  },
+  {
+    "status": "healthy",
+    "score": 100.0,
+    "issues": [],
+    "metrics": {
+      "walkthrough_count": 17,
+      "plan_count": 7
+    },
+    "timestamp": "2026-01-30T07:47:06.223848"
+  },
+  {
+    "status": "healthy",
+    "score": 100.0,
+    "issues": [],
+    "metrics": {
+      "walkthrough_count": 17,
+      "plan_count": 7
+    },
+    "timestamp": "2026-01-30T07:49:44.948186"
+  },
+  {
+    "status": "healthy",
+    "score": 100.0,
+    "issues": [],
+    "metrics": {
+      "walkthrough_count": 17,
+      "plan_count": 7
+    },
+    "timestamp": "2026-01-30T07:50:55.091694"
+  },
+  {
+    "status": "healthy",
+    "score": 100.0,
+    "issues": [],
+    "metrics": {
+      "walkthrough_count": 17,
+      "plan_count": 7
+    },
+    "timestamp": "2026-01-30T07:52:15.373680"
+  },
+  {
+    "status": "healthy",
+    "score": 100.0,
+    "issues": [],
+    "metrics": {
+      "walkthrough_count": 17,
+      "plan_count": 7
+    },
+    "timestamp": "2026-01-30T07:53:04.802099"
+  },
+  {
+    "status": "healthy",
+    "score": 100.0,
+    "issues": [],
+    "metrics": {
+      "walkthrough_count": 17,
+      "plan_count": 7
+    },
+    "timestamp": "2026-01-30T07:54:18.735936"
+  },
+  {
+    "status": "healthy",
+    "score": 100.0,
+    "issues": [],
+    "metrics": {
+      "walkthrough_count": 18,
+      "plan_count": 7
+    },
+    "timestamp": "2026-01-30T08:24:14.463007"
+  },
+  {
+    "status": "healthy",
+    "score": 100.0,
+    "issues": [],
+    "metrics": {
+      "walkthrough_count": 18,
+      "plan_count": 7
+    },
+    "timestamp": "2026-01-30T08:29:21.210412"
+  },
+  {
+    "status": "healthy",
+    "score": 100.0,
+    "issues": [],
+    "metrics": {
+      "walkthrough_count": 18,
+      "plan_count": 7
+    },
+    "timestamp": "2026-01-30T08:31:24.978077"
+  },
+  {
+    "status": "healthy",
+    "score": 100.0,
+    "issues": [],
+    "metrics": {
+      "walkthrough_count": 18,
+      "plan_count": 7
+    },
+    "timestamp": "2026-01-30T08:45:59.405725"
   }
 ]

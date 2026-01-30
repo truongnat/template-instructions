@@ -10,9 +10,9 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 # Import after path setup
 try:
-    from agentic_sdlc.intelligence.knowledge_graph.document_sync import DocumentSyncNeo4j, find_documents, DOCUMENT_TYPES
+    from agentic_sdlc.intelligence.reasoning.knowledge_graph.document_sync import DocumentSyncMemgraph, find_documents, DOCUMENT_TYPES
 except ImportError:
-    DocumentSyncNeo4j = None
+    DocumentSyncMemgraph = None
     find_documents = None
     DOCUMENT_TYPES = {}
 
@@ -49,11 +49,11 @@ This is a test document.
         doc_path.write_text(sample_document_content, encoding='utf-8')
         return doc_path
     
-    @pytest.mark.skipif(DocumentSyncNeo4j is None, reason="DocumentSyncNeo4j not available")
+    @pytest.mark.skipif(DocumentSyncMemgraph is None, reason="DocumentSyncMemgraph not available")
     def test_generate_document_id(self, mock_file):
         """Test document ID generation is consistent"""
-        with patch.object(DocumentSyncNeo4j, '__init__', lambda x, *args, **kwargs: None):
-            sync = DocumentSyncNeo4j.__new__(DocumentSyncNeo4j)
+        with patch.object(DocumentSyncMemgraph, '__init__', lambda x, *args, **kwargs: None):
+            sync = DocumentSyncMemgraph.__new__(DocumentSyncMemgraph)
             
             id1 = sync.generate_document_id(mock_file)
             id2 = sync.generate_document_id(mock_file)
@@ -61,22 +61,22 @@ This is a test document.
             assert id1 == id2
             assert len(id1) == 16  # SHA256 truncated to 16 chars
     
-    @pytest.mark.skipif(DocumentSyncNeo4j is None, reason="DocumentSyncNeo4j not available")
+    @pytest.mark.skipif(DocumentSyncMemgraph is None, reason="DocumentSyncMemgraph not available")
     def test_extract_version(self):
         """Test version extraction from filenames"""
-        with patch.object(DocumentSyncNeo4j, '__init__', lambda x, *args, **kwargs: None):
-            sync = DocumentSyncNeo4j.__new__(DocumentSyncNeo4j)
+        with patch.object(DocumentSyncMemgraph, '__init__', lambda x, *args, **kwargs: None):
+            sync = DocumentSyncMemgraph.__new__(DocumentSyncMemgraph)
             
             assert sync.extract_version("Project-Plan-v1.md") == (1, "-v1")
             assert sync.extract_version("Project-Plan-v2.md") == (2, "-v2")
             assert sync.extract_version("Project-Plan.md") == (1, None)
             assert sync.extract_version("Report_v10.md") == (10, "_v10")
     
-    @pytest.mark.skipif(DocumentSyncNeo4j is None, reason="DocumentSyncNeo4j not available")
+    @pytest.mark.skipif(DocumentSyncMemgraph is None, reason="DocumentSyncMemgraph not available")
     def test_extract_sprint(self, tmp_path):
         """Test sprint extraction from file path"""
-        with patch.object(DocumentSyncNeo4j, '__init__', lambda x, *args, **kwargs: None):
-            sync = DocumentSyncNeo4j.__new__(DocumentSyncNeo4j)
+        with patch.object(DocumentSyncMemgraph, '__init__', lambda x, *args, **kwargs: None):
+            sync = DocumentSyncMemgraph.__new__(DocumentSyncMemgraph)
             
             path1 = tmp_path / "docs" / "sprints" / "sprint-1" / "plan.md"
             path2 = tmp_path / "docs" / "sprints" / "sprint-5" / "report.md"
@@ -86,11 +86,11 @@ This is a test document.
             assert sync.extract_sprint(path2) == "sprint-5"
             assert sync.extract_sprint(path3) is None
     
-    @pytest.mark.skipif(DocumentSyncNeo4j is None, reason="DocumentSyncNeo4j not available")
+    @pytest.mark.skipif(DocumentSyncMemgraph is None, reason="DocumentSyncMemgraph not available")
     def test_parse_frontmatter(self, sample_document_content):
         """Test YAML frontmatter parsing"""
-        with patch.object(DocumentSyncNeo4j, '__init__', lambda x, *args, **kwargs: None):
-            sync = DocumentSyncNeo4j.__new__(DocumentSyncNeo4j)
+        with patch.object(DocumentSyncMemgraph, '__init__', lambda x, *args, **kwargs: None):
+            sync = DocumentSyncMemgraph.__new__(DocumentSyncMemgraph)
             
             metadata = sync.parse_frontmatter(sample_document_content)
             
@@ -99,32 +99,32 @@ This is a test document.
             assert metadata['date'] == '2026-01-02'
             assert metadata['category'] == 'planning'
     
-    @pytest.mark.skipif(DocumentSyncNeo4j is None, reason="DocumentSyncNeo4j not available")
+    @pytest.mark.skipif(DocumentSyncMemgraph is None, reason="DocumentSyncMemgraph not available")
     def test_determine_document_type(self, tmp_path):
         """Test document type determination"""
-        with patch.object(DocumentSyncNeo4j, '__init__', lambda x, *args, **kwargs: None):
-            sync = DocumentSyncNeo4j.__new__(DocumentSyncNeo4j)
+        with patch.object(DocumentSyncMemgraph, '__init__', lambda x, *args, **kwargs: None):
+            sync = DocumentSyncMemgraph.__new__(DocumentSyncMemgraph)
             
             assert sync.determine_document_type(Path("KB-2026-01-01-test.md")) == "KBEntry"
             assert sync.determine_document_type(Path("Project-Plan-v1.md")) == "Plan"
             assert sync.determine_document_type(Path("Phase-Report-Sprint-1.md")) == "Report"
             assert sync.determine_document_type(Path("Backend-Spec-v1.md")) == "Artifact"
     
-    @pytest.mark.skipif(DocumentSyncNeo4j is None, reason="DocumentSyncNeo4j not available")
+    @pytest.mark.skipif(DocumentSyncMemgraph is None, reason="DocumentSyncMemgraph not available")
     def test_chunk_content(self):
         """Test content chunking for large documents"""
-        with patch.object(DocumentSyncNeo4j, '__init__', lambda x, *args, **kwargs: None):
-            sync = DocumentSyncNeo4j.__new__(DocumentSyncNeo4j)
+        with patch.object(DocumentSyncMemgraph, '__init__', lambda x, *args, **kwargs: None):
+            sync = DocumentSyncMemgraph.__new__(DocumentSyncMemgraph)
             
             content = """
 ## Section 1
-This is section one with some content.
+This is section one with some content. This is section one with some content. This is section one with some content. This is section one with some content. This is section one with some content. This is section one with some content. This is section one with some content. This is section one with some content. This is section one with some content. This is section one with some content.
 
 ## Section 2
-This is section two with more content.
+This is section two with more content. This is section two with more content. This is section two with more content. This is section two with more content. This is section two with more content. This is section two with more content. This is section two with more content. This is section two with more content. This is section two with more content. This is section two with more content.
 
 ## Section 3
-This is section three with even more content.
+This is section three with even more content. This is section three with even more content. This is section three with even more content. This is section three with even more content. This is section three with even more content. This is section three with even more content. This is section three with even more content. This is section three with even more content. This is section three with even more content. This is section three with even more content.
 """
             chunks = sync.chunk_content(content, chunk_size=100)
             
@@ -183,45 +183,45 @@ class TestFindDocuments:
         assert len(kb_files) >= 1
 
 
-class TestNeo4jIntegration:
-    """Integration tests for Neo4j operations (requires Neo4j connection)"""
+class TestMemgraphIntegration:
+    """Integration tests for Memgraph operations (requires Memgraph connection)"""
     
     @pytest.fixture
-    def neo4j_credentials(self):
-        """Get Neo4j credentials from environment"""
+    def memgraph_credentials(self):
+        """Get Memgraph credentials from environment"""
         import os
         from dotenv import load_dotenv
         load_dotenv()
         
         return {
-            'uri': os.getenv('NEO4J_URI'),
-            'user': os.getenv('NEO4J_USERNAME'),
-            'password': os.getenv('NEO4J_PASSWORD'),
-            'database': os.getenv('NEO4J_DATABASE', 'neo4j')
+            'uri': os.getenv('MEMGRAPH_URI'),
+            'user': os.getenv('MEMGRAPH_USERNAME'),
+            'password': os.getenv('MEMGRAPH_PASSWORD'),
+            'database': os.getenv('MEMGRAPH_DATABASE', 'memgraph')
         }
     
-    @pytest.mark.skipif(DocumentSyncNeo4j is None, reason="DocumentSyncNeo4j not available")
+    @pytest.mark.skipif(DocumentSyncMemgraph is None, reason="DocumentSyncMemgraph not available")
     @pytest.mark.integration
-    def test_neo4j_connection(self, neo4j_credentials):
-        """Test Neo4j connection (integration)"""
-        if not all(neo4j_credentials.values()):
-            pytest.skip("Neo4j credentials not available")
+    def test_memgraph_connection(self, memgraph_credentials):
+        """Test Memgraph connection (integration)"""
+        if not all(memgraph_credentials.values()):
+            pytest.skip("Memgraph credentials not available")
         
-        sync = DocumentSyncNeo4j(**neo4j_credentials)
+        sync = DocumentSyncMemgraph(**memgraph_credentials)
         try:
             # Connection should not raise
             sync.create_document_schema()
         finally:
             sync.close()
     
-    @pytest.mark.skipif(DocumentSyncNeo4j is None, reason="DocumentSyncNeo4j not available")
+    @pytest.mark.skipif(DocumentSyncMemgraph is None, reason="DocumentSyncMemgraph not available")
     @pytest.mark.integration
-    def test_get_stats(self, neo4j_credentials):
+    def test_get_stats(self, memgraph_credentials):
         """Test getting document statistics (integration)"""
-        if not all(neo4j_credentials.values()):
-            pytest.skip("Neo4j credentials not available")
+        if not all(memgraph_credentials.values()):
+            pytest.skip("Memgraph credentials not available")
         
-        sync = DocumentSyncNeo4j(**neo4j_credentials)
+        sync = DocumentSyncMemgraph(**memgraph_credentials)
         try:
             stats = sync.get_document_stats()
             assert 'documents' in stats

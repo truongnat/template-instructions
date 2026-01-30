@@ -1,4 +1,0 @@
-# Neo4j Skills Sync Requirements
-
-neo4j>=5.15.0
-python-dotenv>=1.0.0

@@ -34,7 +34,7 @@ Write-Host "📦 Activating virtual environment..." -ForegroundColor Cyan
 
 # 4. Install Python Dependencies
 Write-Host "📦 Installing Python dependencies..." -ForegroundColor Cyan
-pip install -r requirements.txt
+pip install -e .[dev]
 
 # 5. Install Node/Bun Dependencies
 Write-Host "📦 Installing JS dependencies using $PackageManager..." -ForegroundColor Cyan
@@ -44,11 +44,7 @@ if ($PackageManager -eq "bun") {
     npm install
 }
 
-# 6. Initialize Brain System
-Write-Host "🧠 Initializing Brain System..." -ForegroundColor Cyan
-python tools/infrastructure/setup/init.py
-
-# 7. Final Check
+# 6. Final Check
 Write-Host "✅ Setup Complete!" -ForegroundColor Green
 Write-Host "👉 Run 'python asdlc.py dashboard' to start the UI." -ForegroundColor Yellow
 Write-Host "👉 Run 'python asdlc.py brain status' to check state." -ForegroundColor Yellow

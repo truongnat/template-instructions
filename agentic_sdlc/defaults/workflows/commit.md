@@ -17,14 +17,14 @@ Automates the process of reviewing changes, generating Conventional Commits mess
 ## Tool Maintenance
 Before starting complex tasks, ensure your tools are up to date:
 ```bash
-python tools/infrastructure/update/updater.py --check
+python agentic_sdlc/infrastructure/update/updater.py --check
 ```
 
 ## Workflow Steps
 
 ### 1. Check Status
 ```bash
-python tools/infrastructure/git/commit.py review
+python agentic_sdlc/infrastructure/git/commit.py review
 ```
 
 ### 2. Review Diff
@@ -55,7 +55,7 @@ git log -1 --oneline
 ### 6. Push Changes
 - **If main or feature branch:**
   ```bash
-  python tools/infrastructure/git/commit.py push
+  python agentic_sdlc/infrastructure/git/commit.py push
   ```
   *Or manually:* `git push`
 

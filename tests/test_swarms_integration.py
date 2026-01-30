@@ -14,8 +14,8 @@ from unittest.mock import patch, MagicMock
 # Add project root to path
 sys.path.insert(0, str(Path(__file__).parents[1]))
 
-from agentic_sdlc.intelligence.router.workflow_router import WorkflowRouter, ExecutionMode
-from agentic_sdlc.intelligence.concurrent_executor import ConcurrentExecutor
+from agentic_sdlc.intelligence.reasoning.router.workflow_router import WorkflowRouter, ExecutionMode
+from agentic_sdlc.intelligence.collaborating.concurrent_executor import ConcurrentExecutor
 from agentic_sdlc.intelligence.synthesizer import OutputSynthesizer
 from agentic_sdlc.intelligence.feedback_protocol import FeedbackProtocol
 from agentic_sdlc.intelligence.group_chat import GroupChat
@@ -32,7 +32,7 @@ class TestSwarmsIntegration:
         result = router.route(task)
         assert result.execution_mode == ExecutionMode.HEAVY_SWARM
         assert result.complexity.score >= 7
-        assert "SA" in result.complexity.recommended_roles
+        assert "@SA" in result.recommended_roles
 
     def test_concurrent_executor(self):
         executor = ConcurrentExecutor()
@@ -45,7 +45,7 @@ class TestSwarmsIntegration:
             result = executor.run(roles, task)
             assert result.task == task
             assert len(result.results) == 2
-            assert result.success is True
+            assert result.all_succeeded is True
 
     def test_output_synthesizer(self):
         synthesizer = OutputSynthesizer()
@@ -53,8 +53,8 @@ class TestSwarmsIntegration:
         synthesizer.add_input("SECA", "Security is tight.", 0.9)
         
         result = synthesizer.synthesize(strategy="concatenate")
-        assert "SA:" in result.output
-        assert "SECA:" in result.output
+        assert "SA:" in result.synthesized_output
+        assert "SECA:" in result.synthesized_output
         assert result.strategy == "concatenate"
 
     def test_feedback_protocol(self):

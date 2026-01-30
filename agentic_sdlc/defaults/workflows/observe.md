@@ -13,13 +13,13 @@ Trigger the Observer agent to check rule compliance for actions, code, or the en
 
 ```bash
 # Check overall compliance status
-python tools/intelligence/observer/observer.py --report
+python asdlc.py observe
 
 # Check a specific action
-python tools/intelligence/observer/observer.py --check-action "create file foo.py"
+python asdlc.py observe --action "create file foo.py"
 
 # Start continuous observation
-python tools/intelligence/observer/observer.py --start
+python asdlc.py observe --start
 ```
 
 ## When to Use
@@ -33,13 +33,13 @@ python tools/intelligence/observer/observer.py --start
 
 ### 1. Check Current Compliance
 ```bash
-python tools/intelligence/observer/observer.py --report
+python asdlc.py observe
 ```
 Review the compliance score and any violations.
 
 ### 2. Check Specific Action
 ```bash
-python tools/intelligence/observer/observer.py --check-action "[action description]"
+python asdlc.py observe --action "[action description]"
 ```
 Validates a specific action against the rules.
 
@@ -53,7 +53,7 @@ If violations are found:
 ### 4. Self-Learning
 ```bash
 # Record the violation pattern for future reference
-python tools/core/brain/brain_cli.py learn "Fixed compliance issue: [description]"
+python asdlc.py learn "Fixed compliance issue: [description]"
 ```
 
 ## Integration

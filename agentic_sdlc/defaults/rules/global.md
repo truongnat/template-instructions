@@ -77,6 +77,8 @@ This document defines the mandatory rules, conventions, and lifecycle flow that 
 
 4. **Auto-Learning System:** `.agent/rules/auto-learning.md`
    - Covers: Automatic knowledge capture from tasks, issues, and bug fixes.
+5. **Skills System:** `.agent/rules/skills.md`
+   - Covers: Standards for modular capabilities and progressive disclosure.
 
 ---
 

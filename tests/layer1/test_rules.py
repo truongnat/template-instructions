@@ -2,8 +2,8 @@
 import pytest
 from pathlib import Path
 
-RULES_DIR = Path("agentic_sdlc/defaults/rules")
-GEMINI_FILE = Path("agentic_sdlc/defaults/GEMINI.md")
+RULES_DIR = Path(".agent/rules")
+GEMINI_FILE = Path("GEMINI.md")
 
 def test_rules_directory_exists():
     assert RULES_DIR.exists()
@@ -12,7 +12,7 @@ def test_rules_directory_exists():
 def test_gemini_rules():
     assert GEMINI_FILE.exists()
     content = GEMINI_FILE.read_text(encoding="utf-8")
-    assert "MANDATORY COMPLIANCE" in content
+    assert "MANDATORY ENFORCEMENT RULES" in content
     assert "Pre-Flight Checklist" in content
     assert "Gate 1: PRE-TASK" in content
 

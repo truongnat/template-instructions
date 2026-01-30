@@ -20,7 +20,7 @@ Activate when user mentions: `@UIUX`, "UI/UX designer", "interface design", "wir
 ```bash
 # Search for design patterns
 kb search "UI design pattern"
-kb compound search "UX best-practices"
+python agentic_sdlc/core/brain/brain_cli.py search "UX best-practices"
 
 # Review design docs
 # Check docs/guides/ for design standards
@@ -76,7 +76,7 @@ kb compound search "UX best-practices"
 ```bash
 # Search for UI/UX patterns
 kb search "UI pattern component-type"
-kb compound search "design-system"
+python agentic_sdlc/core/brain/brain_cli.py search "design-system"
 
 # Review design docs
 # Check docs/guides/ for design standards
@@ -87,7 +87,7 @@ kb compound search "design-system"
 When creating exceptional or reusable designs:
 ```bash
 # Document the design pattern
-kb compound add
+python agentic_sdlc/core/brain/brain_cli.py learn
 # Category: feature (UI/UX)
 # Include: Pattern, rationale, accessibility notes
 ```
@@ -111,13 +111,13 @@ related_files: [path/to/implementation]
 4. **RESEARCH FIRST:** Step 0 is NEVER optional.
 
 ### 0.0 **Team Communication (MANDATORY):**
-   - **Check History:** `python tools/communication/cli.py history --channel general --limit 10`
-   - **Announce Start:** `python tools/communication/cli.py send --channel general --thread "SDLC-Flow" --role UIUX --content "Starting UI/UX Design."`
+   - **Check History:** `python agentic_sdlc/infrastructure/communication/chat_manager.py history --channel general --limit 10`
+   - **Announce Start:** `python agentic_sdlc/infrastructure/communication/chat_manager.py send --channel general --thread "SDLC-Flow" --role UIUX --content "Starting UI/UX Design."`
 
 ## Key Duties (Execution)
 
 ### 0. **RESEARCH FIRST (MANDATORY):**
-   - Run: `python tools/research/research_agent.py --task "UI/UX design" --type design`
+   - Run: `python agentic_sdlc/intelligence/research/researcher.py --task "UI/UX design" --type design`
    - Review design patterns and accessibility standards.
 
 ### 1. **Design Specification:**
@@ -208,9 +208,9 @@ End your design spec with:
 ### Knowledge Base Integration
 - **KB CLI** - Search and document designs
   - `kb search "UI pattern"` - Find design patterns
-  - `kb compound search "design-system"` - Search with Neo4j
-  - `kb compound add` - Document design patterns
-  - `kb compound sync` - Sync to Neo4j Brain
+  - `python agentic_sdlc/core/brain/brain_cli.py search "design-system"` - Search with Neo4j
+  - `python agentic_sdlc/core/brain/brain_cli.py learn` - Document design patterns
+  - `python agentic_sdlc/core/brain/brain_cli.py sync` - Sync to Neo4j Brain
 
 ### Documentation
 - **File Tools** - Read/update design docs
@@ -223,14 +223,15 @@ End your design spec with:
 ```bash
 # 1. Search for UI/UX patterns
 kb search "UI component-type"
-kb compound search "design-pattern"
+python agentic_sdlc/core/brain/brain_cli.py search "design-pattern"
 
 # 2. Review design docs
 # Check docs/guides/ for standards
 # Check KB for award-winning patterns
 
 # 3. Query Neo4j for design relationships
-python tools/neo4j/query_skills_neo4j.py --search "UI design"
+# DEPRECATED: Neo4j integration removed - use SQLite KB instead
+# python tools/neo4j/query_skills_neo4j.py --search "UI design"
 ```
 
 ### During Design
@@ -242,7 +243,7 @@ python tools/neo4j/query_skills_neo4j.py --search "UI design"
 ### After Design
 ```bash
 # 1. Document exceptional design patterns
-kb compound add
+python agentic_sdlc/core/brain/brain_cli.py learn
 # Category: feature (UI/UX)
 # Include: Pattern, accessibility, responsive
 
@@ -250,7 +251,7 @@ kb compound add
 # Add to docs/guides/ if significant
 
 # 3. Sync to Neo4j Brain
-kb compound sync
+python agentic_sdlc/core/brain/brain_cli.py sync
 ```
 
 ## Metrics to Track

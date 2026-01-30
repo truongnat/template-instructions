@@ -20,7 +20,7 @@ Activate when user mentions: `@PO`, "product owner", "backlog", "prioritization"
 ```bash
 # Search for similar features
 kb search "feature-type user-story"
-kb compound search "prioritization patterns"
+python agentic_sdlc/core/brain/brain_cli.py search "prioritization patterns"
 
 # Review product docs
 # Check docs/guides/ for product standards
@@ -81,7 +81,7 @@ kb compound search "prioritization patterns"
 ```bash
 # Search for similar features
 kb search "feature-type"
-kb compound search "user-story patterns"
+python agentic_sdlc/core/brain/brain_cli.py search "user-story patterns"
 
 # Review product docs
 # Check docs/guides/ for product standards
@@ -91,7 +91,7 @@ kb compound search "user-story patterns"
 When features deliver exceptional value or have unique patterns:
 ```bash
 # Document the feature pattern
-kb compound add
+python agentic_sdlc/core/brain/brain_cli.py learn
 # Category: feature
 # Include: User story, value delivered, lessons learned
 ```
@@ -188,9 +188,9 @@ After backlog grooming:
 ### Knowledge Base Integration
 - **KB CLI** - Search and document features
   - `kb search "feature-type"` - Find similar features
-  - `kb compound search "user-story"` - Search with Neo4j
-  - `kb compound add` - Document feature patterns
-  - `kb compound sync` - Sync to Neo4j Brain
+  - `python agentic_sdlc/core/brain/brain_cli.py search "user-story"` - Search with Neo4j
+  - `python agentic_sdlc/core/brain/brain_cli.py learn` - Document feature patterns
+  - `python agentic_sdlc/core/brain/brain_cli.py sync` - Sync to Neo4j Brain
 
 ### Documentation
 - **File Tools** - Read docs/ for standards
@@ -203,13 +203,14 @@ After backlog grooming:
 ```bash
 # 1. Search for similar features
 kb search "feature-name"
-kb compound search "user-story patterns"
+python agentic_sdlc/core/brain/brain_cli.py search "user-story patterns"
 
 # 2. Review product docs
 # Check docs/guides/ for standards
 
 # 3. Query Neo4j for feature relationships
-python tools/neo4j/query_skills_neo4j.py --search "feature"
+# DEPRECATED: Neo4j integration removed - use SQLite KB instead
+# python tools/neo4j/query_skills_neo4j.py --search "feature"
 ```
 
 ### During Backlog Grooming
@@ -221,7 +222,7 @@ python tools/neo4j/query_skills_neo4j.py --search "feature"
 ### After Feature Delivery
 ```bash
 # Document if high-value or novel
-kb compound add
+python agentic_sdlc/core/brain/brain_cli.py learn
 # Category: feature
 # Include: User story, value, lessons learned
 ```

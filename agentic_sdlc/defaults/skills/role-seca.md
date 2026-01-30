@@ -20,7 +20,7 @@ Activate when user mentions: `@SECA`, "security analyst", "security review", "se
 ```bash
 # Search for known security issues
 kb search "security vulnerability"
-kb compound search "OWASP authentication"
+python agentic_sdlc/core/brain/brain_cli.py search "OWASP authentication"
 
 # Review security docs
 # Check docs/guides/ for security standards
@@ -91,7 +91,7 @@ kb compound search "OWASP authentication"
 ```bash
 # Search for known security issues
 kb search "security vulnerability OWASP"
-kb compound search "authentication security"
+python agentic_sdlc/core/brain/brain_cli.py search "authentication security"
 
 # Review security docs
 # Check docs/guides/ for security standards
@@ -102,7 +102,7 @@ kb compound search "authentication security"
 **ALWAYS document security vulnerabilities:**
 ```bash
 # Document the security issue
-kb compound add
+python agentic_sdlc/core/brain/brain_cli.py learn
 # Category: security
 # Priority: based on severity
 # Include: Vulnerability, exploit, fix, prevention
@@ -203,9 +203,9 @@ End your report with:
 ### Knowledge Base Integration
 - **KB CLI** - Search and document security
   - `kb search "security vulnerability"` - Find known issues
-  - `kb compound search "OWASP"` - Search with Neo4j
-  - `kb compound add` - Document security fixes
-  - `kb compound sync` - Sync to Neo4j Brain
+  - `python agentic_sdlc/core/brain/brain_cli.py search "OWASP"` - Search with Neo4j
+  - `python agentic_sdlc/core/brain/brain_cli.py learn` - Document security fixes
+  - `python agentic_sdlc/core/brain/brain_cli.py sync` - Sync to Neo4j Brain
 
 ### Security Analysis
 - **Grep Search** - Find security anti-patterns
@@ -219,13 +219,14 @@ End your report with:
 ```bash
 # 1. Search for known security issues
 kb search "security authentication"
-kb compound search "OWASP vulnerability"
+python agentic_sdlc/core/brain/brain_cli.py search "OWASP vulnerability"
 
 # 2. Review security docs
 # Check docs/guides/ for security standards
 
 # 3. Query Neo4j for security patterns
-python tools/neo4j/query_skills_neo4j.py --search "security"
+# DEPRECATED: Neo4j integration removed - use SQLite KB instead
+# python tools/neo4j/query_skills_neo4j.py --search "security"
 ```
 
 ### During Review
@@ -237,7 +238,7 @@ python tools/neo4j/query_skills_neo4j.py --search "security"
 ### After Review
 ```bash
 # 1. ALWAYS document security vulnerabilities
-kb compound add
+python agentic_sdlc/core/brain/brain_cli.py learn
 # Category: security
 # Priority: based on severity
 # Include: CVE if applicable
@@ -246,7 +247,7 @@ kb compound add
 # Add to KB with prevention strategies
 
 # 3. Sync to Neo4j Brain
-kb compound sync
+python agentic_sdlc/core/brain/brain_cli.py sync
 
 # 4. Verify searchability
 kb search "vulnerability-type"
@@ -270,13 +271,13 @@ kb search "vulnerability-type"
 4. **RESEARCH FIRST:** Step 0 is NEVER optional.
 
 ### 0.0 **Team Communication (MANDATORY):**
-   - **Check History:** `python tools/communication/cli.py history --channel general --limit 10`
-   - **Announce Start:** `python tools/communication/cli.py send --channel general --thread "SDLC-Flow" --role SECA --content "Starting Security Review."`
+   - **Check History:** `python agentic_sdlc/infrastructure/communication/chat_manager.py history --channel general --limit 10`
+   - **Announce Start:** `python agentic_sdlc/infrastructure/communication/chat_manager.py send --channel general --thread "SDLC-Flow" --role SECA --content "Starting Security Review."`
 
 ## Key Duties (Execution)
 
 ### 0. **RESEARCH FIRST (MANDATORY):**
-   - Run: `python tools/research/research_agent.py --task "security review" --type security`
+   - Run: `python agentic_sdlc/intelligence/research/researcher.py --task "security review" --type security`
    - Check OWASP Top 10.
 
 ### 1. **Threat Modeling:**
@@ -291,7 +292,8 @@ kb search "vulnerability-type"
    - Decision: APPROVED / REJECTED.
 
 ### 4. **Self-Learning:**
-   - Run: `python tools/neo4j/sync_skills_to_neo4j.py`arning
+   - Run: `# DEPRECATED: Neo4j integration removed - use SQLite KB instead
+# python tools/neo4j/sync_skills_to_neo4j.py`arning
 
 ## ⏭️ Next Steps
 - **If Secure:** Approve for Development.

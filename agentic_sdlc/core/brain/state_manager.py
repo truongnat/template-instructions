@@ -7,11 +7,11 @@ Manages the .brain-state.json file for tracking SDLC workflow state.
 This enables the Brain's state machine to persist across sessions.
 
 Usage:
-    python tools/brain/state_manager.py --init --sprint 1
-    python tools/brain/state_manager.py --status
-    python tools/brain/state_manager.py --transition DESIGNING
-    python tools/brain/state_manager.py --validate
-    python tools/brain/state_manager.py --rollback
+    python asdlc.py brain init-state --sprint 1
+    python asdlc.py brain status
+    python asdlc.py brain transition DESIGNING
+    python asdlc.py brain validate
+    python agentic_sdlc/core/brain/state_manager.py --rollback
 """
 
 import json

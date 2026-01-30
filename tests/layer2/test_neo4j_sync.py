@@ -7,15 +7,15 @@ from pathlib import Path
 
 def test_sync_scripts_import():
     try:
-        from agentic_sdlc.intelligence.knowledge_graph import brain_parallel
-        from agentic_sdlc.intelligence.knowledge_graph import sync_skills_to_neo4j
+        from agentic_sdlc.intelligence.reasoning.knowledge_graph import brain_parallel
+        from agentic_sdlc.intelligence.reasoning.knowledge_graph import sync_skills_to_neo4j
         assert brain_parallel is not None
         assert sync_skills_to_neo4j is not None
     except ImportError as e:
         pytest.fail(f"Failed to import Neo4j sync scripts: {e}")
 
 def test_brain_parallel_args():
-    from agentic_sdlc.intelligence.knowledge_graph import brain_parallel
+    from agentic_sdlc.intelligence.reasoning.knowledge_graph import brain_parallel
     # Check if argparse setup function exists or main block is structured
     # This is a basic smoke test
     assert hasattr(brain_parallel, 'main') or hasattr(brain_parallel, 'sync_all')

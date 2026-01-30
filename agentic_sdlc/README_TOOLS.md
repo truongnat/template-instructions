@@ -59,12 +59,12 @@ agentic_sdlc/
 │   ├── sync_github.py       # Sync artifacts to GitHub
 │   └── README.md
 │
-├── neo4j/                    # Neo4j brain integration
-│   ├── sync_skills_to_neo4j.py
-│   ├── query_skills_neo4j.py
+├── intelligence/knowledge_graph/  # Memgraph brain integration
+│   ├── sync_skills_to_memgraph.py
+│   ├── query_skills_memgraph.py
 │   ├── graph_brain.py
-│   ├── test_neo4j_connection.py
-│   ├── verify_neo4j.py
+│   ├── test_memgraph_connection.py
+│   ├── verify_memgraph.py
 │   ├── requirements.txt
 │   └── README.md
 │
@@ -233,11 +233,11 @@ python agentic_sdlc/github/sync_github.py --sprint 3
 
 ---
 
-### 2. Neo4j Integration (`neo4j/`)
+### 2. Memgraph Integration (`intelligence/knowledge_graph/`)
 **Purpose:** Knowledge graph and brain integration
 
 **Features:**
-- Sync KB entries to Neo4j
+- Sync KB entries to Memgraph
 - Query knowledge graph
 - Map relationships
 - Track skills and technologies
@@ -248,11 +248,11 @@ python agentic_sdlc/github/sync_github.py --sprint 3
 
 **Usage:**
 ```bash
-python agentic_sdlc/neo4j/sync_skills_to_neo4j.py
-python agentic_sdlc/neo4j/query_skills_neo4j.py --all-skills
+python agentic_sdlc/intelligence/knowledge_graph/sync_skills_to_memgraph.py
+python agentic_sdlc/intelligence/knowledge_graph/query_skills_memgraph.py --all-skills
 ```
 
-**Documentation:** [neo4j/README.md](neo4j/README.md)
+**Documentation:** [intelligence/knowledge_graph/README.md](intelligence/knowledge_graph/README.md)
 
 ---
 
@@ -316,7 +316,7 @@ pip install -r agentic_sdlc/requirements.txt
 # GitHub integration
 pip install PyGithub python-dotenv
 
-# Neo4j integration
+# Memgraph integration
 pip install neo4j python-dotenv
 
 # Research agent
@@ -350,11 +350,11 @@ Create `.env` file in project root:
 GITHUB_TOKEN=ghp_your_personal_access_token
 GITHUB_REPO=username/repository
 
-# Neo4j Integration (optional)
-NEO4J_URI=neo4j+s://instance.databases.neo4j.io
-NEO4J_USERNAME=neo4j
-NEO4J_PASSWORD=your_password
-NEO4J_DATABASE=neo4j
+# Memgraph Integration (optional)
+MEMGRAPH_URI=bolt://instance.databases.memgraph.io
+MEMGRAPH_USERNAME=memgraph
+MEMGRAPH_PASSWORD=your_password
+MEMGRAPH_DATABASE=memgraph
 
 # Research Agent APIs (optional)
 TAVILY_API_KEY=your_tavily_key
@@ -414,14 +414,14 @@ python agentic_sdlc/github/sync_github.py --sprint ${sprint_number}
 
 ## Integration Examples
 
-### Example 1: KB CLI with Neo4j
+### Example 1: KB CLI with Memgraph
 
 ```bash
 # User runs KB CLI
 ./bin/kb/kb compound search "authentication"
 
-# KB CLI calls agentic_sdlc/neo4j/
-# → agentic_sdlc/neo4j/query_skills_neo4j.py
+# KB CLI calls agentic_sdlc/intelligence/knowledge_graph/
+# → agentic_sdlc/intelligence/knowledge_graph/query_skills_memgraph.py
 # → Returns results to CLI
 # → CLI displays to user
 ```
@@ -433,7 +433,7 @@ python agentic_sdlc/github/sync_github.py --sprint ${sprint_number}
 
 # PM workflow calls agentic_sdlc/research/
 # → agentic_sdlc/research/research_agent.py --task "todo app"
-# → Searches KB, Neo4j, GitHub
+# → Searches KB, Memgraph, GitHub
 # → Returns research report
 # → PM uses findings in project plan
 ```
@@ -558,7 +558,7 @@ ls -la .env
 
 # Verify environment variables
 cat .env | grep GITHUB_TOKEN
-cat .env | grep NEO4J_URI
+cat .env | grep MEMGRAPH_URI
 ```
 
 ### API Errors
@@ -567,8 +567,8 @@ cat .env | grep NEO4J_URI
 # Test GitHub connection
 python -c "from github import Github; g = Github('token'); print(g.get_user().login)"
 
-# Test Neo4j connection
-python agentic_sdlc/neo4j/test_neo4j_connection.py
+# Test Memgraph connection
+python agentic_sdlc/intelligence/knowledge_graph/test_memgraph_connection.py
 ```
 
 ## Performance
@@ -584,7 +584,7 @@ python agentic_sdlc/neo4j/test_neo4j_connection.py
 ### Benchmarks
 
 - **GitHub sync:** ~2-5 seconds per sprint
-- **Neo4j sync:** ~5-10 seconds for 100 entries
+- **Memgraph sync:** ~5-10 seconds for 100 entries
 - **Research agent:** ~3-8 seconds per query
 - **Setup scripts:** ~1-2 seconds
 
@@ -603,7 +603,7 @@ python agentic_sdlc/neo4j/test_neo4j_connection.py
 ```bash
 # .env file (never commit!)
 GITHUB_TOKEN=ghp_...
-NEO4J_PASSWORD=...
+MEMGRAPH_PASSWORD=...
 
 # .gitignore
 .env

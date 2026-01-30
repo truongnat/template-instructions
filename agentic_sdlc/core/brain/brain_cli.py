@@ -7,7 +7,7 @@ Command-line interface for @BRAIN operations.
 Provides centralized access to all Layer 2 Intelligence components.
 
 Usage:
-    python tools/core/brain/brain_cli.py <command> [options]
+    python asdlc.py brain <command> [options]
 """
 
 import os
@@ -27,50 +27,126 @@ from typing import List, Optional
 #         pass
 
 # Import Intelligence Components
-try:
-    from agentic_sdlc.core.brain import state_manager
-    from agentic_sdlc.intelligence.knowledge_graph import brain_parallel
-    from agentic_sdlc.intelligence.observer.observer import Observer
-    from agentic_sdlc.intelligence.judge.scorer import Judge
-    from agentic_sdlc.intelligence.ab_test.ab_tester import ABTester
-    from agentic_sdlc.intelligence.self_learning.learner import Learner
-    from agentic_sdlc.intelligence.artifact_gen.generator import ArtifactGenerator
-    from agentic_sdlc.intelligence.monitor.health_monitor import HealthMonitor
-    from agentic_sdlc.intelligence.proxy.router import Router as ModelRouter
-    from agentic_sdlc.intelligence.router.workflow_router import WorkflowRouter
-    from agentic_sdlc.intelligence.concurrent_executor import ConcurrentExecutor, DesignPhaseExecutor, ReviewPhaseExecutor
-    from agentic_sdlc.intelligence.synthesizer import OutputSynthesizer
-    from agentic_sdlc.intelligence.feedback_protocol import FeedbackProtocol
-    from agentic_sdlc.intelligence.group_chat import GroupChat
-    from agentic_sdlc.intelligence.workflow_validator.parser import parse_workflow
-    from agentic_sdlc.intelligence.workflow_validator.tracker import get_tracker
-    from agentic_sdlc.intelligence.workflow_validator.validator import ComplianceValidator
-    from agentic_sdlc.intelligence.workflow_validator.reporter import ComplianceReporter
-    from agentic_sdlc.intelligence.auto_skill_builder import AutoSkillBuilder
-    from agentic_sdlc.intelligence.swarm_router import SwarmRouter
-    from agentic_sdlc.intelligence.task_manager import task_board
-    from agentic_sdlc.intelligence.task_manager import sprint_manager
-    from agentic_sdlc.intelligence.hitl.hitl_manager import HITLManager, ApprovalGate, ApprovalStatus
-    from agentic_sdlc.intelligence.self_healing.self_healer import SelfHealingOrchestrator, HealingResult
-    from agentic_sdlc.intelligence.skills import skills_cli
-    from agentic_sdlc.intelligence.research.research_agent import ResearchAgent
-    from agentic_sdlc.infrastructure.communication.chat_manager import ChatManager
-except ImportError as e:
-    print(f"❌ Import Error: {e}")
-    sys.exit(1)
+# --- Lazy Import Helpers ---
+# We use lazy imports to avoid loading heavy dependencies (like autogen/opentelemetry) 
+# during CLI startup, which prevents crashes if the environment is partially broken.
 
+def get_state_manager():
+    from agentic_sdlc.core.brain import state_manager
+    return state_manager
+
+def get_brain_parallel():
+    from agentic_sdlc.intelligence.reasoning.knowledge_graph import brain_parallel
+    return brain_parallel
+
+def get_observer():
+    from agentic_sdlc.intelligence.monitoring.observer.observer import Observer
+    return Observer()
+
+def get_judge():
+    from agentic_sdlc.intelligence.monitoring.judge import Judge
+    return Judge()
+
+def get_ab_tester():
+    from agentic_sdlc.intelligence.learning.ab_test.ab_tester import ABTester
+    return ABTester()
+
+def get_learner():
+    from agentic_sdlc.intelligence.learning.self_learning.learner import Learner
+    return Learner()
+
+def get_artifact_generator():
+    from agentic_sdlc.intelligence.collaborating.artifact_gen.generator import ArtifactGenerator
+    return ArtifactGenerator()
+
+def get_health_monitor():
+    from agentic_sdlc.intelligence.monitoring.monitor.health_monitor import HealthMonitor
+    return HealthMonitor()
+
+def get_model_router():
+    from agentic_sdlc.intelligence.reasoning.router import ModelRouter
+    return ModelRouter()
+
+def get_workflow_router():
+    from agentic_sdlc.intelligence.reasoning.router import WorkflowRouter
+    return WorkflowRouter()
+
+def get_research_agent():
+    from agentic_sdlc.intelligence.reasoning.research.research_mcp import ResearchAgentMCP
+    return ResearchAgentMCP()
+
+def get_hitl_manager():
+    from agentic_sdlc.intelligence.monitoring.hitl.hitl_manager import HITLManager
+    return HITLManager()
+
+def get_self_healing():
+    from agentic_sdlc.intelligence.learning.self_healing.self_healer import SelfHealingOrchestrator
+    return SelfHealingOrchestrator()
+
+def get_swarm_router():
+    from agentic_sdlc.intelligence.reasoning.router import SwarmRouter
+    return SwarmRouter()
+
+def get_compliance_validator():
+    from agentic_sdlc.intelligence.monitoring.workflow_validator.validator import ComplianceValidator
+    return ComplianceValidator()
+
+def get_compliance_reporter():
+    from agentic_sdlc.intelligence.monitoring.workflow_validator.reporter import ComplianceReporter
+    return ComplianceReporter()
+
+def get_feedback_protocol():
+    from agentic_sdlc.intelligence.collaborating.communication.feedback import FeedbackProtocol
+    return FeedbackProtocol()
+
+def get_group_chat():
+    from agentic_sdlc.intelligence.collaborating.communication.group_chat import GroupChat
+    return GroupChat
+
+def get_auto_skill_builder():
+    from agentic_sdlc.intelligence.reasoning.skills.auto_skill_builder import AutoSkillBuilder
+    return AutoSkillBuilder()
+
+def get_chat_manager():
+    from agentic_sdlc.infrastructure.bridge.communication.chat_manager import ChatManager
+    return ChatManager()
+
+def get_task_board():
+    from agentic_sdlc.intelligence.reasoning.task_manager import task_board
+    return task_board
+
+def get_sprint_manager():
+    from agentic_sdlc.intelligence.reasoning.task_manager import sprint_manager
+    return sprint_manager
+
+def get_skills_cli():
+    from agentic_sdlc.intelligence.reasoning.skills import skills_cli
+    return skills_cli
+
+def get_output_synthesizer():
+    from agentic_sdlc.intelligence.collaborating.synthesis.synthesizer import OutputSynthesizer
+    return OutputSynthesizer()
+
+def get_concurrent_executors():
+    from agentic_sdlc.intelligence.collaborating.concurrent.executor import ConcurrentExecutor, DesignPhaseExecutor, ReviewPhaseExecutor
+    return ConcurrentExecutor, DesignPhaseExecutor, ReviewPhaseExecutor
+
+
+def get_autonomous_research_workflow():
+    from agentic_sdlc.intelligence.reasoning.research.autonomous_workflow import AutonomousResearchWorkflow
+    return AutonomousResearchWorkflow()
 
 # --- Command Handlers ---
 
 def cmd_status(args):
     """Show workflow status."""
     print("🧠 @BRAIN /status")
-    state_manager.main(["--status"])
+    get_state_manager().main(["--status"])
 
 def cmd_validate(args):
     """Validate phase."""
     print("🔍 @BRAIN /validate")
-    state_manager.main(["--validate"])
+    get_state_manager().main(["--validate"])
 
 def cmd_transition(args):
     """Transition state."""
@@ -86,24 +162,24 @@ def cmd_transition(args):
     if parsed_args.force:
         cmd_args.append("--force")
         
-    state_manager.main(cmd_args)
+    get_state_manager().main(cmd_args)
 
 def cmd_init(args):
     """Initialize sprint."""
     parser = argparse.ArgumentParser(description="Init Sprint")
     parser.add_argument("sprint", help="Sprint ID")
     parsed_args = parser.parse_args(args)
-    state_manager.main(["--init", "--sprint", parsed_args.sprint])
+    get_state_manager().main(["--init", "--sprint", parsed_args.sprint])
 
 def cmd_sync(args):
     """Sync brain."""
     print("🔄 @BRAIN /sync")
-    brain_parallel.main(["--sync"])
+    get_brain_parallel().main(["--sync"])
 
 def cmd_full_sync(args):
     """Full sync."""
     print("🔄 @BRAIN /full-sync")
-    brain_parallel.main(["--full"])
+    get_brain_parallel().main(["--full"])
 
 def cmd_recommend(args):
     """Get recommendations."""
@@ -111,8 +187,8 @@ def cmd_recommend(args):
     parser.add_argument("task", help="Task description")
     parsed_args = parser.parse_args(args)
     
-    # Use Learner for this now
-    learner = Learner()
+    # 1. Get Domain Knowledge Recommendation
+    learner = get_learner()
     rec = learner.get_recommendation(parsed_args.task)
     if rec:
         print(f"💡 Recommendation for '{parsed_args.task}':")
@@ -120,13 +196,23 @@ def cmd_recommend(args):
         print(f"   (Confidence: {rec['confidence']}, Based on: {rec['based_on']})")
     else:
         print(f"No specific recommendation found for '{parsed_args.task}'.")
-        print("Falling back to Knowledge Graph...")
-        brain_parallel.main(["--recommend", parsed_args.task])
+        print("Searching Knowledge Graph...")
+        get_brain_parallel().main(["--recommend", parsed_args.task])
+
+    # 2. Get Model Recommendation (Implementation Proxy)
+    model_router = get_model_router()
+    route_res = model_router.route(parsed_args.task, priority="balanced")
+    
+    print("\n[Implementation Strategy]")
+    print(f"  Recommended Model: {route_res['model']} ({route_res['provider']})")
+    print(f"  Estimated Cost: {route_res['estimated_cost']}")
+    print(f"  Rationale: {route_res['reason']}")
+    print("-" * 30)
 
 def cmd_health(args):
     """Check system health."""
     print("🏥 @BRAIN /health")
-    monitor = HealthMonitor()
+    monitor = get_health_monitor()
     status = monitor.check_health()
     
     print(f"Status: {status.status.upper()} (Score: {status.score})")
@@ -151,7 +237,7 @@ def cmd_observe(args):
     parser.add_argument("--context", help="JSON context")
     
     parsed_args = parser.parse_args(args)
-    observer = Observer()
+    observer = get_observer()
     
     if parsed_args.action:
         context = json.loads(parsed_args.context) if parsed_args.context else {}
@@ -169,7 +255,7 @@ def cmd_score(args):
     parser.add_argument("file", help="File to score")
     
     parsed_args = parser.parse_args(args)
-    judge = Judge()
+    judge = get_judge()
     result = judge.score(parsed_args.file)
     
     print(f"Score: {result.final_score}/10 ({'PASSED' if result.passed else 'FAILED'})")
@@ -187,7 +273,7 @@ def cmd_ab_test(args):
     parser.add_argument("prompt", help="Decision prompt")
     
     parsed_args = parser.parse_args(args)
-    tester = ABTester()
+    tester = get_ab_tester()
     test = tester.create_test(
         title=parsed_args.prompt,
         description=parsed_args.prompt,
@@ -213,7 +299,7 @@ def cmd_gen(args):
     parser.add_argument("--output", help="Output filename")
     
     parsed_args = parser.parse_args(args)
-    generator = ArtifactGenerator()
+    generator = get_artifact_generator()
     try:
         context = json.loads(parsed_args.context)
         path = generator.generate_from_template(parsed_args.template, context, output_filename=parsed_args.output)
@@ -231,7 +317,7 @@ def cmd_route_req(args):
     parsed_args = parser.parse_args(args)
     
     # Model Routing
-    model_router = ModelRouter()
+    model_router = get_model_router()
     model_result = model_router.route(parsed_args.request)
     
     print("\n[AI Model Recommendation]")
@@ -242,7 +328,7 @@ def cmd_route_req(args):
     # Workflow Routing & Complexity (Swarms-inspired)
     if parsed_args.workflow:
         print("\n[Workflow & Complexity Analysis]")
-        wf_router = WorkflowRouter()
+        wf_router = get_workflow_router()
         wf_result = wf_router.route(parsed_args.request)
         
         print(f"  Recommended Workflow: {wf_result.workflow}")
@@ -260,7 +346,7 @@ def cmd_learn(args):
     parser.add_argument("description", help="What was learned")
     
     parsed_args = parser.parse_args(args)
-    learner = Learner()
+    learner = get_learner()
     result = learner.learn(parsed_args.description)
     print(f"Recorded. Patterns found: {result['patterns_found']}")
 
@@ -326,6 +412,7 @@ def cmd_validate_workflow(args):
     
     # Parse workflow definition
     try:
+        from agentic_sdlc.intelligence.monitoring.workflow_validator.parser import parse_workflow
         workflow_def = parse_workflow(session.workflow_name)
     except FileNotFoundError:
         print(f"❌ Workflow definition not found: {session.workflow_name}")
@@ -335,11 +422,11 @@ def cmd_validate_workflow(args):
         return
     
     # Validate
-    validator = ComplianceValidator()
+    validator = get_compliance_validator()
     report = validator.validate(workflow_def, session)
     
     # Generate report
-    reporter = ComplianceReporter()
+    reporter = get_compliance_reporter()
     
     # Show console summary
     print(reporter.generate_console_summary(report))
@@ -390,7 +477,8 @@ def cmd_gate(args):
     subparsers.add_parser("stats", help="Show approval statistics")
     
     parsed_args = parser.parse_args(args)
-    manager = HITLManager()
+    manager = get_hitl_manager()
+    from agentic_sdlc.intelligence.monitoring.hitl.hitl_manager import ApprovalGate, ApprovalStatus
     
     if parsed_args.subcommand == "request":
         manager.request_approval(
@@ -470,22 +558,20 @@ def cmd_heal(args):
             print(f"❌ Error reading file: {e}")
             return
             
-    orchestrator = SelfHealingOrchestrator()
+    orchestrator = get_self_healing()
     
     # Integrate with State Manager if possible
     try:
-        from agentic_sdlc.intelligence.state.state_manager import StateManager
-        orchestrator.set_state_manager(StateManager())
+        orchestrator.set_state_manager(get_state_manager().StateManager())
         print("✓ State Manager integrated")
-    except ImportError:
+    except (ImportError, AttributeError):
         pass
         
     # Integrate with HITL if possible
     try:
-        from agentic_sdlc.intelligence.hitl.hitl_manager import HITLManager
-        orchestrator.set_hitl_manager(HITLManager())
+        orchestrator.set_hitl_manager(get_hitl_manager())
         print("✓ HITL Manager integrated")
-    except ImportError:
+    except (ImportError, AttributeError):
         pass
         
     result = orchestrator.heal(
@@ -525,6 +611,7 @@ def cmd_concurrent(args):
     parser.add_argument("--command", help="Shell command template")
     
     parsed_args = parser.parse_args(args)
+    ConcurrentExecutor, DesignPhaseExecutor, ReviewPhaseExecutor = get_concurrent_executors()
     
     if parsed_args.phase:
         if parsed_args.phase == "design":
@@ -554,7 +641,7 @@ def cmd_synthesize(args):
     parser.add_argument("--template", help="Custom template")
     
     parsed_args = parser.parse_args(args)
-    synthesizer = OutputSynthesizer()
+    synthesizer = get_output_synthesizer()
     
     if parsed_args.inputs:
         inputs = json.loads(parsed_args.inputs)
@@ -597,7 +684,7 @@ def cmd_feedback(args):
     list_parser.add_argument("--sender")
     
     parsed_args = parser.parse_args(args)
-    protocol = FeedbackProtocol()
+    protocol = get_feedback_protocol()
     
     if parsed_args.subcommand == "send":
         msg = protocol.send_feedback(parsed_args.sender, parsed_args.receiver, parsed_args.content, parsed_args.type)
@@ -617,7 +704,8 @@ def cmd_chat(args):
     
     parsed_args = parser.parse_args(args)
     agents = [r.strip() for r in parsed_args.agents.split(',')]
-    chat = GroupChat(agents=agents, max_turns=parsed_args.turns)
+    GroupChatClass = get_group_chat()
+    chat = GroupChatClass(agents=agents, max_turns=parsed_args.turns)
     
     # Integration note: In real usage, the CLI would need to know how to call the agents.
     # For now, this invokes the demo mode.
@@ -635,7 +723,7 @@ def cmd_autoskill(args):
     parser.add_argument("--objective", required=True, help="Objective/requirements")
     
     parsed_args = parser.parse_args(args)
-    builder = AutoSkillBuilder()
+    builder = get_auto_skill_builder()
     path = builder.build_skill(parsed_args.name, parsed_args.objective)
     print(f"Generated skill in: {path}")
 
@@ -647,7 +735,7 @@ def cmd_swarm(args):
     parser.add_argument("--mode", choices=["sequential", "concurrent", "moa", "group_chat"], help="Force mode")
     
     parsed_args = parser.parse_args(args)
-    router = SwarmRouter()
+    router = get_swarm_router()
     result = router.run(parsed_args.task, parsed_args.mode)
     print(json.dumps(result.to_dict(), indent=2))
 
@@ -663,10 +751,10 @@ def cmd_aop(args):
     parsed_args = parser.parse_args(args)
     
     if parsed_args.subcommand == "start":
-        from agentic_sdlc.infrastructure.aop.server import run_server
+        from agentic_sdlc.infrastructure.engine.aop.server import run_server
         run_server()
     elif parsed_args.subcommand == "list":
-        from agentic_sdlc.infrastructure.aop.client import AOPClient
+        from agentic_sdlc.infrastructure.engine.aop.client import AOPClient
         client = AOPClient()
         agents = client.list_agents()
         print(f"Remote Agents: {len(agents)}")
@@ -675,7 +763,7 @@ def cmd_aop(args):
 
 def cmd_skills(args):
     """Delegate to skills_cli.py"""
-    skills_cli.main(args)
+    get_skills_cli().main(args)
 
 
 # --- Main Dispatcher ---
@@ -683,13 +771,13 @@ def cmd_skills(args):
 def cmd_help(args):
     """Show help."""
     print("🧠 @BRAIN CLI - Intelligence Layer Control")
-    print("Usage: python tools/core/brain/brain_cli.py <command> [options]")
+    print("Usage: python agentic_sdlc/core/brain/brain_cli.py <command> [options]")
     print()
     print("Commands:")
     print("  status              Show workflow status")
     print("  validate            Validate phase")
     print("  transition          Transition state")
-    print("  init                Initialize sprint")
+    print("  init-sprint         Initialize new sprint state")
     print("  gate                Manage approval gates")
     print("  heal                Run self-healing loop")
     print("  health              Check system health")
@@ -712,6 +800,10 @@ def cmd_help(args):
     print("  sprint              Manage sprints")
     print("  validate-workflow   Validate workflow execution")
     print("  skills              Manage skills (OpenSkills compatible)")
+    print("  dashboard           Launch Brain Dashboard (Streamlit)")
+    print("  workflow            Run a workflow script")
+    print("  research            Custom MCP research agent")
+    print("  auto-research       Autonomous research chain")
     print()
 
 def cmd_workflow(args):
@@ -727,6 +819,7 @@ def cmd_workflow(args):
     project_root = Path(os.getcwd())
     potential_paths = [
         project_root / f"agentic_sdlc/infrastructure/workflows/{workflow_name}.py",
+        project_root / f"agentic_sdlc/infrastructure/automation/workflows/{workflow_name}.py",
         project_root / f"agentic_sdlc/workflows/{workflow_name}.py",
     ]
     
@@ -748,6 +841,24 @@ def cmd_workflow(args):
         for wf in wf_dir.glob("*.py"):
             print(f"  - {wf.stem}")
 
+def cmd_dashboard(args):
+    """Launch the dashboard."""
+    print("🖥️  @BRAIN /dashboard")
+    project_root = Path(os.getcwd())
+    app_path = project_root / "agentic_sdlc/intelligence/collaborating/dashboard/app.py"
+    if not app_path.exists():
+        print(f"❌ Error: Dashboard app not found at {app_path}")
+        return
+    
+    cmd = [str(project_root / ".venv/bin/streamlit"), "run", str(app_path)] + args
+    print(f"🚀 Launching Streamlit dashboard...")
+    try:
+        subprocess.run(cmd)
+    except KeyboardInterrupt:
+        print("\nDashboard stopped.")
+    except Exception as e:
+        print(f"❌ Failed to launch dashboard: {e}")
+
 def cmd_research(args):
     """Execute research command."""
     parser = argparse.ArgumentParser(description="Research Agent")
@@ -757,7 +868,7 @@ def cmd_research(args):
     parser.add_argument('--type', choices=['general', 'bug', 'feature', 'architecture', 'security', 'performance'], default='general')
     
     parsed_args = parser.parse_args(args)
-    agent = ResearchAgent()
+    agent = get_research_agent()
     try:
         if parsed_args.bug:
             task = parsed_args.bug
@@ -815,13 +926,26 @@ def cmd_comm(args):
         for m in msgs:
             print(f"[{m['timestamp']}] {m['role_id']} (in {m['thread_title']}): {m['content']}")
 
-def main():
-    if len(sys.argv) < 2:
+def cmd_auto_research(args):
+    """Execute autonomous research chain: Search -> Score -> A/B -> Learn."""
+    parser = argparse.ArgumentParser(description="Autonomous Research Chain")
+    parser.add_argument('task', help='Research task query')
+    parser.add_argument('--type', choices=['general', 'bug', 'feature', 'architecture', 'security', 'performance'], default='general')
+    
+    parsed_args = parser.parse_args(args)
+    workflow = get_autonomous_research_workflow()
+    workflow.execute(parsed_args.task, parsed_args.type)
+
+def main(cli_args: Optional[List[str]] = None):
+    if cli_args is None:
+        cli_args = sys.argv[1:]
+    
+    if not cli_args:
         cmd_help([])
         return 0
     
     # Handle 'brain' prefix (recursive to handle things like 'brain brain sync')
-    all_args = sys.argv[1:]
+    all_args = cli_args[:]
     while all_args and all_args[0].lower() == "brain":
         all_args = all_args[1:]
     
@@ -836,6 +960,7 @@ def main():
         "status": cmd_status,
         "validate": cmd_validate,
         "transition": cmd_transition,
+        "init-sprint": cmd_init,
         "init-state": cmd_init,
         "gate": cmd_gate,
         "heal": cmd_heal,
@@ -862,6 +987,8 @@ def main():
         "skills": cmd_skills,
         "workflow": cmd_workflow,
         "research": cmd_research,
+        "auto-research": cmd_auto_research,
+        "dashboard": cmd_dashboard,
         "comm": cmd_comm,
         "help": cmd_help,
         "--help": cmd_help,

@@ -1,0 +1,9 @@
+[
+  {
+    "type": "code_review",
+    "severity": "low",
+    "description_match": "TODO found",
+    "fix": "Applied automatic fix",
+    "learned_at": "2026-01-29T22:04:40.370112"
+  }
+]

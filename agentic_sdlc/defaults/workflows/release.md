@@ -13,16 +13,16 @@ description: Support - Release Management Workflow
 
 ```bash
 # Preview changes (dry run)
-python tools/infrastructure/release/release.py preview
+python agentic_sdlc/infrastructure/lifecycle/release/release.py preview
 
 # Generate changelog only
-python tools/infrastructure/release/release.py changelog --sprint 6
+python agentic_sdlc/infrastructure/lifecycle/release/release.py changelog --sprint 6
 
 # Bump version only
-python tools/infrastructure/release/release.py version --auto
+python agentic_sdlc/infrastructure/lifecycle/release/release.py version --auto
 
 # Full release cycle
-python tools/infrastructure/release/release.py release --commit --tag --push --publish
+python agentic_sdlc/infrastructure/lifecycle/release/release.py release --commit --tag --push --publish
 ```
 
 ## Conventional Commit Format
@@ -65,7 +65,7 @@ refactor(core): extract utility functions
 
 ### 1. Preview Changes
 ```bash
-python tools/infrastructure/release/release.py preview --sprint 6
+python agentic_sdlc/infrastructure/lifecycle/release/release.py preview --sprint 6
 ```
 Shows:
 - Last git tag
@@ -76,7 +76,7 @@ Shows:
 
 ### 2. Generate Changelog
 ```bash
-python tools/infrastructure/release/release.py changelog --sprint 6 --dry-run
+python agentic_sdlc/infrastructure/lifecycle/release/release.py changelog --sprint 6 --dry-run
 ```
 - Parses commits since last tag
 - Categorizes by type
@@ -86,16 +86,16 @@ python tools/infrastructure/release/release.py changelog --sprint 6 --dry-run
 ### 3. Bump Version
 ```bash
 # Auto-detect based on commits
-python tools/infrastructure/release/release.py version --auto
+python agentic_sdlc/infrastructure/lifecycle/release/release.py version --auto
 
 # Explicit bump type
-python tools/infrastructure/release/release.py version --bump minor
+python agentic_sdlc/infrastructure/lifecycle/release/release.py version --bump minor
 ```
 Updates `package.json` version.
 
 ### 4. Full Release
 ```bash
-python tools/infrastructure/release/release.py release --sprint 6 --commit --tag --push --publish
+python agentic_sdlc/infrastructure/lifecycle/release/release.py release --sprint 6 --commit --tag --push --publish
 ```
 Executes:
 1. Parse commits
@@ -143,13 +143,13 @@ git push && git push --tags
 
 - **Update Methods:**
   - **NPM Update:** `npm update -g agentic-sdlc`
-  - **Source Update:** `python tools/infrastructure/update/updater.py`
+  - **Source Update:** `python agentic_sdlc/infrastructure/lifecycle/update/updater.py`
 
 - **CI/CD:** Can be triggered in GitHub Actions
 
 - **Publish to NPM:** To publish to NPM, ensure you are logged in using `npm login` then run the release command with the --publish flag.
   ```bash
-  python tools/infrastructure/release/release.py release --publish
+  python agentic_sdlc/infrastructure/lifecycle/release/release.py release --publish
   ```
 
 #release #versioning #changelog #semver #git-tags

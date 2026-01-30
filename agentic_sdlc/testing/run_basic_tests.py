@@ -12,7 +12,7 @@ from datetime import datetime
 project_root = Path(__file__).resolve().parent.parent.parent
 sys.path.insert(0, str(project_root))
 
-from agentic_sdlc.intelligence.judge.scorer import Judge
+from agentic_sdlc.intelligence.monitoring.judge.scorer import Judge
 
 def main():
     print("="*60)

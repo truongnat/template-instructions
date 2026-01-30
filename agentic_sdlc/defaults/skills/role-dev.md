@@ -20,7 +20,7 @@ Activate when user mentions: `@DEV`, "developer", "implementation", "coding", "w
 ```bash
 # Search KB + docs for existing solutions
 kb search "feature-name"
-kb compound search "architecture-pattern"
+python agentic_sdlc/core/brain/brain_cli.py search "architecture-pattern"
 ```
 
 - Review `docs/` for architecture decisions
@@ -79,7 +79,7 @@ kb compound search "architecture-pattern"
 - Write code with good comments
 - Make atomic commits with clear messages
 - Update KB entries for new patterns
-- Sync to Neo4j Brain: `kb compound add`
+- Sync to Neo4j Brain: `python agentic_sdlc/core/brain/brain_cli.py learn`
 - No separate log file needed
 
 ## Compound Learning Integration
@@ -97,13 +97,13 @@ kb compound search "architecture-pattern"
 agentic-sdlc kb add
 
 # Or compound add (auto-syncs to Neo4j)
-agentic-sdlc kb compound add
+agentic-sdlc python agentic_sdlc/core/brain/brain_cli.py learn
 
 # Update index
 agentic-sdlc kb index
 
 # Full sync to Neo4j Brain
-agentic-sdlc kb compound sync
+agentic-sdlc python agentic_sdlc/core/brain/brain_cli.py sync
 ```
 
 ### KB Entry Template
@@ -155,10 +155,10 @@ Links to similar KB entries or docs
 
 ### Compound Learning Rules
 - ✅ Search KB first: `kb search "topic"`
-- ✅ Document hard problems: `kb compound add`
+- ✅ Document hard problems: `python agentic_sdlc/core/brain/brain_cli.py learn`
 - ✅ Link KB entries in commits: `[KB-YYYY-MM-DD-NNN]`
 - ✅ Update docs/ when architecture changes
-- ✅ Sync to Neo4j: `kb compound sync`
+- ✅ Sync to Neo4j: `python agentic_sdlc/core/brain/brain_cli.py sync`
 
 ## Communication Template
 
@@ -195,13 +195,13 @@ After implementation:
 5. **RESEARCH FIRST:** Step 0 is NEVER optional.
 
 ### 0.0 **Team Communication (MANDATORY):**
-   - **Check History:** `python tools/communication/cli.py history --channel general --limit 10`
-   - **Announce Start:** `python tools/communication/cli.py send --channel general --thread "SDLC-Flow" --role DEV --content "Starting implementation of [Task ID]."`
+   - **Check History:** `python agentic_sdlc/infrastructure/communication/chat_manager.py history --channel general --limit 10`
+   - **Announce Start:** `python agentic_sdlc/infrastructure/communication/chat_manager.py send --channel general --thread "SDLC-Flow" --role DEV --content "Starting implementation of [Task ID]."`
 
 ## Key Duties (Execution)
 
 ### 0. **RESEARCH FIRST (MANDATORY):**
-   - Run: `python tools/research/research_agent.py --feature "[feature]" --type feature`
+   - Run: `python agentic_sdlc/intelligence/research/researcher.py --feature "[feature]" --type feature`
    - Check KB for similar implementations.
 
 ### 1. **Task Assignment:**
@@ -228,7 +228,8 @@ After implementation:
 
 ### 6. **Post-Merge:**
    - Update `Development-Log.md` with commit hash, status: Done.
-   - Run self-learning: `python tools/neo4j/sync_skills_to_neo4j.py`
+   - Run self-learning: `# DEPRECATED: Neo4j integration removed - use SQLite KB instead
+# python tools/neo4j/sync_skills_to_neo4j.py`
 
 ## Enhanced Workflows
 
@@ -302,16 +303,18 @@ For production emergencies:
 ### Knowledge Base Integration
 - **KB CLI** - Search, add, sync knowledge
   - `kb search "topic"` - Search KB + docs
-  - `kb compound search "topic"` - Search with Neo4j
+  - `python agentic_sdlc/core/brain/brain_cli.py search "topic"` - Search with Neo4j
   - `kb add` - Create new KB entry
-  - `kb compound add` - Create + sync to Neo4j
-  - `kb compound sync` - Full sync to Neo4j Brain
+  - `python agentic_sdlc/core/brain/brain_cli.py learn` - Create + sync to Neo4j
+  - `python agentic_sdlc/core/brain/brain_cli.py sync` - Full sync to Neo4j Brain
 
 ### Neo4j Brain
 - **Neo4j Sync** - Sync KB to graph database
-  - `python tools/neo4j/sync_skills_to_neo4j.py`
+  - `# DEPRECATED: Neo4j integration removed - use SQLite KB instead
+# python tools/neo4j/sync_skills_to_neo4j.py`
 - **Neo4j Query** - Query knowledge graph
-  - `python tools/neo4j/query_skills_neo4j.py --search "topic"`
+  - `# DEPRECATED: Neo4j integration removed - use SQLite KB instead
+# python tools/neo4j/query_skills_neo4j.py --search "topic"`
 
 ## Knowledge Base Workflow
 
@@ -319,14 +322,15 @@ For production emergencies:
 ```bash
 # 1. Search for existing solutions
 kb search "authentication"
-kb compound search "OAuth integration"
+python agentic_sdlc/core/brain/brain_cli.py search "OAuth integration"
 
 # 2. Review docs for architecture
 # Check docs/ARCHITECTURE-OVERVIEW.md
 # Check docs/guides/ for patterns
 
 # 3. Query Neo4j Brain for relationships
-python tools/neo4j/query_skills_neo4j.py --search "auth"
+# DEPRECATED: Neo4j integration removed - use SQLite KB instead
+# python tools/neo4j/query_skills_neo4j.py --search "auth"
 ```
 
 ### During Implementation
@@ -337,13 +341,13 @@ python tools/neo4j/query_skills_neo4j.py --search "auth"
 ### After Implementation
 ```bash
 # 1. Document if non-obvious (3+ attempts)
-kb compound add
+python agentic_sdlc/core/brain/brain_cli.py learn
 
 # 2. Update index
 kb index
 
 # 3. Sync to Neo4j Brain
-kb compound sync
+python agentic_sdlc/core/brain/brain_cli.py sync
 
 # 4. Verify searchability
 kb search "your-solution"

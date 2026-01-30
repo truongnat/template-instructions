@@ -13,7 +13,7 @@
 3. **17 Specialized AI Roles** - PM, BA, PO, SA, UIUX, DEV, TESTER, SECA, DEVOPS, MOBILE, GAME, CLOUD, ORCHESTRATOR, REPORTER, RESEARCH, STAKEHOLDER, BRAIN
 4. **23 Automated Workflows** - Complete task lifecycle automation
 5. **Cross-IDE Compatibility** - Works everywhere through markdown files
-6. **Self-Learning Knowledge Base** - Neo4j graph + SQLite State + LEANN vector search
+6. **Self-Learning Knowledge Base** - Memgraph graph + SQLite State + LEANN vector search
 7. **Compound Learning** - Every task improves the system via DSPy optimization models.
 
 ---
@@ -49,7 +49,7 @@
             │   └─────────────────────────────────────────────────────┘  │
             │                            ↑                               │
             │   ┌─────────────────────────────────────────────────────┐ │
-            │   │ Tools │ CLI │ MCP Connectors │ Docs │ Neo4j │ KB  │ │
+            │   │ Tools │ CLI │ MCP Connectors │ Docs │ Memgraph │ KB  │ │
             │   └─────────────────────────────────────────────────────┘ │
             │                                                            │
             └────────────────────────────────────────────────────────────┘
@@ -79,7 +79,7 @@ agentic-sdlc/
 │   ├── rules/                   # 8 rule files
 │   └── workflows/               # 23 workflow definitions
 │
-├── tools/                        # 🧠 LAYER 2 + 3
+├── agentic_sdlc/                 # 🧠 LAYER 2 + 3 (Core Package)
 │   ├── intelligence/            # LAYER 2: Brain sub-agents
 │   │   ├── observer/           # Rule compliance monitor
 │   │   ├── ab_test/            # A/B result generator
@@ -101,9 +101,10 @@ agentic-sdlc/
 │       ├── release/            # Release management
 │       └── validation/         # Health checks
 │
-├── bin/                          # CLI entry point
+├── bin/                          # CLI helper scripts
 ├── mcp/                          # MCP connectors
-└── docs/                         # Generated documentation
+├── docs/                         # Generated documentation
+└── asdlc.py                      # Main CLI entry point
 ```
 
 ---
@@ -203,7 +204,7 @@ python asdlc.py brain learn "[task description]"
 # 2. Score output (if applicable)
 python asdlc.py brain score "[artifact path]"
 
-# 3. Sync to Neo4j
+# 3. Sync to Memgraph
 python asdlc.py brain sync
 
 # 4. Monitor health
@@ -233,55 +234,55 @@ python asdlc.py workflow housekeeping
 The brain system consists of 7 specialized sub-agents:
 
 ### 1. HITL (Human-in-the-Loop) - Mandatory Gates
-**Location:** `tools/intelligence/hitl/`
+**Location:** `agentic_sdlc/intelligence/hitl/`
 **Importance:** Critical for Preventing Hallucinations in Production.
 - Implements mandatory approval gates: `PLANNING`, `DESIGN`, `SECURITY`, `CODE_REVIEW`, `DEPLOY`.
-- CLI: `python tools/intelligence/hitl/hitl_manager.py request --gate code_review`
+- CLI: `python asdlc.py brain gate request --gate code_review`
 
 ### 2. State Manager - Persistence & Recovery
-**Location:** `tools/intelligence/state/`
+**Location:** `agentic_sdlc/intelligence/state/`
 **Importance:** System Stability & Crash Recovery.
 - SQLite-based persistent storage for workflow sessions.
 - Checkpointing for long-running multi-agent tasks (e.g., Phase-based state saving).
 
 ### 3. Self-Healing (QA → DEV Feedback Loop)
-**Location:** `tools/intelligence/self_healing/`
+**Location:** `agentic_sdlc/intelligence/self_healing/`
 **Importance:** Automated Quality Assurance.
 - Iterative fix/retry loop until all tests/validations pass.
 - Learns from error messages to suggest optimized fixes.
 
 ### 4. DSPy Integration (Programmatic Optimization)
-**Location:** `tools/intelligence/dspy_integration/`
+**Location:** `agentic_sdlc/intelligence/dspy_integration/`
 **Importance:** Self-Improving Agent Prompting.
 - Replaces brittle prompting with compositional Python code.
 - `AgentOptimizer` improves prompt performance based on successful task outcomes.
 
 ### 5. Cost Monitoring (Token Tracker)
-**Location:** `tools/intelligence/cost/`
+**Location:** `agentic_sdlc/intelligence/cost/`
 **Importance:** Operational Efficiency.
 - Real-time token usage and cost tracking ($) per task and model.
 - Budget alerts and model comparison tools.
 
 ### 6. Evaluation Framework (Benchmarking)
-**Location:** `tools/intelligence/evaluation/`
+**Location:** `agentic_sdlc/intelligence/evaluation/`
 **Importance:** Performance Verification.
 - Benchmark agents against curated test cases (PM-01, DEV-01, etc.).
 - Regression tracking to ensure updates improve (not degrade) agent quality.
 
 ### 7. Observer (Rule Compliance Monitor)
-**Location:** `tools/intelligence/observer/`
+**Location:** `agentic_sdlc/intelligence/observer/`
 - Real-time monitoring of agent actions against project rules (.cursorrules, etc.).
 
-### 8. Knowledge Graph (Neo4j Integration)
-**Location:** `tools/intelligence/knowledge_graph/`
+### 8. Knowledge Graph (Graph Database)
+**Location:** `agentic_sdlc/intelligence/knowledge_graph/`
 - Maps complex relationships between tasks, skills, and learned solutions.
 
 ### 9. A/B Test (Alternative Generator)
-**Location:** `tools/intelligence/ab_test/`
+**Location:** `agentic_sdlc/intelligence/ab_test/`
 - Generates 2 distinct approaches for any task to ensure architectural variety.
 
 ### 10. Judge (Quality Scorer)
-**Location:** `tools/intelligence/judge/`
+**Location:** `agentic_sdlc/intelligence/judge/`
 - Cross-validates outputs from other agents and scores them (0-100).
 
 ### 11-21. Specialized Intelligence Sub-Agents
@@ -300,23 +301,23 @@ The brain system consists of 7 specialized sub-agents:
 ## 🏗️ Layer 3: Infrastructure (Modern Capabilities)
 
 ### 1. Sandboxing (Secure Execution)
-**Location:** `tools/infrastructure/sandbox/`
+**Location:** `agentic_sdlc/infrastructure/sandbox/`
 - Docker-based isolated execution for agent code.
 - Resource limits (CPU/Memory) and network lockdown for safety.
 
 ### 2. Local LLM Hub (Ollama)
-**Location:** `tools/infrastructure/local_llm/`
+**Location:** `agentic_sdlc/infrastructure/local_llm/`
 - Unified client for interacting with local LLMs (Llama3, CodeLlama).
 - Provides privacy and zero-cost execution for routine tasks.
 
 ### 3. Dashboard (Visual Control Panel)
-**Location:** `tools/intelligence/dashboard/`
+**Location:** `agentic_sdlc/intelligence/dashboard/`
 - Streamlit-powered UI for real-time monitoring.
 - Command: `python asdlc.py dashboard`
 
 ### 4. Self-Learning (Learning Engine)
 
-**Location:** `tools/intelligence/self_learning/`
+**Location:** `agentic_sdlc/intelligence/self_learning/`
 
 **Responsibilities:**
 - Learn from ALL sub-agent outputs
@@ -325,7 +326,7 @@ The brain system consists of 7 specialized sub-agents:
 - Learn from Judge scores → Quality patterns
 - Store solutions, bugs, anti-patterns
 - Generate learning digests
-- Update KB and Neo4j with learnings
+- Update KB and Memgraph with learnings
 
 **Learning Sources:**
 - Observer violations → Rules to add/update
@@ -346,7 +347,7 @@ python asdlc.py brain recommend "implement caching"
 
 ### 5. Proxy (AI Model Router)
 
-**Location:** `tools/intelligence/proxy/`
+**Location:** `agentic_sdlc/intelligence/proxy/`
 
 **Responsibilities:**
 - Analyze prompt complexity
@@ -371,12 +372,12 @@ python asdlc.py brain route "refactor this function"
 
 ### 6. Artifact Gen (Document Generator)
 
-**Location:** `tools/intelligence/artifact_gen/`
+**Location:** `agentic_sdlc/intelligence/artifact_gen/`
 
 **Responsibilities:**
 - Generate documents from templates
 - Support all 20+ template types
-- Auto-fill from context (files, KB, Neo4j)
+- Auto-fill from context (files, KB, Memgraph)
 - Validate against rules
 - Version control artifacts
 
@@ -395,7 +396,7 @@ python asdlc.py brain gen project-plan '{"title": "Build todo app"}'
 
 ### 7. Monitor (System Health Monitor)
 
-**Location:** `tools/intelligence/monitor/`
+**Location:** `agentic_sdlc/intelligence/monitor/`
 
 **Responsibilities:**
 - Check for missing documentation
@@ -420,12 +421,12 @@ python asdlc.py brain gen project-plan '{"title": "Build todo app"}'
 python asdlc.py brain health
 ```
 
-### 8. Knowledge Graph (Neo4j Integration)
+### 8. Knowledge Graph (Memgraph-compatible)
 
 **Location:** `tools/intelligence/knowledge_graph/`
 
 **Responsibilities:**
-- Sync project data to Neo4j graph database
+- Sync project data to knowledge graph database
 - Store and query skills, workflows, and relationships
 - Provide learning path recommendations
 - Track task patterns and dependencies
@@ -433,20 +434,20 @@ python asdlc.py brain health
 - Generate context-aware suggestions
 
 **Actions:**
-- `sync_to_neo4j()` - Sync all data to graph
+- `sync_to_graph()` - Sync all data to graph
 - `query_skills(skill_name)` - Query skill nodes
 - `get_learning_path(topic)` - Get learning recommendations
 - `find_patterns(query)` - Search for patterns
 
 **Usage:**
 ```bash
-# Sync to Neo4j
+# Sync to Graph
 python asdlc.py brain sync
 ```
 
 ### 9. Performance (Execution Metrics)
 
-**Location:** `tools/intelligence/performance/`
+**Location:** `agentic_sdlc/intelligence/performance/`
 
 **Responsibilities:**
 - Track execution time for tasks and workflows
@@ -458,15 +459,15 @@ python asdlc.py brain sync
 **Usage:**
 ```bash
 # Profile a workflow
-python tools/intelligence/performance/profiler.py --workflow cycle
+python agentic_sdlc/intelligence/performance/profiler.py --workflow cycle
 
 # Get performance report
-python tools/intelligence/performance/profiler.py --report
+python agentic_sdlc/intelligence/performance/profiler.py --report
 ```
 
 ### 10. Research (Knowledge Discovery)
 
-**Location:** `tools/intelligence/research/`
+**Location:** `agentic_sdlc/intelligence/research/`
 
 **Responsibilities:**
 - Web search for best practices and solutions
@@ -478,15 +479,15 @@ python tools/intelligence/performance/profiler.py --report
 **Usage:**
 ```bash
 # Research a topic
-python tools/intelligence/research/researcher.py --query "implement JWT authentication"
+python asdlc.py research --task "implement JWT authentication"
 
 # Search knowledge base
-python tools/intelligence/research/researcher.py --kb-search "caching strategies"
+python asdlc.py research --task "caching strategies" --type general
 ```
 
 ### 11. Router (Workflow & Agent Routing)
 
-**Location:** `tools/intelligence/router/`
+**Location:** `agentic_sdlc/intelligence/router/`
 
 **Responsibilities:**
 - Route tasks to appropriate workflows
@@ -503,12 +504,12 @@ python tools/intelligence/research/researcher.py --kb-search "caching strategies
 **Usage:**
 ```bash
 # Route a task
-python tools/intelligence/router/workflow_router.py --task "implement login feature"
+python asdlc.py brain route "implement login feature" --workflow
 ```
 
 ### 12. Scorer (Input/Output Quality)
 
-**Location:** `tools/intelligence/scorer/`
+**Location:** `agentic_sdlc/intelligence/scorer/`
 
 **Responsibilities:**
 - Score input quality (clarity, completeness)
@@ -530,7 +531,7 @@ python asdlc.py brain score src/app.py
 
 ### 13. Task Manager (Task Coordination)
 
-**Location:** `tools/intelligence/task_manager/`
+**Location:** `agentic_sdlc/intelligence/task_manager/`
 
 **Responsibilities:**
 - Track task status and progress
@@ -550,7 +551,7 @@ python asdlc.py brain task status task-123
 
 ### 14. Workflow Validator (Execution Compliance)
 
-**Location:** `tools/intelligence/workflow_validator/`
+**Location:** `agentic_sdlc/intelligence/workflow_validator/`
 
 **Responsibilities:**
 - Parse workflow definitions from `.agent/workflows/*.md`
@@ -575,15 +576,15 @@ python asdlc.py brain task status task-123
 **Usage:**
 ```bash
 # Auto-validate last workflow execution
-python tools/core/brain/brain_cli.py validate-workflow --auto
+python asdlc.py brain validate-workflow --auto
 
 # Validate specific workflow with full report
-python tools/core/brain/brain_cli.py validate-workflow --workflow commit --report
+python asdlc.py brain validate-workflow --workflow commit --report
 
 # Manual tracking
-python tools/core/brain/brain_cli.py validate-workflow --start --workflow cycle
+python asdlc.py brain validate-workflow --start --workflow cycle
 # ... execute workflow ...
-python tools/core/brain/brain_cli.py validate-workflow --end
+python asdlc.py brain validate-workflow --end
 ```
 
 **Report Contents:**
@@ -603,47 +604,47 @@ python tools/core/brain/brain_cli.py validate-workflow --end
 The system has been enhanced with advanced reliability and self-improvement capabilities.
 
 ### 15. HITL (Human-in-the-Loop)
-**Location:** `tools/intelligence/hitl/`
+**Location:** `agentic_sdlc/intelligence/hitl/`
 - Implements mandatory approval gates at critical SDLC phases.
 - Supported Gates: `PLANNING`, `DESIGN_REVIEW`, `CODE_REVIEW`, `SECURITY_REVIEW`, `DEPLOYMENT`.
-- CLI: `python tools/intelligence/hitl/hitl_manager.py request --gate code_review`
+- CLI: `python asdlc.py brain gate request --gate code_review`
 
 ### 16. State Manager (Persistence & Recovery)
-**Location:** `tools/intelligence/state/`
+**Location:** `agentic_sdlc/intelligence/state/`
 - SQLite-based workflow session persistence.
 - Checkpointing for long-running multi-agent tasks.
 - Crash recovery and session archival.
-- CLI: `python tools/intelligence/state/state_manager.py checkpoint $SESSION_ID $PHASE`
+- CLI: `python agentic_sdlc/intelligence/state/state_manager.py transition --reason "checkpoint" --transition "CHECKPOINT"` (Use `asdlc.py brain transition` normally)
 
 ### 17. DSPy Integration (Programmatic Optimization)
-**Location:** `tools/intelligence/dspy_integration/`
+**Location:** `agentic_sdlc/intelligence/dspy_integration/`
 - Moves from "prompting" to "programming" language models.
 - Signatures for PM, SA, DEV, QA, and SECA roles.
 - `AgentOptimizer` using `BootstrapFewShot` to improve prompt effectiveness based on successes.
 
 ### 18. Self-Healing (QA → DEV Feedback Loop)
-**Location:** `tools/intelligence/self_healing/`
+**Location:** `agentic_sdlc/intelligence/self_healing/`
 - Automated iterative fix/retry loop until all tests pass.
 - Learns from error patterns to suggest faster fixes in future.
-- CLI: `python tools/intelligence/self_healing/self_healer.py run --code src/`
+- CLI: `python asdlc.py brain heal --code src/`
 
 ### 19. Cost Monitoring (Token Tracker)
-**Location:** `tools/intelligence/cost/`
+**Location:** `agentic_sdlc/intelligence/cost/`
 - Tracks token usage and real-time cost per task/model.
 - Daily budget alerts and cost optimization suggestions.
-- CLI: `python tools/intelligence/cost/cost_tracker.py report --period weekly`
+- CLI: `python agentic_sdlc/intelligence/cost/cost_tracker.py report --period weekly`
 
 ### 20. Sandboxing (Secure Execution)
-**Location:** `tools/infrastructure/sandbox/`
+**Location:** `agentic_sdlc/infrastructure/sandbox/`
 - Docker-based isolated environment for agent-generated code.
 - Resource limits (CPU/Memory) and network isolation.
-- CLI: `python tools/infrastructure/sandbox/sandbox_executor.py --lang python --code "print('hello')"`
+- CLI: `python agentic_sdlc/infrastructure/sandbox/sandbox_executor.py --lang python --code "print('hello')"`
 
 ### 21. Evaluation Framework (Benchmarking)
-**Location:** `tools/intelligence/evaluation/`
+**Location:** `agentic_sdlc/intelligence/evaluation/`
 - Automated benchmarking of agent roles against known test cases.
 - Performance statistics and regression tracking.
-- CLI: `python tools/intelligence/evaluation/benchmark.py run --role DEV`
+- CLI: `python agentic_sdlc/intelligence/evaluation/benchmark.py run --role DEV`
 
 
 ## 👥 Layer 1: Skills (17 AI Roles)
@@ -951,19 +952,19 @@ python tools/core/brain/brain_cli.py resume
 python tools/core/brain/brain_cli.py stats
 ```
 
-### Knowledge Graph (Neo4j)
+### Knowledge Graph (Memgraph)
 
 **Location:** `tools/intelligence/knowledge_graph/`
 
 ```bash
-# Sync to Neo4j
+# Sync to Memgraph
 python tools/intelligence/knowledge_graph/brain_parallel.py --sync
 
 # Query skills
-python tools/intelligence/knowledge_graph/query_skills_neo4j.py --all-skills
+python tools/intelligence/knowledge_graph/query_skills_memgraph.py --all-skills
 
 # Get learning path
-python tools/intelligence/knowledge_graph/query_skills_neo4j.py --learning-path "Authentication"
+python tools/intelligence/knowledge_graph/query_skills_memgraph.py --learning-path "Authentication"
 
 # Get recommendations
 python tools/intelligence/knowledge_graph/brain_parallel.py --recommend "implement OAuth"
@@ -1086,13 +1087,13 @@ python tools/intelligence/self_learning/learner.py --digest
 pip install -r tools/requirements.txt
 ```
 
-**2. Neo4j connection failed**
+**2. Memgraph connection failed**
 ```bash
 # Check .env file
-cat .env | grep NEO4J_URI
+cat .env | grep MEMGRAPH_URI
 
 # Test connection
-python tools/intelligence/knowledge_graph/test_neo4j_connection.py
+python tools/intelligence/knowledge_graph/test_memgraph_connection.py
 ```
 
 **3. Workflow not found**
@@ -1114,7 +1115,7 @@ python tools/intelligence/observer/observer.py --restart
 **Q: Can I use this with any IDE?**
 A: Yes! GEMINI.md is designed to be IDE-agnostic. Copy it into any AI chat.
 
-**Q: Do I need to set up Neo4j?**
+**Q: Do I need to set up Memgraph?**
 A: Optional. The system works without it, but you lose graph-based recommendations.
 
 **Q: Which workflow should I start with?**
@@ -1127,7 +1128,7 @@ A: It monitors all actions in real-time and checks compliance with rules in `.ag
 A: Yes! Edit files in `.agent/templates/` to match your needs.
 
 **Q: How does A/B testing work?**
-A: Provide a prompt, it generates 2 alternatives using KB search + Neo4j, then Judge scores them.
+A: Provide a prompt, it generates 2 alternatives using KB search + Memgraph, then Judge scores them.
 
 **Q: What if I skip the mandatory gates?**
 A: Observer will detect it and generate a violation report.

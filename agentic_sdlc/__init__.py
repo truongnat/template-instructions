@@ -26,6 +26,14 @@ except ImportError:
     Learner = None
     SprintManager = None
 
+# MCP (Model Context Protocol)
+try:
+    from .mcp.protocol import MCPClient
+    from .mcp.config import MCPConfig
+except ImportError:
+    MCPClient = None
+    MCPConfig = None
+
 # Utils
 from .core.utils.common import get_project_root, load_config
 
@@ -34,7 +42,9 @@ __all__ = [
     "create_agent_by_role", 
     "get_model_client",
     "Learner",
-    "SprintManager", 
+    "SprintManager",
+    "MCPClient",
+    "MCPConfig",
     "get_project_root",
     "load_config",
     "__version__"

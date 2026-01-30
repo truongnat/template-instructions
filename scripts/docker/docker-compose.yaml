@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: agentic-sdlc-core
+    volumes:
+      - .:/app
+    environment:
+      - MEMGRAPH_URI=bolt://memgraph:7687
+      - MEMGRAPH_USERNAME=memgraph
+      - MEMGRAPH_PASSWORD=memgraph
+      - OLLAMA_HOST=http://ollama:11434
+    depends_on:
+      - memgraph
+      - ollama
+    ports:
+      - "8501:8501" # Streamlit
+    command: tail -f /dev/null # Keep running for interaction. Or "python asdlc.py dashboard"
+
+  memgraph:
+    image: memgraph/memgraph-platform
+    container_name: agentic-sdlc-memgraph
+    ports:
+      - "7687:7687" # Bolt
+      - "7444:7444" # Logs
+      - "3000:3000" # Memgraph Lab
+    environment:
+      - MEMGRAPH_USER=memgraph
+      - MEMGRAPH_PASSWORD=memgraph
+    volumes:
+      - memgraph_data:/var/lib/memgraph
+      - memgraph_log:/var/log/memgraph
+
+  ollama:
+    image: ollama/ollama
+    container_name: agentic-sdlc-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+
+volumes:
+  memgraph_data:
+  memgraph_log:
+  ollama_data:

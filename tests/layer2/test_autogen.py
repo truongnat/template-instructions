@@ -20,7 +20,7 @@ class TestConfig:
     
     def test_get_default_config(self):
         """Test default configuration values"""
-        from agentic_sdlc.infrastructure.autogen.config import get_default_config
+        from agentic_sdlc.infrastructure.engine.autogen.config import get_default_config
         
         config = get_default_config()
         
@@ -38,7 +38,7 @@ class TestConfig:
         
         # We cannot fully test client creation without actual package
         # but we verify our config module correctly identifies the key
-        from agentic_sdlc.infrastructure.autogen.config import get_default_config
+        from agentic_sdlc.infrastructure.engine.autogen.config import get_default_config
         config = get_default_config()
         assert "model" in config
     
@@ -51,7 +51,7 @@ class TestConfig:
             os.environ.pop("GEMINI_API_KEY", None)
             os.environ.pop("OPENAI_API_KEY", None)
             
-            from agentic_sdlc.infrastructure.autogen.config import get_model_client
+            from agentic_sdlc.infrastructure.engine.autogen.config import get_model_client
             
             with pytest.raises(ValueError, match="not found"):
                 get_model_client("gemini-2.0-flash")
@@ -64,10 +64,10 @@ class TestAgents:
         """Test developer agent creation"""
         mock_client = MagicMock()
         
-        with patch("agentic_sdlc.infrastructure.autogen.agents.AssistantAgent") as mock_agent:
+        with patch("agentic_sdlc.infrastructure.engine.autogen.agents.AssistantAgent") as mock_agent:
             mock_agent.return_value = MagicMock()
             
-            from agentic_sdlc.infrastructure.autogen.agents import create_agent_by_role
+            from agentic_sdlc.infrastructure.engine.autogen.agents import create_agent_by_role
             
             agent = create_agent_by_role(mock_client, "dev")
             
@@ -81,10 +81,10 @@ class TestAgents:
         """Test tester agent creation"""
         mock_client = MagicMock()
         
-        with patch("agentic_sdlc.infrastructure.autogen.agents.AssistantAgent") as mock_agent:
+        with patch("agentic_sdlc.infrastructure.engine.autogen.agents.AssistantAgent") as mock_agent:
             mock_agent.return_value = MagicMock()
             
-            from agentic_sdlc.infrastructure.autogen.agents import create_agent_by_role
+            from agentic_sdlc.infrastructure.engine.autogen.agents import create_agent_by_role
             
             agent = create_agent_by_role(mock_client, "tester")
             
@@ -96,7 +96,7 @@ class TestAgents:
         """Test error for invalid role"""
         mock_client = MagicMock()
         
-        from agentic_sdlc.infrastructure.autogen.agents import create_agent_by_role
+        from agentic_sdlc.infrastructure.engine.autogen.agents import create_agent_by_role
         
         with pytest.raises(ValueError, match="Unknown role"):
             create_agent_by_role(mock_client, "invalid_role")
@@ -110,14 +110,14 @@ class TestToolsRegistry:
         test_file = tmp_path / "test.txt"
         test_file.write_text("Hello, World!")
         
-        from agentic_sdlc.infrastructure.autogen.tools_registry import read_file
+        from agentic_sdlc.infrastructure.engine.autogen.tools_registry import read_file
         
         result = read_file(str(test_file))
         assert "Hello, World!" in result
     
     def test_read_file_not_found(self):
         """Test reading a non-existent file"""
-        from agentic_sdlc.infrastructure.autogen.tools_registry import read_file
+        from agentic_sdlc.infrastructure.engine.autogen.tools_registry import read_file
         
         result = read_file("/nonexistent/path/file.txt")
         assert "Error" in result
@@ -128,7 +128,7 @@ class TestToolsRegistry:
         (tmp_path / "file2.py").touch()
         (tmp_path / "subdir").mkdir()
         
-        from agentic_sdlc.infrastructure.autogen.tools_registry import list_directory
+        from agentic_sdlc.infrastructure.engine.autogen.tools_registry import list_directory
         
         result = list_directory(str(tmp_path))
         assert "file1.txt" in result
@@ -140,7 +140,7 @@ class TestToolsRegistry:
         test_file = tmp_path / "code.py"
         test_file.write_text("def hello_world():\n    print('Hello')")
         
-        from agentic_sdlc.infrastructure.autogen.tools_registry import search_in_files
+        from agentic_sdlc.infrastructure.engine.autogen.tools_registry import search_in_files
         
         # Search by providing the file path directly (absolute path)
         result = search_in_files("hello", str(test_file))
@@ -148,7 +148,7 @@ class TestToolsRegistry:
     
     def test_get_tools_for_role(self):
         """Test getting tools based on role"""
-        from agentic_sdlc.infrastructure.autogen.tools_registry import get_tools_for_role
+        from agentic_sdlc.infrastructure.engine.autogen.tools_registry import get_tools_for_role
         
         dev_tools = get_tools_for_role("dev")
         tester_tools = get_tools_for_role("tester")
@@ -158,7 +158,7 @@ class TestToolsRegistry:
     
     def test_run_command_safety(self):
         """Test that dangerous commands are blocked"""
-        from agentic_sdlc.infrastructure.autogen.tools_registry import run_command
+        from agentic_sdlc.infrastructure.engine.autogen.tools_registry import run_command
         
         result = run_command("rm -rf /")
         assert "blocked" in result.lower() or "error" in result.lower()
@@ -170,7 +170,7 @@ class TestRunner:
     def test_argparse_setup(self):
         """Test that argument parser is configured correctly"""
         import argparse
-        from agentic_sdlc.infrastructure.autogen.runner import main
+        from agentic_sdlc.infrastructure.engine.autogen.runner import main
         
         # Just verify the module imports without error
         assert callable(main)

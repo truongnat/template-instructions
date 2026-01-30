@@ -81,10 +81,10 @@ GITHUB_REPO=username/repository
 
 **Optional for advanced features:**
 ```bash
-# Neo4j (for large projects)
-NEO4J_URI=bolt://localhost:7687
-NEO4J_USERNAME=neo4j
-NEO4J_PASSWORD=your_password
+# Memgraph (for large projects)
+MEMGRAPH_URI=bolt://localhost:7687
+MEMGRAPH_USERNAME=memgraph
+MEMGRAPH_PASSWORD=your_password
 
 # External APIs (for MCP extended)
 TAVILY_API_KEY=your_tavily_api_key
@@ -217,7 +217,7 @@ Time: 2026-01-01 10:00:00
       File: .agent/knowledge-base/features/authentication/KB-2025-12-15-001.md
       Relevance: 80%
 
-🧠 Querying Neo4j Knowledge Graph...
+🧠 Querying Memgraph Knowledge Graph...
   ✓ Found 5 entries
   Related Technologies:
     • Passport.js (used 5x)
@@ -241,7 +241,7 @@ Related Entries: 13
 
 Findings:
   • Found 3 related entries in Knowledge Base
-  • Found 5 related entries in Neo4j
+  • Found 5 related entries in Memgraph
   • Related technologies: Passport.js, JWT, OAuth2
   • Found 2 related GitHub issues
   • Found 13 external resources via MCP APIs
@@ -400,7 +400,7 @@ MIN_RELEVANCE = 0.3  # 30%
 
 # Max results per source
 MAX_KB_RESULTS = 10
-MAX_NEO4J_RESULTS = 10
+MAX_MEMGRAPH_RESULTS = 10
 MAX_GITHUB_RESULTS = 10
 
 # Confidence thresholds
@@ -471,15 +471,15 @@ If you find better solution:
 
 ## 🐛 Troubleshooting
 
-### Issue: Neo4j Connection Failed
+### Issue: Memgraph Connection Failed
 ```bash
-⚠️  Neo4j connection failed: Connection refused
+⚠️  Memgraph connection failed: Connection refused
 
 Solution:
-1. Check Neo4j is running: systemctl status neo4j
+1. Check Memgraph is running: systemctl status memgraph
 2. Verify credentials in .env
-3. Test connection: python tools/neo4j/test_neo4j_connection.py
-4. Or use file-based KB only (works without Neo4j)
+3. Test connection: python tools/intelligence/knowledge_graph/test_memgraph_connection.py
+4. Or use file-based KB only (works without Memgraph)
 ```
 
 ### Issue: GitHub Rate Limit
@@ -495,7 +495,7 @@ Solution:
 ### Issue: No Results Found
 ```bash
 ✗ No entries found in Knowledge Base
-✗ No entries found in Neo4j
+✗ No entries found in Memgraph
 ✗ No issues found in GitHub
 
 Action:

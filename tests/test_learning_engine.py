@@ -1,5 +1,5 @@
 """
-Unit tests for Neo4j Learning Engine functionality.
+Unit tests for Memgraph Learning Engine functionality.
 Tests error tracking, pattern recognition, and recommendations.
 """
 
@@ -16,12 +16,12 @@ sys.path.insert(0, str(PROJECT_ROOT / "tools"))
 
 # Import after path setup
 try:
-    from agentic_sdlc.knowledge_graph.learning_engine import LearningEngine
+    from agentic_sdlc.intelligence.reasoning.knowledge_graph.learning_engine import LearningEngine
 except ImportError:
     try:
         # Alternate import path
         import sys
-        sys.path.insert(0, str(PROJECT_ROOT / "tools" / "knowledge_graph"))
+        sys.path.insert(0, str(PROJECT_ROOT / "tools" / "intelligence" / "knowledge_graph"))
         from learning_engine import LearningEngine
     except ImportError:
         LearningEngine = None
@@ -99,30 +99,30 @@ class TestIdGeneration:
 
 
 class TestLearningEngineIntegration:
-    """Integration tests for Learning Engine (requires Neo4j connection)"""
+    """Integration tests for Learning Engine (requires Memgraph connection)"""
     
     @pytest.fixture
-    def neo4j_credentials(self):
-        """Get Neo4j credentials from environment"""
+    def memgraph_credentials(self):
+        """Get Memgraph credentials from environment"""
         import os
         from dotenv import load_dotenv
         load_dotenv()
         
         return {
-            'uri': os.getenv('NEO4J_URI'),
-            'user': os.getenv('NEO4J_USERNAME'),
-            'password': os.getenv('NEO4J_PASSWORD'),
-            'database': os.getenv('NEO4J_DATABASE', 'neo4j')
+            'uri': os.getenv('MEMGRAPH_URI'),
+            'user': os.getenv('MEMGRAPH_USERNAME'),
+            'password': os.getenv('MEMGRAPH_PASSWORD'),
+            'database': os.getenv('MEMGRAPH_DATABASE', 'memgraph')
         }
     
     @pytest.mark.skipif(LearningEngine is None, reason="LearningEngine not available")
     @pytest.mark.integration
-    def test_neo4j_connection(self, neo4j_credentials):
-        """Test Neo4j connection (integration)"""
-        if not all(neo4j_credentials.values()):
-            pytest.skip("Neo4j credentials not available")
+    def test_memgraph_connection(self, memgraph_credentials):
+        """Test Memgraph connection (integration)"""
+        if not all(memgraph_credentials.values()):
+            pytest.skip("Memgraph credentials not available")
         
-        engine = LearningEngine(**neo4j_credentials)
+        engine = LearningEngine(**memgraph_credentials)
         try:
             # Connection should not raise
             engine.create_learning_schema()
@@ -131,12 +131,12 @@ class TestLearningEngineIntegration:
     
     @pytest.mark.skipif(LearningEngine is None, reason="LearningEngine not available")
     @pytest.mark.integration
-    def test_get_learning_stats(self, neo4j_credentials):
+    def test_get_learning_stats(self, memgraph_credentials):
         """Test getting learning statistics (integration)"""
-        if not all(neo4j_credentials.values()):
-            pytest.skip("Neo4j credentials not available")
+        if not all(memgraph_credentials.values()):
+            pytest.skip("Memgraph credentials not available")
         
-        engine = LearningEngine(**neo4j_credentials)
+        engine = LearningEngine(**memgraph_credentials)
         try:
             stats = engine.get_learning_stats()
             assert 'errors_tracked' in stats
@@ -147,12 +147,12 @@ class TestLearningEngineIntegration:
     
     @pytest.mark.skipif(LearningEngine is None, reason="LearningEngine not available")
     @pytest.mark.integration
-    def test_record_and_find_error(self, neo4j_credentials):
+    def test_record_and_find_error(self, memgraph_credentials):
         """Test recording an error and finding it (integration)"""
-        if not all(neo4j_credentials.values()):
-            pytest.skip("Neo4j credentials not available")
+        if not all(memgraph_credentials.values()):
+            pytest.skip("Memgraph credentials not available")
         
-        engine = LearningEngine(**neo4j_credentials)
+        engine = LearningEngine(**memgraph_credentials)
         try:
             # Record a test error
             error_id = engine.record_error(
@@ -173,12 +173,12 @@ class TestLearningEngineIntegration:
     
     @pytest.mark.skipif(LearningEngine is None, reason="LearningEngine not available")
     @pytest.mark.integration
-    def test_record_success_pattern(self, neo4j_credentials):
+    def test_record_success_pattern(self, memgraph_credentials):
         """Test recording a success pattern (integration)"""
-        if not all(neo4j_credentials.values()):
-            pytest.skip("Neo4j credentials not available")
+        if not all(memgraph_credentials.values()):
+            pytest.skip("Memgraph credentials not available")
         
-        engine = LearningEngine(**neo4j_credentials)
+        engine = LearningEngine(**memgraph_credentials)
         try:
             # Record a success pattern
             pattern_id = engine.record_success(
@@ -200,12 +200,12 @@ class TestLearningEngineIntegration:
     
     @pytest.mark.skipif(LearningEngine is None, reason="LearningEngine not available")
     @pytest.mark.integration
-    def test_get_recommendations(self, neo4j_credentials):
+    def test_get_recommendations(self, memgraph_credentials):
         """Test getting recommendations (integration)"""
-        if not all(neo4j_credentials.values()):
-            pytest.skip("Neo4j credentials not available")
+        if not all(memgraph_credentials.values()):
+            pytest.skip("Memgraph credentials not available")
         
-        engine = LearningEngine(**neo4j_credentials)
+        engine = LearningEngine(**memgraph_credentials)
         try:
             recommendations = engine.get_recommendations("implement user authentication with JWT")
             

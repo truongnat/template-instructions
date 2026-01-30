@@ -41,7 +41,7 @@ source .venv/bin/activate
 
 # 4. Install Python Dependencies
 echo -e "\033[0;36m📦 Installing Python dependencies...\033[0m"
-pip install -r requirements.txt
+pip install -e .[dev]
 
 # 5. Install Node/Bun Dependencies
 echo -e "\033[0;36m📦 Installing JS dependencies using $PKG_MGR...\033[0m"
@@ -51,11 +51,7 @@ else
     npm install
 fi
 
-# 6. Initialize Brain System
-echo -e "\033[0;36m🧠 Initializing Brain System...\033[0m"
-$PYTHON_CMD tools/infrastructure/setup/init.py
-
-# 7. Final Check
+# 6. Final Check
 echo -e "\033[0;32m✅ Setup Complete!\033[0m"
 echo -e "\033[0;33m👉 Run 'python asdlc.py dashboard' to start the UI.\033[0m"
 echo -e "\033[0;33m👉 Run 'python asdlc.py brain status' to check state.\033[0m"

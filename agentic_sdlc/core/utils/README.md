@@ -1,11 +1,11 @@
 # Shared Utilities
 
-Common utilities used by all tools.
+Common utilities used across the agentic-sdlc project.
 
 ## Available Modules
 
 ### `common.py` - Common Functions
-Shared utility functions for all tools.
+Shared utility functions for all components.
 
 **Functions:**
 - `load_config()` - Load configuration
@@ -13,13 +13,18 @@ Shared utility functions for all tools.
 - `ensure_dir()` - Create directory if not exists
 - `read_yaml_frontmatter()` - Parse YAML frontmatter
 - `write_yaml_frontmatter()` - Write YAML frontmatter
+- `print_header()`, `print_success()`, `print_error()`, `print_warning()`, `print_info()` - Colored output
+- `get_project_root()` - Get project root directory
+- `read_file()`, `write_file()` - File I/O helpers
+- `get_date()` - Get current date string
 
 **Usage:**
 ```python
-from tools.utils.common import load_config, ensure_dir
+from agentic_sdlc.core.utils.common import load_config, ensure_dir, print_success
 
 config = load_config()
 ensure_dir('docs/sprints/sprint-3')
+print_success("Directory created!")
 ```
 
 ---
@@ -36,7 +41,7 @@ Knowledge base management utilities.
 
 **Usage:**
 ```python
-from tools.utils.kb_manager import search_kb, add_entry
+from agentic_sdlc.core.utils.kb_manager import search_kb, add_entry
 
 results = search_kb(query="authentication")
 add_entry(category="bugs", priority="high", content=entry)
@@ -56,7 +61,7 @@ Manage sprint artifacts and deliverables.
 
 **Usage:**
 ```python
-from tools.utils.artifact_manager import create_artifact
+from agentic_sdlc.core.utils.artifact_manager import create_artifact
 
 create_artifact(
     sprint=3,
@@ -66,6 +71,28 @@ create_artifact(
 )
 ```
 
+---
+
+### `file_utils.py` - File Operations
+Advanced file operation utilities.
+
+**Functions:**
+- File reading/writing with encoding handling
+- Directory traversal
+- Path manipulation
+- File existence checks
+
+---
+
+### `logger.py` - Logging Utilities
+Centralized logging configuration.
+
+**Features:**
+- Colored console output
+- File logging
+- Log level management
+- Structured logging
+
 ## Integration
 
 Used by:
@@ -73,7 +100,8 @@ Used by:
 - KB management scripts
 - Validation scripts
 - GitHub integration
-- Neo4j integration
+- Intelligence layer components
+- Infrastructure layer tools
 
 ## Dependencies
 
@@ -83,4 +111,6 @@ pip install pyyaml
 
 ## See Also
 
-- **Tools Overview:** `agentic_sdlc/README.md`
+- **Core Brain**: `../brain/README.md`
+- **Intelligence Layer**: `../../intelligence/README.md`
+- **Infrastructure Layer**: `../../infrastructure/README.md`

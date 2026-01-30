@@ -17,14 +17,14 @@ from pathlib import Path
 sys.modules['neo4j'] = MagicMock()
 sys.modules['dotenv'] = MagicMock()
 
-from agentic_sdlc.intelligence.knowledge_graph.query_skills_neo4j import Neo4jSkillQuery
+from agentic_sdlc.intelligence.reasoning.knowledge_graph.query_skills_neo4j import Neo4jSkillQuery
 
 class TestNeo4jSkillQuery:
     """Tests for Neo4j Query Component."""
     
     @pytest.fixture
     def mock_driver(self):
-        with patch('agentic_sdlc.intelligence.knowledge_graph.query_skills_neo4j.GraphDatabase') as mock_gd:
+        with patch('agentic_sdlc.intelligence.reasoning.knowledge_graph.query_skills_neo4j.GraphDatabase') as mock_gd:
             mock_driver = MagicMock()
             mock_gd.driver.return_value = mock_driver
             yield mock_driver
