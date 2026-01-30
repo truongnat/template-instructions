@@ -6,6 +6,15 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [2.5.7] - 2026-01-30
+
+### Fixed
+- [Build] enable include-package-data in pyproject.toml to respect MANIFEST.in
+- enhance error logging during setup initialization and remove PKG-INFO build artifact.
+
+
+---
+
 ## [2.5.6] - 2026-01-30
 
 ### Fixed
