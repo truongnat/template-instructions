@@ -333,6 +333,155 @@ class ReleaseManager:
             print_error(f"Failed to update version: {e}")
             return False
     
+    def update_python_version(self, new_version: str, dry_run: bool = False) -> bool:
+        """Update version in Python package files (pyproject.toml and __init__.py)."""
+        success = True
+        
+        # Update pyproject.toml
+        pyproject_path = self.root / 'pyproject.toml'
+        if pyproject_path.exists():
+            try:
+                content = pyproject_path.read_text()
+                # Replace version line in [project] section
+                updated = re.sub(
+                    r'(version\s*=\s*")[^"]+(")',
+                    f'\\g<1>{new_version}\\g<2>',
+                    content
+                )
+                
+                if dry_run:
+                    print_info(f"DRY RUN - Would update pyproject.toml version to {new_version}")
+                else:
+                    pyproject_path.write_text(updated)
+                    print_success(f"Updated pyproject.toml → {new_version}")
+            except Exception as e:
+                print_error(f"Failed to update pyproject.toml: {e}")
+                success = False
+        
+        # Update __init__.py
+        init_path = self.root / 'agentic_sdlc' / '__init__.py'
+        if init_path.exists():
+            try:
+                content = init_path.read_text()
+                # Replace __version__ line
+                updated = re.sub(
+                    r'(__version__\s*=\s*")[^"]+(")',
+                    f'\\g<1>{new_version}\\g<2>',
+                    content
+                )
+                
+                if dry_run:
+                    print_info(f"DRY RUN - Would update __init__.py version to {new_version}")
+                else:
+                    init_path.write_text(updated)
+                    print_success(f"Updated __init__.py → {new_version}")
+            except Exception as e:
+                print_error(f"Failed to update __init__.py: {e}")
+                success = False
+        
+        return success
+    
+    def build_python_package(self, dry_run: bool = False) -> bool:
+        """Build Python package using python -m build."""
+        if dry_run:
+            print_info("DRY RUN - Would build Python package")
+            return True
+        
+        try:
+            print_info("Building Python package...")
+            
+            # Clean old builds
+            for path in ['dist', 'build', '*.egg-info']:
+                for item in self.root.glob(path):
+                    if item.is_dir():
+                        import shutil
+                        try:
+                            shutil.rmtree(item)
+                        except:
+                            pass
+            
+            # Build using setuptools directly to avoid permission issues
+            result = subprocess.run(
+                [sys.executable, 'setup.py', 'sdist', 'bdist_wheel'],
+                capture_output=True,
+                text=True,
+                cwd=self.root
+            )
+            
+            if result.returncode != 0:
+                # Try alternative build method
+                print_warning("setup.py failed, trying pip wheel...")
+                result = subprocess.run(
+                    [sys.executable, '-m', 'pip', 'wheel', '--no-deps', '-w', 'dist', '.'],
+                    capture_output=True,
+                    text=True,
+                    cwd=self.root
+                )
+            
+            if result.returncode == 0:
+                print_success("Python package built successfully!")
+                # List built files
+                dist_files = list((self.root / 'dist').glob('*'))
+                for f in dist_files:
+                    print_info(f"  Built: {f.name}")
+                return True
+            else:
+                print_error(f"Build failed: {result.stderr}")
+                return False
+                
+        except Exception as e:
+            print_error(f"Failed to build package: {e}")
+            return False
+    
+    def publish_to_pypi(self, dry_run: bool = False, test: bool = False) -> bool:
+        """Publish Python package to PyPI using twine."""
+        if dry_run:
+            registry = "TestPyPI" if test else "PyPI"
+            print_info(f"DRY RUN - Would publish to {registry}")
+            return True
+        
+        try:
+            # Check if twine is available
+            result = subprocess.run(
+                [sys.executable, '-m', 'twine', '--version'],
+                capture_output=True,
+                text=True
+            )
+            
+            if result.returncode != 0:
+                print_error("twine not installed. Install with: pip install twine")
+                return False
+            
+            # Prepare upload command
+            cmd = [sys.executable, '-m', 'twine', 'upload']
+            
+            if test:
+                cmd.extend(['--repository', 'testpypi'])
+                print_info("Publishing to TestPyPI...")
+            else:
+                print_info("Publishing to PyPI...")
+            
+            cmd.append('dist/*')
+            
+            # Run upload
+            result = subprocess.run(
+                cmd,
+                cwd=self.root,
+                text=True
+            )
+            
+            if result.returncode == 0:
+                registry = "TestPyPI" if test else "PyPI"
+                print_success(f"Published to {registry} successfully!")
+                return True
+            else:
+                print_error("Upload failed")
+                return False
+                
+        except Exception as e:
+            print_error(f"Failed to publish: {e}")
+            return False
+    
     def create_tag(self, version: str, dry_run: bool = False) -> bool:
         """Create a git tag for the release."""
         tag = f"v{version}"
@@ -364,10 +513,15 @@ class ReleaseManager:
             
         try:
             print_info("Committing release changes...")
-            # Configure git user if needed? Assuming env is set.
             
-            # Add files
-            subprocess.run(['git', 'add', 'package.json', 'CHANGELOG.md'], check=True, cwd=self.root)
+            # Add files (both JS and Python package files)
+            files_to_add = [
+                'package.json',
+                'CHANGELOG.md',
+                'pyproject.toml',
+                'agentic_sdlc/__init__.py'
+            ]
+            subprocess.run(['git', 'add'] + files_to_add, check=True, cwd=self.root)
             
             # Commit
             msg = f"chore(release): v{version}"
@@ -547,30 +701,47 @@ def cmd_release(manager: ReleaseManager, args):
         print_error("Failed to update changelog. Aborting.")
         return
     
-    # 4. Update version
+    # 4. Update version in package.json
     if not manager.update_version(new_version, dry_run=args.dry_run):
-        print_error("Failed to update version. Aborting.")
+        print_error("Failed to update package.json version. Aborting.")
         return
     
-    # 5. Commit changes (optional but recommended before tagging)
+    # 5. Update Python package version (pyproject.toml + __init__.py)
+    if not manager.update_python_version(new_version, dry_run=args.dry_run):
+        print_error("Failed to update Python package version. Aborting.")
+        return
+    
+    # 6. Commit changes (optional but recommended before tagging)
     if args.commit:
         if not manager.commit_changes(new_version, dry_run=args.dry_run):
             print_error("Failed to commit changes.")
-            # Continue? Or abort? Aborting seems safer for tagging.
             if not args.dry_run:
                 return
 
-    # 6. Create tag (optional)
+    # 7. Create tag (optional)
     if args.tag and not args.dry_run:
         manager.create_tag(new_version, dry_run=args.dry_run)
     
-    # 7. Push changes (optional)
+    # 8. Build Python package (if --build-python flag is set)
+    if hasattr(args, 'build_python') and args.build_python:
+        if not manager.build_python_package(dry_run=args.dry_run):
+            print_error("Failed to build Python package.")
+            if not args.dry_run:
+                return
+    
+    # 9. Push changes (optional)
     if args.push:
         manager.push_changes(dry_run=args.dry_run)
         
-    # 8. Publish package (optional)
+    # 10. Publish to npm (optional)
     if args.publish:
         manager.publish_package(dry_run=args.dry_run)
+    
+    # 11. Publish to PyPI (if --publish-pypi flag is set)
+    if hasattr(args, 'publish_pypi') and args.publish_pypi:
+        test_pypi = hasattr(args, 'test_pypi') and args.test_pypi
+        if not manager.publish_to_pypi(dry_run=args.dry_run, test=test_pypi):
+            print_error("Failed to publish to PyPI.")
     
     if not args.dry_run:
         print_success(f"Release {new_version} completed!")
@@ -622,6 +793,9 @@ Examples:
     release_parser.add_argument('--tag', action='store_true', help='Create git tag')
     release_parser.add_argument('--push', action='store_true', help='Push changes and tags')
     release_parser.add_argument('--publish', action='store_true', help='Publish to npm/bun registry')
+    release_parser.add_argument('--build-python', action='store_true', help='Build Python package')
+    release_parser.add_argument('--publish-pypi', action='store_true', help='Publish to PyPI')
+    release_parser.add_argument('--test-pypi', action='store_true', help='Publish to TestPyPI instead of PyPI')
     release_parser.add_argument('--dry-run', action='store_true', help='Preview only')
     
     args = parser.parse_args()
