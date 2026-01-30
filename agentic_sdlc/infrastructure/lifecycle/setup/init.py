@@ -57,6 +57,13 @@ def setup_env():
     """Setup environment file from template."""
     print_header("Setting up Environment")
     
+    
+    # Defaults
+    root = get_project_root()
+    template = root / ".env.template"
+    # Always create .env in current working directory for user projects
+    env_file = Path(os.getcwd()) / ".env"
+    
     # Try finding template in package first
     try:
         from importlib import resources
