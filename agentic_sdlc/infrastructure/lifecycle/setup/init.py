@@ -57,9 +57,17 @@ def setup_env():
     """Setup environment file from template."""
     print_header("Setting up Environment")
     
-    root = get_project_root()
-    template = root / ".env.template"
-    env_file = root / ".env"
+    # Try finding template in package first
+    try:
+        from importlib import resources
+        # Assuming defaults is a package at agentic_sdlc.defaults
+        import agentic_sdlc.defaults
+        template_files = resources.files(agentic_sdlc.defaults)
+        pkg_template = template_files / "env.template"
+        if pkg_template.is_file():
+             template = pkg_template
+    except Exception:
+        pass
     
     if env_file.exists():
         print_info(".env already exists, skipping...")
@@ -74,7 +82,12 @@ def setup_env():
         return False
     
     try:
-        shutil.copy(template, env_file)
+        if hasattr(template, 'read_bytes'):
+            content = template.read_bytes()
+            with open(env_file, 'wb') as f:
+                f.write(content)
+        else:
+            shutil.copy(template, env_file)
         print_success("Created .env from template")
         print_info("Please edit .env with your API keys")
     except PermissionError as e:
