@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # 🧠 Agentic SDLC Core - The main brain
   agentic-core:
@@ -14,7 +12,7 @@ services:
       # Secrets can be loaded from .env file
     env_file:
       - .env
-    command: tail -f /dev/null  # Keep running for interactive use
+    command: tail -f /dev/null # Keep running for interactive use
     networks:
       - agentic-net
 
@@ -24,8 +22,8 @@ services:
     image: memgraph/memgraph-platform:latest
     container_name: memgraph
     ports:
-      - "7687:7687"   # Bolt port
-      - "3000:3000"   # Visual interface (Lab)
+      - "7687:7687" # Bolt port
+      - "3000:3000" # Visual interface (Lab)
     environment:
       - MEMGRAPH_USER=admin
       - MEMGRAPH_PASSWORD=admin
@@ -40,6 +38,7 @@ volumes:
   agent_data:
   memgraph_data:
   memgraph_log:
+
 
 networks:
   agentic-net:

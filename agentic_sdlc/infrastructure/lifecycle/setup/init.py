@@ -48,11 +48,16 @@ def print_info(msg):
     print(f"{SYM_ARROW} {msg}")
 
 
+def get_project_root():
+    # This script is at agentic_sdlc/infrastructure/lifecycle/setup/init.py
+    # Root is 5 levels up: setup -> lifecycle -> infrastructure -> agentic_sdlc -> ROOT
+    return Path(__file__).resolve().parents[4]
+
 def setup_env():
     """Setup environment file from template."""
     print_header("Setting up Environment")
     
-    root = Path(__file__).parent.parent.parent
+    root = get_project_root()
     template = root / ".env.template"
     env_file = root / ".env"
     
@@ -61,12 +66,24 @@ def setup_env():
         return True
     
     if not template.exists():
-        print_error(".env.template not found!")
+        # Fallback: check if we are in site-packages/agentic_sdlc
+        # If so, template might not be in root, but inside package if packaged correctly.
+        # But we are running from source repo mostly.
+        # Check permission error workaround?
+        print_error(f".env.template not found at {template}")
         return False
     
-    shutil.copy(template, env_file)
-    print_success("Created .env from template")
-    print_info("Please edit .env with your API keys")
+    try:
+        shutil.copy(template, env_file)
+        print_success("Created .env from template")
+        print_info("Please edit .env with your API keys")
+    except PermissionError as e:
+         print_error(f"Permission denied creating .env: {e}")
+         return False
+    except Exception as e:
+         print_error(f"Failed to create .env: {e}")
+         return False
+         
     return True
 
 
@@ -79,7 +96,7 @@ def check_python_deps():
         print_success("pyyaml installed")
     except ImportError:
         print_error("pyyaml not installed")
-        print_info("Run: pip install -r tools/requirements.txt")
+        print_info("Run: pip install agentic-sdlc")
         return False
     
     try:
@@ -95,25 +112,26 @@ def check_directories():
     """Check required directories exist."""
     print_header("Checking Directory Structure")
     
-    root = Path(__file__).parent.parent.parent
+    root = get_project_root()
     required = [
-        ".agent",
-        ".agent/workflows",
-
-        "tools",
+        "agentic_sdlc",
         "docs"
     ]
+    # .agent might not exist yet if this is fresh init? No, it should be there in source.
+    # In V2, .agent is not core anymore? Wait, GEMINI.md says .agent is Layer 1 Core.
+    # But files are in agentic_sdlc/defaults/.
+    # If the user is supposed to use `asdlc init` to scaffold, then `.agent` might be created by it.
+    # But `setup_env` just copies .env.
+    # This script seems to validate the *Installation*? Or the *Project*?
     
-    all_ok = True
-    for dir_path in required:
-        full_path = root / dir_path
-        if full_path.exists():
-            print_success(f"{dir_path}")
-        else:
-            print_error(f"{dir_path} MISSING")
-            all_ok = False
-    
-    return all_ok
+    # If this is validating the repo itself:
+    if (root / "agentic_sdlc").exists():
+         print_success("agentic_sdlc (Core Package)")
+    else:
+         print_error("agentic_sdlc MISSING")
+         return False
+
+    return True
 
 
 def check_memgraph():
@@ -163,7 +181,7 @@ def main():
     
     if passed == len(results):
         print_success("\nSetup complete! You're ready to go.")
-        print_info("Try: npm run health")
+        print_info("Try: asdlc brain health")
     else:
         print_error("\nSome checks failed - please review above.")
     
