@@ -6,6 +6,14 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [2.5.6] - 2026-01-30
+
+### Fixed
+- [Build] add MANIFEST.in to explicit include templates
+
+
+---
+
 ## [2.5.5] - 2026-01-30
 
 ### Fixed
