@@ -6,6 +6,17 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [2.5.2] - 2026-01-30
+
+### Fixed
+- update init script and cli paths for v2 structure
+
+### Documentation
+- Simplify and update the project directory structure description in `GEMINI.md`.
+
+
+---
+
 ## [2.5.1] - 2026-01-30
 
 ### Documentation
