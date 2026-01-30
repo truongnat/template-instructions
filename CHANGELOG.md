@@ -6,6 +6,26 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [2.7.0] - 2026-01-31
+
+### Added
+- [Release] add Python package version update and PyPI publishing support
+- add NEW_FEATURES_v2.6.0.md documenting version check, improved project initialization, and a DSPy cache pollution fix.
+- [Cli] add --version flag and proper init command for project scaffolding
+
+### Fixed
+- [Cli] use dynamic version from package and add wrapper script
+
+### Documentation
+- add comprehensive release workflow documentation
+
+### Maintenance
+- update version to 2.6.0 in pyproject.toml
+- Remove example projects for ffmpeg editor, telegram file manager, and todo app.
+
+
+---
+
 ## [2.6.0] - 2026-01-30
 
 ### Added
