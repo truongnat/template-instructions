@@ -6,6 +6,14 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [2.7.3] - 2026-01-31
+
+### Changed
+- Standardize module imports from `tools` to `agentic_sdlc`, remove obsolete worktree tests, and update the package version to 2.7.2.
+
+
+---
+
 ## [2.7.1] - 2026-01-31
 
 ### Changed

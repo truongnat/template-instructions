@@ -1,6 +1,6 @@
 {
   "name": "agentic-sdlc",
-  "version": "2.7.2",
+  "version": "2.7.3",
   "description": "Simulating a complete Software Development Lifecycle (SDLC) with specialized AI Agents.",
   "type": "module",
   "private": false,
