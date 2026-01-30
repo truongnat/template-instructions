@@ -8,7 +8,7 @@ This project uses a **monorepo architecture** where the root contains the **Brai
 
 ```mermaid
 graph TB
-    subgraph ROOT["🧠 BRAIN (Root: sdlc-kit/)"]
+    subgraph ROOT["🧠 BRAIN (Root: agentic-sdlc/)"]
         AGENT[".agent/<br/>Workflows, KB, Roles"]
         KIRO[".kiro/<br/>Steering, Settings"]
         TOOLS["tools/<br/>Neo4j, Research, Utils"]
@@ -48,7 +48,7 @@ graph TB
 ## Directory Structure
 
 ```
-sdlc-kit/                           # 🧠 BRAIN (Root)
+agentic-sdlc/                           # 🧠 BRAIN (Root)
 │
 ├── 📁 .agent/                          # ✅ SHARED - AI Agent System
 │   ├── workflows/                      # Workflow implementations

@@ -1,5 +1,5 @@
 {
-  "name": "sdlc-kit",
+  "name": "agentic-sdlc",
   "version": "2.7.0",
   "description": "Simulating a complete Software Development Lifecycle (SDLC) with specialized AI Agents.",
   "type": "module",
@@ -77,12 +77,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/truongnat/sdlc-kit.git"
+    "url": "git+https://github.com/truongnat/agentic-sdlc.git"
   },
   "bugs": {
-    "url": "https://github.com/truongnat/sdlc-kit/issues"
+    "url": "https://github.com/truongnat/agentic-sdlc/issues"
   },
-  "homepage": "https://github.com/truongnat/sdlc-kit#readme",
+  "homepage": "https://github.com/truongnat/agentic-sdlc#readme",
   "engines": {
     "node": ">=16.0.0"
   },

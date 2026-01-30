@@ -81,7 +81,7 @@ tags: [tag1, tag2, tag3]
 After adding solutions:
 
 ```bash
-sdlc-kit kb compound sync
+agentic-sdlc kb compound sync
 ```
 
 ## When to Create

@@ -49,7 +49,7 @@ Treat AutoGen as a *Tool* within the existing SDLC.
 *   **Cons:** Context switching between "System Agent" and "AutoGen Sub-agents".
 
 ### Scenario B: The "Brain Replacement" (Long Term)
-Refactor the entire `bin/sdlc-kit` CLI to wrap an AutoGen runtime.
+Refactor the entire `bin/agentic-sdlc` CLI to wrap an AutoGen runtime.
 *   **Concept:** When the user types `/orchestrator`, it launches a persistent AutoGen `GroupChat` involving `@PM`, `@Dev`, etc.
 *   **Pros:** True agentic autonomy, dynamic planning.
 *   **Cons:** Complete rewrite of the Supervisor layer.

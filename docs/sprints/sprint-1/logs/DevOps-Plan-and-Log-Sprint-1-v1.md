@@ -100,7 +100,7 @@
 - **Purpose:** Testing before production
 
 ### Production
-- **URL:** https://sdlc-kit.dev (or Vercel default)
+- **URL:** https://agentic-sdlc.dev (or Vercel default)
 - **Trigger:** Push to main branch
 - **Purpose:** Live site
 

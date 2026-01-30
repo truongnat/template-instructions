@@ -21,5 +21,5 @@ This folder stores task walkthroughs documenting completed work.
 After adding walkthroughs:
 
 ```bash
-sdlc-kit kb compound sync
+agentic-sdlc kb compound sync
 ```

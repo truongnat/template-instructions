@@ -416,13 +416,13 @@ Successfully implemented comprehensive workflow testing and scoring system for a
 ## 📚 References
 
 - [Test Plan](file:///C:/Users/HOANG%20LAM/.gemini/antigravity/brain/ae07c2ca-2f0d-448c-bfd9-61ec127c92db/workflow-test-and-score-plan.md)
-- [Test Cases Specification](file:///d:/dev/sdlc-kit/test-results/test-cases.md)
-- [Comprehensive Test Summary](file:///d:/dev/sdlc-kit/test-results/reports/summary/comprehensive-tests-summary.md)
-- [Basic Test Summary](file:///d:/dev/sdlc-kit/test-results/reports/summary/basic-tests-summary.md)
-- [Test Results JSON](file:///d:/dev/sdlc-kit/test-results/scores/comprehensive-test-results.json)
-- [Judge Scores Database](file:///d:/dev/sdlc-kit/docs/.brain-scores.json)
-- [Test Project](file:///d:/dev/sdlc-kit/test-project)
-- [Test Scripts](file:///d:/dev/sdlc-kit/tools/testing)
+- [Test Cases Specification](file:///d:/dev/agentic-sdlc/test-results/test-cases.md)
+- [Comprehensive Test Summary](file:///d:/dev/agentic-sdlc/test-results/reports/summary/comprehensive-tests-summary.md)
+- [Basic Test Summary](file:///d:/dev/agentic-sdlc/test-results/reports/summary/basic-tests-summary.md)
+- [Test Results JSON](file:///d:/dev/agentic-sdlc/test-results/scores/comprehensive-test-results.json)
+- [Judge Scores Database](file:///d:/dev/agentic-sdlc/docs/.brain-scores.json)
+- [Test Project](file:///d:/dev/agentic-sdlc/test-project)
+- [Test Scripts](file:///d:/dev/agentic-sdlc/tools/testing)
 
 ---
 

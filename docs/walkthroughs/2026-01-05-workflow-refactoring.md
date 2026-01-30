@@ -15,11 +15,11 @@
 ### Added (5)
 | Workflow | Purpose |
 |----------|---------|
-| [review.md](file:///d:/dev/sdlc-kit/.agent/workflows/review.md) | Code review for PRs |
-| [debug.md](file:///d:/dev/sdlc-kit/.agent/workflows/debug.md) | Systematic debugging |
-| [refactor.md](file:///d:/dev/sdlc-kit/.agent/workflows/refactor.md) | Safe refactoring |
-| [onboarding.md](file:///d:/dev/sdlc-kit/.agent/workflows/onboarding.md) | Agent onboarding |
-| [docs.md](file:///d:/dev/sdlc-kit/.agent/workflows/docs.md) | Documentation |
+| [review.md](file:///d:/dev/agentic-sdlc/.agent/workflows/review.md) | Code review for PRs |
+| [debug.md](file:///d:/dev/agentic-sdlc/.agent/workflows/debug.md) | Systematic debugging |
+| [refactor.md](file:///d:/dev/agentic-sdlc/.agent/workflows/refactor.md) | Safe refactoring |
+| [onboarding.md](file:///d:/dev/agentic-sdlc/.agent/workflows/onboarding.md) | Agent onboarding |
+| [docs.md](file:///d:/dev/agentic-sdlc/.agent/workflows/docs.md) | Documentation |
 
 **Final count: 15 workflows**
 
@@ -27,7 +27,7 @@
 
 ## Task 2: Artifact Persistence Rule
 
-Added to [GEMINI.md](file:///d:/dev/sdlc-kit/GEMINI.md):
+Added to [GEMINI.md](file:///d:/dev/agentic-sdlc/GEMINI.md):
 
 - Mandatory persistence of ALL IDE artifacts to docs
 - Sync to Neo4j after every task
@@ -38,7 +38,7 @@ Added to [GEMINI.md](file:///d:/dev/sdlc-kit/GEMINI.md):
 # After every task:
 # 1. Copy artifacts to docs/
 # 2. Sync to Neo4j
-sdlc-kit kb compound sync
+agentic-sdlc kb compound sync
 # 3. Record success
-sdlc-kit learn --record-success "[task]" --task-type "[type]"
+agentic-sdlc learn --record-success "[task]" --task-type "[type]"
 ```

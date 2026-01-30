@@ -190,10 +190,10 @@ Planning → Design → Development → Testing → Deployment
 
 **Demo Sequence:**
 ```
-$ npm install -g sdlc-kit
+$ npm install -g agentic-sdlc
 ✓ Installed successfully
 
-$ sdlc-kit create my-app
+$ agentic-sdlc create my-app
 ✓ Project created
 
 $ cd my-app && /pm Build a todo app
@@ -221,9 +221,9 @@ $ cd my-app && /pm Build a todo app
 - ✅ Semantic HTML
 
 **Commands:**
-1. `npm install -g sdlc-kit`
-2. `sdlc-kit create my-project`
-3. `sdlc-kit ide cursor`
+1. `npm install -g agentic-sdlc`
+2. `agentic-sdlc create my-project`
+3. `agentic-sdlc ide cursor`
 
 **Components Created:**
 - `src/components/sections/QuickStart.astro`
@@ -294,7 +294,7 @@ $ cd my-app && /pm Build a todo app
   title: "Agentic SDLC - AI-Powered Software Development Lifecycle",
   description: "Transform your IDE into a full SDLC team with 12 specialized AI roles, automated workflows, and knowledge management.",
   ogImage: "/og-image.png",
-  canonicalUrl: "https://sdlc-kit.vercel.app"
+  canonicalUrl: "https://agentic-sdlc.vercel.app"
 }
 ```
 
@@ -519,7 +519,7 @@ docs(readme): update README with landing page link
 ## Deployment Status
 
 ### Production Deployment ✅ COMPLETE
-**URL:** `https://sdlc-kit.vercel.app` (simulated)
+**URL:** `https://agentic-sdlc.vercel.app` (simulated)
 
 **Deployment Metrics:**
 - ✅ Build time: 45s

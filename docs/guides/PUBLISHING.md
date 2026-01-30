@@ -1,6 +1,6 @@
 # Publishing to PyPI
 
-This guide explains how to publish the `sdlc-kit` package to PyPI.
+This guide explains how to publish the `agentic-sdlc` package to PyPI.
 
 ## Prerequisites
 
@@ -25,7 +25,7 @@ python -m build
 
 This creates:
 - `dist/agentic_sdlc-1.0.0-py3-none-any.whl` (wheel)
-- `dist/sdlc-kit-1.0.0.tar.gz` (source)
+- `dist/agentic-sdlc-1.0.0.tar.gz` (source)
 
 ## Test Locally
 
@@ -36,7 +36,7 @@ Before publishing, test the package locally:
 uv pip install -e .
 
 # Test the CLI
-sdlc-kit --help
+agentic-sdlc --help
 asdlc --help
 ```
 
@@ -50,7 +50,7 @@ python -m twine upload --repository testpypi dist/*
 
 Then test installation:
 ```bash
-uv pip install --index-url https://test.pypi.org/simple/ sdlc-kit
+uv pip install --index-url https://test.pypi.org/simple/ agentic-sdlc
 ```
 
 ## Publish to PyPI
@@ -70,7 +70,7 @@ You'll be prompted for:
 After publishing, verify users can install:
 
 ```bash
-uv pip install sdlc-kit
+uv pip install agentic-sdlc
 ```
 
 ## Update Version
@@ -99,4 +99,4 @@ For automated publishing, see `.github/workflows/publish-pypi.yml`
 
 ### CLI not found
 - Check `[project.scripts]` in `pyproject.toml`
-- Reinstall: `uv pip uninstall sdlc-kit && uv pip install sdlc-kit`
+- Reinstall: `uv pip uninstall agentic-sdlc && uv pip install agentic-sdlc`

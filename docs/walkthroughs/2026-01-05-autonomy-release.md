@@ -20,14 +20,14 @@
 
 ## Changes Made
 
-### [Hero.astro](file:///d:/dev/sdlc-kit/projects/landing-page/src/components/Hero.astro)
+### [Hero.astro](file:///d:/dev/agentic-sdlc/projects/landing-page/src/components/Hero.astro)
 - Badge: "6 Enforcement Gates • 15 Workflows • 14 AI Roles"
 
-### [Features.astro](file:///d:/dev/sdlc-kit/projects/landing-page/src/components/Features.astro)
+### [Features.astro](file:///d:/dev/agentic-sdlc/projects/landing-page/src/components/Features.astro)
 - Added: 🚦 6 Enforcement Gates feature
 - Updated: Brain, Knowledge, Workflows descriptions
 
-### [Architecture.astro](file:///d:/dev/sdlc-kit/projects/landing-page/src/components/Architecture.astro)
+### [Architecture.astro](file:///d:/dev/agentic-sdlc/projects/landing-page/src/components/Architecture.astro)
 - Layer 1: Added "Model Optimizer", "6 Enforcement Gates"
 - Layer 2: Updated to 15 workflows, new workflow examples
 - Layer 3: Updated @QA → @TESTER

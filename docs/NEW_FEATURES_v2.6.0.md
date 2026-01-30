@@ -53,7 +53,7 @@ Previously, running `asdlc init` would create unwanted `.brain/dspy_cache/` fold
 
 ### Install the kit:
 ```bash
-pip install sdlc-kit
+pip install agentic-sdlc
 ```
 
 ### Initialize a new project:
@@ -85,7 +85,7 @@ asdlc workflow cycle
 For existing projects:
 ```bash
 # Update the package
-pip install --upgrade sdlc-kit
+pip install --upgrade agentic-sdlc
 
 # Check new version
 asdlc --version

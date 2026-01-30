@@ -38,7 +38,7 @@ The landing page includes the following key features:
 
 ## Code Location
 The source code is located in:
-`d:\dev\sdlc-kit\projects\landing-page`
+`d:\dev\agentic-sdlc\projects\landing-page`
 
 ## Instructions for User
 To verify the implementation:

@@ -256,7 +256,7 @@
 
 ### ✅ Positives
 - ✅ `pyproject.toml` well-structured
-- ✅ Three CLI entry points (`agentic`, `sdlc-kit`, `asdlc`)
+- ✅ Three CLI entry points (`agentic`, `agentic-sdlc`, `asdlc`)
 - ✅ Package data includes defaults
 - ✅ Version management in place
 

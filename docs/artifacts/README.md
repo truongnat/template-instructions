@@ -22,5 +22,5 @@ This folder stores IDE-generated artifacts that must be persisted for self-learn
 After adding artifacts:
 
 ```bash
-sdlc-kit kb compound sync
+agentic-sdlc kb compound sync
 ```

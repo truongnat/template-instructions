@@ -20,7 +20,7 @@
 
 ## Proposed Changes
 
-### [MODIFY] [GEMINI.md](file:///d:/dev/sdlc-kit/GEMINI.md)
+### [MODIFY] [GEMINI.md](file:///d:/dev/agentic-sdlc/GEMINI.md)
 
 Add **CRITICAL ENFORCEMENT GATES** section with mandatory checkpoints:
 

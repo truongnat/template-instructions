@@ -35,7 +35,7 @@ The redesign focuses on creating a visually stunning, professional landing page 
 │     [Glowing buttons with hover effects]            │
 │                                                      │
 │     ┌──────────────────────────────┐               │
-│     │ $ npm install -g sdlc-kit│               │
+│     │ $ npm install -g agentic-sdlc│               │
 │     │ [Animated typing effect]      │               │
 │     │ [Copy button with feedback]   │               │
 │     └──────────────────────────────┘               │

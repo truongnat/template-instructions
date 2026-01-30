@@ -1,6 +1,6 @@
 # Shared Utilities
 
-Common utilities used across the sdlc-kit project.
+Common utilities used across the agentic-sdlc project.
 
 ## Available Modules
 

@@ -1,6 +1,6 @@
 # Quick Start Guide
 
-Get started with `sdlc-kit` in 5 minutes.
+Get started with `agentic-sdlc` in 5 minutes.
 
 ---
 
@@ -90,7 +90,7 @@ After setup, you have:
 
 - **Full Examples:** See `CLI-EXAMPLES.md`
 - **Usage Guide:** `.agent/usage.md`
-- **All Commands:** `sdlc-kit --help`
+- **All Commands:** `agentic-sdlc --help`
 
 ---
 

@@ -28,7 +28,7 @@ A standardized `## ⏭️ Next Steps` section was added to the end of **25 files
 ### 2.2 System Flow Visualization
 A new Mermaid diagram was created to visualize the transitions between these roles and workflows.
 
-**File:** [system-flow.mermaid](file:///d:/dev/sdlc-kit/docs/architecture/system-flow.mermaid)
+**File:** [system-flow.mermaid](file:///d:/dev/agentic-sdlc/docs/architecture/system-flow.mermaid)
 
 ```mermaid
 graph TD
@@ -70,7 +70,7 @@ graph TD
 - `role-orchestrator.md`
 
 ### Created Files
-- [system-flow.mermaid](file:///d:/dev/sdlc-kit/docs/architecture/system-flow.mermaid)
+- [system-flow.mermaid](file:///d:/dev/agentic-sdlc/docs/architecture/system-flow.mermaid)
 
 ## 4. Verification Results
 - **Files Verified:** All modified files were successfully updated with the new section.

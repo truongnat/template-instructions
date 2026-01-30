@@ -179,7 +179,7 @@ graph TB
 | # | Gap | Current State | Needed |
 |---|-----|---------------|--------|
 | 1 | No `/learn` CLI | Must use python directly | Add to cli.js |
-| 2 | No artifact sync cmd | Manual copy | `sdlc-kit artifact` |
+| 2 | No artifact sync cmd | Manual copy | `agentic-sdlc artifact` |
 | 3 | Minimal @BA role | 3KB only | Expand like @PM |
 | 4 | Minimal @DEVOPS | 3.9KB | Expand with CI/CD |
 | 5 | No GitHub Actions | .github/ exists | Add CI workflow |
@@ -191,7 +191,7 @@ graph TB
 
 | # | Improvement | Benefit |
 |---|-------------|---------|
-| 1 | Add `workflow` to CLI | `sdlc-kit workflow cycle` works but missing in commands |
+| 1 | Add `workflow` to CLI | `agentic-sdlc workflow cycle` works but missing in commands |
 | 2 | Expand test coverage | Current: 10 tests, need more integration |
 | 3 | Add `metrics` CLI cmd | Quick project stats |
 | 4 | Role cross-references | Link roles to workflows |
