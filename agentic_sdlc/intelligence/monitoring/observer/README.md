@@ -39,7 +39,7 @@ python agentic_sdlc/intelligence/observer/observer.py --check-action "create fil
 ### Programmatic Use
 
 ```python
-from tools.intelligence.observer import Observer, Violation
+from agentic_sdlc.intelligence.observer import Observer, Violation
 
 # Create observer
 observer = Observer()

@@ -204,9 +204,9 @@ python agentic_sdlc/validation/health-check.py
 
 **Usage:**
 ```python
-from tools.utils.common import load_config
-from tools.utils.kb_manager import search_kb
-from tools.utils.artifact_manager import create_artifact
+from agentic_sdlc.utils.common import load_config
+from agentic_sdlc.utils.kb_manager import search_kb
+from agentic_sdlc.utils.artifact_manager import create_artifact
 ```
 
 ---

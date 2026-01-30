@@ -38,7 +38,7 @@ Follow these conventions:
 Example:
 ```python
 def test_get_project_root():
-    from tools.utils.common import get_project_root
+    from agentic_sdlc.utils.common import get_project_root
     root = get_project_root()
     assert root.exists()
     assert (root / '.agent').exists()
