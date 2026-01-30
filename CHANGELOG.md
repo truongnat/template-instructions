@@ -6,6 +6,17 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [2.5.1] - 2026-01-30
+
+### Documentation
+- update architecture diagrams and CLI usage for v2.5.0
+
+### Changed
+- update environment template for Memgraph and clean up distribution files.
+
+
+---
+
 ## [2.5.0] - 2026-01-30
 
 ### Changed
