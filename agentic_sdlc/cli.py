@@ -73,6 +73,11 @@ def cmd_setup(args):
     setup_path = PROJECT_ROOT / "agentic_sdlc/infrastructure/lifecycle/setup/init.py"
     return run_command([sys.executable, str(setup_path)] + args)
 
+def cmd_init(args):
+    """Initialize new project with .agent structure."""
+    init_path = PROJECT_ROOT / "agentic_sdlc/infrastructure/lifecycle/setup/init_project.py"
+    return run_command([sys.executable, str(init_path)] + args)
+
 def cmd_release(args):
     """Manage releases."""
     release_path = PROJECT_ROOT / "agentic_sdlc/infrastructure/lifecycle/release/release.py"
@@ -89,6 +94,9 @@ Examples:
   asdlc dashboard
         """
     )
+    
+    # Add version flag
+    parser.add_argument('--version', action='version', version='%(prog)s 2.6.0')
     
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
     
@@ -132,12 +140,7 @@ Examples:
     elif args.command == "setup":
         sys.exit(cmd_setup([]))
     elif args.command == "init":
-        # Temporary: use old logic or setup
-        # For now, let's map it to cmd_setup or use the logic I created earlier for init if it was in cli.py
-        # Earlier cli.py had init_project.
-        # I should probably include that.
-        # But for 'housekeeping, commit, release', I don't strictly need init right now.
-        sys.exit(cmd_setup(args.args))
+        sys.exit(cmd_init(args.args))
     elif args.command == "release":
         sys.exit(cmd_release(args.args))
     elif args.command == "health":
