@@ -6,6 +6,17 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [2.5.5] - 2026-01-30
+
+### Fixed
+- [Setup] ensure .env is created in CWD and template is found relative to CWD or package
+
+### Documentation
+- Add new brain improvement and health history entries, and update .gitignore to exclude build artifacts.
+
+
+---
+
 ## [2.5.4] - 2026-01-30
 
 ### Fixed
