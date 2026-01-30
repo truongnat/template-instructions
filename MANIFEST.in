@@ -1,0 +1,4 @@
+recursive-include agentic_sdlc/defaults *
+include agentic_sdlc/requirements_tools.txt
+include README.md
+include LICENSE
