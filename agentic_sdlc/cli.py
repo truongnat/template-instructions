@@ -17,6 +17,12 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
+# Import version
+try:
+    from agentic_sdlc import __version__
+except ImportError:
+    __version__ = "unknown"
+
 def run_command(cmd_list, cwd=PROJECT_ROOT):
     """Run a system command."""
     try:
@@ -96,7 +102,7 @@ Examples:
     )
     
     # Add version flag
-    parser.add_argument('--version', action='version', version='%(prog)s 2.6.0')
+    parser.add_argument('--version', action='version', version=f'%(prog)s {__version__}')
     
     subparsers = parser.add_subparsers(dest="command", help="Available commands")
     
