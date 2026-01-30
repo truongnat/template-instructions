@@ -25,7 +25,12 @@ if sys.platform == 'win32':
 try:
     from agentic_sdlc.core.utils.common import get_project_root
     root = get_project_root()
-    cache_dir = root / ".brain" / "dspy_cache"
+    if (root / ".brain").exists():
+        cache_dir = root / ".brain" / "dspy_cache"
+    else:
+        # Fallback to user home directory to avoid polluting new projects
+        cache_dir = Path.home() / ".agentic_sdlc" / "dspy_cache"
+        
     cache_dir.mkdir(parents=True, exist_ok=True)
     os.environ["DSPY_CACHEDIR"] = str(cache_dir)
 except Exception:
