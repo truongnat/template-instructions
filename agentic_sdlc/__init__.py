@@ -2,7 +2,7 @@
 Agentic SDLC - AI-powered Software Development Lifecycle Framework
 """
 
-__version__ = "2.7.3"
+__version__ = "2.7.4"
 __author__ = "Dao Quang Truong"
 __email__ = "truongnat@gmail.com"
 

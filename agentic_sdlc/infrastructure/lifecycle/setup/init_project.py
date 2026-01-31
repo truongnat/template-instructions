@@ -112,8 +112,14 @@ def init_project(target_dir=None):
             dst = agent_dir / dir_name
             
             if src.exists():
-                shutil.copytree(src, dst)
-                print_success(f"Created .agent/{dir_name}/")
+                # Verify source is not empty
+                if not any(src.iterdir()):
+                     print_error(f"Source directory is empty: {src}")
+                     continue
+
+                shutil.copytree(src, dst, dirs_exist_ok=True)
+                item_count = len(list(src.rglob('*')))
+                print_success(f"Created .agent/{dir_name}/ ({item_count} files)")
             else:
                 print_error(f"Source directory not found: {src}")
         
