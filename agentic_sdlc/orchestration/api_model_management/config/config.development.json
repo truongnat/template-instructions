@@ -1,0 +1,19 @@
+{
+  "health_check": {
+    "interval_seconds": 30,
+    "timeout_seconds": 5,
+    "consecutive_failures_threshold": 2
+  },
+  "budget": {
+    "daily_limit": 10.0,
+    "alert_threshold_percent": 50
+  },
+  "caching": {
+    "enabled": true,
+    "max_size_mb": 100,
+    "default_ttl_seconds": 1800
+  },
+  "quality_evaluation": {
+    "enabled": false
+  }
+}

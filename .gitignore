@@ -59,3 +59,8 @@ agentic_sdlc/lib/
 build/
 *.egg-info/
 *.egg-info.trash/
+
+.hypothesis
+agentic_sdlc.egg-info_corrupt_*
+agentic_sdlc.egg-info.trash_corrupt_*
+build_corrupt_*

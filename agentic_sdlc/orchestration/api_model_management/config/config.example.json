@@ -1,0 +1,111 @@
+{
+  "models": [
+    {
+      "id": "gpt-4-turbo",
+      "provider": "openai",
+      "name": "GPT-4 Turbo",
+      "capabilities": ["text-generation", "code-generation", "analysis"],
+      "cost_per_1k_input_tokens": 0.01,
+      "cost_per_1k_output_tokens": 0.03,
+      "rate_limits": {
+        "requests_per_minute": 500,
+        "tokens_per_minute": 150000
+      },
+      "context_window": 128000,
+      "average_response_time_ms": 2000,
+      "enabled": true
+    },
+    {
+      "id": "gpt-3.5-turbo",
+      "provider": "openai",
+      "name": "GPT-3.5 Turbo",
+      "capabilities": ["text-generation", "code-generation"],
+      "cost_per_1k_input_tokens": 0.0005,
+      "cost_per_1k_output_tokens": 0.0015,
+      "rate_limits": {
+        "requests_per_minute": 3500,
+        "tokens_per_minute": 90000
+      },
+      "context_window": 16385,
+      "average_response_time_ms": 1000,
+      "enabled": true
+    },
+    {
+      "id": "claude-3.5-sonnet",
+      "provider": "anthropic",
+      "name": "Claude 3.5 Sonnet",
+      "capabilities": ["text-generation", "code-generation", "analysis"],
+      "cost_per_1k_input_tokens": 0.003,
+      "cost_per_1k_output_tokens": 0.015,
+      "rate_limits": {
+        "requests_per_minute": 1000,
+        "tokens_per_minute": 200000
+      },
+      "context_window": 200000,
+      "average_response_time_ms": 1500,
+      "enabled": true
+    },
+    {
+      "id": "gemini-pro",
+      "provider": "google",
+      "name": "Gemini Pro",
+      "capabilities": ["text-generation", "code-generation", "analysis"],
+      "cost_per_1k_input_tokens": 0.00025,
+      "cost_per_1k_output_tokens": 0.0005,
+      "rate_limits": {
+        "requests_per_minute": 60,
+        "tokens_per_minute": 32000
+      },
+      "context_window": 32768,
+      "average_response_time_ms": 1800,
+      "enabled": true
+    },
+    {
+      "id": "llama3-70b",
+      "provider": "ollama",
+      "name": "Llama 3 70B",
+      "capabilities": ["text-generation", "code-generation"],
+      "cost_per_1k_input_tokens": 0.0,
+      "cost_per_1k_output_tokens": 0.0,
+      "rate_limits": {
+        "requests_per_minute": 100,
+        "tokens_per_minute": 50000
+      },
+      "context_window": 8192,
+      "average_response_time_ms": 3000,
+      "enabled": true
+    }
+  ],
+  "health_check": {
+    "interval_seconds": 60,
+    "timeout_seconds": 10,
+    "consecutive_failures_threshold": 3
+  },
+  "rate_limiting": {
+    "threshold_percent": 90,
+    "window_seconds": 60
+  },
+  "caching": {
+    "enabled": true,
+    "max_size_mb": 1000,
+    "default_ttl_seconds": 3600
+  },
+  "budget": {
+    "daily_limit": 100.0,
+    "alert_threshold_percent": 80
+  },
+  "quality_evaluation": {
+    "enabled": true,
+    "threshold": 0.7,
+    "evaluation_window": 10
+  },
+  "failover": {
+    "max_retries": 3,
+    "base_backoff_seconds": 2,
+    "alert_threshold": 3,
+    "alert_window_hours": 1
+  },
+  "concurrency": {
+    "max_concurrent_requests_per_provider": 10
+  }
+}

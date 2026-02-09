@@ -23,7 +23,7 @@ try:
 except ImportError:
     __version__ = "unknown"
 
-def run_command(cmd_list, cwd=PROJECT_ROOT):
+def run_command(cmd_list, cwd=None):
     """Run a system command."""
     try:
         result = subprocess.run(cmd_list, cwd=cwd, check=False)
