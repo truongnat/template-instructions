@@ -6,59 +6,66 @@ import ImagePreview from './ImagePreview.astro';
 
 const layers = [
   {
-    name: 'Layer 1: Core',
-    description: 'Stable foundation (Audited v2.5)',
-    components: ['GEMINI.md', 'Skills (17 Roles)', 'Templates (20+)', 'Rules (8)', 'Workflows (23)'],
+    name: 'Core',
+    description: 'Foundation layer with configuration, exceptions, and logging',
+    components: ['Config', 'Exceptions', 'Logging', 'Validation'],
     color: 'from-blue-600 to-blue-400',
   },
   {
-    name: 'Layer 2: Intelligence',
-    description: 'Brain System with 26 specialized sub-agents',
-    components: ['Observer', 'Judge', 'Self-Learning', 'HITL', 'Proxy', 'Router', 'Monitor', 'A/B Test', 'DSPy', 'Self-Healing', 'Swarm Router', 'Concurrent Executor'],
+    name: 'Infrastructure',
+    description: 'Automation, bridges, and execution engines',
+    components: ['WorkflowEngine', 'ExecutionEngine', 'LifecycleManager', 'Bridges'],
     color: 'from-purple-600 to-pink-500',
   },
   {
-    name: 'Layer 3: Infrastructure',
-    description: 'External interfaces and tools',
-    components: ['CLI', 'SDK/Kit', 'Memgraph', 'GitHub', 'Workflows', 'Docs'],
+    name: 'Intelligence',
+    description: 'Learning, monitoring, reasoning, and collaboration',
+    components: ['Learner', 'Monitor', 'Reasoner', 'Collaborator'],
     color: 'from-cyan-500 to-green-500',
+  },
+  {
+    name: 'Orchestration',
+    description: 'Agents, models, workflows, and coordination',
+    components: ['Agent', 'AgentRegistry', 'ModelClient', 'Workflow', 'WorkflowBuilder'],
+    color: 'from-yellow-500 to-orange-500',
+  },
+  {
+    name: 'Plugins',
+    description: 'Extensibility through plugin system',
+    components: ['Plugin', 'PluginRegistry', 'Custom Extensions'],
+    color: 'from-pink-500 to-red-500',
   },
 ];
 
 const intelligenceGroups = [
   {
-    name: 'Monitoring & Compliance',
-    agents: ['Observer', 'Monitor', 'Workflow Validator'],
-    color: 'text-red-400',
-  },
-  {
-    name: 'Quality & Scoring',
-    agents: ['Judge', 'Scorer', 'Evaluation'],
-    color: 'text-yellow-400',
-  },
-  {
-    name: 'Learning & Optimization',
-    agents: ['Self-Learning', 'DSPy', 'A/B Test'],
-    color: 'text-purple-400',
-  },
-  {
-    name: 'Execution & Safety',
-    agents: ['HITL', 'Sandbox', 'Self-Healing'],
+    name: 'Core Components',
+    agents: ['Config Management', 'Exception Handling', 'Logging System', 'Validation'],
     color: 'text-blue-400',
   },
   {
-    name: 'Intelligence & Routing',
-    agents: ['Proxy', 'Swarm Router', 'Workflow Router', 'Task Manager', 'Research'],
+    name: 'Infrastructure',
+    agents: ['Workflow Engine', 'Execution Engine', 'Lifecycle Manager', 'Bridge System'],
+    color: 'text-purple-400',
+  },
+  {
+    name: 'Intelligence Layer',
+    agents: ['Learner', 'Monitor', 'Reasoner', 'Collaborator'],
     color: 'text-green-400',
   },
   {
-    name: 'Orchestration & Swarms',
-    agents: ['Concurrent Executor', 'Synthesizer', 'Group Chat', 'Feedback Protocol', 'AutoSkill Builder'],
+    name: 'Orchestration',
+    agents: ['Agent System', 'Agent Registry', 'Model Client', 'Workflow Builder'],
+    color: 'text-yellow-400',
+  },
+  {
+    name: 'Plugin System',
+    agents: ['Plugin Interface', 'Plugin Registry', 'Extension Points', 'Custom Plugins'],
     color: 'text-pink-400',
   },
   {
-    name: 'Generation & Infrastructure',
-    agents: ['Artifact Gen', 'Cost', 'Performance', 'AOP Protocol'],
+    name: 'CLI Tools (Optional)',
+    agents: ['Init Command', 'Run Command', 'Config Command', 'Plugin Command'],
     color: 'text-cyan-400',
   },
 ];
@@ -68,10 +75,10 @@ const intelligenceGroups = [
   <div class="container">
     <div class="text-center mb-12">
       <h2 class="text-3xl md:text-4xl font-bold mb-4">
-        3-Layer Concentric Architecture
+        Modular SDK Architecture
       </h2>
       <p class="text-muted-foreground max-w-2xl mx-auto">
-        Dependencies flow inward (Layer 3 → Layer 2 → Layer 1), ensuring a stable core with intelligent automation
+        Clean separation of concerns with a well-defined public API and extensible plugin system
       </p>
     </div>
 
@@ -104,14 +111,14 @@ const intelligenceGroups = [
       ))}
     </div>
 
-    <!-- Intelligence Sub-Agents -->
+    <!-- SDK Components -->
     <div class="max-w-4xl mx-auto mb-12">
       <div class="card border-primary/30 bg-primary/5">
         <div class="text-center mb-6">
-          <span class="text-3xl mb-2 block animate-pulse">🧠</span>
-          <h3 class="text-xl font-semibold mb-2">26 Intelligence Sub-Agents</h3>
+          <span class="text-3xl mb-2 block animate-pulse">🔧</span>
+          <h3 class="text-xl font-semibold mb-2">SDK Components</h3>
           <p class="text-sm text-muted-foreground">
-            Specialized agents working in harmony to create compound intelligence
+            Comprehensive framework with clean public API and extensible architecture
           </p>
         </div>
         

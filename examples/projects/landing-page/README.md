@@ -1,6 +1,6 @@
 # Agentic SDLC - Landing Page
 
-Documentation website for the Agentic SDLC project built with Astro.
+Landing page for the Agentic SDLC v3.0 - AI-Powered Software Development SDK built with Astro.
 
 ## 🚀 Setup
 
@@ -17,3 +17,17 @@ bun run dev
 ```
 
 The site will be available at `http://localhost:4321`
+
+## 📦 Build
+
+Build for production:
+
+```bash
+bun run build
+```
+
+Preview production build:
+
+```bash
+bun run preview
+```

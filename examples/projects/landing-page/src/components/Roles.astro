@@ -1,59 +1,60 @@
 ---
 /**
- * Roles Section - 17 AI agents
+ * Features Section - SDK Capabilities
  */
-const roleGroups = [
+const featureGroups = [
   {
-    category: 'Planning',
-    icon: '📋',
-    roles: [
-      { name: '@PM', title: 'Project Manager' },
-      { name: '@BA', title: 'Business Analyst' },
-      { name: '@PO', title: 'Product Owner' },
+    category: 'Core',
+    icon: '⚙️',
+    features: [
+      { name: 'Config', title: 'Configuration' },
+      { name: 'Logging', title: 'Structured Logging' },
+      { name: 'Exceptions', title: 'Error Handling' },
     ],
   },
   {
-    category: 'Design',
-    icon: '🎨',
-    roles: [
-      { name: '@SA', title: 'System Analyst' },
-      { name: '@UIUX', title: 'UI/UX Designer' },
-      { name: '@CLOUD', title: 'Cloud Architect' },
+    category: 'Infrastructure',
+    icon: '🏗️',
+    features: [
+      { name: 'Workflow Engine', title: 'Workflow Execution' },
+      { name: 'Execution Engine', title: 'Task Execution' },
+      { name: 'Lifecycle', title: 'Lifecycle Manager' },
     ],
   },
   {
-    category: 'Quality',
-    icon: '✅',
-    roles: [
-      { name: '@SECA', title: 'Security Analyst' },
-      { name: '@TESTER', title: 'Tester' },
+    category: 'Intelligence',
+    icon: '🧠',
+    features: [
+      { name: 'Learner', title: 'Learning System' },
+      { name: 'Monitor', title: 'Monitoring' },
+      { name: 'Reasoner', title: 'Decision Making' },
     ],
   },
   {
-    category: 'Development',
+    category: 'Orchestration',
+    icon: '🎭',
+    features: [
+      { name: 'Agent', title: 'AI Agents' },
+      { name: 'Workflow', title: 'Workflow Builder' },
+      { name: 'ModelClient', title: 'LLM Integration' },
+    ],
+  },
+  {
+    category: 'Extensibility',
+    icon: '🔌',
+    features: [
+      { name: 'Plugin', title: 'Plugin System' },
+      { name: 'Registry', title: 'Plugin Registry' },
+      { name: 'Custom', title: 'Extensions' },
+    ],
+  },
+  {
+    category: 'CLI (Optional)',
     icon: '💻',
-    roles: [
-      { name: '@DEV', title: 'Developer' },
-      { name: '@DEVOPS', title: 'DevOps Engineer' },
-      { name: '@MOBILE', title: 'Mobile Dev' },
-      { name: '@GAME', title: 'Game Dev' },
-    ],
-  },
-  {
-    category: 'Delivery',
-    icon: '📦',
-    roles: [
-      { name: '@REPORTER', title: 'Reporter' },
-      { name: '@STAKEHOLDER', title: 'Stakeholder' },
-    ],
-  },
-  {
-    category: 'Meta',
-    icon: '🤖',
-    roles: [
-      { name: '@BRAIN', title: 'Brain Controller' },
-      { name: '@ORCHESTRATOR', title: 'Orchestrator' },
-      { name: '@RESEARCH', title: 'Research Agent' },
+    features: [
+      { name: 'init', title: 'Project Init' },
+      { name: 'run', title: 'Run Workflows' },
+      { name: 'config', title: 'Config Mgmt' },
     ],
   },
 ];
@@ -63,15 +64,15 @@ const roleGroups = [
   <div class="container">
     <div class="text-center mb-12">
       <h2 class="text-3xl md:text-4xl font-bold mb-4">
-        17 Specialized AI Roles
+        Comprehensive SDK Features
       </h2>
       <p class="text-muted-foreground max-w-2xl mx-auto">
-        Complete development team simulation for every SDLC phase
+        Everything you need to build AI-powered development tools
       </p>
     </div>
 
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 max-w-5xl mx-auto">
-      {roleGroups.map((group) => (
+      {featureGroups.map((group) => (
         <div class="card">
           <div class="text-center mb-3">
             <span class="text-xl">{group.icon}</span>
@@ -80,10 +81,10 @@ const roleGroups = [
             </h3>
           </div>
           <div class="space-y-2">
-            {group.roles.map((role) => (
+            {group.features.map((feature) => (
               <div class="text-center">
-                <code class="text-xs font-mono text-primary">{role.name}</code>
-                <p class="text-xs text-muted-foreground">{role.title}</p>
+                <code class="text-xs font-mono text-primary">{feature.name}</code>
+                <p class="text-xs text-muted-foreground">{feature.title}</p>
               </div>
             ))}
           </div>

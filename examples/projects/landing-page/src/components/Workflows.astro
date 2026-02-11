@@ -1,31 +1,27 @@
 ---
 /**
- * Workflows Section - 18 slash commands
+ * Workflows Section - SDK Usage Patterns
  */
-const workflows = [
-  { name: '/brain', desc: 'Brain system management', icon: '🧠' },
-  { name: '/cycle', desc: 'Complete task lifecycle', icon: '🔄' },
-  { name: '/explore', desc: 'Deep investigation', icon: '🔍' },
-  { name: '/orchestrator', desc: 'Full SDLC automation', icon: '🎭' },
-  { name: '/sprint', desc: 'Sprint management', icon: '🏃' },
-  { name: '/emergency', desc: 'Critical incident response', icon: '🚨' },
-  { name: '/validate', desc: 'System validation', icon: '✅' },
-  { name: '/metrics', desc: 'Metrics dashboard', icon: '📊' },
-  { name: '/release', desc: 'Release management', icon: '🚀' },
-  { name: '/housekeeping', desc: 'Cleanup & maintenance', icon: '🧹' },
-  { name: '/review', desc: 'Code review workflow', icon: '👀' },
-  { name: '/debug', desc: 'Systematic debugging', icon: '🐛' },
-  { name: '/refactor', desc: 'Safe refactoring', icon: '🔧' },
-  { name: '/onboarding', desc: 'Agent ramp-up', icon: '📖' },
-  { name: '/docs', desc: 'Documentation creation', icon: '📝' },
-  { name: '/commit', desc: 'Smart git commit', icon: '💾' },
-  { name: '/worktree', desc: 'Parallel AI agent workflows', icon: '🌳' },
-  { name: '/autogen', desc: 'Multi-agent task execution', icon: '👥' },
-  { name: '/swarm', desc: 'Universal swarm routing', icon: '🚀' },
-  { name: '/concurrent', desc: 'Parallel role execution', icon: '⚡' },
-  { name: '/synthesize', desc: 'Mixture of Agents synthesis', icon: '⚗️' },
-  { name: '/autoskill', desc: 'Dynamic agent skill builder', icon: '🛠️' },
-  { name: '/chat', desc: 'Multi-agent group discussion', icon: '💬' },
+const usagePatterns = [
+  { name: 'Config', desc: 'Configuration management', icon: '⚙️' },
+  { name: 'Agent', desc: 'Create AI agents', icon: '🤖' },
+  { name: 'Workflow', desc: 'Build workflows', icon: '🔄' },
+  { name: 'Plugin', desc: 'Extend functionality', icon: '🔌' },
+  { name: 'Logger', desc: 'Structured logging', icon: '📝' },
+  { name: 'ModelClient', desc: 'LLM integration', icon: '🧠' },
+  { name: 'Learner', desc: 'Learning system', icon: '📚' },
+  { name: 'Monitor', desc: 'System monitoring', icon: '📊' },
+  { name: 'Reasoner', desc: 'Decision making', icon: '🤔' },
+  { name: 'Collaborator', desc: 'Multi-agent collab', icon: '👥' },
+  { name: 'WorkflowEngine', desc: 'Execute workflows', icon: '⚡' },
+  { name: 'ExecutionEngine', desc: 'Task execution', icon: '🚀' },
+];
+
+const cliCommands = [
+  { name: 'agentic init', desc: 'Initialize project', icon: '🎯' },
+  { name: 'agentic run', desc: 'Run workflow', icon: '▶️' },
+  { name: 'agentic config', desc: 'Manage config', icon: '⚙️' },
+  { name: 'agentic plugin', desc: 'Plugin management', icon: '🔌' },
 ];
 ---
 
@@ -33,30 +29,57 @@ const workflows = [
   <div class="container">
     <div class="text-center mb-12">
       <h2 class="text-3xl md:text-4xl font-bold mb-4">
-        23 Automated Workflows
+        SDK Usage & CLI Tools
       </h2>
       <p class="text-muted-foreground max-w-2xl mx-auto">
-        Execute complete SDLC processes with simple slash commands or the unified <code>agentic</code> CLI
+        Comprehensive Python SDK with clean API and optional CLI tools for rapid development
       </p>
     </div>
 
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
-      {workflows.map((workflow, index) => (
-        <div 
-          class="card text-center group cursor-default"
-          style={`animation-delay: ${index * 0.05}s`}
-        >
-          <span class="text-2xl mb-2 block group-hover:scale-110 transition-transform">
-            {workflow.icon}
-          </span>
-          <code class="text-sm font-mono text-primary font-medium">
-            {workflow.name}
-          </code>
-          <p class="text-xs text-muted-foreground mt-1">
-            {workflow.desc}
-          </p>
-        </div>
-      ))}
+    <!-- SDK Components -->
+    <div class="mb-12">
+      <h3 class="text-xl font-semibold text-center mb-6">SDK Components</h3>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
+        {usagePatterns.map((pattern, index) => (
+          <div 
+            class="card text-center group cursor-default"
+            style={`animation-delay: ${index * 0.05}s`}
+          >
+            <span class="text-2xl mb-2 block group-hover:scale-110 transition-transform">
+              {pattern.icon}
+            </span>
+            <code class="text-sm font-mono text-primary font-medium">
+              {pattern.name}
+            </code>
+            <p class="text-xs text-muted-foreground mt-1">
+              {pattern.desc}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- CLI Commands -->
+    <div>
+      <h3 class="text-xl font-semibold text-center mb-6">CLI Commands (Optional)</h3>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+        {cliCommands.map((cmd, index) => (
+          <div 
+            class="card text-center group cursor-default"
+            style={`animation-delay: ${index * 0.05}s`}
+          >
+            <span class="text-2xl mb-2 block group-hover:scale-110 transition-transform">
+              {cmd.icon}
+            </span>
+            <code class="text-sm font-mono text-primary font-medium">
+              {cmd.name}
+            </code>
+            <p class="text-xs text-muted-foreground mt-1">
+              {cmd.desc}
+            </p>
+          </div>
+        ))}
+      </div>
     </div>
   </div>
 </section>
