@@ -1,0 +1,1094 @@
+terms:
+- english: Agent
+  vietnamese: Tác nhân
+  description: Một thực thể AI chuyên biệt thực hiện các nhiệm vụ cụ thể trong quy
+    trình phát triển phần mềm
+  usage_examples:
+  - Developer Agent xử lý việc viết code
+  - Tester Agent thực hiện testing tự động
+  related_terms:
+  - Workflow
+  - Orchestration
+- english: Workflow
+  vietnamese: Quy trình làm việc
+  description: Một chuỗi các bước được định nghĩa trước để hoàn thành một nhiệm vụ
+    phức tạp
+  usage_examples:
+  - CI/CD workflow tự động hóa deployment
+  - Code review workflow quản lý review process
+  related_terms:
+  - Agent
+  - WorkflowEngine
+- english: Plugin
+  vietnamese: Plugin
+  description: Một module mở rộng cho phép tùy chỉnh và mở rộng chức năng của SDK
+  usage_examples:
+  - GitHub plugin tích hợp với GitHub API
+  - Slack plugin gửi notifications
+  related_terms:
+  - PluginRegistry
+  - Extension
+- english: LLM
+  vietnamese: Mô hình ngôn ngữ lớn
+  description: Large Language Model - mô hình AI có khả năng hiểu và sinh văn bản
+    tự nhiên
+  usage_examples:
+  - GPT-4 là một LLM mạnh mẽ
+  - Claude là LLM của Anthropic
+  related_terms:
+  - ModelClient
+  - AI
+- english: Orchestration Layer
+  vietnamese: Lớp điều phối
+  description: Lớp quản lý workflow và tương tác giữa các agent
+  usage_examples:
+  - Orchestration layer điều phối các agent trong workflow
+  related_terms:
+  - Agent
+  - Workflow
+- english: Intelligence Layer
+  vietnamese: Lớp trí tuệ
+  description: Lớp cung cấp khả năng học tập, suy luận và ra quyết định
+  usage_examples:
+  - Intelligence layer học từ các execution thành công
+  related_terms:
+  - Learner
+  - Reasoner
+  - Monitor
+- english: Infrastructure Layer
+  vietnamese: Lớp hạ tầng
+  description: Lớp cung cấp các dịch vụ cơ bản như execution engine, lifecycle management
+  usage_examples:
+  - Infrastructure layer quản lý execution của workflows
+  related_terms:
+  - ExecutionEngine
+  - Lifecycle
+- english: Learner
+  vietnamese: Bộ học
+  description: Component học hỏi từ các execution và cải thiện performance
+  usage_examples:
+  - Learner ghi nhận các pattern thành công
+  related_terms:
+  - Intelligence Layer
+  - Learning
+- english: Monitor
+  vietnamese: Bộ giám sát
+  description: Component theo dõi metrics và health của hệ thống
+  usage_examples:
+  - Monitor thu thập metrics về execution time
+  related_terms:
+  - Metrics
+  - Health Check
+- english: Reasoner
+  vietnamese: Bộ suy luận
+  description: Component phân tích và đưa ra quyết định thông minh
+  usage_examples:
+  - Reasoner phân tích độ phức tạp của task
+  related_terms:
+  - Decision Making
+  - Analysis
+- english: TeamCoordinator
+  vietnamese: Bộ điều phối nhóm
+  description: Component quản lý collaboration giữa các agent
+  usage_examples:
+  - TeamCoordinator điều phối communication giữa agents
+  related_terms:
+  - Collaboration
+  - Agent
+- english: Product Manager Agent
+  vietnamese: Agent Quản lý Sản phẩm
+  description: Agent chịu trách nhiệm về requirements và product vision
+  usage_examples:
+  - PM Agent định nghĩa user stories
+  related_terms:
+  - Requirements
+  - User Story
+- english: Software Architect Agent
+  vietnamese: Agent Kiến trúc Phần mềm
+  description: Agent thiết kế kiến trúc hệ thống
+  usage_examples:
+  - SA Agent thiết kế system architecture
+  related_terms:
+  - Architecture
+  - Design
+- english: Developer Agent
+  vietnamese: Agent Phát triển
+  description: Agent viết code và implement features
+  usage_examples:
+  - Developer Agent implement business logic
+  related_terms:
+  - Code
+  - Implementation
+- english: Tester Agent
+  vietnamese: Agent Kiểm thử
+  description: Agent thực hiện testing và quality assurance
+  usage_examples:
+  - Tester Agent viết và chạy test cases
+  related_terms:
+  - Testing
+  - QA
+- english: DevOps Agent
+  vietnamese: Agent DevOps
+  description: Agent quản lý deployment và infrastructure
+  usage_examples:
+  - DevOps Agent setup CI/CD pipeline
+  related_terms:
+  - Deployment
+  - Infrastructure
+- english: WorkflowBuilder
+  vietnamese: Bộ xây dựng workflow
+  description: Component để định nghĩa và xây dựng workflow
+  usage_examples:
+  - WorkflowBuilder tạo workflow với các steps
+  related_terms:
+  - Workflow
+  - WorkflowStep
+- english: WorkflowEngine
+  vietnamese: "\x82\x03\U00039973ô&KÉ\x18Å\U000F676AGI+i<Æï\x9B"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: WorkflowStep
+  vietnamese: Bước workflow
+  description: Một bước đơn lẻ trong workflow
+  usage_examples:
+  - WorkflowStep định nghĩa action và parameters
+  related_terms:
+  - Workflow
+  - Action
+- english: Configuration
+  vietnamese: Cấu hình
+  description: Thiết lập và tham số của hệ thống
+  usage_examples:
+  - Configuration file chứa API keys và settings
+  related_terms:
+  - Config
+  - Settings
+- english: ModelClient
+  vietnamese: Client mô hình
+  description: Client để tương tác với LLM providers
+  usage_examples:
+  - ModelClient kết nối với OpenAI API
+  related_terms:
+  - LLM
+  - API
+- english: ModelConfig
+  vietnamese: Cấu hình mô hình
+  description: Cấu hình cho LLM model
+  usage_examples:
+  - ModelConfig chỉ định model name và parameters
+  related_terms:
+  - ModelClient
+  - Configuration
+- english: ExecutionEngine
+  vietnamese: Bộ thực thi
+  description: Component thực thi các task và workflow
+  usage_examples:
+  - ExecutionEngine chạy agent tasks
+  related_terms:
+  - Execution
+  - Task
+- english: Lifecycle
+  vietnamese: Vòng đời
+  description: Các giai đoạn từ khởi tạo đến kết thúc của một component
+  usage_examples:
+  - Agent lifecycle bao gồm registration, execution, shutdown
+  related_terms:
+  - Agent
+  - Management
+- english: Exception
+  vietnamese: Ngoại lệ
+  description: Lỗi xảy ra trong quá trình thực thi
+  usage_examples:
+  - ConfigurationError là một exception type
+  related_terms:
+  - Error
+  - Error Handling
+- english: ValidationError
+  vietnamese: Lỗi xác thực
+  description: Lỗi khi dữ liệu không hợp lệ
+  usage_examples:
+  - ValidationError xảy ra khi config không đúng format
+  related_terms:
+  - Validation
+  - Exception
+- english: Unit Test
+  vietnamese: Kiểm thử đơn vị
+  description: Test cho một đơn vị code nhỏ nhất
+  usage_examples:
+  - Unit test kiểm tra một function cụ thể
+  related_terms:
+  - Testing
+  - Test
+- english: Integration Test
+  vietnamese: Kiểm thử tích hợp
+  description: Test sự tương tác giữa các component
+  usage_examples:
+  - Integration test kiểm tra workflow hoàn chỉnh
+  related_terms:
+  - Testing
+  - Test
+- english: Property-Based Test
+  vietnamese: Kiểm thử dựa trên thuộc tính
+  description: Test verify các thuộc tính phải đúng với mọi input
+  usage_examples:
+  - Property-based test với Hypothesis library
+  related_terms:
+  - Testing
+  - Hypothesis
+- english: Command-Line Interface
+  vietnamese: Giao diện dòng lệnh
+  description: Interface để tương tác qua terminal
+  usage_examples:
+  - CLI cho phép chạy workflow từ terminal
+  related_terms:
+  - CLI
+  - Terminal
+- english: SDK
+  vietnamese: Bộ công cụ phát triển phần mềm
+  description: Software Development Kit - bộ thư viện và tools
+  usage_examples:
+  - Agentic SDLC SDK cung cấp APIs cho AI development
+  related_terms:
+  - API
+  - Library
+- english: API
+  vietnamese: Giao diện lập trình ứng dụng
+  description: Application Programming Interface - interface để tương tác với hệ thống
+  usage_examples:
+  - Public API cho phép developers sử dụng SDK
+  related_terms:
+  - SDK
+  - Interface
+- english: Deployment
+  vietnamese: Triển khai
+  description: Quá trình đưa ứng dụng lên production
+  usage_examples:
+  - Deployment lên Kubernetes cluster
+  related_terms:
+  - Production
+  - DevOps
+- english: Metrics
+  vietnamese: Chỉ số
+  description: Các số liệu đo lường performance
+  usage_examples:
+  - Metrics bao gồm execution time, success rate
+  related_terms:
+  - Monitor
+  - Performance
+- english: Benchmark
+  vietnamese: Đánh giá hiệu năng
+  description: Test để đo lường performance
+  usage_examples:
+  - Benchmark test đo execution speed
+  related_terms:
+  - Performance
+  - Testing
+- english: GitHub Integration
+  vietnamese: Tích hợp GitHub
+  description: Kết nối và tương tác với GitHub
+  usage_examples:
+  - GitHub integration tự động tạo pull requests
+  related_terms:
+  - Integration
+  - GitHub
+- english: Slack Integration
+  vietnamese: Tích hợp Slack
+  description: Kết nối và gửi notifications qua Slack
+  usage_examples:
+  - Slack integration gửi thông báo khi workflow hoàn thành
+  related_terms:
+  - Integration
+  - Slack
+- english: Documentation
+  vietnamese: Tài liệu
+  description: Hướng dẫn và reference cho hệ thống
+  usage_examples:
+  - Documentation giải thích cách sử dụng SDK
+  related_terms:
+  - Guide
+  - Reference
+- english: Use Case
+  vietnamese: Trường hợp sử dụng
+  description: Ví dụ thực tế về cách sử dụng hệ thống
+  usage_examples:
+  - Use case về automated code review
+  related_terms:
+  - Example
+  - Scenario
+- english: Code Example
+  vietnamese: Ví dụ code
+  description: Đoạn code mẫu minh họa cách sử dụng
+  usage_examples:
+  - Code example cho việc tạo agent
+  related_terms:
+  - Example
+  - Sample
+- english: Diagram
+  vietnamese: Sơ đồ
+  description: Biểu đồ trực quan hóa kiến trúc hoặc flow
+  usage_examples:
+  - Architecture diagram hiển thị system components
+  related_terms:
+  - Visualization
+  - Architecture
+- english: API Key
+  vietnamese: Khóa API
+  description: Mã bí mật để xác thực với API
+  usage_examples:
+  - API key cho OpenAI được lưu trong .env file
+  related_terms:
+  - Authentication
+  - Security
+- english: Encryption
+  vietnamese: Mã hóa
+  description: Quá trình bảo mật dữ liệu
+  usage_examples:
+  - Encryption bảo vệ sensitive data
+  related_terms:
+  - Security
+  - Data Protection
+- english: Dependency
+  vietnamese: Phụ thuộc
+  description: Thư viện hoặc package cần thiết
+  usage_examples:
+  - Dependencies được liệt kê trong requirements.txt
+  related_terms:
+  - Package
+  - Library
+- english: Environment Variable
+  vietnamese: Biến môi trường
+  description: Biến được set trong môi trường hệ thống
+  usage_examples:
+  - Environment variables chứa configuration
+  related_terms:
+  - Configuration
+  - Environment
+- english: Docker
+  vietnamese: Docker
+  description: Platform để containerize applications
+  usage_examples:
+  - Docker container chạy ứng dụng isolated
+  related_terms:
+  - Container
+  - Deployment
+- english: Kubernetes
+  vietnamese: Kubernetes
+  description: Platform orchestration cho containers
+  usage_examples:
+  - Kubernetes quản lý deployment ở scale
+  related_terms:
+  - Container
+  - Orchestration
+  - Deployment
+- english: AAA
+  vietnamese: AAA
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: hBRhxxPm
+  vietnamese: '999999999999999999999999999999'
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: QjSAllqdLTYJsYizaQ
+  vietnamese: "24!\x81\x11rúE]\x1Aó"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: dpEkXNkvin
+  vietnamese: "Î\x10ªô\x8D·En¿\x87¥\x80\U000C0D52\U00073DE4\x92ä"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: XtjBjxKSDpczvRtYYh
+  vietnamese: Êo􊻢,[
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: vSChyDRk
+  vietnamese: ',./;''[]\-=<>?:"{}|_+!@#$%^&*()`~'
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: oCCTQy
+  vietnamese: "\x8A¢\U0004F568"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: qBCR
+  vietnamese: 򟼮J2
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: OQJeztnz
+  vietnamese: "\x9A\x91Ì\U000E4543\x8A\x9B»\n¦M\U00085334«!4\U000156D8"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: HXhlAG
+  vietnamese: "ç?\x12?\U0004A451\U0008BC04"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: CTGH
+  vietnamese: Scunthorpe
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: Scunthorpe
+  vietnamese: Scunthorpe
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: mkjKzVY
+  vietnamese: mkjKzVY
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: gdeS
+  vietnamese: EÚí
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: cxZ
+  vietnamese: "1\U000CA554¥\x84\nÓÔ{\U0005B81A\U0008F8FD\U0009DE6CÑÕ\f\x15%5\U0004B035\
+    w\U000BEBF2V\U000D472Dã\U000F67E5×ME¹"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: puJY
+  vietnamese: 7􇸋򳊸镝ò
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: lpn
+  vietnamese: "²@°\x96EÅ*"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: oHsRm
+  vietnamese: "\x88\x1Fs\x8E\x12Ùr\x99\x89¥\U000E99A3£"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: HXuXELtLj
+  vietnamese: ^kñ󶢊Ó
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: MwDb
+  vietnamese: "\x92à\x02"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: WPi
+  vietnamese: ë󔥽𼶚
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: kTXf
+  vietnamese: "\x05|\x87Ò"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: dTqQTYUnoBTLpxXfc
+  vietnamese: ÿ?¾ºÌ
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: tiGCkcxz
+  vietnamese: "\ví\U000987FF\U000594112×\U000FDF4EEÜ"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: Ggwt
+  vietnamese: "_\x81凙Ó\U0006D17C"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: QlqfucFvt
+  vietnamese: ¾򈹶FØ
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: cDKQwqw
+  vietnamese: "KÍ/D\U00035663+\U00047C25\a\U0005172F©G\Nûw\U000878A5È\U000D18EA\x0F\
+    ÝÕâ*"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: CUurUxKeQtnSxOf
+  vietnamese: 񦥻񤿶O񵋘񣅞¤W
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: KxYIXhK
+  vietnamese: ­Í<𼎔􁀺2dæ򻍷£
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: dMUSIduusivMwmSNlgYlhSar
+  vietnamese: "\x9D\x83\U000AB9A9¹³pè\U000218F3\x82"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: IEIBrX
+  vietnamese: "\x80Z\t"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: crfIYhZ
+  vietnamese: "\U0006E29F¢\x18"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: CZXxtHWLpchIaiKwOTzXmat
+  vietnamese: 򐱌õ񕒖A0
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: TJFP
+  vietnamese: "_i¸W\n\U000DDCF8\x9A)\x90tó"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: oJzfkC
+  vietnamese: "\0§FP"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: mIOBiK
+  vietnamese: "\x93¿\U000A3AF1)0\U00057C02"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: kUCmTZkr
+  vietnamese: kUCmTZkr
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: Oth
+  vietnamese: '"qÒ'
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: IcHfsYlwL
+  vietnamese: "\U000DCE61æp´\x84\x0E\U00019FF1"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: KfvGrBbSSNqNk
+  vietnamese: KfvGrBbSSNqNk
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: KCBCTw
+  vietnamese: 񫐈ó󒁗{2
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: jZlYG
+  vietnamese: "\U000CED42\x83\U000552FF\x8A;"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: 'true'
+  vietnamese: "\U0008F160\x8F\U000B375F"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: sxKFhxdQwQYajtw
+  vietnamese: "¡\x93\"\U0005C3C07"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: ZApG
+  vietnamese: "\x03\x97ð\U000FADC6Ó\NÂuÄ\U000E5003I´Ï"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: IRDWP
+  vietnamese: "¨\x05V"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: rQH
+  vietnamese: "fA\e²°\f\U000EF5AF!\v\x95#\U00056A48\x13n\U000885ECÛ"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: Infinity
+  vietnamese: "T\x13\U00050327ý\U0001F0DD"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: RWjBk
+  vietnamese: "\x190\x89"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: path
+  vietnamese: path
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: VDcfBAHJQ
+  vietnamese: ²>Ñ
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: parallel
+  vietnamese: parallel
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: GuXgXZt
+  vietnamese: "\U000A88D5ùq\x9Fa\U000C80AC\x8BÛ"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: QlEoyy
+  vietnamese: Agent name
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: PgDOT
+  vietnamese: ']¬Ò'
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: fdrVRhrxoN
+  vietnamese: "H\U000E35F3(D@Þ)\x9Co\x15ôN"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: QvqnmvzeHNIgO
+  vietnamese: LearningStrategy
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: ZqBghWJOUyeas
+  vietnamese: ' T©𗽬'
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: JeLsvetf
+  vietnamese: "\x1C\U00034594xÙ#Æ\r\x1C\U0009139D\U000FBF3BË"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: xvU
+  vietnamese: "\x1DË\x8C-6\x16\x9Ci\x9BÖ\U00034439$\x8AZÈ\x95\U0008876A\U0005CDE8\x03\
+    ó\v9"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: wnzdBoMbJGL
+  vietnamese: "\f\x94\x80"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: iuf
+  vietnamese: "\U000C7583v# \x8Aëõ\x81\U000F64C9yÑBÉè\U0008D96Fxçò^é\x19\U000E9506\
+    #Á\x05¤ñ"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: LOGGsBwr
+  vietnamese: LOGGsBwr
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: SefqkA
+  vietnamese: SefqkA
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: VOz
+  vietnamese: "å\x90\x7F'P\U000D5AEB®\U00102CE0¼4"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: RJAurCYCmoPV
+  vietnamese: RJAurCYCmoPV
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: awTq
+  vietnamese: "\x110%\x8E"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: MxJ
+  vietnamese: "n\b¨È\x15\x13\U000D8D83¼\U000B0AF6\U000DBD4C×<s¿"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: EJjMtHyA
+  vietnamese: ê1i0
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: FgTyQEiW
+  vietnamese: "LX≈\x88\x99\U000CF45AUÏßr!\U000C68D8"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: McOpqUorE
+  vietnamese: NaN
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: ThGFsPUDC
+  vietnamese: "\f\U000A4522}\x99\U00025488\N\U000F5F20qf\U00087FDFå\x1F\x96\x94"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: iutH
+  vietnamese: "\a\N\x9EÑÄ\x9C"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: WMpOUiy
+  vietnamese: "ñ¾\x98"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: BXUzr
+  vietnamese: ¨ya
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: yvuWWh
+  vietnamese: yvuWWh
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: YTyVfMYqDwXAKyfMxwUjhBqwiaVj
+  vietnamese: YTyVfMYqDwXAKyfMxwUjhBqwiaVj
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: OCKxJpuHBl
+  vietnamese: OCKxJpuHBl
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: PKHvEHx
+  vietnamese: "\x9CÒE"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: eBNNXYMe
+  vietnamese: "µÚ\x16Z{Ú\U00019D8B\x9D\U0001FE7Cá\x1Eð\U000AE6B3õ\U000812DE\U000DB172\
+    ä~"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: maP
+  vietnamese: "1y\0 \x98"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: LTaYzu
+  vietnamese: "\x93¾F=\x94Ï;C,\x8C\x13\x11\U0006CCD5Â\t]\x8C\x1D"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: hybrid
+  vietnamese: "È­\x91\U0008B2EEù_Á\U0006E1AA"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: FAoRpZluesk
+  vietnamese: "Ä®\U0010454F÷²\U0001F3A5\U000B6023\\¤·Ù\x8D"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: SEOz
+  vietnamese: hõ.~
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: DhUap
+  vietnamese: "\x05\x97ùbß\U00098A75\\"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: DQr
+  vietnamese: "\x91ó\U0009F52E"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: EwEK
+  vietnamese: "\x96\U0006A6820\U000DC721M\t\U0005F4A5"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: BwNo
+  vietnamese: "&VÕA\x92ó\U000DB319NØ"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: wDt
+  vietnamese: wDt
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: did
+  vietnamese: "\U000AF67D\x15\U00020E52W"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: ouJ
+  vietnamese: bÇ񳶙
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: UHbdYqnvTtlvTfCZkjGTFiYI
+  vietnamese: "\x82\x12oñ|Æ1\x11\x14u©\x9C\e"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: FfP
+  vietnamese: '&g񬶍'
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: Ljb
+  vietnamese: "·\U0001EA9A#\x1Av\x9D@"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: UGSOywbSin
+  vietnamese: ë򣓨k
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: HjUH
+  vietnamese: "\U000855BFÚ\x8Aßlv\x06VýQ\x1EÚ倬U\x9Ex%\x93"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: hFbBbI
+  vietnamese: "{\n\b{)Ä©nÐ\U000CF734\x01â\U00056D48⻬]\U000B2692\"\U000ED971\x14\x0F\
+    \U00035352Ï\x01ñ-\tJóC\U0005E7E4\U000BEF91I\U000D13AE©\x9C©ﺒL\x1A"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: RMDWjzTtvDQ
+  vietnamese: Í񭂥򸡊Á`
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: dvwDtmXolg
+  vietnamese: "é\t\U000E57AB}\U00041842¾ì\x0E\U000A9FD6\x91\x81Í\U00096E19ÔÍ\U00108A57\
+    o"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: lDXAqvQhZ
+  vietnamese: "?³\x04Ý@0"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: QPMQBmrTrvMoYk
+  vietnamese: Nöw󻬜
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: ifNX
+  vietnamese: ifNX
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: bkO
+  vietnamese: No options provided
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: NaN
+  vietnamese: "´\U000A00E6·`\x01\U00047F78\U0005FB30Õ%JJicQ\x7F"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: CMe
+  vietnamese: "\x03£T£3"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: bwt
+  vietnamese: "üj\x98\U000F52B3æÀ"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: pSKI
+  vietnamese: 򛮭uVß·
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: QRvT
+  vietnamese: "3Û\x14\U000E2D0EµDÿt"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: completed
+  vietnamese: K¹w=ÏÅ
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: mkg
+  vietnamese: Yî!򀦫򪼜G
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: IYOu
+  vietnamese: ÏN³à
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: bYVzRcSbhOebmYxvN
+  vietnamese: bYVzRcSbhOebmYxvN
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: pLsKI
+  vietnamese: "\U000A4413\eÖ\U000CCD85\x0E*\x1F\x8D\U0002BFD3D\U0008B82F\U0001E605\
+    %ñ"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: qybNjqAdhdiOVN
+  vietnamese: qybNjqAdhdiOVN
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: vLrE
+  vietnamese: vLrE
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: ZxCT
+  vietnamese: "'\U0008359E1Àº\U000AE41B\U0009DA83\U00104C4A\x91\U00065DA3¼\x94IT"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []

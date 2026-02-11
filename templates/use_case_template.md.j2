@@ -1,0 +1,167 @@
+# {{ title }}
+
+**Phiên bản:** {{ version }}  
+**Cập nhật lần cuối:** {{ last_updated }}  
+**Danh mục:** {{ category.value }}
+
+---
+
+## Tổng Quan
+
+{{ description }}
+
+---
+
+## Kịch Bản
+
+{{ scenario }}
+
+---
+
+## Vấn Đề
+
+{{ problem }}
+
+---
+
+## Giải Pháp
+
+{{ solution }}
+
+---
+
+{% if architecture %}
+## Kiến Trúc
+
+**{{ architecture.caption }}**
+
+```mermaid
+{{ architecture.mermaid_code }}
+```
+
+{% endif %}
+
+---
+
+## Triển Khai
+
+{% if implementation %}
+{% for code_block in implementation %}
+### {{ code_block.caption if code_block.caption else "Bước " ~ loop.index }}
+
+```{{ code_block.language }}
+{{ code_block.code }}
+```
+
+{% endfor %}
+{% endif %}
+
+{% for section in sections %}
+{% if section.title == "Triển Khai" or section.title == "Implementation" %}
+{{ section.content }}
+
+{% if section.code_blocks %}
+{% for code_block in section.code_blocks %}
+{% if code_block.caption %}
+### {{ code_block.caption }}
+{% endif %}
+
+```{{ code_block.language }}
+{{ code_block.code }}
+```
+{% endfor %}
+{% endif %}
+
+{% if section.subsections %}
+{% for subsection in section.subsections %}
+### {{ subsection.title }}
+
+{{ subsection.content }}
+
+{% if subsection.code_blocks %}
+{% for code_block in subsection.code_blocks %}
+{% if code_block.caption %}
+**{{ code_block.caption }}**
+{% endif %}
+
+```{{ code_block.language }}
+{{ code_block.code }}
+```
+{% endfor %}
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endif %}
+{% endfor %}
+
+---
+
+{% if results %}
+## Kết Quả
+
+{{ results }}
+
+{% endif %}
+
+---
+
+{% if lessons_learned %}
+## Bài Học Kinh Nghiệm
+
+{% for lesson in lessons_learned %}
+- {{ lesson }}
+{% endfor %}
+
+{% endif %}
+
+---
+
+## Chi Tiết Bổ Sung
+
+{% for section in sections %}
+{% if section.title not in ["Triển Khai", "Implementation"] %}
+### {{ section.title }}
+
+{{ section.content }}
+
+{% if section.code_blocks %}
+{% for code_block in section.code_blocks %}
+{% if code_block.caption %}
+**{{ code_block.caption }}**
+{% endif %}
+
+```{{ code_block.language }}
+{{ code_block.code }}
+```
+{% endfor %}
+{% endif %}
+
+{% if section.diagrams %}
+{% for diagram in section.diagrams %}
+**{{ diagram.caption }}**
+
+```mermaid
+{{ diagram.mermaid_code }}
+```
+{% endfor %}
+{% endif %}
+{% endif %}
+{% endfor %}
+
+---
+
+## Tài Liệu Liên Quan
+
+{% if metadata.related_docs %}
+{% for doc in metadata.related_docs %}
+- [{{ doc }}]({{ doc }}.md)
+{% endfor %}
+{% endif %}
+
+{% if metadata.tags %}
+**Tags:** {% for tag in metadata.tags %}{{ tag }}{% if not loop.last %}, {% endif %}{% endfor %}
+{% endif %}
+
+---
+
+*Use case này là một phần của Agentic SDLC v{{ version }}*

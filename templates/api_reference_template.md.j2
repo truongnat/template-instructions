@@ -1,0 +1,237 @@
+# API Reference: {{ title }}
+
+**Phiên bản:** {{ version }}  
+**Cập nhật lần cuối:** {{ last_updated }}  
+**Module:** `{{ module_path }}`
+
+---
+
+## Tổng Quan
+
+{{ description }}
+
+---
+
+{% if classes %}
+## Classes
+
+{% for class_ref in classes %}
+### `{{ class_ref.name }}`
+
+{{ class_ref.description }}
+
+#### Constructor
+
+**Signature:** `{{ class_ref.constructor.signature }}`
+
+{{ class_ref.constructor.description }}
+
+{% if class_ref.constructor.parameters %}
+**Parameters:**
+
+| Tên | Kiểu | Mô tả | Mặc định | Bắt buộc |
+|-----|------|-------|----------|----------|
+{% for param in class_ref.constructor.parameters %}
+| `{{ param.name }}` | `{{ param.type }}` | {{ param.description }} | {{ param.default if param.default is not none else "-" }} | {{ "Có" if param.required else "Không" }} |
+{% endfor %}
+{% endif %}
+
+{% if class_ref.constructor.raises %}
+**Raises:**
+
+{% for exception in class_ref.constructor.raises %}
+- `{{ exception }}`
+{% endfor %}
+{% endif %}
+
+{% if class_ref.constructor.examples %}
+**Ví dụ:**
+
+{% for example in class_ref.constructor.examples %}
+```{{ example.language }}
+{{ example.code }}
+```
+{% endfor %}
+{% endif %}
+
+{% if class_ref.properties %}
+#### Properties
+
+{% for prop in class_ref.properties %}
+##### `{{ prop.name }}`
+
+- **Kiểu:** `{{ prop.type }}`
+- **Chỉ đọc:** {{ "Có" if prop.readonly else "Không" }}
+- **Mô tả:** {{ prop.description }}
+
+{% endfor %}
+{% endif %}
+
+{% if class_ref.methods %}
+#### Methods
+
+{% for method in class_ref.methods %}
+##### `{{ method.name }}`
+
+**Signature:** `{{ method.signature }}`
+
+{{ method.description }}
+
+{% if method.parameters %}
+**Parameters:**
+
+| Tên | Kiểu | Mô tả | Mặc định | Bắt buộc |
+|-----|------|-------|----------|----------|
+{% for param in method.parameters %}
+| `{{ param.name }}` | `{{ param.type }}` | {{ param.description }} | {{ param.default if param.default is not none else "-" }} | {{ "Có" if param.required else "Không" }} |
+{% endfor %}
+{% endif %}
+
+{% if method.returns %}
+**Returns:**
+
+- **Kiểu:** `{{ method.returns.type }}`
+- **Mô tả:** {{ method.returns.description }}
+{% endif %}
+
+{% if method.raises %}
+**Raises:**
+
+{% for exception in method.raises %}
+- `{{ exception }}`
+{% endfor %}
+{% endif %}
+
+{% if method.examples %}
+**Ví dụ:**
+
+{% for example in method.examples %}
+```{{ example.language }}
+{{ example.code }}
+```
+{% endfor %}
+{% endif %}
+
+---
+
+{% endfor %}
+{% endif %}
+
+{% if class_ref.examples %}
+#### Ví Dụ Sử Dụng Class
+
+{% for example in class_ref.examples %}
+{% if example.caption %}
+**{{ example.caption }}**
+{% endif %}
+
+```{{ example.language }}
+{{ example.code }}
+```
+
+{% endfor %}
+{% endif %}
+
+---
+
+{% endfor %}
+{% endif %}
+
+{% if functions %}
+## Functions
+
+{% for func in functions %}
+### `{{ func.name }}`
+
+**Signature:** `{{ func.signature }}`
+
+{{ func.description }}
+
+{% if func.parameters %}
+**Parameters:**
+
+| Tên | Kiểu | Mô tả | Mặc định | Bắt buộc |
+|-----|------|-------|----------|----------|
+{% for param in func.parameters %}
+| `{{ param.name }}` | `{{ param.type }}` | {{ param.description }} | {{ param.default if param.default is not none else "-" }} | {{ "Có" if param.required else "Không" }} |
+{% endfor %}
+{% endif %}
+
+{% if func.returns %}
+**Returns:**
+
+- **Kiểu:** `{{ func.returns.type }}`
+- **Mô tả:** {{ func.returns.description }}
+{% endif %}
+
+{% if func.raises %}
+**Raises:**
+
+{% for exception in func.raises %}
+- `{{ exception }}`
+{% endfor %}
+{% endif %}
+
+{% if func.examples %}
+**Ví dụ:**
+
+{% for example in func.examples %}
+```{{ example.language }}
+{{ example.code }}
+```
+{% endfor %}
+{% endif %}
+
+---
+
+{% endfor %}
+{% endif %}
+
+{% if constants %}
+## Constants
+
+{% for const in constants %}
+### `{{ const.name }}`
+
+- **Kiểu:** `{{ const.type }}`
+- **Giá trị:** `{{ const.value }}`
+- **Mô tả:** {{ const.description }}
+
+{% endfor %}
+{% endif %}
+
+---
+
+## Ví Dụ Sử Dụng
+
+{% for section in sections %}
+{% if section.title == "Ví Dụ" or section.title == "Examples" or section.title == "Ví Dụ Sử Dụng" %}
+{{ section.content }}
+
+{% if section.code_blocks %}
+{% for code_block in section.code_blocks %}
+{% if code_block.caption %}
+### {{ code_block.caption }}
+{% endif %}
+
+```{{ code_block.language }}
+{{ code_block.code }}
+```
+{% endfor %}
+{% endif %}
+{% endif %}
+{% endfor %}
+
+---
+
+## Tài Liệu Liên Quan
+
+{% if metadata.related_docs %}
+{% for doc in metadata.related_docs %}
+- [{{ doc }}]({{ doc }}.md)
+{% endfor %}
+{% endif %}
+
+---
+
+*API Reference này là một phần của Agentic SDLC v{{ version }}*
