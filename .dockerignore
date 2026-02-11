@@ -1,40 +1,98 @@
-# Version Control
+# Git
 .git
 .gitignore
+.gitattributes
 
-# Dependencies
-node_modules/
-.venv/
-venv/
-env/
+# Python
 __pycache__/
-*.pyc
-
-# Distribution
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
 dist/
 build/
-*.egg-info/
 *.egg
+.eggs/
+.venv/
+venv/
+ENV/
+env/
+.python-version
 
-# Agentic SDLC Artifacts
-.brain/
-docs/artifacts/
-docs/reports/
+# Testing
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.hypothesis/
+*.cover
+.cache
+nosetests.xml
+coverage.xml
+*.log
 
-# Large Example Projects (Exclude from build context)
-agentic_sdlc/defaults/projects/
-examples/
-
-# Environment
-.env
-.env.*
-!.env.template
+# Documentation
+docs/_build/
+docs/.doctrees/
+site/
+.mkdocs/
 
 # IDE
 .vscode/
 .idea/
+*.swp
+*.swo
+*~
+.DS_Store
 
-# Testing
-.pytest_cache/
-htmlcov/
-coverage.xml
+# Project specific
+tests/
+examples/
+scripts/
+.kiro/
+.brain/
+.cleanup_backup/
+
+# Logs and data
+logs/
+*.log
+data/
+states/
+backups/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Docker
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# CI/CD
+.github/
+.gitlab-ci.yml
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.bak
+*.swp
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Large dependencies (will be installed via requirements.txt)
+lib/
+
+# Development tools
+.pre-commit-config.yaml
+.editorconfig
+.flake8
+.pylintrc
+mypy.ini

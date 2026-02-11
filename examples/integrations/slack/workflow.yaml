@@ -1,0 +1,94 @@
+# Slack Integration Workflow Example
+# This workflow demonstrates integration with Slack for notifications, alerts, and team collaboration.
+# It shows how to send workflow updates, alerts, and reports to Slack channels.
+
+name: "slack-integration-workflow"
+version: "1.0.0"
+description: "Automated workflow for Slack integration including notifications, alerts, and status updates"
+
+# Agents for Slack integration
+agents:
+  - "notification-agent"
+  - "report-generator"
+
+# Tasks for Slack integration
+tasks:
+  - id: "workflow-started-notification"
+    type: "implementation"
+    config:
+      priority: "low"
+      timeout: 60
+      slack_config:
+        channel: "#dev-notifications"
+        message_type: "workflow_start"
+        include_details: true
+    dependencies: []
+
+  - id: "generate-status-report"
+    type: "analysis"
+    config:
+      priority: "medium"
+      timeout: 300
+      report_type: "workflow_status"
+      include_metrics: true
+    dependencies: ["workflow-started-notification"]
+
+  - id: "send-status-update"
+    type: "implementation"
+    config:
+      priority: "medium"
+      timeout: 120
+      slack_config:
+        channel: "#dev-status"
+        message_type: "status_update"
+        format: "rich"
+    dependencies: ["generate-status-report"]
+
+  - id: "check-for-errors"
+    type: "validation"
+    config:
+      priority: "high"
+      timeout: 180
+      error_threshold: 0
+    dependencies: ["generate-status-report"]
+
+  - id: "send-alert-if-errors"
+    type: "implementation"
+    config:
+      priority: "critical"
+      timeout: 60
+      slack_config:
+        channel: "#dev-alerts"
+        message_type: "alert"
+        mention_users: ["@oncall", "@team-lead"]
+        format: "urgent"
+    dependencies: ["check-for-errors"]
+
+  - id: "workflow-completed-notification"
+    type: "implementation"
+    config:
+      priority: "low"
+      timeout: 60
+      slack_config:
+        channel: "#dev-notifications"
+        message_type: "workflow_complete"
+        include_summary: true
+    dependencies: ["send-status-update", "send-alert-if-errors"]
+
+# Workflow configuration
+timeout: 1800  # 30 minutes
+environment: "production"
+
+# Retry policy
+retry_policy:
+  max_attempts: 3
+  backoff_multiplier: 2
+
+# Metadata
+metadata:
+  author: "SDLC Kit Team"
+  tags:
+    - "slack"
+    - "integration"
+    - "notifications"
+    - "alerts"

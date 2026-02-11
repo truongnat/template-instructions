@@ -1,0 +1,56 @@
+# Development Dockerfile for Agentic SDLC Kit with Hot-Reload Support
+FROM python:3.11-slim
+
+# Set working directory
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    gcc \
+    g++ \
+    git \
+    curl \
+    vim \
+    nano \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set environment variables for development
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONPATH=/app \
+    ENVIRONMENT=development
+
+# Copy requirements files
+COPY requirements.txt requirements-dev.txt ./
+
+# Install Python dependencies (including dev dependencies)
+RUN pip install --no-cache-dir --upgrade pip setuptools wheel && \
+    pip install --no-cache-dir -r requirements.txt && \
+    pip install --no-cache-dir -r requirements-dev.txt
+
+# Copy application code
+COPY . .
+
+# Install the package in editable mode for hot-reload
+RUN pip install --no-cache-dir -e .
+
+# Create necessary directories
+RUN mkdir -p logs data states config
+
+# Create non-root user for security
+RUN useradd -m -u 1000 sdlc && \
+    chown -R sdlc:sdlc /app
+USER sdlc
+
+# Expose ports
+# 8501 - Streamlit dashboard
+# 5678 - Python debugger (debugpy)
+EXPOSE 8501 5678
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD python -c "import agentic_sdlc; print('healthy')" || exit 1
+
+# Default command - start interactive shell
+CMD ["/bin/bash"]

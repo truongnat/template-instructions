@@ -1,0 +1,270 @@
+# Slack Integration Configuration
+# Configure Slack API access and notification settings
+
+slack:
+  # Slack API configuration
+  api:
+    # Webhook URL (recommended for simple notifications)
+    webhook_url_env: "SLACK_WEBHOOK_URL"
+    
+    # OAuth token (for advanced features)
+    token_env: "SLACK_BOT_TOKEN"
+    
+    # API settings
+    timeout: 30
+    retry_attempts: 3
+    
+  # Workspace configuration
+  workspace:
+    name: "Your Workspace"
+    team_id: "T1234567890"
+    
+  # Channel configuration
+  channels:
+    # Default channels for different notification types
+    notifications: "#dev-notifications"
+    alerts: "#dev-alerts"
+    status: "#dev-status"
+    reports: "#dev-reports"
+    
+    # Channel mappings
+    mappings:
+      workflow_start: "#dev-notifications"
+      workflow_complete: "#dev-notifications"
+      workflow_error: "#dev-alerts"
+      task_complete: "#dev-status"
+      task_error: "#dev-alerts"
+      daily_report: "#dev-reports"
+      
+  # Message formatting
+  formatting:
+    # Use Slack's Block Kit for rich messages
+    use_blocks: true
+    
+    # Include emoji in messages
+    use_emoji: true
+    
+    # Message templates
+    templates:
+      workflow_start: |
+        :rocket: *Workflow Started*
+        *Name:* {workflow_name}
+        *Version:* {workflow_version}
+        *Started by:* {user}
+        *Time:* {timestamp}
+        
+      workflow_complete: |
+        :white_check_mark: *Workflow Completed*
+        *Name:* {workflow_name}
+        *Status:* {status}
+        *Duration:* {duration}
+        *Tasks:* {tasks_completed}/{total_tasks}
+        
+      workflow_error: |
+        :x: *Workflow Failed*
+        *Name:* {workflow_name}
+        *Error:* {error_message}
+        *Task:* {failed_task}
+        *Time:* {timestamp}
+        
+      task_complete: |
+        :heavy_check_mark: Task completed: *{task_name}*
+        Duration: {duration}
+        
+      alert: |
+        :rotating_light: *ALERT*
+        *Severity:* {severity}
+        *Message:* {message}
+        *Details:* {details}
+        
+  # User mentions
+  mentions:
+    # User ID mappings
+    users:
+      oncall: "U1234567890"
+      team_lead: "U0987654321"
+      admin: "U1122334455"
+      
+    # Group mentions
+    groups:
+      developers: "@developers"
+      qa_team: "@qa-team"
+      devops: "@devops"
+      
+    # Mention rules
+    rules:
+      critical_alert:
+        mention: ["@oncall", "@team_lead"]
+        channel: "#dev-alerts"
+      workflow_failure:
+        mention: ["@oncall"]
+        channel: "#dev-alerts"
+      daily_report:
+        mention: ["@channel"]
+        channel: "#dev-reports"
+        
+  # Notification settings
+  notifications:
+    # Enable/disable notifications by type
+    enabled:
+      workflow_start: true
+      workflow_complete: true
+      workflow_error: true
+      task_complete: false  # Too noisy
+      task_error: true
+      daily_report: true
+      
+    # Quiet hours (no notifications during these times)
+    quiet_hours:
+      enabled: true
+      start: "22:00"  # 10 PM
+      end: "08:00"    # 8 AM
+      timezone: "America/New_York"
+      exceptions:
+        - "critical_alert"
+        - "workflow_error"
+        
+    # Rate limiting
+    rate_limit:
+      enabled: true
+      max_messages_per_minute: 10
+      max_messages_per_hour: 100
+      
+  # Alert configuration
+  alerts:
+    # Alert severity levels
+    severity_levels:
+      critical:
+        color: "#FF0000"
+        emoji: ":rotating_light:"
+        mention: ["@oncall", "@team_lead"]
+      high:
+        color: "#FFA500"
+        emoji: ":warning:"
+        mention: ["@oncall"]
+      medium:
+        color: "#FFFF00"
+        emoji: ":exclamation:"
+        mention: []
+      low:
+        color: "#00FF00"
+        emoji: ":information_source:"
+        mention: []
+        
+    # Alert rules
+    rules:
+      - name: "workflow_failure"
+        severity: "critical"
+        condition: "workflow.status == 'failed'"
+        channel: "#dev-alerts"
+        
+      - name: "task_timeout"
+        severity: "high"
+        condition: "task.duration > task.timeout"
+        channel: "#dev-alerts"
+        
+      - name: "low_test_coverage"
+        severity: "medium"
+        condition: "coverage < 80"
+        channel: "#dev-status"
+        
+  # Report configuration
+  reports:
+    # Daily report
+    daily:
+      enabled: true
+      schedule: "09:00"  # 9 AM
+      timezone: "America/New_York"
+      channel: "#dev-reports"
+      include:
+        - "workflows_executed"
+        - "success_rate"
+        - "average_duration"
+        - "errors_count"
+        - "top_failures"
+        
+    # Weekly report
+    weekly:
+      enabled: true
+      schedule: "Monday 09:00"
+      timezone: "America/New_York"
+      channel: "#dev-reports"
+      include:
+        - "weekly_summary"
+        - "trends"
+        - "performance_metrics"
+        - "recommendations"
+        
+  # Interactive features
+  interactive:
+    # Enable interactive buttons
+    buttons_enabled: true
+    
+    # Button actions
+    actions:
+      - id: "approve_workflow"
+        text: "Approve"
+        style: "primary"
+        
+      - id: "reject_workflow"
+        text: "Reject"
+        style: "danger"
+        
+      - id: "view_details"
+        text: "View Details"
+        style: "default"
+        
+    # Slash commands
+    commands:
+      - command: "/workflow-status"
+        description: "Get current workflow status"
+        
+      - command: "/workflow-run"
+        description: "Run a workflow"
+        
+      - command: "/workflow-cancel"
+        description: "Cancel a running workflow"
+        
+  # Thread management
+  threads:
+    # Use threads for related messages
+    use_threads: true
+    
+    # Thread rules
+    rules:
+      - type: "workflow_updates"
+        parent_message: "workflow_start"
+        child_messages: ["task_complete", "task_error"]
+        
+      - type: "alert_discussion"
+        parent_message: "alert"
+        child_messages: ["alert_update", "alert_resolved"]
+        
+  # File uploads
+  files:
+    # Enable file uploads
+    enabled: true
+    
+    # File types to upload
+    types:
+      - "logs"
+      - "reports"
+      - "screenshots"
+      - "artifacts"
+      
+    # Upload settings
+    max_size_mb: 10
+    compression: true
+    
+  # Emoji reactions
+  reactions:
+    # Auto-react to messages
+    auto_react: true
+    
+    # Reaction mappings
+    mappings:
+      workflow_start: "rocket"
+      workflow_complete: "white_check_mark"
+      workflow_error: "x"
+      task_complete: "heavy_check_mark"
+      alert: "rotating_light"

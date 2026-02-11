@@ -1,4 +1,6 @@
-graft agentic_sdlc/defaults
-include agentic_sdlc/requirements_tools.txt
+graft src/agentic_sdlc/resources
+include src/agentic_sdlc/py.typed
 include README.md
 include LICENSE
+include CHANGELOG.md
+include MIGRATION.md

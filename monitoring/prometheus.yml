@@ -1,0 +1,39 @@
+# Prometheus configuration for SDLC Kit monitoring
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  external_labels:
+    cluster: 'sdlc-kit'
+    environment: 'production'
+
+# Alertmanager configuration (optional)
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: []
+          # - alertmanager:9093
+
+# Load rules once and periodically evaluate them
+rule_files:
+  # - "alerts.yml"
+
+# Scrape configurations
+scrape_configs:
+  # Prometheus self-monitoring
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  # SDLC Kit application metrics (if exposed)
+  - job_name: 'sdlc-kit'
+    static_configs:
+      - targets: ['app:8501']
+    metrics_path: '/metrics'
+    scrape_interval: 30s
+
+  # Neo4j metrics (if exposed)
+  - job_name: 'neo4j'
+    static_configs:
+      - targets: ['neo4j:2004']
+    metrics_path: '/metrics'
+    scrape_interval: 30s

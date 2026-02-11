@@ -1,0 +1,155 @@
+stages:
+  - test
+  - lint
+  - build
+  - release
+
+variables:
+  PIP_CACHE_DIR: "$CI_PROJECT_DIR/.cache/pip"
+
+cache:
+  paths:
+    - .cache/pip
+    - .venv/
+
+# Test stage - run tests on multiple Python versions
+.test-template: &test-template
+  stage: test
+  before_script:
+    - python -m pip install --upgrade pip
+    - pip install -r requirements.txt
+    - pip install -r requirements-dev.txt
+  script:
+    - pytest tests/unit/ -v --cov=agentic_sdlc --cov-report=xml --cov-report=term
+    - pytest tests/integration/ -v
+    - pytest tests/property/ -v --hypothesis-iterations=100
+  coverage: '/(?i)total.*? (100(?:\.0+)?\%|[1-9]?\d(?:\.\d+)?\%)$/'
+  artifacts:
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage.xml
+    paths:
+      - coverage.xml
+    expire_in: 1 week
+
+test:python3.9:
+  <<: *test-template
+  image: python:3.9
+
+test:python3.10:
+  <<: *test-template
+  image: python:3.10
+
+test:python3.11:
+  <<: *test-template
+  image: python:3.11
+
+# Lint stage - code quality checks
+lint:flake8:
+  stage: lint
+  image: python:3.9
+  before_script:
+    - pip install flake8
+  script:
+    - flake8 agentic_sdlc/ --max-line-length=120 --count --statistics
+  allow_failure: false
+
+lint:black:
+  stage: lint
+  image: python:3.9
+  before_script:
+    - pip install black
+  script:
+    - black --check agentic_sdlc/ --line-length=120
+  allow_failure: false
+
+lint:mypy:
+  stage: lint
+  image: python:3.9
+  before_script:
+    - pip install mypy
+    - pip install -r requirements.txt
+  script:
+    - mypy agentic_sdlc/ --ignore-missing-imports --check-untyped-defs
+  allow_failure: false
+
+# Build stage - documentation and package
+build:docs:
+  stage: build
+  image: python:3.9
+  before_script:
+    - pip install sphinx sphinx-rtd-theme sphinx-autodoc-typehints
+    - pip install -r requirements.txt
+  script:
+    - test -d docs || (echo "docs/ directory not found" && exit 1)
+    - test -f docs/README.md || (echo "docs/README.md not found" && exit 1)
+    - test -f docs/GETTING_STARTED.md || (echo "docs/GETTING_STARTED.md not found" && exit 1)
+    - test -f docs/INSTALLATION.md || (echo "docs/INSTALLATION.md not found" && exit 1)
+    - test -f docs/ARCHITECTURE.md || (echo "docs/ARCHITECTURE.md not found" && exit 1)
+    - echo "Documentation structure verified"
+    - |
+      if [ -f docs/conf.py ]; then
+        sphinx-build -b html docs/ docs/_build/html -W
+      else
+        echo "Sphinx not configured, skipping API doc build"
+      fi
+  artifacts:
+    paths:
+      - docs/_build/html
+    expire_in: 1 week
+  allow_failure: true
+
+build:package:
+  stage: build
+  image: python:3.9
+  before_script:
+    - pip install build
+  script:
+    - python -m build
+  artifacts:
+    paths:
+      - dist/
+    expire_in: 1 week
+  only:
+    - tags
+    - main
+
+# Release stage - publish package
+release:pypi:
+  stage: release
+  image: python:3.9
+  before_script:
+    - pip install twine
+  script:
+    - |
+      if [ -f VERSION ]; then
+        VERSION_FILE=$(cat VERSION)
+        TAG_VERSION=${CI_COMMIT_TAG#v}
+        echo "Version from VERSION file: $VERSION_FILE"
+        echo "Release version: $TAG_VERSION"
+        if [ "$VERSION_FILE" != "$TAG_VERSION" ]; then
+          echo "Version mismatch: VERSION file ($VERSION_FILE) != tag version ($TAG_VERSION)"
+          exit 1
+        fi
+      fi
+    - twine check dist/*
+    - twine upload dist/* -u __token__ -p $PYPI_TOKEN
+  only:
+    - tags
+  when: manual
+  dependencies:
+    - build:package
+
+release:gitlab:
+  stage: release
+  image: registry.gitlab.com/gitlab-org/release-cli:latest
+  script:
+    - echo "Creating GitLab release for $CI_COMMIT_TAG"
+  release:
+    tag_name: '$CI_COMMIT_TAG'
+    description: 'Release $CI_COMMIT_TAG'
+  only:
+    - tags
+  dependencies:
+    - build:package

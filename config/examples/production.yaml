@@ -1,0 +1,390 @@
+# SDLC Kit Production Environment Configuration
+# This configuration is optimized for production deployment with security hardening,
+# performance optimization, and comprehensive monitoring.
+
+# =============================================================================
+# CORE SETTINGS
+# =============================================================================
+core:
+  name: "sdlc-kit-prod"
+  version: "1.0.0"
+  environment: "production"
+  
+  timeout: 3600  # 1 hour
+  max_retries: 3
+  retry_delay: 10  # Longer delay for production
+  
+  data_dir: "/var/lib/sdlc-kit/data"
+  state_dir: "/var/lib/sdlc-kit/states"
+  artifact_dir: "/var/lib/sdlc-kit/artifacts"
+  
+  features:
+    enable_caching: true
+    enable_metrics: true
+    enable_audit_logging: true  # Required for production
+    enable_health_checks: true
+
+# =============================================================================
+# AGENT CONFIGURATION
+# =============================================================================
+agents:
+  defaults:
+    timeout: 300  # 5 minutes
+    max_iterations: 10
+    temperature: 0.5  # Lower temperature for consistency
+    
+  types:
+    ba:
+      role: "business_analyst"
+      capabilities:
+        - "requirements_gathering"
+        - "stakeholder_analysis"
+        - "documentation"
+      system_prompt: "You are a Business Analyst. Provide concise, professional analysis."
+      
+    pm:
+      role: "product_manager"
+      capabilities:
+        - "product_planning"
+        - "prioritization"
+        - "roadmap_creation"
+      system_prompt: "You are a Product Manager. Focus on business value and priorities."
+      
+    sa:
+      role: "software_architect"
+      capabilities:
+        - "system_design"
+        - "architecture_documentation"
+        - "technical_decisions"
+      system_prompt: "You are a Software Architect. Design scalable, maintainable systems."
+      
+    implementation:
+      role: "developer"
+      capabilities:
+        - "code_generation"
+        - "code_review"
+        - "testing"
+      system_prompt: "You are a Developer. Write production-quality, well-tested code."
+      
+    quality_judge:
+      role: "quality_assurance"
+      capabilities:
+        - "code_review"
+        - "quality_assessment"
+        - "testing_strategy"
+      system_prompt: "You are a QA specialist. Ensure code meets production standards."
+
+# =============================================================================
+# MODEL CONFIGURATION
+# =============================================================================
+models:
+  default_provider: "gemini"
+  
+  providers:
+    gemini:
+      default_model: "gemini-2.5-pro"  # More capable model for production
+      api_key_env: "GOOGLE_GENAI_API_KEY"
+      base_url: "https://generativelanguage.googleapis.com/v1beta/openai/"
+      timeout: 60
+      max_retries: 3
+      
+    openai:
+      default_model: "gpt-4o"
+      api_key_env: "OPENAI_API_KEY"
+      timeout: 60
+      max_retries: 3
+      
+  parameters:
+    temperature: 0.5  # Lower for consistency
+    max_tokens: 4096
+    top_p: 0.9
+    frequency_penalty: 0.0
+    presence_penalty: 0.0
+
+# =============================================================================
+# WORKFLOW CONFIGURATION
+# =============================================================================
+workflows:
+  defaults:
+    timeout: 3600  # 1 hour
+    max_concurrent_tasks: 10  # Higher for production throughput
+    checkpoint_interval: 300  # Save every 5 minutes
+    enable_rollback: true
+    
+  execution:
+    mode: "parallel"  # Parallel for performance
+    retry_failed_tasks: true
+    continue_on_error: false  # Fail fast in production
+    
+  state:
+    persistence: true
+    compression: true  # Compress to save space
+    retention_days: 90  # Keep for 90 days
+
+# =============================================================================
+# LOGGING CONFIGURATION
+# =============================================================================
+logging:
+  level: "INFO"  # Standard logging for production
+  
+  handlers:
+    console:
+      enabled: true
+      level: "WARNING"  # Only warnings and errors to console
+      format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+      
+    file:
+      enabled: true
+      level: "INFO"
+      path: "/var/log/sdlc-kit/sdlc-kit.log"
+      max_bytes: 52428800  # 50 MB
+      backup_count: 10
+      format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s - %(pathname)s:%(lineno)d"
+      
+    json:
+      enabled: true  # Structured logging for production
+      level: "INFO"
+      path: "/var/log/sdlc-kit/sdlc-kit.json"
+      
+  loggers:
+    "agentic_sdlc.core":
+      level: "INFO"
+    "agentic_sdlc.orchestration":
+      level: "INFO"
+    "agentic_sdlc.infrastructure":
+      level: "INFO"
+    "agentic_sdlc.intelligence":
+      level: "INFO"
+
+# =============================================================================
+# MONITORING CONFIGURATION
+# =============================================================================
+monitoring:
+  metrics:
+    enabled: true
+    collection_interval: 60  # Every minute
+    retention_days: 180  # Keep for 6 months
+    
+    types:
+      - "workflow_execution_time"
+      - "agent_response_time"
+      - "api_call_count"
+      - "error_rate"
+      - "memory_usage"
+      - "cpu_usage"
+      
+  health:
+    enabled: true
+    check_interval: 300  # Every 5 minutes
+    
+    checks:
+      - name: "database"
+        enabled: true
+        timeout: 10
+        
+      - name: "api_connectivity"
+        enabled: true
+        timeout: 10
+        
+      - name: "disk_space"
+        enabled: true
+        threshold_percent: 85  # Alert at 85%
+        
+      - name: "memory"
+        enabled: true
+        threshold_percent: 80  # Alert at 80%
+        
+  alerts:
+    enabled: true
+    
+    channels:
+      email:
+        enabled: true
+        recipients:
+          - "ops-team@example.com"
+          - "dev-team@example.com"
+        
+      slack:
+        enabled: true
+        webhook_url: "${SLACK_WEBHOOK_URL}"
+        
+      console:
+        enabled: false  # Disable console alerts in production
+        
+    rules:
+      - name: "high_error_rate"
+        condition: "error_rate > 0.02"  # Alert if error rate > 2%
+        severity: "critical"
+        
+      - name: "workflow_timeout"
+        condition: "workflow_duration > timeout"
+        severity: "error"
+        
+      - name: "disk_space_low"
+        condition: "disk_usage > 85"
+        severity: "critical"
+        
+      - name: "memory_high"
+        condition: "memory_usage > 80"
+        severity: "warning"
+
+# =============================================================================
+# SECURITY CONFIGURATION
+# =============================================================================
+security:
+  secrets:
+    provider: "vault"  # Use vault in production
+    encryption_enabled: true
+    encryption_algorithm: "fernet"
+    
+  api_keys:
+    rotation_enabled: true
+    rotation_days: 90
+    
+  audit:
+    enabled: true
+    log_path: "/var/log/sdlc-kit/audit.log"
+    
+    events:
+      - "authentication"
+      - "authorization"
+      - "secret_access"
+      - "configuration_change"
+      - "workflow_execution"
+      
+  validation:
+    enabled: true
+    sanitize_inputs: true
+    max_input_length: 10000
+    
+  rate_limiting:
+    enabled: true
+    requests_per_minute: 100
+    burst_size: 20
+
+# =============================================================================
+# CLI CONFIGURATION
+# =============================================================================
+cli:
+  output:
+    format: "json"  # Structured output for production
+    color_enabled: false  # Disable colors for log parsing
+    verbose: false
+    
+  commands:
+    workflow:
+      validate_before_run: true
+      show_progress: false  # Disable progress for cleaner logs
+      
+  interactive:
+    enabled: false  # Disable interactive mode in production
+
+# =============================================================================
+# TESTING CONFIGURATION
+# =============================================================================
+testing:
+  execution:
+    parallel: true
+    max_workers: 8
+    timeout: 300
+    
+  types:
+    unit:
+      enabled: true
+      coverage_threshold: 85  # Higher threshold for production
+      
+    integration:
+      enabled: true
+      coverage_threshold: 75
+      
+    e2e:
+      enabled: true
+      
+    property:
+      enabled: true
+      iterations: 200  # More iterations for production
+      
+  coverage:
+    enabled: true
+    format: "xml"  # XML for CI/CD integration
+    output_dir: "/var/lib/sdlc-kit/coverage"
+    fail_under: 85
+
+# =============================================================================
+# DATABASE CONFIGURATION
+# =============================================================================
+database:
+  provider: "postgresql"
+  
+  postgresql:
+    host: "${DB_HOST}"
+    port: 5432
+    database: "sdlc_kit_prod"
+    username: "${DB_USERNAME}"
+    password: "${DB_PASSWORD}"
+    pool_size: 20  # Larger pool for production
+    
+  migrations:
+    auto_migrate: false  # Manual migrations in production
+    backup_before_migrate: true
+
+# =============================================================================
+# CACHE CONFIGURATION
+# =============================================================================
+cache:
+  enabled: true
+  provider: "redis"  # Redis for production
+  
+  redis:
+    host: "${REDIS_HOST}"
+    port: 6379
+    db: 0
+    password: "${REDIS_PASSWORD}"
+
+# =============================================================================
+# INTEGRATION CONFIGURATION
+# =============================================================================
+integrations:
+  github:
+    enabled: true
+    api_token_env: "GITHUB_TOKEN"
+    base_url: "https://api.github.com"
+    timeout: 30
+    
+  slack:
+    enabled: true
+    webhook_url_env: "SLACK_WEBHOOK_URL"
+    bot_token_env: "SLACK_BOT_TOKEN"
+    
+  jira:
+    enabled: true
+    base_url: "${JIRA_BASE_URL}"
+    username_env: "JIRA_USERNAME"
+    api_token_env: "JIRA_API_TOKEN"
+    
+  email:
+    enabled: true
+    smtp_host: "${SMTP_HOST}"
+    smtp_port: 587
+    username_env: "EMAIL_USERNAME"
+    password_env: "EMAIL_PASSWORD"
+    use_tls: true
+
+# =============================================================================
+# PRODUCTION SETTINGS
+# =============================================================================
+production:
+  optimization:
+    enable_caching: true
+    enable_compression: true
+    connection_pooling: true
+    
+  reliability:
+    auto_restart: true
+    max_restart_attempts: 3
+    health_check_interval: 60
+    
+  limits:
+    max_memory_mb: 4096  # 4 GB
+    max_cpu_percent: 80
+    max_concurrent_workflows: 20

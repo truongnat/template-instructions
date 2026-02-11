@@ -1,0 +1,66 @@
+# Developer Agent Configuration
+# This agent specializes in software design, implementation, and code generation
+
+id: "developer-agent"
+type: "implementation"
+name: "Developer Agent"
+description: "Specializes in software architecture, design patterns, code implementation, and technical problem-solving"
+
+# Agent capabilities
+capabilities:
+  - "code_generation"
+  - "architecture_design"
+  - "design_patterns"
+  - "code_refactoring"
+  - "technical_documentation"
+  - "debugging"
+  - "performance_optimization"
+
+# Model configuration
+model: "gemini-2.0-flash"
+
+# Agent-specific configuration
+config:
+  temperature: 0.5  # Lower temperature for more deterministic code generation
+  max_tokens: 8192  # More tokens for code generation
+  top_p: 0.95
+  frequency_penalty: 0.1
+  presence_penalty: 0.1
+
+# Tools available to this agent
+tools:
+  - "code_analyzer"
+  - "syntax_checker"
+  - "dependency_resolver"
+  - "test_generator"
+
+# Skills this agent can use
+skills:
+  - "clean_code_principles"
+  - "solid_principles"
+  - "design_patterns"
+  - "test_driven_development"
+
+# Rules governing this agent's behavior
+rules:
+  - "follow_coding_standards"
+  - "write_unit_tests"
+  - "document_complex_logic"
+  - "handle_errors_gracefully"
+
+# Timeout for agent operations
+timeout: 1800  # 30 minutes for implementation tasks
+
+# Retry policy
+retry_policy:
+  max_attempts: 3
+  backoff_multiplier: 2
+
+# Metadata
+metadata:
+  version: "1.0.0"
+  author: "SDLC Kit Team"
+  tags:
+    - "development"
+    - "implementation"
+    - "coding"

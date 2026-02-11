@@ -13,6 +13,7 @@ dist/
 .next/
 .astro/
 coverage/
+build/
 
 # IDE
 .vscode/
@@ -25,8 +26,21 @@ Thumbs.db
 # Python
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
 .pytest_cache/
 htmlcov/
+.tox/
+.coverage
+.coverage.*
+*.cover
+.hypothesis/
+.mypy_cache/
+.dmypy.json
+dmypy.json
+*.py[cod]
+*$py.class
+.Python
 
 # Agentic SDLC
 .brain/
@@ -51,16 +65,28 @@ help_output.txt
 .venv/
 venv/
 env/
+ENV/
+env.bak/
+venv.bak/
 
-# Libraries (if local)
-agentic_sdlc/lib/
-
-agentic_sdlc/lib/
+# Build artifacts
 build/
+dist/
 *.egg-info/
 *.egg-info.trash/
+*.egg
+.eggs/
 
-.hypothesis
+.hypothesis/
 agentic_sdlc.egg-info_corrupt_*
 agentic_sdlc.egg-info.trash_corrupt_*
 build_corrupt_*
+
+# Logs
+logs/
+*.log
+
+# Old structure (pre-v3.0.0)
+agentic_sdlc/lib/
+lib/
+agentic_sdlc_old/

@@ -1,39 +1,71 @@
-# Use an official Python runtime as a parent image
-FROM python:3.10-slim
+# Multi-stage Dockerfile for Agentic SDLC Kit Production Deployment
+# Stage 1: Builder - Install dependencies and build
+FROM python:3.11-slim as builder
 
-# Set the working directory in the container
+# Set working directory
 WORKDIR /app
 
-# Install system dependencies
-# git: for cloning repositories and git operations
-# curl: for healthchecks
-RUN apt-get update && apt-get install -y \
+# Install system dependencies required for building Python packages
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    gcc \
+    g++ \
     git \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy configuration files
-COPY pyproject.toml .
-COPY README.md .
-COPY LICENSE .
+# Copy requirements files
+COPY requirements.txt requirements-dev.txt ./
 
-# Install dependencies from pyproject.toml
-# We use a dummy setup to cache dependencies
-RUN pip install --no-cache-dir .
+# Create virtual environment and install dependencies
+RUN python -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
 
-# Copy the rest of the application code
+# Install Python dependencies
+RUN pip install --no-cache-dir --upgrade pip setuptools wheel && \
+    pip install --no-cache-dir -r requirements.txt
+
+# Stage 2: Runtime - Create minimal production image
+FROM python:3.11-slim
+
+# Set working directory
+WORKDIR /app
+
+# Install runtime system dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    git \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy virtual environment from builder
+COPY --from=builder /opt/venv /opt/venv
+
+# Set environment variables
+ENV PATH="/opt/venv/bin:$PATH" \
+    PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONPATH=/app
+
+# Copy application code
 COPY . .
 
-# Re-install package to include the code mappings
+# Install the package in editable mode
 RUN pip install --no-cache-dir -e .
 
-# Define environment variable
-ENV PYTHONUNBUFFERED=1
-ENV PROJECT_ROOT=/app
+# Create necessary directories
+RUN mkdir -p logs data states config
 
-# Create a user to avoid running as root (Security Best Practice)
-RUN useradd -m agentic
-USER agentic
+# Create non-root user for security
+RUN useradd -m -u 1000 sdlc && \
+    chown -R sdlc:sdlc /app
+USER sdlc
 
-# Run asdlc.py when the container launches
-CMD ["python", "asdlc.py", "brain", "health"]
+# Expose port for Streamlit dashboard (if needed)
+EXPOSE 8501
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD python -c "import agentic_sdlc; print('healthy')" || exit 1
+
+# Default command - show help
+CMD ["asdlc", "--help"]

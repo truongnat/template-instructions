@@ -1,0 +1,73 @@
+# Multi-Agent Workflow Example
+# This workflow demonstrates collaboration between multiple agents in a software development lifecycle.
+# It includes a Business Analyst, Developer, and Quality Judge working together on a feature implementation.
+
+name: "multi-agent-collaboration"
+version: "1.0.0"
+description: "A collaborative workflow demonstrating multiple agents working together to analyze, implement, and validate a feature"
+
+# Multiple agents participating in this workflow
+agents:
+  - "business-analyst"
+  - "developer-agent"
+  - "quality-judge"
+
+# Tasks executed in sequence with dependencies
+tasks:
+  - id: "gather-requirements"
+    type: "analysis"
+    config:
+      priority: "critical"
+      timeout: 600
+      assigned_agent: "business-analyst"
+    dependencies: []
+
+  - id: "design-solution"
+    type: "research"
+    config:
+      priority: "high"
+      timeout: 900
+      assigned_agent: "developer-agent"
+    dependencies: ["gather-requirements"]
+
+  - id: "implement-feature"
+    type: "implementation"
+    config:
+      priority: "high"
+      timeout: 1800
+      assigned_agent: "developer-agent"
+    dependencies: ["design-solution"]
+
+  - id: "code-review"
+    type: "validation"
+    config:
+      priority: "high"
+      timeout: 600
+      assigned_agent: "quality-judge"
+    dependencies: ["implement-feature"]
+
+  - id: "run-tests"
+    type: "testing"
+    config:
+      priority: "critical"
+      timeout: 900
+      assigned_agent: "quality-judge"
+    dependencies: ["code-review"]
+
+# Workflow-level configuration
+timeout: 7200  # 2 hours for complete workflow
+environment: "development"
+
+# Retry policy for failed tasks
+retry_policy:
+  max_attempts: 3
+  backoff_multiplier: 2
+
+# Metadata
+metadata:
+  author: "SDLC Kit Team"
+  tags:
+    - "example"
+    - "multi-agent"
+    - "collaboration"
+    - "tutorial"

@@ -1,0 +1,37 @@
+# Basic Workflow Example
+# This is a simple workflow that demonstrates the core concepts of SDLC Kit workflows.
+# It includes a single agent performing a basic analysis task.
+
+name: "basic-workflow-example"
+version: "1.0.0"
+description: "A simple workflow demonstrating basic SDLC Kit functionality with a single agent performing analysis"
+
+# List of agents participating in this workflow
+agents:
+  - "analyst-agent"
+
+# Tasks to be executed in the workflow
+tasks:
+  - id: "analyze-requirements"
+    type: "analysis"
+    config:
+      priority: "high"
+      timeout: 300
+    dependencies: []
+
+# Workflow-level configuration
+timeout: 1800  # 30 minutes
+environment: "development"
+
+# Retry policy for failed tasks
+retry_policy:
+  max_attempts: 3
+  backoff_multiplier: 2
+
+# Metadata
+metadata:
+  author: "SDLC Kit Team"
+  tags:
+    - "example"
+    - "basic"
+    - "tutorial"

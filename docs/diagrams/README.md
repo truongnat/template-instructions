@@ -1,133 +1,303 @@
 # Agentic SDLC Architecture Diagrams
 
-This directory contains professional architecture diagrams that illustrate the various flows and components of the Agentic SDLC system.
+This directory contains comprehensive ASCII diagrams documenting the architecture, design, and structure of the Agentic SDLC framework.
 
-## 📊 Available Diagrams
+## 📋 Diagram Index
 
-### 1. 3-Layer Concentric Architecture
-**File:** `architecture_3_layers.png`  
-**Size:** 773 KB  
-**Purpose:** Shows the system's foundational 3-layer architecture
+### 1. **System Architecture** (`system_architecture.md`)
+High-level overview of the entire system structure and component organization.
 
-**What it shows:**
-- **Layer 1 (Core):** GEMINI.md, Skills (17 AI Roles), Templates (20+ Documents), Rules (8 Files), Workflows (23 Workflows)
-- **Layer 2 (Intelligence):** 21 sub-agents organized in 6 functional groups
-- **Layer 3 (Infrastructure):** External interfaces, tools, CLI, MCP connectors, Neo4j, GitHub
+**Contents:**
+- High-level layered architecture (CLI, Core Logic, Cross-Cutting Concerns, Infrastructure)
+- Component interaction diagram showing how modules communicate
+- Module dependency graph illustrating relationships between components
+- Data flow architecture (Configuration, Execution, Learning flows)
+- Deployment architecture (Development, Runtime, Cloud Services)
 
-**Key Insight:** Dependencies flow inward (Layer 3 → Layer 2 → Layer 1), ensuring a stable core that rarely changes.
-
----
-
-### 2. Orchestrator Workflow Flow
-**File:** `orchestrator_workflow_flow.png`  
-**Size:** 644 KB  
-**Purpose:** Illustrates the complete SDLC workflow with mandatory HITL gates
-
-**What it shows:**
-- 11 phases from Planning to Self-Learning
-- 3 HITL (Human-in-the-Loop) gates at critical decision points
-- 4 checkpoints for state persistence
-- Self-healing loop for automatic test failure recovery
-- Brain status checks at workflow start and end
-
-**Key Insight:** Human approval is mandatory at Design, Code Review, and Deployment phases to prevent hallucinations and ensure quality.
+**Use this when:**
+- Understanding the overall system structure
+- Identifying which layer a component belongs to
+- Learning how modules depend on each other
+- Planning deployment strategies
 
 ---
 
-### 3. Brain Intelligence Sub-Agents Network
-**File:** `brain_intelligence_subagents.png`  
-**Size:** 938 KB  
-**Purpose:** Demonstrates the 21 intelligence sub-agents and their interactions
+### 2. **Workflow Execution Flow** (`workflow_flow.md`)
+Detailed sequence of events during workflow execution from start to finish.
 
-**What it shows:**
-- Central Brain Core with State Manager and Knowledge Graph (Neo4j)
-- 6 groups of sub-agents:
-  - **Monitoring & Compliance:** Observer, Monitor, Workflow Validator
-  - **Quality & Scoring:** Judge, Scorer, Evaluation
-  - **Learning & Optimization:** Self-Learning, DSPy, A/B Test
-  - **Execution & Safety:** HITL, Sandbox, Self-Healing
-  - **Intelligence & Routing:** Proxy, Router, Task Manager, Research
-  - **Generation & Tracking:** Artifact Gen, Cost, Performance
-- Data flow patterns between agents
+**Contents:**
+- Complete workflow lifecycle (Initialization → Planning → Execution → Completion)
+- Parallel execution patterns showing concurrent task handling
+- Error handling flow with retry logic and escalation
+- State transitions throughout workflow execution
+- Learning and monitoring integration points
 
-**Key Insight:** All agents feed data to the central Brain Core, creating a compound intelligence system where every action improves the whole.
-
----
-
-### 4. Brain Learning Loop
-**File:** `brain_learning_loop.png`  
-**Size:** 822 KB  
-**Purpose:** Shows how the system learns and improves from every task
-
-**What it shows:**
-- 8-step circular learning cycle:
-  1. Execute Task
-  2. Observer Monitors
-  3. Judge Scores
-  4. A/B Testing
-  5. Self-Learning (pattern extraction)
-  6. Knowledge Storage (Neo4j + SQLite + LEANN)
-  7. Context-Aware Suggestions
-  8. DSPy Optimization
-- Side flows for error handling, cost monitoring, and state management
-- Central "Compound Intelligence" hub
-
-**Key Insight:** Every task execution contributes to the system's knowledge base, making it smarter over time.
+**Use this when:**
+- Understanding how workflows are executed
+- Debugging workflow execution issues
+- Implementing error handling
+- Optimizing parallel execution
+- Tracking workflow state changes
 
 ---
 
-### 5. SDLC State Machine
-**File:** `sdlc_state_machine.png`  
-**Size:** 618 KB  
-**Purpose:** Complete state machine showing all transitions and error handling
+### 3. **Component Interactions** (`component_interactions.md`)
+Detailed interactions between components within each module and across modules.
 
-**What it shows:**
-- 9 states: IDLE → PLANNING → DESIGN → VERIFICATION → DEVELOPMENT → TESTING → DEPLOYMENT → REPORTING → LEARNING → IDLE
-- State transitions with conditions
-- HITL gates at Design, Code Review, and Deployment
-- Error handling paths (any state can transition to ERROR → HALTED)
-- Recovery mechanism (HALTED → Fix Issue → Resume → Previous State)
-- Checkpoints at Planning, Design, Development, and Deployment
+**Contents:**
+- Core module interactions (Config management, validation)
+- Orchestration module interactions (Agents, Models, Workflows, Coordination)
+- Infrastructure module interactions (Engines, Lifecycle, Bridges)
+- Intelligence module interactions (Learning, Monitoring, Reasoning)
+- Cross-module communication patterns
+- Plugin integration architecture
+- Data flow between modules
 
-**Key Insight:** The state machine ensures a structured, recoverable workflow with clear transitions and error handling at every step.
-
----
-
-## 🎨 Design Principles
-
-All diagrams follow consistent design principles:
-
-- **Dark Background:** Better contrast and reduced eye strain
-- **Color Coding:** Different colors for different component types
-- **Professional Gradients:** Modern, tech-aesthetic appearance
-- **Clear Icons:** Visual representation of each component
-- **Directional Arrows:** Unambiguous data flow indicators
-- **Glow Effects:** Emphasizes the "intelligence" aspect
-- **Consistent Style:** Same visual language across all diagrams
-
-## 📖 Usage
-
-These diagrams are referenced in:
-- `README.md` - Main landing page
-- `GEMINI.md` - Complete system documentation
-- Documentation and presentations
-
-## 🔄 Updates
-
-**Last Updated:** 2026-01-16  
-**Version:** 1.0  
-**Created By:** @UIUX + @REPORTER
-
-## 📝 Notes
-
-- All diagrams are PNG format for maximum compatibility
-- High resolution for both web and print use
-- Can be used in presentations, documentation, and training materials
-- Source prompts available in walkthrough documentation
+**Use this when:**
+- Understanding how specific components work together
+- Implementing new components
+- Debugging component interactions
+- Designing plugin extensions
+- Tracing data flow through the system
 
 ---
 
-For more information, see:
-- [Main README](../../README.md)
-- [GEMINI.md](../../GEMINI.md)
-- [Walkthrough: Landing Page Diagram Update](../walkthroughs/2026-01-16-landing-page-diagram-update.md)
+### 4. **Data Models** (`data_models.md`)
+Structure and relationships of all data models used in the system.
+
+**Contents:**
+- Configuration models (SDKConfig, ModelConfig, AgentConfig, WorkflowConfig)
+- Agent and Workflow models with runtime state
+- Execution models (ExecutionPlan, Task, TaskResult, TaskError)
+- Learning models (Pattern, LearningEvent)
+- Plugin models (PluginMetadata, Plugin base class)
+- Exception hierarchy
+- Type system definitions
+- Model relationships and dependencies
+
+**Use this when:**
+- Understanding data structures
+- Designing new models
+- Implementing serialization/deserialization
+- Validating data schemas
+- Extending the type system
+
+---
+
+### 5. **Deployment and Integration** (`deployment_integration.md`)
+Deployment topologies and integration patterns for different environments.
+
+**Contents:**
+- Local development deployment
+- Containerized deployment (Docker)
+- Kubernetes deployment
+- Serverless deployment
+- Integration points with external systems
+- API integration patterns (Sync, Async, Webhooks, Streaming)
+- Data flow in distributed systems
+- High availability setup
+
+**Use this when:**
+- Planning deployment strategy
+- Setting up production environments
+- Integrating with external services
+- Designing API interfaces
+- Implementing high availability
+- Scaling the system
+
+---
+
+## 🎯 Quick Navigation
+
+### By Use Case
+
+**I want to understand...**
+
+| Question | Diagram |
+|----------|---------|
+| How the system is organized | System Architecture |
+| How workflows execute | Workflow Execution Flow |
+| How components interact | Component Interactions |
+| What data structures exist | Data Models |
+| How to deploy the system | Deployment & Integration |
+| How modules communicate | Component Interactions |
+| What happens during errors | Workflow Execution Flow |
+| How to extend the system | Component Interactions (Plugins) |
+| How to integrate external services | Deployment & Integration |
+| What the API looks like | Deployment & Integration |
+
+### By Role
+
+**Developer**
+- Start with: System Architecture
+- Then read: Component Interactions, Data Models
+- Reference: Workflow Execution Flow
+
+**DevOps/Infrastructure**
+- Start with: Deployment & Integration
+- Then read: System Architecture
+- Reference: Component Interactions
+
+**Architect**
+- Start with: System Architecture
+- Then read: All diagrams in order
+- Focus on: Component Interactions, Deployment & Integration
+
+**Plugin Developer**
+- Start with: Component Interactions (Plugin section)
+- Then read: Data Models
+- Reference: System Architecture
+
+---
+
+## 📊 Architecture Layers
+
+### Layer 1: CLI Layer
+- User interface and command execution
+- Output formatting and styling
+- Command routing
+
+### Layer 2: Core Business Logic
+- **Orchestration**: Agents, Models, Workflows, Coordination
+- **Infrastructure**: Automation, Bridges, Execution Engines, Lifecycle
+- **Intelligence**: Learning, Monitoring, Reasoning, Collaboration
+
+### Layer 3: Cross-Cutting Concerns
+- Configuration management
+- Logging and monitoring
+- Exception handling
+- Resource management
+
+### Layer 4: Infrastructure
+- LLM providers (OpenAI, Anthropic, Ollama)
+- Databases (Neo4j, SQL)
+- External services (Docker, APIs)
+- Storage systems
+
+---
+
+## 🔄 Key Flows
+
+### Configuration Flow
+```
+Environment → Config File → Config Manager → All Components
+```
+
+### Execution Flow
+```
+Workflow Definition → Execution Plan → Agent Execution → Result Aggregation
+```
+
+### Learning Flow
+```
+Execution Events → Pattern Recognition → Knowledge Base → Future Decisions
+```
+
+### Communication Flow
+```
+Components → Event Bus → Shared State → External Services
+```
+
+---
+
+## 🏗️ Design Patterns Used
+
+1. **Layered Architecture** - Clear separation of concerns
+2. **Registry Pattern** - Agent and Plugin management
+3. **Factory Pattern** - Component creation
+4. **Strategy Pattern** - Multiple LLM providers
+5. **Observer Pattern** - Monitoring and learning
+6. **Adapter Pattern** - External system integration
+7. **Singleton Pattern** - Config and Logger instances
+8. **Dependency Injection** - Component configuration
+9. **Plugin Architecture** - System extensibility
+10. **Event-Driven** - Asynchronous communication
+
+---
+
+## 📈 Scalability Considerations
+
+### Horizontal Scaling
+- Multiple instances behind load balancer
+- Shared state in distributed storage
+- Message queue for async processing
+- Event bus for decoupled communication
+
+### Vertical Scaling
+- Efficient resource management
+- Caching strategies
+- Connection pooling
+- Batch processing
+
+### Performance Optimization
+- Parallel task execution
+- Async/await patterns
+- Connection reuse
+- Result caching
+
+---
+
+## 🔐 Security Architecture
+
+### Authentication & Authorization
+- API key management
+- Role-based access control
+- Credential storage in secrets manager
+
+### Data Protection
+- Encrypted communication (HTTPS)
+- Encrypted storage
+- Audit logging
+- Access control
+
+### Integration Security
+- API key rotation
+- Secure credential handling
+- Rate limiting
+- Input validation
+
+---
+
+## 📝 Diagram Conventions
+
+### Symbols Used
+- `┌─┐` - Boxes/Components
+- `│` - Vertical connections
+- `─` - Horizontal connections
+- `┬┴` - Junctions
+- `▼▲` - Flow direction
+- `→` - Data flow
+- `◄►` - Bidirectional flow
+
+### Color Coding (in descriptions)
+- **Core** - Central system components
+- **Orchestration** - Workflow and agent management
+- **Infrastructure** - Execution and resource management
+- **Intelligence** - Learning and monitoring
+- **External** - Third-party services
+
+---
+
+## 🔗 Related Documentation
+
+- [Architecture Overview](../ARCHITECTURE.md) - Detailed architecture documentation
+- [API Documentation](../API.md) - API reference
+- [Configuration Guide](../CONFIGURATION.md) - Configuration options
+- [Deployment Guide](../DEPLOYMENT.md) - Deployment instructions
+- [Plugin Development](../PLUGINS.md) - Plugin development guide
+
+---
+
+## 📞 Questions?
+
+For questions about specific diagrams or architecture decisions, refer to:
+1. The specific diagram file for detailed ASCII art
+2. The related documentation files
+3. The source code in `src/agentic_sdlc/`
+4. The project README and contributing guidelines
+
+---
+
+**Last Updated:** February 2026  
+**Version:** 3.0.0  
+**Status:** Complete

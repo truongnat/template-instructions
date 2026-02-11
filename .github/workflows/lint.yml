@@ -2,60 +2,40 @@ name: Lint
 
 on:
   push:
-    branches: [main, develop]
+    branches: [ main, develop ]
   pull_request:
-    branches: [main]
+    branches: [ main, develop ]
 
 jobs:
-  lint-python:
+  lint:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      - name: Install dependencies
-        run: pip install -e .[dev]
-
-      - name: Run ruff
-        run: ruff check .
-
-      - name: Run mypy
-        run: mypy .
-
-  lint-markdown:
-    runs-on: ubuntu-latest
+    - uses: actions/checkout@v3
     
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-
-      - name: Install markdownlint
-        run: npm install -g markdownlint-cli
-
-      - name: Lint markdown files
-        run: markdownlint '**/*.md' --ignore node_modules --ignore trash
-
-  check-links:
-    runs-on: ubuntu-latest
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
     
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Check for broken links
-        uses: gaurav-nelson/github-action-markdown-link-check@v1
-        with:
-          folder-path: 'docs/'
-          file-path: 'README.md'
-          config-file: '.github/mlc_config.json'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8 black mypy types-requests types-PyYAML
+        pip install -r requirements.txt || true
+        pip install -e .[dev] || pip install -r requirements-dev.txt || true
+    
+    - name: Run flake8
+      run: |
+        flake8 agentic_sdlc/ --max-line-length=120 --count --statistics
+      continue-on-error: false
+    
+    - name: Run black
+      run: |
+        black --check agentic_sdlc/ --line-length=120
+      continue-on-error: false
+    
+    - name: Run mypy type checking
+      run: |
+        mypy agentic_sdlc/ --config-file=pyproject.toml
+      continue-on-error: false

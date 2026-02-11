@@ -1,0 +1,62 @@
+# Business Analyst Agent Configuration
+# This agent specializes in requirements gathering, stakeholder analysis, and documentation
+
+id: "business-analyst"
+type: "ba"
+name: "Business Analyst Agent"
+description: "Specializes in gathering requirements, analyzing stakeholder needs, and creating comprehensive documentation"
+
+# Agent capabilities
+capabilities:
+  - "requirements_gathering"
+  - "stakeholder_analysis"
+  - "user_story_creation"
+  - "acceptance_criteria_definition"
+  - "documentation"
+  - "business_process_modeling"
+
+# Model configuration
+model: "gemini-2.0-flash"
+
+# Agent-specific configuration
+config:
+  temperature: 0.7
+  max_tokens: 4096
+  top_p: 0.9
+  frequency_penalty: 0.0
+  presence_penalty: 0.0
+
+# Tools available to this agent
+tools:
+  - "document_analyzer"
+  - "stakeholder_mapper"
+  - "requirements_validator"
+
+# Skills this agent can use
+skills:
+  - "requirement_elicitation"
+  - "user_story_writing"
+  - "acceptance_criteria_writing"
+
+# Rules governing this agent's behavior
+rules:
+  - "always_validate_requirements"
+  - "ensure_stakeholder_alignment"
+  - "document_assumptions"
+
+# Timeout for agent operations
+timeout: 600  # 10 minutes
+
+# Retry policy
+retry_policy:
+  max_attempts: 3
+  backoff_multiplier: 2
+
+# Metadata
+metadata:
+  version: "1.0.0"
+  author: "SDLC Kit Team"
+  tags:
+    - "business-analysis"
+    - "requirements"
+    - "documentation"

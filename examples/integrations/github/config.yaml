@@ -1,0 +1,113 @@
+# GitHub Integration Configuration
+# Configure GitHub API access and integration settings
+
+github:
+  # GitHub API configuration
+  api:
+    base_url: "https://api.github.com"
+    version: "2022-11-28"
+    timeout: 30
+    
+  # Authentication
+  auth:
+    # Use personal access token from environment variable
+    token_env: "GITHUB_TOKEN"
+    # Required scopes: repo, read:org, write:discussion
+    
+  # Repository configuration
+  repository:
+    owner: "your-organization"
+    name: "your-repository"
+    default_branch: "main"
+    
+  # Pull request settings
+  pull_requests:
+    auto_review: true
+    review_labels:
+      - "needs-review"
+      - "ready-for-review"
+    
+    # Review criteria
+    criteria:
+      min_approvals: 1
+      require_tests: true
+      require_documentation: true
+      check_security: true
+      
+    # Comment templates
+    templates:
+      approval: "LGTM! ✅ Code looks good. All checks passed."
+      request_changes: "Changes requested. Please address the comments below."
+      comment: "💡 Suggestion: {suggestion}"
+      
+  # Issue management
+  issues:
+    auto_triage: true
+    
+    # Label mapping
+    labels:
+      bug: ["bug", "defect"]
+      feature: ["enhancement", "feature-request"]
+      documentation: ["docs", "documentation"]
+      question: ["question", "help-wanted"]
+      
+    # Priority assignment rules
+    priority_rules:
+      critical:
+        keywords: ["crash", "security", "data-loss"]
+        labels: ["critical", "urgent"]
+      high:
+        keywords: ["error", "broken", "regression"]
+        labels: ["high-priority"]
+      medium:
+        keywords: ["improvement", "enhancement"]
+        labels: ["medium-priority"]
+      low:
+        keywords: ["typo", "formatting", "minor"]
+        labels: ["low-priority"]
+        
+  # Automation settings
+  automation:
+    # Auto-assign reviewers
+    auto_assign_reviewers: true
+    reviewer_pool:
+      - "reviewer1"
+      - "reviewer2"
+      - "reviewer3"
+      
+    # Auto-label PRs
+    auto_label: true
+    label_rules:
+      - pattern: "^docs/"
+        labels: ["documentation"]
+      - pattern: "^tests/"
+        labels: ["testing"]
+      - pattern: "^src/"
+        labels: ["code"]
+        
+    # Auto-close stale issues
+    stale_issues:
+      enabled: true
+      days_until_stale: 60
+      days_until_close: 7
+      stale_label: "stale"
+      exempt_labels: ["pinned", "security"]
+      
+  # Notifications
+  notifications:
+    enabled: true
+    channels:
+      - type: "slack"
+        webhook_env: "SLACK_WEBHOOK_URL"
+      - type: "email"
+        recipients: ["team@example.com"]
+        
+  # Webhooks
+  webhooks:
+    enabled: true
+    events:
+      - "pull_request"
+      - "issues"
+      - "push"
+      - "release"
+    secret_env: "GITHUB_WEBHOOK_SECRET"

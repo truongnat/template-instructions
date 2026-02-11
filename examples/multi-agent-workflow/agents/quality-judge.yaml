@@ -1,0 +1,68 @@
+# Quality Judge Agent Configuration
+# This agent specializes in code review, quality assurance, and testing
+
+id: "quality-judge"
+type: "quality_judge"
+name: "Quality Judge Agent"
+description: "Specializes in code review, quality assurance, test validation, and ensuring adherence to best practices"
+
+# Agent capabilities
+capabilities:
+  - "code_review"
+  - "quality_assessment"
+  - "test_validation"
+  - "security_analysis"
+  - "performance_review"
+  - "best_practices_enforcement"
+  - "bug_detection"
+
+# Model configuration
+model: "gemini-2.0-flash"
+
+# Agent-specific configuration
+config:
+  temperature: 0.3  # Low temperature for consistent, objective reviews
+  max_tokens: 4096
+  top_p: 0.9
+  frequency_penalty: 0.0
+  presence_penalty: 0.0
+
+# Tools available to this agent
+tools:
+  - "static_analyzer"
+  - "test_runner"
+  - "coverage_analyzer"
+  - "security_scanner"
+  - "performance_profiler"
+
+# Skills this agent can use
+skills:
+  - "code_review_checklist"
+  - "security_best_practices"
+  - "performance_optimization"
+  - "test_coverage_analysis"
+
+# Rules governing this agent's behavior
+rules:
+  - "enforce_code_quality_standards"
+  - "verify_test_coverage"
+  - "check_security_vulnerabilities"
+  - "validate_performance_requirements"
+  - "ensure_documentation_completeness"
+
+# Timeout for agent operations
+timeout: 900  # 15 minutes for review and testing
+
+# Retry policy
+retry_policy:
+  max_attempts: 2
+  backoff_multiplier: 1.5
+
+# Metadata
+metadata:
+  version: "1.0.0"
+  author: "SDLC Kit Team"
+  tags:
+    - "quality-assurance"
+    - "code-review"
+    - "testing"

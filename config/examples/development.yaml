@@ -1,0 +1,276 @@
+# SDLC Kit Development Environment Configuration
+# This configuration is optimized for local development with debugging enabled,
+# verbose logging, and relaxed security settings.
+
+# =============================================================================
+# CORE SETTINGS
+# =============================================================================
+core:
+  name: "sdlc-kit-dev"
+  version: "1.0.0"
+  environment: "development"
+  
+  timeout: 1800  # 30 minutes for development
+  max_retries: 2
+  retry_delay: 3
+  
+  data_dir: "data/dev"
+  state_dir: "states/dev"
+  artifact_dir: "artifacts/dev"
+  
+  features:
+    enable_caching: true
+    enable_metrics: true
+    enable_audit_logging: false  # Disabled for dev to reduce noise
+    enable_health_checks: true
+
+# =============================================================================
+# AGENT CONFIGURATION
+# =============================================================================
+agents:
+  defaults:
+    timeout: 600  # 10 minutes for development
+    max_iterations: 15  # More iterations for experimentation
+    temperature: 0.8  # Higher creativity for development
+    
+  types:
+    ba:
+      role: "business_analyst"
+      capabilities:
+        - "requirements_gathering"
+        - "stakeholder_analysis"
+        - "documentation"
+      system_prompt: "You are a Business Analyst in development mode. Be verbose and explain your reasoning."
+      
+    implementation:
+      role: "developer"
+      capabilities:
+        - "code_generation"
+        - "code_review"
+        - "testing"
+        - "debugging"
+      system_prompt: "You are a Developer in development mode. Include detailed comments and explanations."
+
+# =============================================================================
+# MODEL CONFIGURATION
+# =============================================================================
+models:
+  default_provider: "gemini"
+  
+  providers:
+    gemini:
+      default_model: "gemini-2.0-flash"  # Fast model for development
+      api_key_env: "GOOGLE_GENAI_API_KEY"
+      base_url: "https://generativelanguage.googleapis.com/v1beta/openai/"
+      timeout: 90
+      max_retries: 2
+      
+    ollama:
+      default_model: "llama2"
+      base_url: "http://localhost:11434"
+      timeout: 180
+      
+  parameters:
+    temperature: 0.8  # Higher for experimentation
+    max_tokens: 8192  # More tokens for detailed responses
+    top_p: 0.95
+    frequency_penalty: 0.0
+    presence_penalty: 0.0
+
+# =============================================================================
+# WORKFLOW CONFIGURATION
+# =============================================================================
+workflows:
+  defaults:
+    timeout: 1800  # 30 minutes
+    max_concurrent_tasks: 3  # Limited for easier debugging
+    checkpoint_interval: 60  # Save state every minute
+    enable_rollback: true
+    
+  execution:
+    mode: "sequential"  # Sequential for easier debugging
+    retry_failed_tasks: true
+    continue_on_error: true  # Continue to see all errors
+    
+  state:
+    persistence: true
+    compression: false  # Uncompressed for easier inspection
+    retention_days: 7  # Keep for a week
+
+# =============================================================================
+# LOGGING CONFIGURATION
+# =============================================================================
+logging:
+  level: "DEBUG"  # Verbose logging for development
+  
+  handlers:
+    console:
+      enabled: true
+      level: "DEBUG"
+      format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+      
+    file:
+      enabled: true
+      level: "DEBUG"
+      path: "logs/dev/sdlc-kit.log"
+      max_bytes: 5242880  # 5 MB
+      backup_count: 3
+      format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s - %(pathname)s:%(lineno)d"
+      
+  loggers:
+    "agentic_sdlc.core":
+      level: "DEBUG"
+    "agentic_sdlc.orchestration":
+      level: "DEBUG"
+    "agentic_sdlc.infrastructure":
+      level: "DEBUG"
+    "agentic_sdlc.intelligence":
+      level: "DEBUG"
+
+# =============================================================================
+# MONITORING CONFIGURATION
+# =============================================================================
+monitoring:
+  metrics:
+    enabled: true
+    collection_interval: 30  # More frequent collection
+    retention_days: 7
+    
+    types:
+      - "workflow_execution_time"
+      - "agent_response_time"
+      - "api_call_count"
+      - "error_rate"
+      - "memory_usage"
+      
+  health:
+    enabled: true
+    check_interval: 120  # Check every 2 minutes
+    
+    checks:
+      - name: "disk_space"
+        enabled: true
+        threshold_percent: 95  # More lenient for dev
+        
+      - name: "memory"
+        enabled: true
+        threshold_percent: 90
+        
+  alerts:
+    enabled: false  # Disabled for development
+
+# =============================================================================
+# SECURITY CONFIGURATION
+# =============================================================================
+security:
+  secrets:
+    provider: "environment"
+    encryption_enabled: false  # Disabled for easier development
+    
+  audit:
+    enabled: false  # Disabled for development
+    
+  validation:
+    enabled: true
+    sanitize_inputs: true
+    max_input_length: 50000  # More lenient for dev
+    
+  rate_limiting:
+    enabled: false  # Disabled for development
+
+# =============================================================================
+# CLI CONFIGURATION
+# =============================================================================
+cli:
+  output:
+    format: "text"
+    color_enabled: true
+    verbose: true  # Verbose output for development
+    
+  commands:
+    workflow:
+      validate_before_run: true
+      show_progress: true
+      
+  interactive:
+    enabled: true
+    history_enabled: true
+    history_file: ".sdlc_history_dev"
+
+# =============================================================================
+# TESTING CONFIGURATION
+# =============================================================================
+testing:
+  execution:
+    parallel: false  # Sequential for easier debugging
+    max_workers: 2
+    timeout: 600
+    
+  types:
+    unit:
+      enabled: true
+      coverage_threshold: 70  # Lower threshold for dev
+      
+    integration:
+      enabled: true
+      coverage_threshold: 60
+      
+    property:
+      enabled: true
+      iterations: 50  # Fewer iterations for faster feedback
+      
+  coverage:
+    enabled: true
+    format: "html"
+    output_dir: "coverage/dev"
+    fail_under: 70
+
+# =============================================================================
+# DATABASE CONFIGURATION
+# =============================================================================
+database:
+  provider: "sqlite"
+  
+  sqlite:
+    path: "data/dev/sdlc-kit-dev.db"
+    timeout: 30
+
+# =============================================================================
+# CACHE CONFIGURATION
+# =============================================================================
+cache:
+  enabled: true
+  provider: "memory"
+  
+  memory:
+    max_size_mb: 50  # Smaller cache for dev
+    ttl_seconds: 1800  # 30 minutes
+
+# =============================================================================
+# INTEGRATION CONFIGURATION
+# =============================================================================
+integrations:
+  github:
+    enabled: false  # Typically disabled for local dev
+    
+  slack:
+    enabled: false
+    
+  email:
+    enabled: false
+
+# =============================================================================
+# DEVELOPMENT SETTINGS
+# =============================================================================
+development:
+  debug_mode: true  # Enable debug mode
+  verbose_logging: true
+  
+  hot_reload: true  # Enable hot reload
+  watch_paths:
+    - "agentic_sdlc"
+    - "config"
+    
+  tools:
+    profiling_enabled: true  # Enable profiling
+    memory_profiling: true

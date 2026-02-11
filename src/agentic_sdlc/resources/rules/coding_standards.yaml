@@ -1,0 +1,9 @@
+name: coding_standards
+description: Standard coding rules
+rules:
+  - name: type_hints
+    description: All functions must have type hints
+    severity: error
+  - name: docstrings
+    description: All public functions must have docstrings
+    severity: warning

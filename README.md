@@ -1,121 +1,229 @@
-# 📦 Agentic SDLC Kit
-![Version](https://img.shields.io/badge/version-2.5.0-blue.svg)
+# 📦 Agentic SDLC - AI-Powered Software Development Kit
+![Version](https://img.shields.io/badge/version-3.0.0-blue.svg)
 ![Build](https://img.shields.io/badge/build-passing-brightgreen.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
-> The Intelligence Layer for your Software Development Lifecycle. Installable, scalable, and self-learning.
+> Professional SDK for AI-powered software development. Clean architecture, extensible design, and production-ready.
 
-**Agentic SDLC** is a portable AI-powered development framework that transforms any repository into an intelligent development ecosystem. It provides specialized AI experts, automated workflows, and a "Brain" that learns from every line of code you write.
+**Agentic SDLC** is a Python SDK that provides a comprehensive framework for building AI-powered development tools. It features a clean public API, modular architecture, and support for custom extensions through plugins.
 
 ---
 
 ## 🚀 Quick Start
 
-### 1. Install the Kit (via Bun or Pip)
-```bash
-# Recommended (Docker)
-docker-compose up -d
+### Installation
 
-# Alternative (Python)
+**Core SDK** (without CLI):
+```bash
 pip install agentic-sdlc
-
-# Alternative (Bun)
-bun install agentic-sdlc
 ```
 
-### 2. Initialize your Project
-Navigate to your project root and run:
+**With CLI tools**:
 ```bash
-asdlc init
+pip install agentic-sdlc[cli]
 ```
-This scaffolds the following in your project:
-- `.agent/` - AI Expert roles, rules, and workflows.
-- `docs/` - Project documentation and SDLC artifacts.
-- `agentic.yaml` - Runtime configuration.
 
-### 3. Start your first Sprint
+**Development**:
 ```bash
-asdlc workflow sprint start 1
+pip install -e ".[dev]"
 ```
 
----
-
-## 🧠 What's inside the Kit?
-
-### 👥 18 Specialized AI Roles
-Assign tasks to specific experts directly in your IDE:
-- `@PM` (Project Manager) - Planning & Tracking
-- `@SA` (System Architect) - Design & Architecture
-- `@DEV` (Developer) - Implementation
-- `@TESTER` (QA) - Verification & Self-Healing
-- `@SECA` (Security) - Audits & Safety
-- `@RESEARCH` (Specialist) - Technical Research & Swarms
-
-### ⚡ 23 Automated Workflows
-Execute complete SDLC phases with simple slash commands:
-- `/cycle` - Research → Plan → Code → Review in one go.
-- `/orchestrator` - Full automation of complex features.
-- `/swarm` - Intelligent multi-agent routing.
-- `/concurrent` - Execute multiple roles (SA, UIUX, PO) in parallel.
-- `/synthesize` - Mixture of Agents (MoA) synthesis.
-- `/heal` - Automated bug detection and auto-fixing.
-- `/ab` - Generate and compare architectural alternatives.
-
-### 3-Layer Architecture
-The system follows a concentric design ensuring safety and consistency:
-- **Layer 1: Core** - GEMINI.md, Rules, and Workflows.
-- **Layer 2: Intelligence** - 26 Sub-Agents (Brain, SwarmRouter, Self-Learning).
-- **Layer 3: Infrastructure** - CLI, SDK, AOP (Agent Orchestration Protocol).
-
----
-
-## 🛠️ Usage
-
-### CLI Commands
-The kit provides a unified entry point:
-```bash
-asdlc brain status              # View current SDLC state
-asdlc brain init-state --sprint 1  # Initialize brain state for a sprint
-asdlc brain heal --code src/main.py # Run self-healing on a file
-asdlc brain gate list           # View pending human-in-the-loop approvals
-```
-
-### IDE Integration (Slash Commands)
-If you use an AI-powered IDE (Cursor, Windsurf, etc.), simply reference the workflows:
-```text
-@DEV /cycle Implement user authentication
-@PM /planning Create a plan for the next feature
-```
-
----
-
-## 🐍 SDK Usage (Python)
-Integrate the Agentic Brain directly into your own scripts:
+### Basic Usage
 
 ```python
-from agentic_sdlc import Learner, SprintManager, get_project_root
+from agentic_sdlc import Config, Agent, Workflow, get_logger
 
-# Get the current project context
-root = get_project_root()
+# Setup logging
+setup_logging(level="INFO")
+logger = get_logger(__name__)
 
-# Record a learning event
-learner = Learner()
-learner.learn("Refactored database layer for performance")
+# Load configuration
+config = Config()
 
-# Manage sprints
-sm = SprintManager()
-sm.create_sprint("Feature Alpha", "Deliver MVP")
+# Create and use agents
+agent = Agent(name="Developer", role="implementation")
+workflow = Workflow(name="feature-dev", agents=[agent])
+
+# Execute workflow
+result = workflow.execute()
+logger.info(f"Workflow completed: {result}")
+```
+
+### CLI Usage
+
+```bash
+# Initialize a project
+agentic init
+
+# Run a workflow
+agentic run my-workflow
+
+# View configuration
+agentic config get log_level
 ```
 
 ---
 
-## 🏗️ Enterprise Features
-- **🛡️ Sandboxing:** Execute agent code in isolated Docker containers.
-- **🩹 Self-Healing:** Automated feedback loops that learn from test failures.
-- **🌊 Swarms Orchestration:** Universal routing, parallel execution, and expert synthesis.
-- **📡 AOP Protocol:** Distributed Agent Orchestration Protocol for distributed AI.
-- **Knowledge Graph:** Optional Neo4j integration for cross-project intelligence.
-- **Local LLM Support:** Full compatibility with Ollama for privacy-first development.
+## 📚 Architecture
+
+### Package Structure
+
+```
+agentic_sdlc/
+├── core/              # Core functionality (config, exceptions, logging)
+├── infrastructure/    # Automation, bridges, execution engines
+├── intelligence/      # Learning, monitoring, reasoning, collaboration
+├── orchestration/     # Agents, models, workflows, coordination
+├── plugins/           # Plugin system and registry
+├── cli/               # Command-line interface (optional)
+└── _internal/         # Private utilities
+```
+
+### Public API
+
+The SDK exposes a clean public API through the top-level `agentic_sdlc` module:
+
+```python
+# Core
+from agentic_sdlc import (
+    Config, load_config, get_config,
+    AgenticSDLCError, ConfigurationError, ValidationError,
+    setup_logging, get_logger
+)
+
+# Infrastructure
+from agentic_sdlc import (
+    WorkflowEngine, ExecutionEngine, LifecycleManager
+)
+
+# Intelligence
+from agentic_sdlc import (
+    Learner, Monitor, Reasoner, Collaborator
+)
+
+# Orchestration
+from agentic_sdlc import (
+    Agent, AgentRegistry, create_agent,
+    ModelClient, Workflow, WorkflowBuilder
+)
+
+# Plugins
+from agentic_sdlc import (
+    Plugin, PluginRegistry, get_plugin_registry
+)
+```
+
+---
+
+## 🔧 Configuration
+
+Configuration can be loaded from files, environment variables, or set programmatically:
+
+```python
+from agentic_sdlc import Config
+
+# Load from file
+config = Config("config.yaml")
+
+# Get values with dot notation
+log_level = config.get("log_level")
+model_name = config.get("models.openai.model_name")
+
+# Set values
+config.set("log_level", "DEBUG")
+
+# Validate configuration
+config.validate()
+```
+
+---
+
+## 🔌 Plugin System
+
+Extend the SDK with custom plugins:
+
+```python
+from agentic_sdlc import Plugin, get_plugin_registry
+
+class MyPlugin(Plugin):
+    @property
+    def name(self) -> str:
+        return "my-plugin"
+    
+    @property
+    def version(self) -> str:
+        return "1.0.0"
+    
+    def initialize(self, config: dict) -> None:
+        print(f"Initializing {self.name}")
+    
+    def shutdown(self) -> None:
+        print(f"Shutting down {self.name}")
+
+# Register plugin
+registry = get_plugin_registry()
+registry.register(MyPlugin())
+```
+
+---
+
+## 📖 Documentation
+
+- **[Getting Started](docs/GETTING_STARTED.md)** - Installation and basic usage
+- **[Migration Guide](docs/MIGRATION.md)** - Upgrading from v2.x to v3.x
+- **[Plugin Development](docs/PLUGIN_DEVELOPMENT.md)** - Creating custom plugins
+- **[API Reference](docs/api/)** - Complete API documentation
+- **[Architecture](docs/architecture/)** - Design and architecture decisions
+
+---
+
+## 💡 Examples
+
+See the `examples/` directory for complete working examples:
+
+- **Programmatic SDK usage**: `examples/programmatic/`
+- **CLI usage**: `examples/cli/`
+- **Plugin development**: `examples/plugins/`
+
+---
+
+## 🧪 Testing
+
+Run the test suite:
+
+```bash
+# All tests
+pytest
+
+# Unit tests only
+pytest tests/unit/
+
+# Property-based tests
+pytest tests/property/
+
+# With coverage
+pytest --cov=agentic_sdlc --cov-report=html
+```
+
+---
+
+## 🔄 What's New in v3.0.0
+
+### Breaking Changes
+- Reorganized package structure (moved to `src/` layout)
+- Removed vendored dependencies from `lib/` directory
+- CLI is now optional (install with `[cli]` extra)
+- Old import paths are deprecated (use new public API)
+
+### New Features
+- Clean public API with explicit exports
+- Plugin system for extensibility
+- Comprehensive configuration management
+- Type hints throughout the codebase
+- Property-based testing for correctness validation
+
+### Migration
+See [MIGRATION.md](docs/MIGRATION.md) for detailed migration instructions from v2.x.
 
 ---
 

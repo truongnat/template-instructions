@@ -1,0 +1,83 @@
+# GitHub Integration Workflow Example
+# This workflow demonstrates integration with GitHub for automated code review and issue management.
+# It shows how to use SDLC Kit agents to interact with GitHub repositories.
+
+name: "github-integration-workflow"
+version: "1.0.0"
+description: "Automated workflow for GitHub integration including PR review, issue triage, and documentation updates"
+
+# Agents for GitHub integration
+agents:
+  - "github-reviewer"
+  - "issue-triager"
+
+# Tasks for GitHub integration
+tasks:
+  - id: "fetch-pull-requests"
+    type: "research"
+    config:
+      priority: "high"
+      timeout: 300
+      github_config:
+        repository: "owner/repo"
+        state: "open"
+        labels: ["needs-review"]
+    dependencies: []
+
+  - id: "review-code-changes"
+    type: "validation"
+    config:
+      priority: "critical"
+      timeout: 900
+      review_criteria:
+        - "code_quality"
+        - "security"
+        - "test_coverage"
+        - "documentation"
+    dependencies: ["fetch-pull-requests"]
+
+  - id: "post-review-comments"
+    type: "implementation"
+    config:
+      priority: "high"
+      timeout: 300
+      comment_style: "constructive"
+    dependencies: ["review-code-changes"]
+
+  - id: "triage-issues"
+    type: "analysis"
+    config:
+      priority: "medium"
+      timeout: 600
+      triage_rules:
+        - "categorize_by_type"
+        - "assign_priority"
+        - "suggest_labels"
+    dependencies: []
+
+  - id: "update-documentation"
+    type: "implementation"
+    config:
+      priority: "medium"
+      timeout: 600
+      docs_path: "docs/"
+      auto_commit: false
+    dependencies: ["review-code-changes"]
+
+# Workflow configuration
+timeout: 3600  # 1 hour
+environment: "production"
+
+# Retry policy
+retry_policy:
+  max_attempts: 3
+  backoff_multiplier: 2
+
+# Metadata
+metadata:
+  author: "SDLC Kit Team"
+  tags:
+    - "github"
+    - "integration"
+    - "automation"
+    - "code-review"
