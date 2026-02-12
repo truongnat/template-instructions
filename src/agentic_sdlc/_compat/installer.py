@@ -66,6 +66,17 @@ def install_compatibility_shims() -> None:
         # Infrastructure autogen -> Orchestration agents
         "agentic_sdlc.infrastructure.autogen": "agentic_sdlc.orchestration",
         "agentic_sdlc.infrastructure.autogen.agents": "agentic_sdlc.orchestration.agents",
+        
+        # Comparison (V2 legacy) -> Orchestration (lenient)
+        "agentic_sdlc.comparison": "agentic_sdlc.orchestration",
+        "agentic_sdlc.comparison.models": "agentic_sdlc.orchestration.models",
+        
+        # Renamed orchestration components
+        "agentic_sdlc.orchestration.engine.execution_planner": "agentic_sdlc.orchestration.workflows",
+        "agentic_sdlc.orchestration.models.workflow": "agentic_sdlc.orchestration.workflows",
+        
+        # Version
+        "agentic_sdlc.version": "agentic_sdlc._version",
     }
     
     for old_path, new_path in shim_mappings.items():
@@ -75,12 +86,15 @@ def install_compatibility_shims() -> None:
         if old_path not in sys.modules:
             # Create a fake module with __getattr__ handler
             module = ModuleType(old_path)
-            # Use lenient mode for legacy paths to allow test collection
+            # Use lenient mode for legacy/removed paths to allow test collection
             is_lenient = (
                 "api_model_management" in old_path or 
                 "collaborating" in old_path or 
                 "release" in old_path or
-                "automation" in old_path
+                "automation" in old_path or
+                "comparison" in old_path or
+                "execution_planner" in old_path or
+                "workflow" in old_path
             )
             module.__getattr__ = create_module_deprecation_handler(old_path, new_path, lenient=is_lenient)
             sys.modules[old_path] = module
@@ -91,11 +105,15 @@ def install_compatibility_shims() -> None:
                 if parent_path in sys.modules:
                     parent_module = sys.modules[parent_path]
                     # ONLY attach if the parent doesn't already have this attribute
-                    if not hasattr(parent_module, child_name):
+                    # or if the attribute is already a shim module (to handle deep paths)
+                    current_attr = getattr(parent_module, child_name, None)
+                    if current_attr is None or (
+                        isinstance(current_attr, ModuleType) and 
+                        getattr(current_attr, "__getattr__", None) is not None
+                    ):
                         try:
                             setattr(parent_module, child_name, module)
                         except (AttributeError, TypeError):
-                            # Some modules (built-ins or locked) might not allow setattr
                             pass
 
 
