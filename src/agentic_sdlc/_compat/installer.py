@@ -66,12 +66,12 @@ def install_compatibility_shims() -> None:
         # Infrastructure autogen -> Orchestration agents
         "agentic_sdlc.infrastructure.autogen": "agentic_sdlc.orchestration",
         "agentic_sdlc.infrastructure.autogen.agents": "agentic_sdlc.orchestration.agents",
-        
-        # Core config
-        "agentic_sdlc.core.config": "agentic_sdlc.core.config",
     }
     
     for old_path, new_path in shim_mappings.items():
+        if old_path == new_path:
+            continue
+            
         if old_path not in sys.modules:
             # Create a fake module with __getattr__ handler
             module = ModuleType(old_path)
@@ -85,11 +85,18 @@ def install_compatibility_shims() -> None:
             module.__getattr__ = create_module_deprecation_handler(old_path, new_path, lenient=is_lenient)
             sys.modules[old_path] = module
             
-            # Also attach it to its parent if the parent exists
+            # Safely attach it to its parent if the parent exists in sys.modules
             if "." in old_path:
                 parent_path, child_name = old_path.rsplit(".", 1)
                 if parent_path in sys.modules:
-                    setattr(sys.modules[parent_path], child_name, module)
+                    parent_module = sys.modules[parent_path]
+                    # ONLY attach if the parent doesn't already have this attribute
+                    if not hasattr(parent_module, child_name):
+                        try:
+                            setattr(parent_module, child_name, module)
+                        except (AttributeError, TypeError):
+                            # Some modules (built-ins or locked) might not allow setattr
+                            pass
 
 
 # Install shims when this module is imported

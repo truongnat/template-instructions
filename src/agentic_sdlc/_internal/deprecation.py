@@ -82,12 +82,25 @@ def create_module_deprecation_handler(
         A __getattr__ function that redirects to the new module
     """
     def __getattr__(name: str) -> Any:
+        # Recursion guard: if we are trying to get an attribute that is already being 
+        # handled or if old and new paths are the same (which shouldn't happen).
+        if old_module_path == new_module_path:
+            raise AttributeError(f"Recursive shim detected: {old_module_path} -> {new_module_path}")
+
         emit_deprecation_warning(old_module_path, new_module_path, name, stacklevel=2)
         
         # Import and return from the new module
         import importlib
+        import sys
         try:
+            # We need to be careful if new_module_path is already in sys.modules 
+            # and it points to us (the shim). 
             module = importlib.import_module(new_module_path)
+            
+            # If importlib gave us back the same shim module, we can't proceed
+            if getattr(module, "__name__", None) == old_module_path and module is sys.modules.get(old_module_path):
+                raise ImportError(f"Shim loop detected for {new_module_path}")
+
             return getattr(module, name)
         except (ImportError, AttributeError):
             if lenient:
