@@ -76,9 +76,20 @@ def install_compatibility_shims() -> None:
             # Create a fake module with __getattr__ handler
             module = ModuleType(old_path)
             # Use lenient mode for legacy paths to allow test collection
-            is_lenient = "api_model_management" in old_path or "collaborating" in old_path or "release" in old_path
+            is_lenient = (
+                "api_model_management" in old_path or 
+                "collaborating" in old_path or 
+                "release" in old_path or
+                "automation" in old_path
+            )
             module.__getattr__ = create_module_deprecation_handler(old_path, new_path, lenient=is_lenient)
             sys.modules[old_path] = module
+            
+            # Also attach it to its parent if the parent exists
+            if "." in old_path:
+                parent_path, child_name = old_path.rsplit(".", 1)
+                if parent_path in sys.modules:
+                    setattr(sys.modules[parent_path], child_name, module)
 
 
 # Install shims when this module is imported

@@ -33,6 +33,10 @@ Usage:
 
 from ._version import __version__
 
+# Enable compatibility shims for legacy imports
+from ._compat import install_compatibility_shims
+install_compatibility_shims()
+
 # Core module exports
 from .core import (
     # Configuration
