@@ -1,0 +1,58 @@
+# Development Dependencies for Agentic SDLC Kit
+# These are additional dependencies needed for development, testing, and building
+# Install with: pip install -r requirements-dev.txt
+
+# First install core dependencies
+-r requirements.txt
+
+# Testing Framework
+pytest>=7.4.0
+pytest-cov>=4.1.0
+pytest-asyncio>=0.21.0
+pytest-mock>=3.12.0
+hypothesis>=6.92.0
+
+# Code Quality and Linting
+black>=23.0.0
+ruff>=0.1.0
+pylint>=3.0.0
+flake8>=6.1.0
+isort>=5.12.0
+
+# Type Checking
+mypy>=1.7.0
+types-requests>=2.31.0
+types-PyYAML>=6.0.0
+types-python-dateutil>=2.8.0
+
+# Documentation
+sphinx>=7.2.0
+sphinx-rtd-theme>=2.0.0
+mkdocs>=1.5.0
+mkdocs-material>=9.5.0
+
+# Build Tools
+build>=1.0.0
+twine>=4.0.0
+wheel>=0.42.0
+setuptools>=69.0.0
+
+# Development Utilities
+ipython>=8.18.0
+ipdb>=0.13.0
+pre-commit>=3.6.0
+
+# Code Coverage
+coverage>=7.4.0
+coverage-badge>=1.1.0
+
+# Performance Testing
+pytest-benchmark>=4.0.0
+
+# Security Scanning
+bandit>=1.7.0
+safety>=3.0.0
+
+# API Testing
+tavily-python>=0.3.0
+brave-search>=1.0.0
