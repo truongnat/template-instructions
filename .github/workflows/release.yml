@@ -35,28 +35,36 @@ jobs:
         python -m pip install --upgrade pip
         pip install build twine
 
-    - name: Verify version consistency
+    - name: Sync version from Tag
       run: |
-        # Get version from tag or manual input
-        if [ "${{ github.event_name }}" == "push" ]; then
-          TARGET_VERSION=${GITHUB_REF#refs/tags/v}
+        # Get target version
+        if [[ $GITHUB_REF == refs/tags/v* ]]; then
+          VERSION=${GITHUB_REF#refs/tags/v}
+        elif [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+          VERSION="${{ github.event.inputs.version }}"
         else
-          TARGET_VERSION=${{ github.event.inputs.version }}
+          echo "No version tag found, using local version."
+          exit 0
         fi
         
-        # Check VERSION file
-        if [ -f VERSION ]; then
-          FILE_VERSION=$(cat VERSION | tr -d '[:space:]')
-          echo "Version in file: '$FILE_VERSION'"
-          echo "Target version: '$TARGET_VERSION'"
-          if [ "$FILE_VERSION" != "$TARGET_VERSION" ]; then
-            echo "::error::Version mismatch! VERSION file ($FILE_VERSION) != Target ($TARGET_VERSION)"
-            exit 1
-          fi
+        echo "Synchronizing version files to $VERSION"
+        echo "$VERSION" > VERSION
+        
+        # Update pyproject.toml
+        if [[ "$OSTYPE" == "darwin"* ]]; then
+          sed -i '' "s/^version = \".*\"/version = \"$VERSION\"/" pyproject.toml
+        else
+          sed -i "s/^version = \".*\"/version = \"$VERSION\"/" pyproject.toml
+        fi
+        
+        # Update _version.py fallback (optional but good for consistency)
+        if [ -f src/agentic_sdlc/_version.py ]; then
+          sed -i "s/__version__ = .* or \".*\"/__version__ = _read_version_from_file() or \"$VERSION\"/" src/agentic_sdlc/_version.py
         fi
 
     - name: Build package
       run: python -m build
+
 
     - name: Check package metadata
       run: twine check dist/*
