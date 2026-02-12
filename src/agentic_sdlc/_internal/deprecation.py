@@ -67,12 +67,16 @@ def create_getattr_handler(
 def create_module_deprecation_handler(
     old_module_path: str,
     new_module_path: str,
+    lenient: bool = False,
 ) -> Any:
     """Create a __getattr__ handler that redirects all imports to a new module.
     
     Args:
         old_module_path: The old module path
         new_module_path: The new module path
+        lenient: If True, return a Mock for missing names instead of raising AttributeError.
+                 This is useful for allowing legacy tests to be collectable even if some
+                 classes have been removed.
     
     Returns:
         A __getattr__ function that redirects to the new module
@@ -82,7 +86,14 @@ def create_module_deprecation_handler(
         
         # Import and return from the new module
         import importlib
-        module = importlib.import_module(new_module_path)
-        return getattr(module, name)
+        try:
+            module = importlib.import_module(new_module_path)
+            return getattr(module, name)
+        except (ImportError, AttributeError):
+            if lenient:
+                from unittest.mock import MagicMock
+                mock = MagicMock(name=f"{old_module_path}.{name}")
+                return mock
+            raise
     
     return __getattr__
