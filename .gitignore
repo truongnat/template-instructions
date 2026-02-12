@@ -46,6 +46,8 @@ dmypy.json
 .brain/
 .agent-state/
 *.txt
+!requirements.txt
+!requirements-dev.txt
 debug_*.py
 pytest_*.txt
 test_*.txt
