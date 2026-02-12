@@ -17,6 +17,8 @@ jobs:
     permissions:
       contents: write
       id-token: write
+    outputs:
+      version: ${{ steps.sync_version.outputs.version }}
 
     steps:
     - name: Checkout code
@@ -36,6 +38,7 @@ jobs:
         pip install build twine
 
     - name: Sync version from Tag
+      id: sync_version
       run: |
         # Get target version
         if [[ $GITHUB_REF == refs/tags/v* ]]; then
@@ -43,11 +46,11 @@ jobs:
         elif [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
           VERSION="${{ github.event.inputs.version }}"
         else
-          echo "No version tag found, using local version."
-          exit 0
+          VERSION=$(cat VERSION | tr -d '[:space:]')
         fi
         
         echo "Synchronizing version files to $VERSION"
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
         echo "$VERSION" > VERSION
         
         # Update pyproject.toml
@@ -57,14 +60,13 @@ jobs:
           sed -i "s/^version = \".*\"/version = \"$VERSION\"/" pyproject.toml
         fi
         
-        # Update _version.py fallback (optional but good for consistency)
+        # Update _version.py fallback
         if [ -f src/agentic_sdlc/_version.py ]; then
           sed -i "s/__version__ = .* or \".*\"/__version__ = _read_version_from_file() or \"$VERSION\"/" src/agentic_sdlc/_version.py
         fi
 
     - name: Build package
       run: python -m build
-
 
     - name: Check package metadata
       run: twine check dist/*
@@ -73,6 +75,7 @@ jobs:
       uses: softprops/action-gh-release@v2
       if: github.event_name == 'workflow_dispatch' || startsWith(github.ref, 'refs/tags/')
       with:
+        tag_name: v${{ steps.sync_version.outputs.version }}
         files: dist/*
         generate_release_notes: true
       env:
@@ -84,5 +87,6 @@ jobs:
       with:
         password: ${{ secrets.PYPI_TOKEN }}
         packages-dir: dist/
+
 
 
