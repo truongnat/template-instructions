@@ -85,7 +85,7 @@ esac
 
 # Add coverage options
 if [ "$COVERAGE" = true ]; then
-    PYTEST_CMD="$PYTEST_CMD --cov=agentic_sdlc --cov-report=term --cov-report=html --cov-report=xml"
+    PYTEST_CMD="$PYTEST_CMD --cov=agentic_sdlc --cov-report=term --cov-report=html --cov-report=xml --cov-branch"
 fi
 
 # Add verbose option
