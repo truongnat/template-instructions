@@ -50,7 +50,7 @@ jobs:
           pip install -e ".[dev]"
       - name: Run all tests
         run: |
-          pytest tests/ -v --cov=agentic_sdlc --cov-report=xml --hypothesis-profile=ci
+          pytest tests/ -v --cov=agentic_sdlc --cov-report=xml --hypothesis-profile=ci --cov-branch
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
         with:
