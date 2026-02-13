@@ -1,0 +1,43 @@
+#!/bin/bash
+#
+# Git post-commit hook
+# Automatically bumps version and creates tags based on commit message
+
+# Prevent infinite loop - check if this commit already has version bump
+COMMIT_MSG=$(git log -1 --pretty=%B)
+if [[ "$COMMIT_MSG" == *"[version-bump]"* ]]; then
+    exit 0
+fi
+
+# Run version bump script
+SCRIPT_DIR="$(git rev-parse --show-toplevel)/scripts"
+python3 "$SCRIPT_DIR/version_bump.py" "$COMMIT_MSG"
+
+# Check if version was bumped
+if [ $? -eq 0 ]; then
+    # Check if VERSION file changed
+    if git diff --quiet VERSION pyproject.toml; then
+        # No changes, version wasn't bumped
+        exit 0
+    fi
+    
+    # Get new version
+    NEW_VERSION=$(cat VERSION | tr -d '\n')
+    
+    # Stage the version files
+    git add VERSION pyproject.toml
+    
+    # Amend the commit to include version changes with marker
+    GIT_COMMITTER_DATE="$(git log -1 --format=%cD)" \
+    git commit --amend -m "$COMMIT_MSG
+
+[version-bump] Auto-bumped to v$NEW_VERSION" --no-verify
+    
+    # Create git tag
+    git tag -a "v$NEW_VERSION" -m "Release version $NEW_VERSION" 2>/dev/null || true
+    
+    echo ""
+    echo "✓ Version bumped to: v$NEW_VERSION"
+    echo "✓ Created tag: v$NEW_VERSION"
+    echo "  Push with: git push && git push --tags"
+fi

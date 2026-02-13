@@ -40,11 +40,15 @@ class TestPackageStructure:
         pattern = r"^\d+\.\d+\.\d+$"
         assert re.match(pattern, __version__), f"Version {__version__} does not match semver"
 
-    def test_version_is_3_0_0(self) -> None:
-        """Test that version is 3.0.0 for SDK reorganization."""
+    def test_version_matches_version_file(self) -> None:
+        """Test that version matches the VERSION file."""
         from agentic_sdlc import __version__
 
-        assert __version__ == "3.0.0", f"Expected version 3.0.0, got {__version__}"
+        # Read version from VERSION file
+        version_file = Path(__file__).parent.parent.parent / "VERSION"
+        expected_version = version_file.read_text().strip()
+        
+        assert __version__ == expected_version, f"Expected version {expected_version}, got {__version__}"
 
 
 class TestPublicAPIImports:
