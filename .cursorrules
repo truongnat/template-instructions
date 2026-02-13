@@ -1,5 +1,10 @@
 # TeamLifecycle SDLC Roles
 
+> [!IMPORTANT]
+> **CONTEXT MAP**: This project uses the `agentic-sdlc` framework. Refer to `CONTEXT.md` for detailed framework structure, API usage, and configuration. Agents MUST read `CONTEXT.md` to understand the codebase.
+
+
+
 You have access to specialized SDLC roles. When user types a slash command, interpret it as the corresponding role tag:
 
 ## Role Commands
