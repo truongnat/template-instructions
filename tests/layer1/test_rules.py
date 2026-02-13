@@ -2,8 +2,8 @@
 import pytest
 from pathlib import Path
 
-RULES_DIR = Path(".agent/rules")
-GEMINI_FILE = Path("GEMINI.md")
+RULES_DIR = Path(__file__).parent.parent / ".agent" / "rules"
+GEMINI_FILE = Path(__file__).parent.parent / "GEMINI.md"
 
 def test_rules_directory_exists():
     assert RULES_DIR.exists()

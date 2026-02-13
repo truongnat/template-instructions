@@ -19,17 +19,20 @@ class AgenticSDLCError(Exception):
     """
 
     def __init__(
-        self, message: str, context: Optional[Dict[str, Any]] = None
+        self, message: str, context: Optional[Dict[str, Any]] = None, **kwargs: Any
     ) -> None:
         """Initialize the exception.
 
         Args:
             message: The error message
             context: Optional dictionary with additional context (e.g., field names, values)
+            **kwargs: Additional context fields to be merged into context
         """
         super().__init__(message)
         self.message = message
         self.context = context or {}
+        if kwargs:
+            self.context.update(kwargs)
 
     def __str__(self) -> str:
         """Return string representation of the exception."""

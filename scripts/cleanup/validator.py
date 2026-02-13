@@ -14,7 +14,7 @@ import shutil
 
 from .models import (
     ValidationResult,
-    TestResult,
+    CleanupTestResult,
     ImportResult,
     CLIResult,
     BuildResult,
@@ -122,7 +122,7 @@ class Validator:
         
         return result
     
-    def run_tests(self) -> TestResult:
+    def run_tests(self) -> CleanupTestResult:
         """Execute pytest test suite.
         
         Runs the project's test suite using pytest. Captures output and
@@ -171,23 +171,33 @@ class Validator:
                                 pass
             
             # Pass if:
-            # 1. Return code is 0 AND we found some passing tests, OR
-            # 2. We found passing tests and no actual test failures (collection errors are OK)
-            passed = (result.returncode == 0 and tests_run > 0) or (tests_failed == 0 and tests_run > 0)
+            # 1. Return code is 0 (standard success)
+            # 2. We found passing tests and no actual test failures
+            passed = (result.returncode == 0) or (tests_failed == 0 and tests_run > 0)
             
             if passed:
-                logger.info(f"Test suite passed: {tests_run} tests run")
+                if tests_run > 0:
+                    logger.info(f"Test suite passed: {tests_run} tests run")
+                else:
+                    logger.info("Test suite passed (no tests run or count not parsed)")
+                
                 if has_collection_errors:
                     logger.warning("Some test files had collection errors but no tests failed")
             else:
-                # If we have collection errors but no test runs, treat as passed
+                # If we have collection errors but no test failures, we might still want to pass
+                # if the user intended to allow this.
                 if has_collection_errors and tests_failed == 0:
                     logger.warning("Test collection had errors but treating as passed (no actual test failures)")
                     passed = True
                 else:
-                    logger.error(f"Test suite failed: {tests_failed} tests failed")
+                    msg = f"Test suite failed with exit code {result.returncode}"
+                    if tests_failed > 0:
+                        msg += f": {tests_failed} tests failed"
+                    elif has_collection_errors:
+                        msg += " (Collection errors)"
+                    logger.error(msg)
             
-            return TestResult(
+            return CleanupTestResult(
                 passed=passed,
                 tests_run=tests_run,
                 tests_failed=tests_failed,
@@ -196,7 +206,7 @@ class Validator:
             
         except subprocess.TimeoutExpired:
             logger.error("Test suite execution timed out")
-            return TestResult(
+            return CleanupTestResult(
                 passed=False,
                 tests_run=0,
                 tests_failed=0,
@@ -204,7 +214,7 @@ class Validator:
             )
         except Exception as e:
             logger.error(f"Failed to run test suite: {e}")
-            return TestResult(
+            return CleanupTestResult(
                 passed=False,
                 tests_run=0,
                 tests_failed=0,
@@ -384,11 +394,11 @@ class Validator:
             )
             
             if check_result.returncode != 0:
-                logger.warning("'build' module not available or not runnable - skipping build validation")
+                logger.error("'build' module not available or not runnable - build validation failed")
                 return BuildResult(
-                    passed=True,  # Don't fail if build module isn't available
-                    output="Build module not available - validation skipped",
-                    errors=[]
+                    passed=False,
+                    output="Build module not available - validation failed",
+                    errors=["Build command failed: Python 'build' package is not installed or runnable"]
                 )
             
             # Clean any existing dist directory

@@ -312,6 +312,10 @@ class TestDependencyVersionConstraints:
                 # Skip comments
                 if dep.startswith("#"):
                     continue
+                
+                # Skip self-references (e.g. agentic-sdlc[...])
+                if dep.startswith("agentic-sdlc"):
+                    continue
 
                 # Check for version operators
                 has_constraint = any(op in dep for op in [">=", "<=", "==", "!=", "~=", ">", "<"])

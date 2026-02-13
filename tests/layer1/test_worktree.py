@@ -6,7 +6,7 @@ Worktrunk workflow validation tests
 import pytest
 from pathlib import Path
 
-WORKTREE_WORKFLOW = Path("agentic_sdlc/defaults/workflows/worktree.md")
+WORKTREE_WORKFLOW = Path(__file__).parent.parent / "agentic_sdlc" / "defaults" / "workflows" / "worktree.md"
 
 
 class TestWorktreeWorkflowExists:

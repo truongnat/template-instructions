@@ -231,42 +231,51 @@ def test_migration_backup_error_handling(num_files, tmp_path):
     
     Validates: Requirements 16.4
     """
-    # Create backup directory
-    backup_dir = tmp_path / "backups" / "test_backup"
+    # Change to tmp_path to make it the working directory for this test
+    original_cwd = Path.cwd()
+    os.chdir(tmp_path)
     
-    # Create logger
-    log_file = tmp_path / "test_migration.log"
-    logger = MigrationLogger(log_file, verbose=False)
+    try:
+        # Create backup directory
+        backup_dir = tmp_path / "backups" / "test_backup"
+        
+        # Create logger
+        log_file = tmp_path / "test_migration.log"
+        logger = MigrationLogger(log_file, verbose=False)
+        
+        # Create backup manager
+        backup_manager = BackupManager(backup_dir, logger)
     
-    # Create backup manager
-    backup_manager = BackupManager(backup_dir, logger)
+        # Try to backup non-existent files
+        non_existent_files = []
+        for i in range(num_files):
+            file_path = tmp_path / f"non_existent_{i}.py"
+            non_existent_files.append(file_path)
+        
+        # Property: Backup manager should not crash on non-existent files
+        for file_path in non_existent_files:
+            try:
+                result = backup_manager.create_backup(file_path)
+                # Should return None for non-existent files
+                assert result is None, \
+                    f"Expected None for non-existent file, got {result}"
+            except Exception as e:
+                pytest.fail(f"Backup manager crashed on non-existent file: {e}")
+        
+        # Property: Backup manager should still be functional after errors
+        # Create a real file and verify backup works
+        real_file = tmp_path / "real_file.py"
+        real_file.write_text("test content")
+        
+        backup_path = backup_manager.create_backup(real_file)
+        assert backup_path is not None, \
+            "Backup manager is not functional after handling errors"
+        assert backup_path.exists(), \
+            "Backup file was not created after error handling"
     
-    # Try to backup non-existent files
-    non_existent_files = []
-    for i in range(num_files):
-        file_path = tmp_path / f"non_existent_{i}.py"
-        non_existent_files.append(file_path)
-    
-    # Property: Backup manager should not crash on non-existent files
-    for file_path in non_existent_files:
-        try:
-            result = backup_manager.create_backup(file_path)
-            # Should return None for non-existent files
-            assert result is None, \
-                f"Expected None for non-existent file, got {result}"
-        except Exception as e:
-            pytest.fail(f"Backup manager crashed on non-existent file: {e}")
-    
-    # Property: Backup manager should still be functional after errors
-    # Create a real file and verify backup works
-    real_file = tmp_path / "real_file.py"
-    real_file.write_text("test content")
-    
-    backup_path = backup_manager.create_backup(real_file)
-    assert backup_path is not None, \
-        "Backup manager is not functional after handling errors"
-    assert backup_path.exists(), \
-        "Backup file was not created after error handling"
+    finally:
+        # Restore original working directory
+        os.chdir(original_cwd)
 
 
 # Feature: sdlc-kit-improvements, Property 17: Post-Migration Test Success

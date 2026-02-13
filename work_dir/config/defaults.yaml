@@ -1,0 +1,531 @@
+# SDLC Kit Default Configuration
+# This file contains default configuration values for the SDLC Kit system.
+# Copy and customize this file for your specific environment.
+
+# =============================================================================
+# CORE SETTINGS
+# =============================================================================
+core:
+  # System identification
+  name: "sdlc-kit"
+  version: "1.0.0"
+  environment: "development"  # Options: development, production, test
+  
+  # Execution settings
+  timeout: 3600  # Default timeout in seconds (1 hour)
+  max_retries: 3  # Maximum number of retries for failed operations
+  retry_delay: 5  # Delay between retries in seconds
+  
+  # Storage settings
+  data_dir: "data"  # Directory for persistent data
+  state_dir: "states"  # Directory for workflow state files
+  artifact_dir: "artifacts"  # Directory for generated artifacts
+  
+  # Feature flags
+  features:
+    enable_caching: true
+    enable_metrics: true
+    enable_audit_logging: true
+    enable_health_checks: true
+
+# =============================================================================
+# AGENT CONFIGURATION
+# =============================================================================
+agents:
+  # Default agent settings
+  defaults:
+    timeout: 300  # Agent execution timeout in seconds (5 minutes)
+    max_iterations: 10  # Maximum iterations for agent loops
+    temperature: 0.7  # LLM temperature for agent responses
+    
+  # Agent type configurations
+  types:
+    # Business Analyst agent
+    ba:
+      role: "business_analyst"
+      capabilities:
+        - "requirements_gathering"
+        - "stakeholder_analysis"
+        - "documentation"
+      system_prompt: "You are a Business Analyst responsible for gathering and documenting requirements."
+      
+    # Product Manager agent
+    pm:
+      role: "product_manager"
+      capabilities:
+        - "product_planning"
+        - "prioritization"
+        - "roadmap_creation"
+      system_prompt: "You are a Product Manager responsible for product strategy and planning."
+      
+    # Software Architect agent
+    sa:
+      role: "software_architect"
+      capabilities:
+        - "system_design"
+        - "architecture_documentation"
+        - "technical_decisions"
+      system_prompt: "You are a Software Architect responsible for system design and architecture."
+      
+    # Implementation agent
+    implementation:
+      role: "developer"
+      capabilities:
+        - "code_generation"
+        - "code_review"
+        - "testing"
+        - "debugging"
+      system_prompt: "You are a Developer responsible for implementing features and writing code."
+      
+    # Research agent
+    research:
+      role: "researcher"
+      capabilities:
+        - "information_gathering"
+        - "analysis"
+        - "documentation"
+      system_prompt: "You are a Researcher responsible for gathering and analyzing information."
+      
+    # Quality Judge agent
+    quality_judge:
+      role: "quality_assurance"
+      capabilities:
+        - "code_review"
+        - "quality_assessment"
+        - "testing_strategy"
+      system_prompt: "You are a Quality Assurance specialist responsible for ensuring code quality."
+
+# =============================================================================
+# MODEL CONFIGURATION
+# =============================================================================
+models:
+  # Default model settings
+  default_provider: "gemini"  # Options: gemini, openai, ollama
+  
+  # Provider-specific configurations
+  providers:
+    gemini:
+      default_model: "gemini-2.0-flash"
+      available_models:
+        - "gemini-2.0-flash"
+        - "gemini-2.5-pro"
+      api_key_env: "GOOGLE_GENAI_API_KEY"  # Environment variable name
+      base_url: "https://generativelanguage.googleapis.com/v1beta/openai/"
+      timeout: 60
+      max_retries: 3
+      
+    openai:
+      default_model: "gpt-4o"
+      available_models:
+        - "gpt-4o"
+        - "gpt-4o-mini"
+        - "gpt-3.5-turbo"
+      api_key_env: "OPENAI_API_KEY"
+      timeout: 60
+      max_retries: 3
+      
+    ollama:
+      default_model: "llama2"
+      available_models:
+        - "llama2"
+        - "codellama"
+        - "mistral"
+      base_url: "http://localhost:11434"
+      timeout: 120
+      
+  # Model parameters
+  parameters:
+    temperature: 0.7  # Creativity level (0.0 - 1.0)
+    max_tokens: 4096  # Maximum tokens in response
+    top_p: 0.9  # Nucleus sampling parameter
+    frequency_penalty: 0.0  # Penalty for token frequency
+    presence_penalty: 0.0  # Penalty for token presence
+
+# =============================================================================
+# WORKFLOW CONFIGURATION
+# =============================================================================
+workflows:
+  # Default workflow settings
+  defaults:
+    timeout: 3600  # Workflow timeout in seconds (1 hour)
+    max_concurrent_tasks: 5  # Maximum parallel task execution
+    checkpoint_interval: 300  # Save state every 5 minutes
+    enable_rollback: true  # Enable workflow rollback on failure
+    
+  # Workflow execution modes
+  execution:
+    mode: "sequential"  # Options: sequential, parallel, hybrid
+    retry_failed_tasks: true
+    continue_on_error: false
+    
+  # Workflow state management
+  state:
+    persistence: true  # Persist workflow state to disk
+    compression: true  # Compress state files
+    retention_days: 30  # Keep state files for 30 days
+    
+  # Workflow types
+  types:
+    # Sprint workflow
+    sprint:
+      duration_days: 14
+      planning_hours: 4
+      review_hours: 2
+      retrospective_hours: 2
+      
+    # Emergency workflow
+    emergency:
+      priority: "critical"
+      max_response_time: 300  # 5 minutes
+      escalation_enabled: true
+      
+    # Housekeeping workflow
+    housekeeping:
+      schedule: "daily"
+      cleanup_enabled: true
+      backup_enabled: true
+
+# =============================================================================
+# LOGGING CONFIGURATION
+# =============================================================================
+logging:
+  # Log level settings
+  level: "INFO"  # Options: DEBUG, INFO, WARNING, ERROR, CRITICAL
+  
+  # Log output destinations
+  handlers:
+    console:
+      enabled: true
+      level: "INFO"
+      format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+      
+    file:
+      enabled: true
+      level: "DEBUG"
+      path: "logs/sdlc-kit.log"
+      max_bytes: 10485760  # 10 MB
+      backup_count: 5
+      format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s - %(pathname)s:%(lineno)d"
+      
+    json:
+      enabled: false
+      level: "INFO"
+      path: "logs/sdlc-kit.json"
+      
+  # Logger-specific settings
+  loggers:
+    "agentic_sdlc.core":
+      level: "INFO"
+    "agentic_sdlc.orchestration":
+      level: "INFO"
+    "agentic_sdlc.infrastructure":
+      level: "INFO"
+    "agentic_sdlc.intelligence":
+      level: "INFO"
+      
+  # Log formatting
+  format:
+    timestamp_format: "%Y-%m-%d %H:%M:%S"
+    include_context: true
+    include_traceback: true
+
+# =============================================================================
+# MONITORING CONFIGURATION
+# =============================================================================
+monitoring:
+  # Metrics collection
+  metrics:
+    enabled: true
+    collection_interval: 60  # Collect metrics every 60 seconds
+    retention_days: 90
+    
+    # Metric types to collect
+    types:
+      - "workflow_execution_time"
+      - "agent_response_time"
+      - "api_call_count"
+      - "error_rate"
+      - "memory_usage"
+      - "cpu_usage"
+      
+  # Health checks
+  health:
+    enabled: true
+    check_interval: 300  # Check every 5 minutes
+    
+    # Components to check
+    checks:
+      - name: "database"
+        enabled: true
+        timeout: 10
+        
+      - name: "api_connectivity"
+        enabled: true
+        timeout: 10
+        
+      - name: "disk_space"
+        enabled: true
+        threshold_percent: 90  # Alert if disk usage > 90%
+        
+      - name: "memory"
+        enabled: true
+        threshold_percent: 85  # Alert if memory usage > 85%
+        
+  # Alerting
+  alerts:
+    enabled: true
+    
+    # Alert channels
+    channels:
+      email:
+        enabled: false
+        recipients: []
+        
+      slack:
+        enabled: false
+        webhook_url: ""
+        
+      console:
+        enabled: true
+        
+    # Alert rules
+    rules:
+      - name: "high_error_rate"
+        condition: "error_rate > 0.05"  # Alert if error rate > 5%
+        severity: "warning"
+        
+      - name: "workflow_timeout"
+        condition: "workflow_duration > timeout"
+        severity: "error"
+        
+      - name: "disk_space_low"
+        condition: "disk_usage > 90"
+        severity: "critical"
+
+# =============================================================================
+# SECURITY CONFIGURATION
+# =============================================================================
+security:
+  # Secrets management
+  secrets:
+    provider: "environment"  # Options: environment, file, vault
+    encryption_enabled: false
+    encryption_algorithm: "fernet"
+    
+  # API key management
+  api_keys:
+    rotation_enabled: false
+    rotation_days: 90
+    
+  # Audit logging
+  audit:
+    enabled: true
+    log_path: "logs/audit.log"
+    
+    # Events to audit
+    events:
+      - "authentication"
+      - "authorization"
+      - "secret_access"
+      - "configuration_change"
+      - "workflow_execution"
+      
+  # Input validation
+  validation:
+    enabled: true
+    sanitize_inputs: true
+    max_input_length: 10000
+    
+  # Rate limiting
+  rate_limiting:
+    enabled: false
+    requests_per_minute: 60
+    burst_size: 10
+
+# =============================================================================
+# CLI CONFIGURATION
+# =============================================================================
+cli:
+  # Output formatting
+  output:
+    format: "text"  # Options: text, json, yaml
+    color_enabled: true
+    verbose: false
+    
+  # Command defaults
+  commands:
+    workflow:
+      validate_before_run: true
+      show_progress: true
+      
+    agent:
+      interactive_mode: false
+      
+    validate:
+      strict_mode: false
+      
+  # Interactive features
+  interactive:
+    enabled: true
+    prompt_style: "default"
+    history_enabled: true
+    history_file: ".sdlc_history"
+
+# =============================================================================
+# TESTING CONFIGURATION
+# =============================================================================
+testing:
+  # Test execution settings
+  execution:
+    parallel: true
+    max_workers: 4
+    timeout: 300
+    
+  # Test types
+  types:
+    unit:
+      enabled: true
+      coverage_threshold: 80
+      
+    integration:
+      enabled: true
+      coverage_threshold: 70
+      
+    e2e:
+      enabled: true
+      
+    property:
+      enabled: true
+      iterations: 100  # Hypothesis iterations
+      
+  # Test data
+  fixtures:
+    auto_generate: true
+    seed: 42  # Random seed for reproducibility
+    
+  # Coverage reporting
+  coverage:
+    enabled: true
+    format: "html"  # Options: html, xml, json
+    output_dir: "coverage"
+    fail_under: 80
+
+# =============================================================================
+# DATABASE CONFIGURATION (if applicable)
+# =============================================================================
+database:
+  # Connection settings
+  provider: "sqlite"  # Options: sqlite, postgresql, mysql
+  
+  sqlite:
+    path: "data/sdlc-kit.db"
+    timeout: 30
+    
+  postgresql:
+    host: "localhost"
+    port: 5432
+    database: "sdlc_kit"
+    username: ""
+    password: ""
+    pool_size: 10
+    
+  # Migration settings
+  migrations:
+    auto_migrate: false
+    backup_before_migrate: true
+
+# =============================================================================
+# CACHE CONFIGURATION
+# =============================================================================
+cache:
+  # Cache settings
+  enabled: true
+  provider: "memory"  # Options: memory, redis, file
+  
+  memory:
+    max_size_mb: 100
+    ttl_seconds: 3600
+    
+  redis:
+    host: "localhost"
+    port: 6379
+    db: 0
+    password: ""
+    
+  file:
+    path: "cache"
+    max_size_mb: 500
+
+# =============================================================================
+# INTEGRATION CONFIGURATION
+# =============================================================================
+integrations:
+  # GitHub integration
+  github:
+    enabled: false
+    api_token_env: "GITHUB_TOKEN"
+    base_url: "https://api.github.com"
+    timeout: 30
+    
+  # Slack integration
+  slack:
+    enabled: false
+    webhook_url_env: "SLACK_WEBHOOK_URL"
+    bot_token_env: "SLACK_BOT_TOKEN"
+    
+  # Jira integration
+  jira:
+    enabled: false
+    base_url: ""
+    username_env: "JIRA_USERNAME"
+    api_token_env: "JIRA_API_TOKEN"
+    
+  # Email integration
+  email:
+    enabled: false
+    smtp_host: "smtp.gmail.com"
+    smtp_port: 587
+    username_env: "EMAIL_USERNAME"
+    password_env: "EMAIL_PASSWORD"
+    use_tls: true
+
+# =============================================================================
+# DEVELOPMENT SETTINGS
+# =============================================================================
+development:
+  # Debug settings
+  debug_mode: false
+  verbose_logging: false
+  
+  # Hot reload
+  hot_reload: false
+  watch_paths:
+    - "agentic_sdlc"
+    - "config"
+    
+  # Development tools
+  tools:
+    profiling_enabled: false
+    memory_profiling: false
+    
+# =============================================================================
+# PRODUCTION SETTINGS
+# =============================================================================
+production:
+  # Performance optimization
+  optimization:
+    enable_caching: true
+    enable_compression: true
+    connection_pooling: true
+    
+  # Reliability
+  reliability:
+    auto_restart: true
+    max_restart_attempts: 3
+    health_check_interval: 60
+    
+  # Resource limits
+  limits:
+    max_memory_mb: 2048
+    max_cpu_percent: 80
+    max_concurrent_workflows: 10

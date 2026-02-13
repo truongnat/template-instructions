@@ -269,7 +269,7 @@ class RestoreResult:
 
 
 @dataclass
-class TestResult:
+class CleanupTestResult:
     """Results from test suite execution.
     
     Attributes:

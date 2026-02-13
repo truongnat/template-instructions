@@ -115,6 +115,10 @@ class TestDependencyVersionConstraints:
             for dep in deps:
                 package_name, version_spec = parse_dependency_spec(dep)
 
+                # Skip self-reference without version spec (common pattern for 'all' extra)
+                if package_name == "agentic-sdlc" and not version_spec:
+                    continue
+
                 if not is_valid_version_constraint(version_spec):
                     unconstrained.append(
                         f"{section}: {package_name} (spec: '{version_spec}')"

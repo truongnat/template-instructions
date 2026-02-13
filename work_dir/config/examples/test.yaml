@@ -1,0 +1,259 @@
+# SDLC Kit Test Environment Configuration
+# This configuration is optimized for automated testing with fast execution,
+# minimal external dependencies, and deterministic behavior.
+
+# =============================================================================
+# CORE SETTINGS
+# =============================================================================
+core:
+  name: "sdlc-kit-test"
+  version: "1.0.0"
+  environment: "test"
+  
+  timeout: 300  # 5 minutes for tests
+  max_retries: 1  # Minimal retries for faster test execution
+  retry_delay: 1
+  
+  data_dir: "data/test"
+  state_dir: "states/test"
+  artifact_dir: "artifacts/test"
+  
+  features:
+    enable_caching: false  # Disabled for test isolation
+    enable_metrics: false  # Disabled to reduce overhead
+    enable_audit_logging: false  # Disabled for tests
+    enable_health_checks: false  # Disabled for tests
+
+# =============================================================================
+# AGENT CONFIGURATION
+# =============================================================================
+agents:
+  defaults:
+    timeout: 60  # 1 minute for test agents
+    max_iterations: 5  # Limited iterations for tests
+    temperature: 0.0  # Deterministic responses for testing
+    
+  types:
+    ba:
+      role: "business_analyst"
+      capabilities:
+        - "requirements_gathering"
+        - "documentation"
+      system_prompt: "You are a Business Analyst in test mode. Provide minimal, deterministic responses."
+      
+    implementation:
+      role: "developer"
+      capabilities:
+        - "code_generation"
+        - "testing"
+      system_prompt: "You are a Developer in test mode. Generate simple, testable code."
+
+# =============================================================================
+# MODEL CONFIGURATION
+# =============================================================================
+models:
+  default_provider: "gemini"
+  
+  providers:
+    gemini:
+      default_model: "gemini-2.0-flash"  # Fast model for testing
+      api_key_env: "GOOGLE_GENAI_API_KEY_TEST"
+      base_url: "https://generativelanguage.googleapis.com/v1beta/openai/"
+      timeout: 30
+      max_retries: 1
+      
+    # Mock provider for unit tests
+    mock:
+      default_model: "mock-model"
+      timeout: 1
+      
+  parameters:
+    temperature: 0.0  # Deterministic for testing
+    max_tokens: 1024  # Smaller for faster tests
+    top_p: 1.0
+    frequency_penalty: 0.0
+    presence_penalty: 0.0
+
+# =============================================================================
+# WORKFLOW CONFIGURATION
+# =============================================================================
+workflows:
+  defaults:
+    timeout: 300  # 5 minutes
+    max_concurrent_tasks: 2  # Limited for test stability
+    checkpoint_interval: 30  # Frequent checkpoints for test verification
+    enable_rollback: true
+    
+  execution:
+    mode: "sequential"  # Sequential for deterministic testing
+    retry_failed_tasks: false  # No retries in tests
+    continue_on_error: false  # Fail fast in tests
+    
+  state:
+    persistence: true
+    compression: false  # Uncompressed for test inspection
+    retention_days: 1  # Clean up quickly
+
+# =============================================================================
+# LOGGING CONFIGURATION
+# =============================================================================
+logging:
+  level: "WARNING"  # Minimal logging for tests
+  
+  handlers:
+    console:
+      enabled: false  # Disabled to reduce test output noise
+      level: "ERROR"
+      format: "%(levelname)s - %(message)s"
+      
+    file:
+      enabled: true
+      level: "DEBUG"  # Detailed logs for debugging test failures
+      path: "logs/test/sdlc-kit-test.log"
+      max_bytes: 1048576  # 1 MB
+      backup_count: 2
+      format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+      
+  loggers:
+    "agentic_sdlc.core":
+      level: "WARNING"
+    "agentic_sdlc.orchestration":
+      level: "WARNING"
+    "agentic_sdlc.infrastructure":
+      level: "WARNING"
+    "agentic_sdlc.intelligence":
+      level: "WARNING"
+
+# =============================================================================
+# MONITORING CONFIGURATION
+# =============================================================================
+monitoring:
+  metrics:
+    enabled: false  # Disabled for tests
+    
+  health:
+    enabled: false  # Disabled for tests
+    
+  alerts:
+    enabled: false  # Disabled for tests
+
+# =============================================================================
+# SECURITY CONFIGURATION
+# =============================================================================
+security:
+  secrets:
+    provider: "environment"
+    encryption_enabled: false  # Disabled for test simplicity
+    
+  audit:
+    enabled: false  # Disabled for tests
+    
+  validation:
+    enabled: true
+    sanitize_inputs: true
+    max_input_length: 5000  # Smaller for tests
+    
+  rate_limiting:
+    enabled: false  # Disabled for tests
+
+# =============================================================================
+# CLI CONFIGURATION
+# =============================================================================
+cli:
+  output:
+    format: "text"
+    color_enabled: false  # Disabled for test output parsing
+    verbose: false
+    
+  commands:
+    workflow:
+      validate_before_run: true
+      show_progress: false
+      
+  interactive:
+    enabled: false  # Disabled for automated tests
+
+# =============================================================================
+# TESTING CONFIGURATION
+# =============================================================================
+testing:
+  execution:
+    parallel: true
+    max_workers: 4
+    timeout: 120  # 2 minutes per test
+    
+  types:
+    unit:
+      enabled: true
+      coverage_threshold: 80
+      
+    integration:
+      enabled: true
+      coverage_threshold: 70
+      
+    e2e:
+      enabled: true
+      
+    property:
+      enabled: true
+      iterations: 100  # Standard iterations for property tests
+      
+  fixtures:
+    auto_generate: true
+    seed: 42  # Fixed seed for reproducibility
+    
+  coverage:
+    enabled: true
+    format: "xml"
+    output_dir: "coverage/test"
+    fail_under: 80
+
+# =============================================================================
+# DATABASE CONFIGURATION
+# =============================================================================
+database:
+  provider: "sqlite"
+  
+  sqlite:
+    path: ":memory:"  # In-memory database for tests
+    timeout: 5
+
+# =============================================================================
+# CACHE CONFIGURATION
+# =============================================================================
+cache:
+  enabled: false  # Disabled for test isolation
+  
+  memory:
+    max_size_mb: 10
+    ttl_seconds: 60
+
+# =============================================================================
+# INTEGRATION CONFIGURATION
+# =============================================================================
+integrations:
+  # All integrations disabled for test isolation
+  github:
+    enabled: false
+    
+  slack:
+    enabled: false
+    
+  jira:
+    enabled: false
+    
+  email:
+    enabled: false
+
+# =============================================================================
+# DEVELOPMENT SETTINGS
+# =============================================================================
+development:
+  debug_mode: false
+  verbose_logging: false
+  
+  hot_reload: false
+  
+  tools:
+    profiling_enabled: false
+    memory_profiling: false

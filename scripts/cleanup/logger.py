@@ -63,22 +63,24 @@ class CleanupLogger:
         logger.addHandler(console_handler)
         
         # File handler for detailed logs
-        log_dir = Path("logs")
-        log_dir.mkdir(exist_ok=True)
-        
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        log_file = log_dir / f"cleanup_{timestamp}.log"
-        
-        file_handler = logging.FileHandler(log_file)
-        file_handler.setLevel(logging.DEBUG)  # Always DEBUG for file
-        file_formatter = logging.Formatter(
-            '%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-            datefmt='%Y-%m-%d %H:%M:%S'
-        )
-        file_handler.setFormatter(file_formatter)
-        logger.addHandler(file_handler)
-        
-        logger.info(f"Logging initialized. Log file: {log_file}")
+        try:
+            log_dir = Path("logs")
+            log_dir.mkdir(exist_ok=True)
+            
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            log_file = log_dir / f"cleanup_{timestamp}.log"
+            
+            file_handler = logging.FileHandler(log_file)
+            file_handler.setLevel(logging.DEBUG)  # Always DEBUG for file
+            file_formatter = logging.Formatter(
+                '%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                datefmt='%Y-%m-%d %H:%M:%S'
+            )
+            file_handler.setFormatter(file_formatter)
+            logger.addHandler(file_handler)
+            logger.info(f"Logging initialized. Log file: {log_file}")
+        except (PermissionError, FileNotFoundError) as e:
+            logger.warning(f"Could not initialize file logging: {e}. Falling back to console-only logging.")
         
         return logger
     

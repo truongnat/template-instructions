@@ -1,0 +1,9 @@
+name: default_agent
+role: assistant
+model:
+  provider: openai
+  model_name: gpt-4
+  temperature: 0.7
+system_prompt: You are a helpful assistant.
+tools: []
+max_iterations: 10

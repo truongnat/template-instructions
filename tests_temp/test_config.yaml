@@ -1,0 +1,237 @@
+# Test Configuration for SDLC Kit Test Suite
+# This file contains settings and configuration for running tests
+
+# General test settings
+general:
+  # Test environment
+  environment: test
+  
+  # Logging configuration for tests
+  log_level: DEBUG
+  log_to_file: false
+  log_file: tests/test_run.log
+  
+  # Test execution settings
+  fail_fast: false
+  verbose: true
+  show_capture: true
+  
+  # Parallel execution settings
+  parallel: false
+  num_workers: 4
+
+# Test discovery patterns
+discovery:
+  # Patterns for test file discovery
+  test_file_patterns:
+    - "test_*.py"
+    - "*_test.py"
+  
+  # Directories to search for tests
+  test_directories:
+    - "tests/unit"
+    - "tests/integration"
+    - "tests/e2e"
+    - "tests/property"
+  
+  # Patterns to exclude from test discovery
+  exclude_patterns:
+    - "__pycache__"
+    - "*.pyc"
+    - ".pytest_cache"
+    - "fixtures"
+
+# Test type configurations
+test_types:
+  # Unit test configuration
+  unit:
+    enabled: true
+    timeout: 30  # seconds
+    markers:
+      - unit
+    coverage_threshold: 80
+  
+  # Integration test configuration
+  integration:
+    enabled: true
+    timeout: 120  # seconds
+    markers:
+      - integration
+    coverage_threshold: 70
+  
+  # End-to-end test configuration
+  e2e:
+    enabled: true
+    timeout: 300  # seconds
+    markers:
+      - e2e
+    coverage_threshold: 60
+  
+  # Property-based test configuration
+  property:
+    enabled: true
+    timeout: 180  # seconds
+    markers:
+      - property
+      - slow
+    # Hypothesis settings (reduced for faster execution)
+    max_examples: 5
+    max_iterations: 100
+    verbosity: normal
+
+# Coverage configuration
+coverage:
+  enabled: true
+  source:
+    - "agentic_sdlc"
+  omit:
+    - "*/tests/*"
+    - "*/lib/*"
+    - "*/__pycache__/*"
+    - "*/site-packages/*"
+  report_formats:
+    - terminal
+    - html
+    - xml
+  html_dir: htmlcov
+  xml_file: coverage.xml
+  fail_under: 80
+
+# Mock and fixture settings
+fixtures:
+  # Fixture directories
+  fixture_dirs:
+    - "tests/fixtures"
+  
+  # Mock data settings
+  mock_data:
+    enabled: true
+    cache_mocks: true
+  
+  # Factory settings
+  factories:
+    enabled: true
+    use_faker: true
+
+# External dependencies for tests
+dependencies:
+  # API testing
+  api:
+    mock_by_default: true
+    timeout: 30
+    retry_attempts: 3
+  
+  # Database testing
+  database:
+    use_in_memory: true
+    reset_between_tests: true
+  
+  # File system testing
+  filesystem:
+    use_temp_dirs: true
+    cleanup_after_tests: true
+
+# Performance testing settings
+performance:
+  enabled: false
+  benchmarks:
+    enabled: false
+    warmup_rounds: 3
+    test_rounds: 10
+  profiling:
+    enabled: false
+    output_dir: tests/profiling
+
+# CI/CD specific settings
+ci:
+  # Settings for CI/CD environments
+  enabled: false
+  
+  # Hypothesis profile for CI (reduced for faster execution)
+  hypothesis_profile: ci
+  hypothesis_max_examples: 20
+  
+  # Extended test runs
+  extended_tests: false
+  
+  # Reporting
+  junit_xml: test-results.xml
+  coverage_report: true
+
+# Test data paths
+test_data:
+  # Sample configuration files
+  sample_configs:
+    workflow: "tests/fixtures/sample_workflow.yaml"
+    agent: "tests/fixtures/sample_agent.yaml"
+    rule: "tests/fixtures/sample_rule.yaml"
+    skill: "tests/fixtures/sample_skill.yaml"
+  
+  # Mock data files
+  mock_data:
+    api_responses: "tests/fixtures/mock_api_responses.json"
+    error_responses: "tests/fixtures/mock_error_responses.json"
+
+# Marker configurations
+markers:
+  # Custom markers for test categorization
+  unit: "Unit tests for individual components"
+  integration: "Integration tests for component interactions"
+  e2e: "End-to-end tests for complete workflows"
+  property: "Property-based tests using Hypothesis"
+  slow: "Tests that take significant time to run"
+  requires_api: "Tests that require external API access"
+  requires_db: "Tests that require database access"
+  skip_ci: "Tests to skip in CI/CD environments"
+
+# Plugin configurations
+plugins:
+  # pytest-cov plugin
+  cov:
+    enabled: true
+    branch: true
+    
+  # pytest-xdist plugin (parallel execution)
+  xdist:
+    enabled: false
+    num_workers: auto
+  
+  # pytest-timeout plugin
+  timeout:
+    enabled: true
+    timeout: 300
+    method: thread
+  
+  # pytest-mock plugin
+  mock:
+    enabled: true
+
+# Reporting settings
+reporting:
+  # Console output
+  console:
+    verbose: true
+    show_locals: true
+    show_capture: log
+  
+  # HTML report
+  html:
+    enabled: false
+    output_dir: test-reports
+  
+  # JUnit XML report
+  junit:
+    enabled: false
+    output_file: junit.xml
+  
+  # JSON report
+  json:
+    enabled: false
+    output_file: test-report.json
+
+# Cleanup settings
+cleanup:
+  # Cleanup after test runs
+  remove_temp_files: true
+  remove_cache: false
+  remove_logs: false

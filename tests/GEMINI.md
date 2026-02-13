@@ -1,0 +1,1 @@
+MANDATORY ENFORCEMENT RULES\nPre-Flight Checklist\nGate 1: PRE-TASK

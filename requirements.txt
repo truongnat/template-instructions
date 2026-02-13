@@ -39,7 +39,7 @@ propcache>=0.2.0
 yarl>=1.9.0
 
 # AI and ML - OpenAI
-openai==2.16.0
+openai>=2.16.0
 tiktoken==0.12.0
 
 # AI and ML - Anthropic
@@ -58,9 +58,9 @@ safetensors>=0.4.0
 huggingface-hub>=0.20.0
 
 # AI and ML - MLX (Apple Silicon)
-mlx==0.30.4
-mlx-lm==0.29.1
-mlx-metal==0.30.4
+mlx==0.30.4; sys_platform == 'darwin' and platform_machine == 'arm64'
+mlx-lm==0.29.1; sys_platform == 'darwin' and platform_machine == 'arm64'
+mlx-metal==0.30.4; sys_platform == 'darwin' and platform_machine == 'arm64'
 
 # AI and ML - Sentence Transformers
 sentence-transformers==5.2.2
@@ -69,16 +69,13 @@ sentence-transformers==5.2.2
 leann-core==0.3.6
 leann-backend-hnsw>=0.3.0
 
-# LlamaIndex
-llama-index>=0.10.0
-llama-index-instrumentation==0.4.2
 
 # DSPy
 dspy-ai>=2.1.0
 
 # AutoGen
-autogen-agentchat>=0.4.0
-autogen-ext[openai]>=0.4.0
+autogen-agentchat>=0.4.2
+autogen-ext[openai]>=0.4.2
 
 # Scientific Computing
 numpy>=1.26.0

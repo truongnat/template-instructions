@@ -103,7 +103,7 @@ def kb_dir(agent_dir):
 @pytest.fixture
 def tools_dir(project_root):
     """Return agentic_sdlc directory path (formerly tools)."""
-    return project_root / "agentic_sdlc"
+    return project_root / "src" / "agentic_sdlc"
 
 
 @pytest.fixture

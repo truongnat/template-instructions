@@ -48,9 +48,9 @@ site/
 .DS_Store
 
 # Project specific
-tests/
-examples/
-scripts/
+# tests/
+# examples/
+# scripts/
 .kiro/
 .brain/
 .cleanup_backup/

@@ -18,7 +18,7 @@ import shutil
 from scripts.cleanup.validator import Validator
 from scripts.cleanup.models import (
     ValidationResult,
-    TestResult,
+    CleanupTestResult,
     ImportResult,
     CLIResult,
     BuildResult,

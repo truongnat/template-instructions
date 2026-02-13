@@ -55,4 +55,4 @@ safety>=3.0.0
 
 # API Testing
 tavily-python>=0.3.0
-brave-search>=1.0.0
+brave-search>=0.2.0

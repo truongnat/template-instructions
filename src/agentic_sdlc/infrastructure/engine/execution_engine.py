@@ -1,6 +1,6 @@
 """Execution engine for running tasks."""
 
-from typing import Any, Callable, Dict, Optional
+from typing import Any, Callable, Dict, Optional, List
 from dataclasses import dataclass, field
 
 
@@ -107,3 +107,81 @@ class ExecutionEngine:
             The result if the task has been executed, None otherwise.
         """
         return self._results.get(task_name)
+
+
+class ConcurrentExecutor(ExecutionEngine):
+    """Executor that runs tasks in parallel using threads.
+    
+    Equivalent to Swarms' concurrent task execution.
+    """
+    
+    def execute(self) -> Dict[str, Any]:
+        """Execute all tasks in parallel."""
+        import concurrent.futures
+        
+        self._results = {}
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            future_to_name = {
+                executor.submit(self._executor.execute, task): name 
+                for name, task in self._tasks.items()
+            }
+            for future in concurrent.futures.as_completed(future_to_name):
+                name = future_to_name[future]
+                self._results[name] = future.result()
+                
+        return self._results
+
+
+class OutputSynthesizer:
+    """Synthesizes multiple outputs into a single coherent response.
+    
+    Equivalent to Swarms' output synthesis logic.
+    """
+    
+    def synthesize(self, outputs: List[Any], context: Optional[str] = None) -> str:
+        """Synthesize multiple outputs.
+        
+        Args:
+            outputs: List of results to synthesize.
+            context: Optional context for synthesis.
+            
+        Returns:
+            A single synthesized string result.
+        """
+        if not outputs:
+            return ""
+        
+        # Simple implementation: join with separators and add context
+        header = f"Synthesized Output (Context: {context})\n" if context else "Synthesized Output\n"
+        body = "\n---\n".join(str(o) for o in outputs)
+        return header + body
+
+
+class FeedbackProtocol:
+    """Handles agent-to-agent or user-to-agent feedback loops.
+    
+    Equivalent to Swarms' feedback protocols.
+    """
+    
+    def __init__(self) -> None:
+        self.history = []
+    
+    def process_feedback(self, target: str, feedback: str, score: Optional[float] = None) -> Dict[str, Any]:
+        """Process and store feedback.
+        
+        Args:
+            target: The recipient of the feedback.
+            feedback: The feedback message.
+            score: Optional numeric score (0-1).
+            
+        Returns:
+            Status of feedback processing.
+        """
+        entry = {
+            "target": target,
+            "feedback": feedback,
+            "score": score,
+            "timestamp": __import__("datetime").datetime.now().isoformat()
+        }
+        self.history.append(entry)
+        return {"status": "success", "processed_at": entry["timestamp"]}

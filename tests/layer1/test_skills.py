@@ -3,7 +3,7 @@ import pytest
 import os
 from pathlib import Path
 
-SKILLS_DIR = Path(".agent/skills")
+SKILLS_DIR = Path(__file__).parent.parent / ".agent" / "skills"
 
 def test_skills_directory_exists():
     assert SKILLS_DIR.exists()

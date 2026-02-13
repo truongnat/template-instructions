@@ -98,7 +98,7 @@ class TestTypeHintCoverage:
         """
         # Feature: sdlc-kit-improvements, Property 10: Type Hint Coverage
         
-        core_dir = ROOT_DIR / 'agentic_sdlc' / 'core'
+        core_dir = ROOT_DIR / 'src' / 'agentic_sdlc' / 'core'
         if not core_dir.exists():
             pytest.skip("Core directory not found")
         
@@ -140,7 +140,7 @@ class TestTypeHintCoverage:
         """
         # Feature: sdlc-kit-improvements, Property 10: Type Hint Coverage
         
-        orch_dir = ROOT_DIR / 'agentic_sdlc' / 'orchestration'
+        orch_dir = ROOT_DIR / 'src' / 'agentic_sdlc' / 'orchestration'
         if not orch_dir.exists():
             pytest.skip("Orchestration directory not found")
         
@@ -179,7 +179,7 @@ class TestTypeHintCoverage:
         """
         # Feature: sdlc-kit-improvements, Property 10: Type Hint Coverage
         
-        infra_dir = ROOT_DIR / 'agentic_sdlc' / 'infrastructure'
+        infra_dir = ROOT_DIR / 'src' / 'agentic_sdlc' / 'infrastructure'
         if not infra_dir.exists():
             pytest.skip("Infrastructure directory not found")
         
@@ -218,7 +218,7 @@ class TestTypeHintCoverage:
         """
         # Feature: sdlc-kit-improvements, Property 10: Type Hint Coverage
         
-        intel_dir = ROOT_DIR / 'agentic_sdlc' / 'intelligence'
+        intel_dir = ROOT_DIR / 'src' / 'agentic_sdlc' / 'intelligence'
         if not intel_dir.exists():
             pytest.skip("Intelligence directory not found")
         
@@ -259,7 +259,7 @@ class TestTypeHintCoverage:
         """
         # Feature: sdlc-kit-improvements, Property 10: Type Hint Coverage
         
-        py_typed_path = ROOT_DIR / 'agentic_sdlc' / 'py.typed'
+        py_typed_path = ROOT_DIR / 'src' / 'agentic_sdlc' / 'py.typed'
         assert py_typed_path.exists(), (
             "py.typed marker file not found. This file is required to indicate "
             "that the package supports type hints."
@@ -281,7 +281,7 @@ class TestTypeHintCoverage:
         """
         # Feature: sdlc-kit-improvements, Property 10: Type Hint Coverage
         
-        module_dir = ROOT_DIR / 'agentic_sdlc' / module_name
+        module_dir = ROOT_DIR / 'src' / 'agentic_sdlc' / module_name
         if not module_dir.exists():
             pytest.skip(f"Module {module_name} not found")
         

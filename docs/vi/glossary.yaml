@@ -136,13 +136,11 @@ terms:
   - Deployment
   - Infrastructure
 - english: WorkflowBuilder
-  vietnamese: Bộ xây dựng workflow
-  description: Component để định nghĩa và xây dựng workflow
+  vietnamese: ÞmËÛ
+  description: Test term
   usage_examples:
-  - WorkflowBuilder tạo workflow với các steps
-  related_terms:
-  - Workflow
-  - WorkflowStep
+  - Example usage
+  related_terms: []
 - english: WorkflowEngine
   vietnamese: "\x82\x03\U00039973ô&KÉ\x18Å\U000F676AGI+i<Æï\x9B"
   description: Test term
@@ -326,13 +324,11 @@ terms:
   - Example
   - Sample
 - english: Diagram
-  vietnamese: Sơ đồ
-  description: Biểu đồ trực quan hóa kiến trúc hoặc flow
+  vietnamese: ³0J𐾵à'ü[<󏺵¡򚤍J
+  description: Test term
   usage_examples:
-  - Architecture diagram hiển thị system components
-  related_terms:
-  - Visualization
-  - Architecture
+  - Example usage
+  related_terms: []
 - english: API Key
   vietnamese: Khóa API
   description: Mã bí mật để xác thực với API
@@ -383,7 +379,7 @@ terms:
   - Orchestration
   - Deployment
 - english: AAA
-  vietnamese: AAA
+  vietnamese: "\x8Ahk"
   description: Test term
   usage_examples:
   - Example usage
@@ -945,8 +941,8 @@ terms:
   usage_examples:
   - Example usage
   related_terms: []
-- english: FfP
-  vietnamese: '&g񬶍'
+- english: Ffp
+  vietnamese: "\x1FÛ\U000F3C77"
   description: Test term
   usage_examples:
   - Example usage
@@ -1088,6 +1084,1401 @@ terms:
   related_terms: []
 - english: ZxCT
   vietnamese: "'\U0008359E1Àº\U000AE41B\U0009DA83\U00104C4A\x91\U00065DA3¼\x94IT"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: iNdyohJ
+  vietnamese: 'TRUE'
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: dNBkKzHh
+  vietnamese: "\x12òÂK\x1C\x97\x03"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: qqsBarGxu
+  vietnamese: "¾/D\x84\U000AA3BB\0%\U00013933Ku÷\U00088CA5\x89\U0005ABA4/95Þª2\x8A\
+    y.\U00059FED"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: FRFIr
+  vietnamese: "0e\x95\x9D"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: sbWiODncyzptytgB
+  vietnamese: "\x9F\r¹SÄ{GMVÆ"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: GSKMHi
+  vietnamese: helpers
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: rzYTlOYma
+  vietnamese: "\U0005C8C2\"Õñ\U000BDA0A\v\U00084609"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: zoplMgh
+  vietnamese: -Infinity
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: tYN
+  vietnamese: tYN
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: bZSlYEE
+  vietnamese: '!󡙛Âù蹳'
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: qGZVnYnOktiTl
+  vietnamese: "PçëÐ\x17\U000E61FB\f&¹\x9A\U000D5A19d½³\x054ÍÕÀ"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: Dockerfile
+  vietnamese: "ñ\x8BÙµ"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: XcIYGZOizplNxHrCP
+  vietnamese: "Â+\x9E\x1Cðµ­Ôv«O\a\U00071AB7\x96Ûý\U0003154A£8"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: ibE
+  vietnamese: "¼\fc#»­8\x8B"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: GvFVayuBv
+  vietnamese: "\U000CAFE3µ¿\x14\U0004A958X"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: PIxiGlG
+  vietnamese: None
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: OwB
+  vietnamese: \òa0¹N
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: uAUcuNPjedLpSQq
+  vietnamese: "çÝn\U00019557á·\x17\x9Dð"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: CchnkI
+  vietnamese: Ñ𰏽¡E
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: NIj
+  vietnamese: "ÚgL\x83íS»?0Î"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: hpJwo
+  vietnamese: "\b\x8D\U000BFBC0}\x02E\U000883C8"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: gMjob
+  vietnamese: ËÀ𞳲
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: PlYih
+  vietnamese: PlYih
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: BzdDhWs
+  vietnamese: BzdDhWs
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: JIYok
+  vietnamese: JIYok
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: WKUam
+  vietnamese: "í\U00099BC3Û\U000264FCÒ­C\U000D54E6\x05-"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: nFbKb
+  vietnamese: "\U000580D7a\x03l\0\x81"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: RlkeZVwhvYy
+  vietnamese: <g膲
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: XCJo
+  vietnamese: "Þ\U0007247DN\x82½\U000C48D2\x052Tû@ \x9Eâ(&íô6Ê\x8B\x7F"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: brSFsT
+  vietnamese: flatten_dict
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: IIHYO
+  vietnamese: "Ð=äèkéa°\\à⟂\x83?\x90ï2ô\U00038361q\U0008D1B6ð\x0F\x15"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: hjJzvJBi
+  vietnamese: 'true'
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: yfjjsUei
+  vietnamese: "ÇJ\x84Ä\x18ðÚcæ\x04\U00010AAF\x8Dð\x19?\x84"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: YxBUuTxIin
+  vietnamese: d|I[]
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: ckzIJQkzc
+  vietnamese: ckzIJQkzc
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: neK
+  vietnamese: neK
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: dDmPrKgglWNTXm
+  vietnamese: dDmPrKgglWNTXm
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: IcNHzW
+  vietnamese: hÊU𼕾񢝶(
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: helpers
+  vietnamese: "\U000401E5\x1EYf_"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: MokiZDoFpnnJv
+  vietnamese: "\x84SÎ"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: Kkc
+  vietnamese: "\U0003A0DF\x87N\U0008D62F\U0006EBF2c"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: egH
+  vietnamese: "µ\x1DÃ"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: Tfq
+  vietnamese: "½·Íx÷\U0001A0C1½´C³\x1F"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: DDV
+  vietnamese: ÜÅz񵸫Îx<@ö
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: MSTJ
+  vietnamese: ',./;''[]\-=<>?:"{}|_+!@#$%^&*()`~'
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: seKtvSoa
+  vietnamese: \jÉÙ h
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: nWOz
+  vietnamese: nWOz
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: QuwieAypzSngl
+  vietnamese: QuwieAypzSngl
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: bXBJQfwtvcBre
+  vietnamese: bXBJQfwtvcBre
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: HAzRCuT
+  vietnamese: "\U0010478C\x03\x03£\U000CF131"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: xnALg
+  vietnamese: "0\U000FBD33\x10°Óå\x80Ö4"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: sUDtEI
+  vietnamese: "Ì\x0E\x90ÃiL®\U0002AAA1/ì\U000BE45D\U000303F9\U0007F976p\U000CE2F4\U0008F896"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: wSn
+  vietnamese: ÿ5󊤉lËû
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: count
+  vietnamese: "'ü\U0007925FÛ\x80"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: yXfNsk
+  vietnamese: ¯YËïh
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: nuU
+  vietnamese: "»\U0010B6D6o^Ôi\x91n\U00041B08G\x12\U000B578E?"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: ybtuPGni
+  vietnamese: "ç\r5\x80¦Ê^\x87ðæï\"杹W§¬\U0005A953R[ÿ剨êl"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: mGIpC
+  vietnamese: »󺺳𳝠¹񚥙W
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: FsjzR
+  vietnamese: 1e100
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: hUi
+  vietnamese: "'\x8E«é\NQã\x94\x17é\x7F"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: BWrWu
+  vietnamese: BWrWu
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: JpVizBS
+  vietnamese: "p\x93¤\x17\x05ìË\U000CF588"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: FMuTlI
+  vietnamese: FMuTlI
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: YEfTgOzHEFC
+  vietnamese: Scunthorpe
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: xLJ
+  vietnamese: 񣡑îÍWq
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: jtUZRy
+  vietnamese: "w¶·\U000550A1\x02\x9Cü"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: AMfnlIdQw
+  vietnamese: "ôØeôûå\x8F\x18\x88Ô\x06ïê<\n¼x\x15B\x013"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: nvRz
+  vietnamese: "\U0005635A@¹\x06É!\U000DD940\U0009B284\x14\x06õ9nnÌÚ"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: zNuXmWFLlL
+  vietnamese: 𝕋𝕙𝕖 𝕢𝕦𝕚𝕔𝕜 𝕓𝕣𝕠𝕨𝕟 𝕗𝕠𝕩 𝕛𝕦𝕞𝕡𝕤 𝕠𝕧𝕖𝕣 𝕥𝕙𝕖 𝕝𝕒𝕫𝕪 𝕕𝕠𝕘
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: aaoZYr
+  vietnamese: 򫈑l򩔚'9񽯬
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: hbkStCdp
+  vietnamese: K𐍇\
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: OOL
+  vietnamese: E.Å5Ø󬉔
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: pYszHxRTBPaeD
+  vietnamese: "U\U000C7901 {:w\x8D*\U000D2386ÔÙKª·"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: zSuLjsrni
+  vietnamese: zSuLjsrni
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: nXuvXDw
+  vietnamese: nXuvXDw
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: console
+  vietnamese: console
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: mswj
+  vietnamese: "\U000662F7\x83\U000DCB4D"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: rIz
+  vietnamese: "\x9E\t\x1DT¤Ú"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: dCXzjSsE
+  vietnamese: "WJÆ~ç¥\U000643B0\aÍ\n\x03"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: GiR
+  vietnamese: "\x1ER¸"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: eOYTbLUXmFwSqh
+  vietnamese: 򻏕򜖴O
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: TWR
+  vietnamese: OÆ󆶗ü^ñ.
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: vQWKWTigpPuqoUBOFkZb
+  vietnamese: "\x92\U000DCB44饘\U000D303C7Ð\a\U00097F02\U00084BA6"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: SCbIPQLpv
+  vietnamese: "0\U00053833?å5轅ò^8\x95"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: sBco
+  vietnamese: "\x0F\U0003A31F\fÓ+ÑB\x18;"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: yafMePE
+  vietnamese: yafMePE
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: EOWNxkxdn
+  vietnamese: EOWNxkxdn
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: StwVREF
+  vietnamese: \󦏃Ð>򖲾
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: OUCAmxJ
+  vietnamese: þÀw-򇊱¸𙵿
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: KVe
+  vietnamese: ',𧃾Î𷥕'
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: aNIjUsmaKvWpb
+  vietnamese: "Ng/|\x82`\x04\U000FC502Oö\U000A3849"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: BvtCtoaNJM
+  vietnamese: "Ü\x1A$t­rç"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: ZbBjEa
+  vietnamese: "\x7Fg\U000488BD\x99ï6"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: kkzvDYDkbFbjPD
+  vietnamese: Ä쳔𣻀
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: cesry
+  vietnamese: "Óõ\x9D|\x94W÷³"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: TBEJVdLxpkxDT
+  vietnamese: 𕨣¨R
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: kFIFfJr
+  vietnamese: 񑙟zâ
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: lkpzfEcdLDr
+  vietnamese: "\x9C |\U00082DF2\x7F\x93\x93"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: XkOJwnVTC
+  vietnamese: XkOJwnVTC
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: rrs
+  vietnamese: rrs
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: UKyg
+  vietnamese: ">\U000A2ACD; \U00021450·\b\x1D\U00076460Áº"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: FcQvoQOxAzzsafcx
+  vietnamese: "í\x8B«t\U000572F1ë×"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: eAuW
+  vietnamese: Z󷧽GÖ£c'·)ý
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: GJYEqNmhYTCBYrggDMAMc
+  vietnamese: â3-
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: djC
+  vietnamese: "\U000E3C2Dà\x12\U00046C8C\x84\x039Ê\x91i¿\U0007B52C"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: qGeLsXjk
+  vietnamese: "ÔZy\U0006F1FA0\U0003BFC6Ñ\x8C"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: sfI
+  vietnamese: 󯳻#åÑN
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: wNHEoUznFpQXVAH
+  vietnamese: "\rjÁg"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: nXoMEKDpaAYyMRmLpzM
+  vietnamese: «𫵁ÁÊ`µÊ¨ÐÆ
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: dKL
+  vietnamese: '#Ô򾟗`XlÁ񫼻'
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: Czbo
+  vietnamese: "Ê\x0EÔ\U000894E4Ó±\U00025714"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: APXpy
+  vietnamese: "äKs\x15í+é\U0004EBEBy¨\U00015EF4:ú\U00029A89\U0001E775\e\U0004BF53"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: UJMDxiqLRpPITEaN
+  vietnamese: UJMDxiqLRpPITEaN
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: ODpr
+  vietnamese: "+}\x14"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: COVJ
+  vietnamese: COVJ
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: CleanupLogger
+  vietnamese: "\b¾²\x93<\x9E"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: ufPmGREK
+  vietnamese: "\b\U000A048C౺\n\U0005AB1E\nþ\x12"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: HuVtjY
+  vietnamese: óò򐀒
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: LLgLR
+  vietnamese: ò Ó񎀵n
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: fPLRVieDYrH
+  vietnamese: "\"×\x95\x80\x16"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: fdC
+  vietnamese: ".\U0008E8E0Ëý*\U000F777CT\x06."
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: FfBHwhm
+  vietnamese: ÓëÐ5æ
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: LyPisJX
+  vietnamese: "3\x9F/zÿÞÓ\x8E"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: UNtsUY
+  vietnamese: íÃ􊠌
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: QzSaedIKptlettDrX
+  vietnamese: QzSaedIKptlettDrX
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: fJlduZbA
+  vietnamese: "\x92\x80\U00089CAB¡¦Üú"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: vEhcI
+  vietnamese: results
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: results
+  vietnamese: results
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: Hxn
+  vietnamese: "ìO#\t\x0F\U000AC8DA\x81\eS\x8E("
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: hwIRcpXwncC
+  vietnamese: "ð\x98²SMD"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: eNPpjOsX
+  vietnamese: "±\x96\U0007C992ª\x81¾¨7\U000863FF\rþ÷\x8F"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: DataFlow
+  vietnamese: "\x83\x18ÑÈ"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: zSyKdR
+  vietnamese: "\x11kÿ,\x19\U00057422\x16"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: PtsjzlrBZYY
+  vietnamese: "\U000C8452\x84÷Í»\bçÝ"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: AOvjjrrOqhiDrUK
+  vietnamese: É~&󉚡I󹣇-
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: aqSSIW
+  vietnamese: .2󇥇¨򑥍
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: szIhH
+  vietnamese: "¶\U000AD5790\U0005F5A4ß\x9Ea÷2V\x98¤(y"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: BzzZb
+  vietnamese: 4ª銎¾Î"o
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: KJJrlqYpQCh
+  vietnamese: KJJrlqYpQCh
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: IoW
+  vietnamese: "\U00022A591Ä\x01\U000A5C5F{¦"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: SlOyGhw
+  vietnamese: SlOyGhw
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: EkaWRgdpXNRBHbEATdjGLrSWqB
+  vietnamese: EkaWRgdpXNRBHbEATdjGLrSWqB
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: hNjBwvycPAby
+  vietnamese: "¥\x82~N\\\U0010FF3FUb³\x16,\U0007DE67\U00027AB3"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: DYCMEVNih
+  vietnamese: none
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: TranslationManager
+  vietnamese: "ä\x8E¾\U000F0ACC\x02"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: tvlY
+  vietnamese: "2Ç>\U0009E756\x9AWkp\U0007C713\U0002186A\x95"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: jwNNxUnCWQnK
+  vietnamese: "A\U0006FDA9r¢òn¶\U000D072C¾uPp\n\U00041E2E\x94\x84\x9CR¼\vý\x048b"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: rVMUjwqjnsJdQi
+  vietnamese: "\U00064C13\U000A1860Þ\x89\U000C72AA\t'Ð0"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: rsKjGIN
+  vietnamese: "\U000F3ED9º\U000F41AB°\U0001F1EAo­\x8E\x9AÈ\x04"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: yniO
+  vietnamese: "䔩\N¶H\r¿E¯[K\U00026DB3ÄEï4"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: crU
+  vietnamese: "P^\x17>C\U00084ABD®\e9\x18"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: nSTAxbipQgwSGKxIb
+  vietnamese: "Ó*\x18a÷\eÈ@\U000F4A96Ç\U0007E4AF-\x8A\U000D9C86\U0009A007䍎"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: aGsgay
+  vietnamese: aGsgay
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: TyGGQaK
+  vietnamese: TyGGQaK
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: tpZtGE
+  vietnamese: tpZtGE
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: RZfTAvrNohZkw
+  vietnamese: "¢®\U001097958\U00042DCCLêÖ7ý\U000668F9\x8EE\U000D7C27å"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: ZNiljlgBHxWnBtM
+  vietnamese: "\U000AED46\x1FZ\U0007581Dè~\U000F2EB1à"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: yemua
+  vietnamese: "\x96SÁ\U000CFF4A"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: UZLQmEoY
+  vietnamese: "of\U000AEC36\U00022F27\U000C9519?\x9BÏÜÜE7n"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: iIlx
+  vietnamese: "\x98\x043 í\au\x14Q)\x9C\U0006E585!é"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: MphdPkW
+  vietnamese: "\U0010621Aí\U00075E91\U0004795DÀ<Ü\U000E3612W\x9Dqaw\x96\x04\U00093630\
+    <\x88\U0008D81A\U0003354DúYG\x1DÄ\U00034426Õ<Z"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: VxUOFru
+  vietnamese: "\x86ꍞ4"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: RnAdMUEW
+  vietnamese: "3\n\x93ñ\x19J\U0010B2D6È\x1D\b"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: gDvyRGzDdvpqLoYiOT
+  vietnamese: "\x05fW"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: btSxB
+  vietnamese: btSxB
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: dghxwSfZFKzyQk
+  vietnamese: dghxwSfZFKzyQk
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: KNrbaiMOA
+  vietnamese: KNrbaiMOA
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: XqSjnwjjdtolc
+  vietnamese: "¡\x05\x86þ\U0004CC38V\U000F0FE8\x88\U000E1FA2½[\x99\x89\\lö"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: YMRmLccZgWGT
+  vietnamese: "\U00070CD22\x12"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: MbKNwk
+  vietnamese: )󥆂d
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: TiRtNVxxOFkHvuFGrvGDau
+  vietnamese: 0..0
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: UAEt
+  vietnamese: "\x83\x04Ü\t(3"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: iEuYb
+  vietnamese: "ß]\x87Ãu\e"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: rpcfpQT
+  vietnamese: "\U000DC042\x99\x9B\x05\U000B1F78\t\x11ïÖ\U000826A6\x90]úÏỚ$"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: zSanPzEwKXnxettgmAzt
+  vietnamese: M򂱘Ù𶎩
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: eOjJEv
+  vietnamese: ªó𵝆񣗍§
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: IbvCxOjUVghAdcwK
+  vietnamese: "\x9BxW|\U000D4B41\x8B\U000C1C12"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: JRDVS
+  vietnamese: JRDVS
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: ynsJ
+  vietnamese: ynsJ
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: mNkgZsuFvEU
+  vietnamese: mNkgZsuFvEU
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: ccNKt
+  vietnamese: ccNKt
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: IxD
+  vietnamese: "\x1DO\U000BA92Bõß"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: dSf
+  vietnamese: "þ\U0008734E\x01îk!"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: OCUwFPN
+  vietnamese: e£󩓼𜬫¸ï
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: hpz
+  vietnamese: "\x89éÀ~\U000F53A3º"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: PGoIMiUwjTnwxFJ
+  vietnamese: templates
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: euqz
+  vietnamese: ²Ê􌆶XbïzI
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: nYZkcbnIaaJa
+  vietnamese: sb®õ񮇭×񯫝í
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: GvGgVgNvZfYaW
+  vietnamese: ìv7Íþ¾r񣍛
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: XSYSPPATGEanPVKrM
+  vietnamese: "yí3\x19$\x90q#?"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: mAkdrk
+  vietnamese: mAkdrk
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: zZoYgSi
+  vietnamese: "\U000AEFFFE\U0006D11BLOä8g\U00018B9C\U00055BD7\U000E7E3Bû\x89Ü\x95\
+    Ä6"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: gXmbcRtFEhszF
+  vietnamese: "\x1AxÌ\x91"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: QDgmKJKYu
+  vietnamese: "¥\eî"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: kqcJoiJlUO
+  vietnamese: "!\x02\U000DD295Ô"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: QtHnykIXDHO
+  vietnamese: "\x8BÉ\U000D2AE9"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: UtESSbf
+  vietnamese: "¼âòo\x84"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: EBMZ
+  vietnamese: "\U00096A3E[\x1D·K\U00027C38\x93"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: cVOOTNSePwqxzrwJEhikSZsFLuqh
+  vietnamese: "\x01\x9C¤"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: SPm
+  vietnamese: "\x87ÜÊï_"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: CKcWNVDCMrIrk
+  vietnamese: "\x91\x92>\U000C63F6ÅÒ\t× å\U00031634Þ"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: mIF
+  vietnamese: "\x04\x8B=¾\x9D\x17\x0F£"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: TeF
+  vietnamese: TeF
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: mlNrkdNbfPZ
+  vietnamese: "8\e\U000770E6Ê"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: XHqg
+  vietnamese: XHqg
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: VwUeQLRvT
+  vietnamese: "q\x0FææQ*"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: Ihfe
+  vietnamese: "Q9\x87"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: foWvYPPPCraupHyNkdQQylSyEgAZeN
+  vietnamese: "O\x80ø\x13¾\x98\x95z"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: eIVSArVdbQcWpBmHkTDXHKq
+  vietnamese: "+\b\x0E \x92\U00050AED\x8D\U0007D2FF\x9D\U000FD6C1´QÚÌ\U00105036\x86"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: rpYWtFdpGz
+  vietnamese: load_resource_text
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: xIzc
+  vietnamese: "\U0005C89C\"\x8Bj\U00059CA1¸\x98"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: wjdzXvLzFrQAKdysXkYMZAsE
+  vietnamese: 96:􉁙.
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: zYFDX
+  vietnamese: "\x9AÛ\x7F"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: pQerez
+  vietnamese: ÀO򇪿
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: lMaj
+  vietnamese: /򀥸񓶅
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: MxDtBrSzMtjTATegzOCKYJgCJZO
+  vietnamese: MxDtBrSzMtjTATegzOCKYJgCJZO
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: Sgocch
+  vietnamese: Sgocch
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: TtdgGMMPr
+  vietnamese: TtdgGMMPr
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: pHqFjAdjVgNLGdQOZ
+  vietnamese: pHqFjAdjVgNLGdQOZ
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: ppLpCUJvykgVNhnNoOn
+  vietnamese: "3\U00106792sò¨5A\x18\U000F0995ö\U000F7EF0\x8F\U000D647A3\b"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: rIiMYec
+  vietnamese: "ôoª\x99\U000B1B1CÊ©÷ÒÄL\U0003C45C"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: PnNnQwHBMV
+  vietnamese: "@ø\x02²i0Ô>\U00091A5D\U0008D8F0O5\x18"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: DAAcaW
+  vietnamese: "¹Ë\x15y\U0007ABFC"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: NMKDeaHZPi
+  vietnamese: "\U00051141\x92\U000FDC17\x95Á\e2k¥\x1A\x8CT\x13\U000EF6E3\x90ß\U000229FC"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: idss
+  vietnamese: "\U000DCD72xK¨\U000E225E\U000F1442ù9\x98"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: YdMDYjj
+  vietnamese: "\x05´#\U00085705?\x89\U000D66A6\x97^"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: gfVwyNipxzEkow
+  vietnamese: "ã+\U00098BBF\x0F"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: liOkHcDWhJqrjzdoE
+  vietnamese: "WMÊa\x1F"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: ONQkB
+  vietnamese: ">(\U000AE080¨ÁÁ\x7F.®\x11Ò\U000BD13CQ\x1F¾\x1Ed¿ëü\v\x9A"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: eINQHFxUGQXSQ
+  vietnamese: eINQHFxUGQXSQ
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: ZVRWyBJvIOnKK
+  vietnamese: "\x8Ahk"
+  description: Test term
+  usage_examples:
+  - Example usage
+  related_terms: []
+- english: IauWw
+  vietnamese: "r.\U000D2229¡\x19\U000474DCr3[K"
   description: Test term
   usage_examples:
   - Example usage

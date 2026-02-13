@@ -1,0 +1,145 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://sdlc-kit.io/schemas/agent.schema.json",
+  "title": "Agent Configuration",
+  "description": "Schema for SDLC Kit agent configuration files",
+  "type": "object",
+  "required": ["id", "type"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique agent identifier",
+      "minLength": 1,
+      "pattern": "^[a-zA-Z0-9_-]+$"
+    },
+    "type": {
+      "type": "string",
+      "description": "Agent type/role in the SDLC process",
+      "enum": ["ba", "pm", "sa", "implementation", "research", "quality_judge", "security_analyst", "devops"]
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable agent name"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the agent's purpose and capabilities"
+    },
+    "capabilities": {
+      "type": "array",
+      "description": "List of capabilities this agent possesses",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
+    "model": {
+      "type": "string",
+      "description": "LLM model to use for this agent",
+      "default": "gpt-4"
+    },
+    "config": {
+      "type": "object",
+      "description": "Agent-specific configuration parameters",
+      "properties": {
+        "temperature": {
+          "type": "number",
+          "description": "Model temperature for response generation",
+          "minimum": 0,
+          "maximum": 2,
+          "default": 0.7
+        },
+        "max_tokens": {
+          "type": "integer",
+          "description": "Maximum tokens for model responses",
+          "minimum": 1,
+          "maximum": 32000,
+          "default": 2000
+        },
+        "top_p": {
+          "type": "number",
+          "description": "Nucleus sampling parameter",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "frequency_penalty": {
+          "type": "number",
+          "description": "Frequency penalty for token generation",
+          "minimum": -2,
+          "maximum": 2
+        },
+        "presence_penalty": {
+          "type": "number",
+          "description": "Presence penalty for token generation",
+          "minimum": -2,
+          "maximum": 2
+        }
+      }
+    },
+    "tools": {
+      "type": "array",
+      "description": "List of tools available to this agent",
+      "items": {
+        "type": "string"
+      }
+    },
+    "skills": {
+      "type": "array",
+      "description": "List of skill IDs this agent can use",
+      "items": {
+        "type": "string"
+      }
+    },
+    "rules": {
+      "type": "array",
+      "description": "List of rule IDs that govern this agent's behavior",
+      "items": {
+        "type": "string"
+      }
+    },
+    "timeout": {
+      "type": "integer",
+      "description": "Agent operation timeout in seconds",
+      "minimum": 1,
+      "default": 300
+    },
+    "retry_policy": {
+      "type": "object",
+      "description": "Retry policy for failed operations",
+      "properties": {
+        "max_attempts": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10,
+          "default": 3
+        },
+        "backoff_multiplier": {
+          "type": "number",
+          "minimum": 1,
+          "default": 2
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional metadata for the agent",
+      "properties": {
+        "version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "author": {
+          "type": "string"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}
