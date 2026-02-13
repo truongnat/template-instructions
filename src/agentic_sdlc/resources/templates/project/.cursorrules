@@ -1,0 +1,25 @@
+# .cursorrules
+
+> [!IMPORTANT]
+> **CONTEXT MAP**: This project uses the `agentic-sdlc` framework. Refer to `CONTEXT.md` for detailed framework structure, API usage, and configuration. Agents MUST read `CONTEXT.md` to understand the codebase.
+
+## Project Context
+
+This project is built using the **Agentic SDLC** framework, an AI-powered Software Development Lifecycle toolkit.
+
+### Key Resources
+- `CONTEXT.md` - Framework overview and API reference
+- `GEMINI.md` - Configuration for Gemini CLI and Antigravity
+- `.agentic_sdlc/config.yaml` - Project configuration
+
+### Framework Modules
+- `agentic_sdlc.core` - Configuration, logging, exceptions
+- `agentic_sdlc.orchestration` - Agents, models, workflows
+- `agentic_sdlc.intelligence` - Learning, monitoring, reasoning
+- `agentic_sdlc.infrastructure` - Execution engine, automation
+
+### Best Practices
+1. Always import from the public API: `from agentic_sdlc import ...`
+2. Use `Config` for all configuration management
+3. Follow conventional commit format for version bumping
+4. Refer to `CONTEXT.md` for usage examples

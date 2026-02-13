@@ -45,6 +45,8 @@ def _create_cli() -> "click.Group | None":
         """
         from agentic_sdlc import Config
         import yaml
+        import shutil
+        import agentic_sdlc
         
         click.echo(f"Initializing Agentic SDLC project: {name}")
         
@@ -71,8 +73,53 @@ def _create_cli() -> "click.Group | None":
         
         click.echo(f"  ✓ Created config directory: {config_dir}")
         click.echo(f"  ✓ Created config file: {config_file}")
+        
+        # Copy context files from templates
+        package_dir = Path(agentic_sdlc.__file__).parent
+        template_dir = package_dir / "resources" / "templates" / "project"
+        
+        # Copy documentation and config files
+        context_files = ["CONTEXT.md", "GEMINI.md", ".cursorrules", "SETUP.md"]
+        for filename in context_files:
+            src = template_dir / filename
+            dst = project_path / filename
+            
+            if src.exists():
+                shutil.copy2(src, dst)
+                click.echo(f"  ✓ Created {filename}")
+            else:
+                click.echo(f"  ⚠ Template {filename} not found, skipping")
+        
+        # Handle .env.template - copy from framework's .env.template
+        env_template_src = template_dir / ".env.template"
+        env_template_dst = project_path / ".env.template"
+        
+        if env_template_src.exists():
+            shutil.copy2(env_template_src, dst=env_template_dst)
+            click.echo(f"  ✓ Created .env.template")
+            
+            # Check if .env already exists
+            env_file = project_path / ".env"
+            if env_file.exists():
+                click.echo(f"  ℹ .env already exists, keeping existing file")
+            else:
+                # Create .env from template
+                shutil.copy2(env_template_src, dst=env_file)
+                click.echo(f"  ✓ Created .env (from template)")
+                click.echo(f"  ⚠ Remember to add your API keys to .env!")
+        else:
+            click.echo(f"  ⚠ .env.template not found in framework")
+        
         click.echo(f"  ✓ Template: {template}")
+        click.echo("")
         click.echo("✓ Project initialized successfully")
+        click.echo("")
+        click.echo("Next steps:")
+        click.echo("  1. Read SETUP.md for installation and configuration guide")
+        click.echo("  2. Edit .env and add your API keys")
+        click.echo("  3. Review CONTEXT.md for framework overview")
+        click.echo("  4. Start coding with AI agent support!")
+
 
     @cli.command()
     @click.argument("workflow_name")
