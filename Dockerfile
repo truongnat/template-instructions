@@ -1,6 +1,6 @@
 # Multi-stage Dockerfile for Agentic SDLC Kit Production Deployment
 # Stage 1: Builder - Install dependencies and build
-FROM python:3.11-slim as builder
+FROM python:3.11-slim AS builder
 
 # Set working directory
 WORKDIR /app
@@ -21,9 +21,10 @@ COPY requirements.txt requirements-dev.txt ./
 RUN python -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
-# Install Python dependencies
+# Install Python dependencies (exclude heavy optional deps to save space)
 RUN pip install --no-cache-dir --upgrade pip setuptools wheel && \
-    pip install --no-cache-dir -r requirements.txt
+    pip install --no-cache-dir -r requirements.txt --no-deps && \
+    pip install --no-cache-dir $(grep -v '^\s*#' requirements.txt | grep -v '^\s*$' | cut -d'[' -f1)
 
 # Stage 2: Runtime - Create minimal production image
 FROM python:3.11-slim
