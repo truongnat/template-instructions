@@ -1,0 +1,51 @@
+{
+  "architecture-design": {
+    "execution_count": 0,
+    "success_count": 0,
+    "avg_score": 0.0,
+    "last_used": null,
+    "tags_generated": []
+  },
+  "code-implementation": {
+    "execution_count": 0,
+    "success_count": 0,
+    "avg_score": 0.0,
+    "last_used": null,
+    "tags_generated": []
+  },
+  "code-review": {
+    "execution_count": 1,
+    "success_count": 1,
+    "avg_score": 1.0,
+    "last_used": "2026-02-14T17:58:19.109054",
+    "tags_generated": []
+  },
+  "documentation": {
+    "execution_count": 0,
+    "success_count": 0,
+    "avg_score": 0.0,
+    "last_used": null,
+    "tags_generated": []
+  },
+  "requirement-analysis": {
+    "execution_count": 0,
+    "success_count": 0,
+    "avg_score": 0.0,
+    "last_used": null,
+    "tags_generated": []
+  },
+  "testing": {
+    "execution_count": 0,
+    "success_count": 0,
+    "avg_score": 0.0,
+    "last_used": null,
+    "tags_generated": []
+  },
+  "test-workflow": {
+    "execution_count": 0,
+    "success_count": 0,
+    "avg_score": 0.0,
+    "last_used": null,
+    "tags_generated": []
+  }
+}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Premium Todo App</title>
+  </head>
+  <body>
+    <div id="app">
+      <div class="container">
+        <h1>Todo.</h1>
+        
+        <div class="input-group">
+          <input type="text" id="todo-input" placeholder="What needs to be done?" autofocus>
+          <button class="add-btn" id="add-btn">+</button>
+        </div>
+
+        <div class="filter-bar">
+          <button class="filter-btn active" data-filter="all">All</button>
+          <button class="filter-btn" data-filter="active">Active</button>
+          <button class="filter-btn" data-filter="completed">Completed</button>
+        </div>
+
+        <ul class="todo-list" id="todo-list">
+          <!-- Todos will be rendered here -->
+        </ul>
+      </div>
+    </div>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
