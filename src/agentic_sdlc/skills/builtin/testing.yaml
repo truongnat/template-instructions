@@ -1,0 +1,73 @@
+name: testing
+description: >
+  Design and implement a comprehensive testing strategy. Write unit tests,
+  integration tests, and end-to-end tests. Generate test coverage reports
+  and identify gaps in test coverage.
+role: tester
+category: testing
+tags:
+  - test
+  - unit
+  - integration
+  - e2e
+  - coverage
+  - quality
+prerequisites:
+  - "skill:code-implementation"
+workflow_steps:
+  - name: plan-strategy
+    action: plan_test_strategy
+    description: >
+      Analyze the codebase and create a test plan. Identify testable units,
+      integration points, and critical user flows for e2e testing.
+    expected_output: Test strategy document
+    depends_on: []
+  - name: write-unit-tests
+    action: implement_unit_tests
+    description: >
+      Write unit tests for individual functions and classes. Cover happy
+      paths, edge cases, error conditions, and boundary values.
+    expected_output: Unit test files
+    depends_on:
+      - plan-strategy
+  - name: write-integration-tests
+    action: implement_integration_tests
+    description: >
+      Write integration tests for module interactions, API endpoints,
+      and data flow between components.
+    expected_output: Integration test files
+    depends_on:
+      - plan-strategy
+  - name: run-and-report
+    action: execute_and_report
+    description: >
+      Run all tests, collect results and coverage metrics. Generate a
+      coverage report highlighting gaps and untested paths.
+    expected_output: Test results and coverage report
+    depends_on:
+      - write-unit-tests
+      - write-integration-tests
+validation_rules:
+  - Tests must cover happy path and edge cases
+  - Test names must be descriptive
+  - Must achieve minimum 80% line coverage
+  - Integration tests must test real interactions (not just mocks)
+context_requirements:
+  required_files:
+    - "*.py"
+    - "*.ts"
+    - "test_*.py"
+    - "*.test.ts"
+  required_context:
+    - project_structure
+    - tech_stack
+    - dependencies
+  max_tokens: 5000
+score_criteria:
+  coverage: 0.30
+  quality: 0.25
+  edge_cases: 0.20
+  readability: 0.15
+  performance: 0.10
+version: "1.0.0"
+source: builtin

@@ -31,35 +31,35 @@ pip install -e ".[dev]"
 ### Basic Usage
 
 ```python
-from agentic_sdlc import Config, Agent, Workflow, get_logger
+from agentic_sdlc import AgentBridge
+from pathlib import Path
 
-# Setup logging
-setup_logging(level="INFO")
-logger = get_logger(__name__)
+# Create bridge (main entry point for agents)
+bridge = AgentBridge(project_dir=Path("."))
 
-# Load configuration
-config = Config()
+# Process a natural language request
+response = bridge.process_request("Create a FastAPI hello world")
 
-# Create and use agents
-agent = Agent(name="Developer", role="implementation")
-workflow = Workflow(name="feature-dev", agents=[agent])
-
-# Execute workflow
-result = workflow.execute()
-logger.info(f"Workflow completed: {result}")
+if response.success:
+    print(f"Task ID: {response.task_id}")
+    print(f"Instructions: {response.skill_instructions}")
 ```
 
 ### CLI Usage
 
 ```bash
-# Initialize a project
-agentic init
+# Initialize a Skills-First project
+asdlc init --name MyProject
 
-# Run a workflow
-agentic run my-workflow
+# Run a task request
+asdlc run "Add unit tests for the auth module"
 
-# View configuration
-agentic config get log_level
+# View SDLC board status
+asdlc status
+
+# Manage skills
+asdlc skill list
+asdlc skill generate "A skill to deploy to AWS"
 ```
 
 ---
@@ -70,13 +70,14 @@ agentic config get log_level
 
 ```
 agentic_sdlc/
-├── core/              # Core functionality (config, exceptions, logging)
-├── infrastructure/    # Automation, bridges, execution engines
-├── intelligence/      # Learning, monitoring, reasoning, collaboration
-├── orchestration/     # Agents, models, workflows, coordination
+├── core/              # Config, exceptions, logging, resources
+├── skills/            # Skill engine (Registry, Generator, Loader)
+├── prompts/           # Prompt generation and context optimization
+├── sdlc/              # SDLC tracking (Board, Task, Sprint)
+├── bridge/            # Agent integration (AgentBridge, Formatters)
+├── intelligence/      # Self-review, A/B testing, reasoning
 ├── plugins/           # Plugin system and registry
-├── cli/               # Command-line interface (optional)
-└── _internal/         # Private utilities
+└── cli/               # asdlc command-line interface
 ```
 
 ### Public API
@@ -91,24 +92,21 @@ from agentic_sdlc import (
     setup_logging, get_logger
 )
 
-# Infrastructure
+# Skills & Prompts (New)
 from agentic_sdlc import (
-    WorkflowEngine, ExecutionEngine, LifecycleManager
+    Skill, SkillRegistry, SkillGenerator,
+    PromptGenerator, ContextOptimizer
 )
 
-# Intelligence
+# SDLC & Bridge (New)
 from agentic_sdlc import (
-    Learner, Monitor, Reasoner, Collaborator
+    Board, SDLCTracker, Task, Sprint,
+    AgentBridge, AgentResponse
 )
 
-# Orchestration
+# Intelligence & Plugins
 from agentic_sdlc import (
-    Agent, AgentRegistry, create_agent,
-    ModelClient, Workflow, WorkflowBuilder
-)
-
-# Plugins
-from agentic_sdlc import (
+    SelfReviewEngine, ABScorer,
     Plugin, PluginRegistry, get_plugin_registry
 )
 ```

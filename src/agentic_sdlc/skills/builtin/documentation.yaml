@@ -1,0 +1,68 @@
+name: documentation
+description: >
+  Create and maintain project documentation including README, API docs,
+  guides, and tutorials. Ensure documentation is accurate, up-to-date,
+  and accessible to the target audience.
+role: documenter
+category: documentation
+tags:
+  - documentation
+  - readme
+  - guide
+  - tutorial
+  - api-doc
+prerequisites: []
+workflow_steps:
+  - name: audit-existing
+    action: audit_existing_docs
+    description: >
+      Review existing documentation for accuracy, completeness, and
+      freshness. Identify gaps and outdated content.
+    expected_output: Documentation audit findings
+    depends_on: []
+  - name: create-outline
+    action: create_doc_outline
+    description: >
+      Create an outline for new or updated documentation. Structure
+      content logically for the target audience.
+    expected_output: Documentation outline
+    depends_on:
+      - audit-existing
+  - name: write-content
+    action: write_documentation
+    description: >
+      Write clear, concise documentation with code examples, diagrams
+      where helpful, and step-by-step instructions.
+    expected_output: Documentation files (markdown)
+    depends_on:
+      - create-outline
+  - name: review-docs
+    action: review_documentation
+    description: >
+      Review documentation for clarity, accuracy, and completeness.
+      Verify all code examples work. Check for broken links.
+    expected_output: Review notes and final documentation
+    depends_on:
+      - write-content
+validation_rules:
+  - Documentation must include working code examples
+  - Must be accessible to the target audience level
+  - All links must be valid
+  - Must include a table of contents for documents > 100 lines
+context_requirements:
+  required_files:
+    - "*.md"
+    - "*.py"
+    - "*.ts"
+  required_context:
+    - project_structure
+    - tech_stack
+    - existing_docs
+  max_tokens: 4000
+score_criteria:
+  clarity: 0.30
+  completeness: 0.25
+  accuracy: 0.25
+  examples: 0.20
+version: "1.0.0"
+source: builtin

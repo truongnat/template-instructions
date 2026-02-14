@@ -4,10 +4,11 @@ This document is intended for AI Agents (Cursor, Copilot, etc.) to understand th
 
 ## 1. Framework Overview
 
-`agentic-sdlc` is an AI-powered Software Development Lifecycle framework. It provides tools for:
--   **Orchestration**: Managing multiple AI agents (Developer, Reviewer, Tester).
--   **Workflows**: Defining and executing development processes.
--   **Intelligence**: Learning from execution history and providing reasoning capabilities.
+`agentic-sdlc` is a Skills-First AI Software Development Lifecycle framework. It provides:
+-   **Skill Engine**: Discovering, executing, and generating structured skills.
+-   **SDLC Tracking**: Real-time board, task, and sprint management.
+-   **Agent Bridge**: Normalized interface for Antigravity, Gemini, and Cursor.
+-   **Optimized Prompts**: Context window optimization and automated prompting.
 
 > [!TIP]
 > **INTEGRATIONS**: To use this framework with external tools (Gemini CLI, Copilot CLI, Kiro), see [INTEGRATIONS.md](INTEGRATIONS.md).
@@ -15,10 +16,13 @@ This document is intended for AI Agents (Cursor, Copilot, etc.) to understand th
 ## 2. Directory Structure
 
 -   `src/agentic_sdlc/`: Main source code.
-    -   `core/`: Configuration, logging, exceptions.
-    -   `orchestration/`: Agents, Models, Workflows.
-    -   `intelligence/`: Learner, Monitor, Reasoner.
-    -   `infrastructure/`: Execution engine, Automation.
+    -   `skills/`: Skill models, registry, loading, and generation.
+    -   `prompts/`: Prompt generation and context optimization.
+    -   `sdlc/`: Board, Task, Issue, and Sprint tracking.
+    -   `bridge/`: AgentBridge and agent-specific output formatters.
+    -   `core/`: Configuration, logging, exceptions, resources.
+    -   `intelligence/`: Self-review, A/B testing, evaluation.
+    -   `infrastructure/`: Legacy automation and lifecycle.
 -   `examples/`: Sample usage scripts.
 
 ## 3. Key Concepts & Usage
@@ -34,43 +38,43 @@ config = Config()
 log_level = config.get("log_level", "INFO")
 ```
 
-### Agents (`agentic_sdlc.orchestration.agents`)
+### Agent Bridge (`agentic_sdlc.bridge`)
 
-Agents are autonomous entities with specific roles.
+The `AgentBridge` is the primary entry point for AI agents.
 
 ```python
-from agentic_sdlc import create_agent
+from agentic_sdlc import AgentBridge
+from pathlib import Path
 
-developer = create_agent(
-    name="developer",
-    role="software_developer",
-    model_name="gpt-4"
-)
+bridge = AgentBridge(project_dir=Path("."))
+response = bridge.process_request("Implement user login")
 ```
 
-### Workflows (`agentic_sdlc.infrastructure.automation`)
+### Skills & SDLC (`agentic_sdlc.skills`, `agentic_sdlc.sdlc`)
 
-Workflows define a sequence of steps.
+The framework maps requests to **Skills** and tracks progress on an **SDLC Board**.
 
 ```python
-from agentic_sdlc import WorkflowRunner
-from agentic_sdlc.infrastructure.automation.workflow_engine import WorkflowStep
+from agentic_sdlc import SkillRegistry, SDLCTracker
 
-steps = [
-    WorkflowStep(name="init", action="initialize", parameters={}),
-    WorkflowStep(name="build", action="build_project", parameters={}, depends_on=["init"])
-]
+registry = SkillRegistry()
+tracker = SDLCTracker(project_dir=Path("."))
 
-runner = WorkflowRunner()
-results = runner.run(steps)
+# Discover skills
+skills = registry.search("auth")
+
+# View board status
+print(tracker.get_board_markdown())
 ```
 
 ## 4. CLI Usage
 
-The framework provides a CLI `asdlc` for common tasks.
+The framework provides the `asdlc` CLI for common tasks.
 
 ```bash
-python3 asdlc.py init --name MyProject
-python3 asdlc.py agent create --name dev --role developer
-python3 asdlc.py run my-workflow
+asdlc init --name MyProject
+asdlc run "Implement feature X"
+asdlc status
+asdlc task next
+asdlc skill list
 ```

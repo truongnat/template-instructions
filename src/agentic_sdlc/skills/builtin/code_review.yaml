@@ -1,0 +1,68 @@
+name: code-review
+description: >
+  Review code changes for quality, correctness, security vulnerabilities,
+  and adherence to best practices. Generate a structured review report
+  with findings categorized by severity.
+role: reviewer
+category: general
+tags:
+  - review
+  - quality
+  - security
+  - audit
+prerequisites: []
+workflow_steps:
+  - name: review-correctness
+    action: check_correctness
+    description: >
+      Verify that the code correctly implements the intended functionality.
+      Check logic, data flows, and edge case handling.
+    expected_output: Correctness findings list
+    depends_on: []
+  - name: review-quality
+    action: check_code_quality
+    description: >
+      Review code for readability, maintainability, naming conventions,
+      code duplication, and adherence to SOLID principles.
+    expected_output: Quality findings list
+    depends_on: []
+  - name: review-security
+    action: check_security
+    description: >
+      Check for security vulnerabilities: injection risks, auth issues,
+      data exposure, insecure dependencies, and OWASP top 10.
+    expected_output: Security findings list
+    depends_on: []
+  - name: generate-report
+    action: compile_review_report
+    description: >
+      Compile all findings into a structured review report. Categorize
+      by severity (critical, major, minor, suggestion). Include
+      specific code references and recommended fixes.
+    expected_output: Review report (markdown)
+    depends_on:
+      - review-correctness
+      - review-quality
+      - review-security
+validation_rules:
+  - Review must cover all changed files
+  - Findings must be categorized by severity
+  - Each finding must include specific code reference
+  - Must provide actionable fix recommendations
+context_requirements:
+  required_files:
+    - "*.py"
+    - "*.ts"
+    - "*.js"
+  required_context:
+    - project_structure
+    - coding_standards
+    - changed_files
+  max_tokens: 5000
+score_criteria:
+  thoroughness: 0.30
+  actionability: 0.25
+  accuracy: 0.25
+  clarity: 0.20
+version: "1.0.0"
+source: builtin

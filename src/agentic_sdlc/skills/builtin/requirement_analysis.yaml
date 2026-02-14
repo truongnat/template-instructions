@@ -1,0 +1,66 @@
+name: requirement-analysis
+description: >
+  Analyze user requirements and create a structured requirement specification.
+  Gather functional and non-functional requirements, identify stakeholders,
+  define acceptance criteria, and produce a requirement document for review.
+role: analyst
+category: general
+tags:
+  - requirement
+  - analysis
+  - specification
+  - planning
+prerequisites: []
+workflow_steps:
+  - name: gather-context
+    action: gather_project_context
+    description: >
+      Collect all available project context: existing codebase structure,
+      tech stack, dependencies, and any existing documentation.
+    expected_output: Project context summary
+    depends_on: []
+  - name: analyze-requirements
+    action: analyze_user_requirements
+    description: >
+      Break down the user's request into functional requirements (features,
+      behaviors) and non-functional requirements (performance, security,
+      scalability). Identify constraints and assumptions.
+    expected_output: Categorized requirement list
+    depends_on:
+      - gather-context
+  - name: define-acceptance
+    action: define_acceptance_criteria
+    description: >
+      For each functional requirement, define clear acceptance criteria
+      that can be tested. Use Given/When/Then format where applicable.
+    expected_output: Acceptance criteria document
+    depends_on:
+      - analyze-requirements
+  - name: write-spec
+    action: write_requirement_spec
+    description: >
+      Compile all analysis into a structured requirement specification
+      document. Include scope, stakeholders, requirements, constraints,
+      and acceptance criteria.
+    expected_output: Requirement specification (markdown)
+    depends_on:
+      - define-acceptance
+validation_rules:
+  - All functional requirements must have acceptance criteria
+  - Requirements must be testable and measurable
+  - Must identify at least one constraint or assumption
+  - Specification must follow a structured template
+context_requirements:
+  required_files: ["*.*"]
+  required_context:
+    - project_structure
+    - tech_stack
+    - dependencies
+  max_tokens: 4000
+score_criteria:
+  completeness: 0.30
+  clarity: 0.25
+  testability: 0.25
+  structure: 0.20
+version: "1.0.0"
+source: builtin

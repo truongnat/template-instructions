@@ -1,34 +1,33 @@
-"""Agentic SDLC - AI-powered Software Development Lifecycle Framework.
+"""Agentic SDLC - Skills-First AI Development Lifecycle Framework.
 
-This is the public API. All exports from this module are considered stable
-and follow semantic versioning.
+This is the public API. All exports follow semantic versioning.
 
-The Agentic SDLC Kit is an AI-powered Software Development Lifecycle framework
-that provides tools for orchestrating agents, managing workflows, and building
-intelligent automation systems. It offers a clean separation between the SDK core
-and CLI interface, with a plugin architecture for extensibility.
+The Agentic SDLC framework provides a skills-first architecture where
+CLI/IDE agents (Antigravity, Gemini CLI, Cursor) discover, execute,
+and review structured skills. The framework handles skill management,
+prompt generation, context optimization, SDLC tracking, and self-review.
 
 Key Features:
-- Configuration management with validation
-- Agent orchestration and coordination
-- Workflow automation and execution
-- Intelligence features (learning, monitoring, reasoning, collaboration)
-- Infrastructure components (automation, bridging, lifecycle management)
-- Plugin system for extensibility
-- Comprehensive logging and error handling
+- Skill Engine: Define, discover, search, generate, and load skills
+- Prompt Generator: Optimized prompts with context management
+- SDLC Board: Task/Sprint/Issue tracking with lifecycle management
+- Agent Bridge: Integration layer for CLI/IDE agents
+- Self-Review: Automated output quality review and A/B testing
+- Remote Registry: Pull skills from GitHub/NPX with security scanning
 
 Usage:
-    from agentic_sdlc import Config, Agent, Workflow, create_agent
-    
-    # Load configuration
-    config = Config()
-    
-    # Create and run agents
-    agent = create_agent(name="my_agent", role="developer")
-    
-    # Build and execute workflows
-    workflow = Workflow(name="my_workflow")
-    # ... add steps and execute
+    from agentic_sdlc import AgentBridge, Skill, SkillRegistry
+    from pathlib import Path
+
+    # Create bridge (main entry point for agents)
+    bridge = AgentBridge(project_dir=Path("."))
+
+    # Process a user request
+    response = bridge.process_request("Create a REST API with auth")
+
+    # Or search skills directly
+    registry = SkillRegistry()
+    skills = registry.search("testing")
 """
 
 from ._version import __version__
@@ -37,7 +36,7 @@ from ._version import __version__
 from ._compat import install_compatibility_shims
 install_compatibility_shims()
 
-# Core module exports
+# Core module exports (kept from original)
 from .core import (
     # Configuration
     Config,
@@ -65,19 +64,48 @@ from .core import (
     load_resource_text,
 )
 
-# Infrastructure module exports
-from .infrastructure import (
-    Bridge,
-    BridgeRegistry,
-    ExecutionEngine,
-    LifecycleManager,
-    Phase,
-    TaskExecutor,
-    WorkflowEngine,
-    WorkflowRunner,
+# Skills module exports (NEW - Phase 1)
+from .skills import (
+    Skill,
+    SkillStep,
+    SkillRole,
+    SkillSource,
+    ContextSpec,
+    SkillMetadata,
+    SkillRegistry,
+    SkillGenerator,
+    SkillLoader,
+    RemoteSkillRegistry,
+    SecurityScanResult,
 )
 
-# Intelligence module exports
+# Prompts module exports (NEW - Phase 2)
+from .prompts import (
+    PromptGenerator,
+    ContextOptimizer,
+    ContextItem,
+)
+
+# SDLC module exports (NEW - Phase 3)
+from .sdlc import (
+    Board,
+    Task,
+    Issue,
+    Sprint,
+    TaskStatus,
+    SDLCTracker,
+)
+
+# Agent Bridge module exports (NEW - Phase 4)
+from .bridge import (
+    AgentBridge,
+    AgentResponse,
+    AntigravityFormatter,
+    GeminiFormatter,
+    GenericFormatter,
+)
+
+# Intelligence module exports (kept + NEW review)
 from .intelligence import (
     Collaborator,
     DecisionEngine,
@@ -88,29 +116,20 @@ from .intelligence import (
     Reasoner,
     TeamCoordinator,
 )
-
-# Orchestration module exports
-from .orchestration import (
-    # Agents
-    Agent,
-    AgentRegistry,
-    create_agent,
-    get_agent_registry,
-    # Coordination
-    Coordinator,
-    ExecutionPlan,
-    # Models
-    ModelClient,
-    create_model_client,
-    get_model_client,
-    register_model_client,
-    # Workflows
-    Workflow,
-    WorkflowBuilder,
-    WorkflowStep,
+from .intelligence.review import (
+    SelfReviewEngine,
+    ReviewResult,
+    ReviewCriteria,
+    ABScorer,
+    ABTest,
+    ABResult,
 )
 
-# Plugins module exports
+# Infrastructure (kept: lifecycle, automation)
+from .infrastructure.lifecycle import LifecycleManager, Phase
+from .infrastructure.automation import WorkflowEngine, WorkflowRunner
+
+# Plugins module exports (kept)
 from .plugins import (
     Plugin,
     PluginMetadata,
@@ -125,7 +144,6 @@ __all__ = [
     "Config",
     "load_config",
     "get_config",
-    # Core - Configuration types
     "AgentConfig",
     "ModelConfig",
     "SDKConfig",
@@ -145,16 +163,36 @@ __all__ = [
     "get_resource_path",
     "load_resource_text",
     "list_resources",
-    # Infrastructure
-    "WorkflowEngine",
-    "WorkflowRunner",
-    "Bridge",
-    "BridgeRegistry",
-    "ExecutionEngine",
-    "TaskExecutor",
-    "LifecycleManager",
-    "Phase",
-    # Intelligence
+    # Skills (NEW)
+    "Skill",
+    "SkillStep",
+    "SkillRole",
+    "SkillSource",
+    "ContextSpec",
+    "SkillMetadata",
+    "SkillRegistry",
+    "SkillGenerator",
+    "SkillLoader",
+    "RemoteSkillRegistry",
+    "SecurityScanResult",
+    # Prompts (NEW)
+    "PromptGenerator",
+    "ContextOptimizer",
+    "ContextItem",
+    # SDLC (NEW)
+    "Board",
+    "Task",
+    "Issue",
+    "Sprint",
+    "TaskStatus",
+    "SDLCTracker",
+    # Agent Bridge (NEW)
+    "AgentBridge",
+    "AgentResponse",
+    "AntigravityFormatter",
+    "GeminiFormatter",
+    "GenericFormatter",
+    # Intelligence (kept + NEW review)
     "Learner",
     "LearningStrategy",
     "Monitor",
@@ -163,24 +201,18 @@ __all__ = [
     "DecisionEngine",
     "Collaborator",
     "TeamCoordinator",
-    # Orchestration - Agents
-    "Agent",
-    "AgentRegistry",
-    "create_agent",
-    "get_agent_registry",
-    # Orchestration - Models
-    "ModelClient",
-    "create_model_client",
-    "get_model_client",
-    "register_model_client",
-    # Orchestration - Workflows
-    "Workflow",
-    "WorkflowStep",
-    "WorkflowBuilder",
-    # Orchestration - Coordination
-    "Coordinator",
-    "ExecutionPlan",
-    # Plugins
+    "SelfReviewEngine",
+    "ReviewResult",
+    "ReviewCriteria",
+    "ABScorer",
+    "ABTest",
+    "ABResult",
+    # Infrastructure (kept)
+    "LifecycleManager",
+    "Phase",
+    "WorkflowEngine",
+    "WorkflowRunner",
+    # Plugins (kept)
     "Plugin",
     "PluginMetadata",
     "PluginRegistry",

@@ -7,10 +7,14 @@ This module provides the command-line interface for the Agentic SDLC framework.
 It acts as a consumer of the SDK public API, delegating all operations to SDK components.
 """
 
+import json
 import sys
 from pathlib import Path
 
 from agentic_sdlc import __version__
+from agentic_sdlc.bridge import AgentBridge, AgentResponse
+from agentic_sdlc.skills import SkillRole, SkillSource
+from agentic_sdlc.sdlc import TaskStatus
 
 try:
     import click
@@ -18,351 +22,242 @@ except ImportError:
     click = None  # type: ignore
 
 
-def _create_cli() -> "click.Group | None":
-    """Create the CLI group if click is available."""
-    if not click:
-        return None
+@click.group()
+@click.version_option(version=__version__)
+@click.option('--project-dir', default='.', type=click.Path(file_okay=False, dir_okay=True, path_type=Path), help='Project root directory')
+@click.pass_context
+def cli(ctx: "click.Context", project_dir: Path) -> None:
+    """Agentic SDLC - Skills-First AI Development Lifecycle Framework.
     
-    @click.group()
-    @click.version_option(version=__version__)
-    @click.pass_context
-    def cli(ctx: "click.Context") -> None:
-        """Agentic SDLC - AI-powered Software Development Lifecycle Framework.
-        
-        This CLI provides access to the Agentic SDLC framework for managing
-        AI-powered software development workflows.
-        """
-        ctx.ensure_object(dict)
+    This CLI provides a bridge for AI agents (Gemini, Antigravity, Cursor) 
+     to discover, execute, and review structured skills.
+    """
+    ctx.ensure_object(dict)
+    ctx.obj['project_dir'] = project_dir
+    
+    # Only initialize bridge if not running 'init'
+    if ctx.invoked_subcommand not in ['init', None]:
+        try:
+            ctx.obj['bridge'] = AgentBridge(project_dir=project_dir)
+        except Exception as e:
+            ctx.obj['bridge_error'] = str(e)
 
-    @cli.command()
-    @click.option('--name', default='.', help='Project name or path')
-    @click.option('--template', default='basic', help='Project template')
-    @click.pass_context
-    def init(ctx: "click.Context", name: str, template: str) -> None:
-        """Initialize a new Agentic SDLC project.
-        
-        Creates the necessary project structure and configuration files.
-        """
-        from agentic_sdlc import Config
-        import yaml
-        import shutil
-        import agentic_sdlc
-        
-        click.echo(f"Initializing Agentic SDLC project: {name}")
-        
-        # Create project directory
-        project_path = Path(name)
-        project_path.mkdir(exist_ok=True)
-        
-        # Create config directory
-        config_dir = project_path / ".agentic_sdlc"
-        config_dir.mkdir(exist_ok=True)
-        
-        # Create default config file
-        config_file = config_dir / "config.yaml"
+
+@cli.command()
+@click.option('--name', default='.', help='Project name or path')
+@click.pass_context
+def init(ctx: "click.Context", name: str) -> None:
+    """Initialize a new Agentic SDLC project.
+    
+    Creates the skills-first project structure and configuration.
+    """
+    import yaml
+    import shutil
+    import agentic_sdlc
+    
+    click.echo(f"Initializing Skills-First project: {name}")
+    
+    project_path = Path(name).resolve()
+    project_path.mkdir(exist_ok=True)
+    
+    # Create core data directory
+    data_dir = project_path / ".agentic_sdlc"
+    data_dir.mkdir(exist_ok=True)
+    (data_dir / "skills" / "generated").mkdir(parents=True, exist_ok=True)
+    (data_dir / "outputs").mkdir(exist_ok=True)
+    
+    # Default config
+    config_file = data_dir / "config.yaml"
+    if not config_file.exists():
         default_config = {
-            "project_root": str(project_path),
+            "project_name": project_path.name,
             "log_level": "INFO",
-            "models": {},
-            "workflows": {},
-            "plugins": []
+            "default_agent": "antigravity",
+            "skills": {"remote_sources": []}
         }
-        
         with open(config_file, 'w') as f:
             yaml.dump(default_config, f, default_flow_style=False)
-        
-        click.echo(f"  ✓ Created config directory: {config_dir}")
-        click.echo(f"  ✓ Created config file: {config_file}")
-        
-        # Copy context files from templates
-        package_dir = Path(agentic_sdlc.__file__).parent
-        template_dir = package_dir / "resources" / "templates" / "project"
-        
-        # Copy documentation and config files
-        context_files = ["CONTEXT.md", "GEMINI.md", ".cursorrules", "SETUP.md"]
-        for filename in context_files:
-            src = template_dir / filename
-            dst = project_path / filename
-            
-            if src.exists():
-                shutil.copy2(src, dst)
-                click.echo(f"  ✓ Created {filename}")
-            else:
-                click.echo(f"  ⚠ Template {filename} not found, skipping")
-        
-        # Handle .env.template - copy from framework's .env.template
-        env_template_src = template_dir / ".env.template"
-        env_template_dst = project_path / ".env.template"
-        
-        if env_template_src.exists():
-            shutil.copy2(env_template_src, dst=env_template_dst)
-            click.echo(f"  ✓ Created .env.template")
-            
-            # Check if .env already exists
-            env_file = project_path / ".env"
-            if env_file.exists():
-                click.echo(f"  ℹ .env already exists, keeping existing file")
-            else:
-                # Create .env from template
-                shutil.copy2(env_template_src, dst=env_file)
-                click.echo(f"  ✓ Created .env (from template)")
-                click.echo(f"  ⚠ Remember to add your API keys to .env!")
-        else:
-            click.echo(f"  ⚠ .env.template not found in framework")
-        
-        click.echo(f"  ✓ Template: {template}")
-        click.echo("")
-        click.echo("✓ Project initialized successfully")
-        click.echo("")
-        click.echo("Next steps:")
-        click.echo("  1. Read SETUP.md for installation and configuration guide")
-        click.echo("  2. Edit .env and add your API keys")
-        click.echo("  3. Review CONTEXT.md for framework overview")
-        click.echo("  4. Start coding with AI agent support!")
+        click.echo(f"  ✓ Created config: {config_file}")
+
+    # Copy context files from templates
+    package_dir = Path(agentic_sdlc.__file__).parent
+    template_dir = package_dir / "resources" / "templates" / "project"
+    
+    for filename in ["CONTEXT.md", "GEMINI.md", ".cursorrules", "SETUP.md", ".env.template"]:
+        src = template_dir / filename
+        dst = project_path / filename
+        if src.exists() and not dst.exists():
+            shutil.copy2(src, dst)
+            click.echo(f"  ✓ Created {filename}")
+    
+    # Copy .agent directory if it exists
+    agent_src = template_dir / ".agent"
+    agent_dst = project_path / ".agent"
+    if agent_src.exists() and not agent_dst.exists():
+        shutil.copytree(agent_src, agent_dst)
+        click.echo("  ✓ Created .agent/ workflows")
+    
+    click.echo("\n✓ Project initialized successfully")
+    click.echo("Next steps: `asdlc run \"Describe your task here\"`")
 
 
-    @cli.command()
-    @click.argument("workflow_name")
-    @click.option('--config', default=None, help='Path to config file')
-    @click.pass_context
-    def run(ctx: "click.Context", workflow_name: str, config: str) -> None:
-        """Run a workflow.
-        
-        Executes the specified workflow using the SDK.
-        """
-        from agentic_sdlc import Config, WorkflowRunner
-        from agentic_sdlc.infrastructure.automation.workflow_engine import WorkflowStep
-        
-        click.echo(f"Running workflow: {workflow_name}")
-        
-        # Load config
-        if config:
-            cfg = Config(config_path=config)
-        else:
-            cfg = Config()
-        
-        # Create sample workflow
-        steps = [
-            WorkflowStep(
-                name="start",
-                action="initialize",
-                parameters={"workflow": workflow_name}
-            ),
-            WorkflowStep(
-                name="execute",
-                action="run",
-                parameters={"workflow": workflow_name},
-                depends_on=["start"]
-            )
-        ]
-        
-        # Run workflow
-        runner = WorkflowRunner()
-        results = runner.run(steps)
-        
-        click.echo(f"  ✓ Executed {len(results)} steps")
-        for step_name, result in results.items():
-            click.echo(f"    - {step_name}: {result.get('status', 'unknown')}")
-        
-        click.echo("✓ Workflow completed successfully")
+@cli.command()
+@click.argument("request")
+@click.option('--agent', default='antigravity', help='Agent type (antigravity, gemini, generic)')
+@click.pass_context
+def run(ctx: "click.Context", request: str, agent: str) -> None:
+    """Process a task request and generate agent instructions.
+    
+    This maps a natural language request to matching or generated skills,
+    creates an SDLC plan, and returns instructions for the agent.
+    """
+    bridge = ctx.obj.get('bridge')
+    if not bridge:
+        click.echo(f"Error: {ctx.obj.get('bridge_error', 'Project not initialized')}", err=True)
+        return
 
-    @cli.command()
-    @click.option('--verbose', is_flag=True, help='Show detailed status')
-    @click.pass_context
-    def status(ctx: "click.Context", verbose: bool) -> None:
-        """Show project status.
-        
-        Displays the current status of the project and any active workflows.
-        """
-        from agentic_sdlc import Monitor, get_agent_registry
-        
-        click.echo("Project Status:")
-        click.echo("=" * 50)
-        
-        # Check system health
-        monitor = Monitor()
-        health = monitor.check_health()
-        click.echo(f"  System Health: {health.status}")
-        
-        # Check agents
-        registry = get_agent_registry()
-        agents = registry.list_agents()
-        click.echo(f"  Registered Agents: {len(agents)}")
-        
-        if verbose and agents:
-            click.echo("\n  Agents:")
-            for agent in agents:
-                click.echo(f"    - {agent.name} ({agent.role})")
-        
-        # Check metrics
-        metrics = monitor.get_all_metrics()
-        if metrics:
-            click.echo(f"  Metrics Collected: {len(metrics)}")
-            if verbose:
-                click.echo("\n  Metrics:")
-                for name, value in metrics.items():
-                    click.echo(f"    - {name}: {value}")
-        
-        click.echo("\n✓ Status check complete")
+    click.echo(f"Processing request: {request}...")
+    response = bridge.process_request(request, agent_type=agent)
+    
+    if not response.success:
+        click.echo(f"Failure: {response.message}", err=True)
+        return
 
-    # Agent command group
-    @cli.group()
-    def agent() -> None:
-        """Manage agents."""
-        pass
-
-    @agent.command('create')
-    @click.option('--name', required=True, help='Agent name')
-    @click.option('--role', required=True, help='Agent role')
-    @click.option('--model', default='gpt-4', help='Model name')
-    def agent_create(name: str, role: str, model: str) -> None:
-        """Create a new agent."""
-        from agentic_sdlc import create_agent
-        
-        agent = create_agent(
-            name=name,
-            role=role,
-            model_name=model
-        )
-        click.echo(f"✓ Created agent: {agent.name}")
-        click.echo(f"  Role: {agent.role}")
-        click.echo(f"  Model: {agent.model_name}")
-        click.echo(f"  ID: {agent.id}")
-
-    @agent.command('list')
-    def agent_list() -> None:
-        """List all agents."""
-        from agentic_sdlc import get_agent_registry
-        
-        registry = get_agent_registry()
-        agents = registry.list_agents()
-        
-        if not agents:
-            click.echo("No agents registered")
-            return
-        
-        click.echo(f"Registered Agents ({len(agents)}):")
-        click.echo("=" * 50)
-        for agent in agents:
-            click.echo(f"  {agent.name}")
-            click.echo(f"    Role: {agent.role}")
-            click.echo(f"    Model: {agent.model_name}")
-            click.echo(f"    ID: {agent.id}")
-            click.echo()
-
-    # Workflow command group
-    @cli.group()
-    def workflow() -> None:
-        """Manage workflows."""
-        pass
-
-    @workflow.command('create')
-    @click.option('--name', required=True, help='Workflow name')
-    @click.option('--description', default='', help='Workflow description')
-    def workflow_create(name: str, description: str) -> None:
-        """Create a new workflow."""
-        from agentic_sdlc import Workflow
-        
-        wf = Workflow(name=name, description=description)
-        click.echo(f"✓ Created workflow: {wf.name}")
-        click.echo(f"  Description: {wf.description}")
-        click.echo(f"  ID: {wf.id}")
-
-    # Config command group
-    @cli.group()
-    def config() -> None:
-        """Manage configuration."""
-        pass
-
-    @config.command('show')
-    @click.option('--key', default=None, help='Specific config key')
-    def config_show(key: str) -> None:
-        """Show configuration."""
-        from agentic_sdlc import Config
-        
-        cfg = Config()
-        
-        if key:
-            value = cfg.get(key)
-            click.echo(f"{key}: {value}")
-        else:
-            import json
-            click.echo("Configuration:")
-            click.echo(json.dumps(cfg.to_dict(), indent=2))
-
-    @config.command('set')
-    @click.option('--key', required=True, help='Config key')
-    @click.option('--value', required=True, help='Config value')
-    def config_set(key: str, value: str) -> None:
-        """Set configuration value."""
-        from agentic_sdlc import Config
-        
-        cfg = Config()
-        cfg.set(key, value)
-        click.echo(f"✓ Set {key} = {value}")
-
-    # Health command
-    @cli.command()
-    def health() -> None:
-        """Check system health."""
-        from agentic_sdlc import Monitor, MetricsCollector
-        
-        monitor = Monitor()
-        collector = MetricsCollector()
-        
-        health = monitor.check_health()
-        
-        click.echo("System Health Check:")
-        click.echo("=" * 50)
-        click.echo(f"  Status: {health.status}")
-        click.echo(f"  Timestamp: {health.timestamp}")
-        
-        metrics = monitor.get_all_metrics()
-        if metrics:
-            click.echo(f"\n  Active Metrics: {len(metrics)}")
-        
-        click.echo("\n✓ Health check complete")
-
-    # Brain command group
-    @cli.group()
-    def brain() -> None:
-        """Manage learning and intelligence."""
-        pass
-
-    @brain.command('stats')
-    def brain_stats() -> None:
-        """Show learning statistics."""
-        from agentic_sdlc import Learner
-        
-        learner = Learner()
-        stats = learner.get_stats()
-        
-        click.echo("Learning Statistics:")
-        click.echo("=" * 50)
-        click.echo(f"  Total Patterns: {stats['total_patterns']}")
-        click.echo(f"  Error Patterns: {stats['error_patterns']}")
-        click.echo(f"  Success Patterns: {stats['success_patterns']}")
-        click.echo(f"  Task Patterns: {stats['task_patterns']}")
-
-    @brain.command('learn')
-    @click.option('--description', required=True, help='Pattern description')
-    @click.option('--context', default='{}', help='Context as JSON')
-    def brain_learn(description: str, context: str) -> None:
-        """Learn a new pattern."""
-        from agentic_sdlc import Learner
-        import json
-        
-        learner = Learner()
-        ctx = json.loads(context)
-        result = learner.learn(description, ctx)
-        
-        click.echo(f"✓ Learned pattern: {description}")
-        click.echo(f"  Status: {result['status']}")
-
-    return cli
+    click.echo(f"\n✅ {response.message}")
+    click.echo(f"Task ID: {response.task_id}")
+    click.echo(f"Skill: {response.metadata.get('skill_name')}")
+    
+    click.echo("\n--- SKILL INSTRUCTIONS ---")
+    click.echo(response.skill_instructions)
+    
+    click.echo("\n--- EXECUTION PROMPT ---")
+    click.echo(response.prompt)
+    
+    click.echo("\n--- BOARD STATUS ---")
+    click.echo(response.board_state)
 
 
-cli = _create_cli()
+@cli.command()
+@click.pass_context
+def status(ctx: "click.Context") -> None:
+    """Show project SDLC board status."""
+    bridge = ctx.obj.get('bridge')
+    if not bridge:
+        click.echo(f"Error: {ctx.obj.get('bridge_error', 'Project not initialized')}", err=True)
+        return
+    
+    click.echo("SDLC Board Status:")
+    click.echo("=" * 50)
+    click.echo(bridge.get_board())
+
+
+# Skill command group
+@cli.group()
+def skill() -> None:
+    """Manage and discover skills."""
+    pass
+
+
+@skill.command('list')
+@click.pass_context
+def skill_list(ctx: "click.Context") -> None:
+    """List all available skills."""
+    bridge = ctx.obj.get('bridge')
+    if not bridge: return
+    
+    skills = bridge.search_skills("", limit=100)
+    click.echo(f"Available Skills ({len(skills)}):")
+    click.echo("=" * 50)
+    for s in skills:
+        click.echo(f"  - {s['name']} ({s['role']})")
+        click.echo(f"    Category: {s['category']} | Success: {s['success_rate']:.0%}")
+
+
+@skill.command('search')
+@click.argument("query")
+@click.pass_context
+def skill_search(ctx: "click.Context", query: str) -> None:
+    """Search the skill registry."""
+    bridge = ctx.obj.get('bridge')
+    if not bridge: return
+    
+    skills = bridge.search_skills(query)
+    click.echo(f"Search results for '{query}':")
+    click.echo("=" * 50)
+    for s in skills:
+        click.echo(f"  - {s['name']} [{s['category']}]")
+        click.echo(f"    {s['description']}")
+
+
+@skill.command('generate')
+@click.argument("description")
+@click.pass_context
+def skill_generate(ctx: "click.Context", description: str) -> None:
+    """Generate a new skill from description."""
+    bridge = ctx.obj.get('bridge')
+    if not bridge: return
+    
+    click.echo(f"Generating skill for: {description[:50]}...")
+    skill = bridge.generate_skill(description)
+    click.echo(f"✓ Generated skill: {skill['name']}")
+    click.echo(f"  Role: {skill['role']} | Steps: {skill['steps']}")
+
+
+# Task command group
+@cli.group()
+def task() -> None:
+    """Manage SDLC tasks."""
+    pass
+
+
+@task.command('next')
+@click.option('--agent', default='antigravity', help='Agent type')
+@click.pass_context
+def task_next(ctx: "click.Context", agent: str) -> None:
+    """Get the next task to execute."""
+    bridge = ctx.obj.get('bridge')
+    if not bridge: return
+    
+    tasks = bridge._tracker.get_next_tasks()
+    if not tasks:
+        click.echo("No tasks currently in TODO status.")
+        return
+        
+    task = tasks[0]
+    click.echo(f"Next Task: {task.title} ({task.id})")
+    
+    resp = bridge.get_task_instructions(task.id, agent_type=agent)
+    if resp.success:
+        click.echo("\n--- INSTRUCTIONS ---")
+        click.echo(resp.skill_instructions)
+        click.echo("\n--- PROMPT ---")
+        click.echo(resp.prompt)
+
+
+@task.command('submit')
+@click.argument("task_id")
+@click.argument("output_file", type=click.Path(exists=True))
+@click.option('--score', type=float, help='Manual quality score (0-1)')
+@click.pass_context
+def task_submit(ctx: "click.Context", task_id: str, output_file: str, score: float) -> None:
+    """Submit output for a task."""
+    bridge = ctx.obj.get('bridge')
+    if not bridge: return
+    
+    output_content = Path(output_file).read_text(encoding="utf-8")
+    resp = bridge.submit_output(task_id, output_content, score=score)
+    
+    click.echo(f"✓ Submitted output for task {task_id}")
+    click.echo(f"  Status: {resp.metadata.get('status')}")
+    if resp.prompt:
+        click.echo("\n--- REVIEW PROMPT ---")
+        click.echo(resp.prompt)
+
+
+@cli.command()
+def health() -> None:
+    """Check system health."""
+    click.echo("System Health Check: OK")
 
 
 def main() -> None:

@@ -113,7 +113,7 @@ class TestOldImportPaths:
             warnings.simplefilter("always")
             
             # Import from new location
-            from agentic_sdlc import Agent  # noqa: F401
+            from agentic_sdlc import AgentBridge  # noqa: F401
             
             # Check that no deprecation warnings were emitted
             deprecation_warnings = [
@@ -122,28 +122,7 @@ class TestOldImportPaths:
             ]
             
             assert len(deprecation_warnings) == 0
-    
-    def test_old_and_new_imports_refer_to_same_object(self) -> None:
-        """Test that old and new imports refer to the same object."""
-        with warnings.catch_warnings(record=True):
-            warnings.simplefilter("always")
-            
-            try:
-                # Import from new location
-                from agentic_sdlc.orchestration.agents import Agent as NewAgent
-                
-                # Import from old location (if it works)
-                try:
-                    from agentic_sdlc.infrastructure.autogen.agents import Agent as OldAgent
-                    
-                    # They should be the same class
-                    assert NewAgent is OldAgent
-                except (ImportError, AttributeError):
-                    # Old import might not work, that's okay
-                    pass
-            except ImportError:
-                # If new import doesn't work, skip this test
-                pytest.skip("New import path not available")
+
 
 
 class TestCompatibilityShimInstallation:

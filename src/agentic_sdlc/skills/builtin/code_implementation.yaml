@@ -1,0 +1,75 @@
+name: code-implementation
+description: >
+  Implement code for a feature or module following best practices.
+  Write clean, tested, documented code that follows project conventions
+  and passes all validation rules.
+role: developer
+category: general
+tags:
+  - code
+  - implementation
+  - development
+  - build
+prerequisites:
+  - "skill:architecture-design"
+workflow_steps:
+  - name: setup
+    action: setup_development_environment
+    description: >
+      Ensure development environment is ready. Check dependencies,
+      create necessary files and directories.
+    expected_output: Environment ready confirmation
+    depends_on: []
+  - name: implement
+    action: write_code
+    description: >
+      Implement the feature following the architecture design.
+      Write clean, readable code with proper error handling.
+      Follow project coding conventions and style guide.
+    expected_output: Implementation code files
+    depends_on:
+      - setup
+  - name: test
+    action: write_and_run_tests
+    description: >
+      Write unit tests covering happy paths, edge cases, and error
+      conditions. Run tests and ensure all pass.
+    expected_output: Test files and passing test results
+    depends_on:
+      - implement
+  - name: document
+    action: document_implementation
+    description: >
+      Add inline documentation (docstrings, comments for complex logic),
+      update README if needed, and create a brief change summary.
+    expected_output: Documentation updates
+    depends_on:
+      - test
+validation_rules:
+  - Code must compile/parse without errors
+  - All tests must pass
+  - No placeholder or TODO comments in final output
+  - Must include error handling for edge cases
+  - Must follow project coding conventions
+context_requirements:
+  required_files:
+    - "*.py"
+    - "*.ts"
+    - "*.js"
+    - "*.tsx"
+    - "*.jsx"
+  required_context:
+    - project_structure
+    - tech_stack
+    - dependencies
+    - architecture
+    - coding_standards
+  max_tokens: 6000
+score_criteria:
+  correctness: 0.30
+  code_quality: 0.25
+  test_coverage: 0.20
+  documentation: 0.10
+  efficiency: 0.15
+version: "1.0.0"
+source: builtin

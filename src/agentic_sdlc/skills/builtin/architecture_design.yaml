@@ -1,0 +1,68 @@
+name: architecture-design
+description: >
+  Design the software architecture for a project or feature. Create component
+  diagrams, define data models, choose technology stack, and write an
+  Architecture Decision Record (ADR) documenting key design choices.
+role: architect
+category: general
+tags:
+  - architecture
+  - design
+  - adr
+  - diagram
+  - planning
+prerequisites:
+  - "skill:requirement-analysis"
+workflow_steps:
+  - name: research
+    action: research_approaches
+    description: >
+      Research architectural patterns and approaches suitable for the
+      requirements. Consider scalability, maintainability, and team expertise.
+    expected_output: Architecture options analysis
+    depends_on: []
+  - name: design-components
+    action: design_component_structure
+    description: >
+      Define the component structure, module boundaries, and interfaces.
+      Create a component diagram showing relationships and data flow.
+    expected_output: Component diagram and module structure
+    depends_on:
+      - research
+  - name: define-data-model
+    action: design_data_model
+    description: >
+      Design the data model including entities, relationships, and storage
+      strategy. Consider data access patterns and performance.
+    expected_output: Data model diagram and schema
+    depends_on:
+      - design-components
+  - name: write-adr
+    action: write_architecture_decision_record
+    description: >
+      Write an Architecture Decision Record documenting the key decisions,
+      alternatives considered, and rationale for each choice.
+    expected_output: ADR document (markdown)
+    depends_on:
+      - define-data-model
+validation_rules:
+  - Must include component diagram or structure description
+  - Must justify technology choices with rationale
+  - Must consider at least 2 alternative approaches
+  - ADR must follow standard template (Context, Decision, Consequences)
+context_requirements:
+  required_files: ["*.*"]
+  required_context:
+    - project_structure
+    - tech_stack
+    - dependencies
+    - requirements
+  max_tokens: 5000
+score_criteria:
+  technical_soundness: 0.30
+  scalability: 0.20
+  maintainability: 0.20
+  documentation: 0.15
+  completeness: 0.15
+version: "1.0.0"
+source: builtin

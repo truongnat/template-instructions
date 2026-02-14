@@ -5,20 +5,23 @@
 
 ## Framework Overview
 
-`agentic-sdlc` is an AI-powered Software Development Lifecycle framework providing:
--   **Agent Orchestration**: Multi-agent coordination (Developer, Reviewer, Tester)
--   **Workflow Automation**: Define and execute complex development workflows
--   **Intelligence Layer**: Learning, monitoring, and reasoning capabilities
+`agentic-sdlc` is a Skills-First AI Software Development Lifecycle framework providing:
+-   **Skill Engine**: Discover, execute, and generate structured development skills.
+-   **SDLC Board**: Real-time tracking of tasks, issues, and sprints.
+-   **Agent Bridge**: Optimized integration for Gemini, Antigravity, and Cursor.
+-   **Prompt Optimization**: Automated context management and prompt generation.
 
 ## Project Structure
 
 ```
 agentic-sdlc/
 ├── src/agentic_sdlc/          # Main SDK
-│   ├── core/                  # Config, logging, exceptions
-│   ├── orchestration/         # Agents, models, workflows
-│   ├── intelligence/          # Learning, monitoring, reasoning
-│   └── infrastructure/        # Execution engine, automation
+│   ├── skills/                # Skill Registry & Generation
+│   ├── prompts/               # Prompt & Context Optimization
+│   ├── sdlc/                  # Board & Task Tracking
+│   ├── bridge/                # AgentBridge Integration
+│   ├── core/                  # Config, resources, exceptions
+│   └── intelligence/          # Self-review & AB Testing
 ├── examples/                  # Usage examples
 ├── .kiro/                     # Audit & implementation docs
 ├── CONTEXT.md                 # Quick reference for agents
@@ -36,45 +39,37 @@ log_level = config.get("log_level", "INFO")
 config.set("custom_key", "value")
 ```
 
-### Agent Creation
+### Agent Bridge
 ```python
-from agentic_sdlc import create_agent
+from agentic_sdlc import AgentBridge
 
-developer = create_agent(
-    name="developer",
-    role="software_developer",
-    model_name="gpt-4"
-)
+bridge = AgentBridge(project_dir=".")
+response = bridge.process_request("Create unit tests")
+print(response.skill_instructions)
 ```
 
-### Workflow Execution
+### SDLC Tracking
 ```python
-from agentic_sdlc import WorkflowRunner
-from agentic_sdlc.infrastructure.automation.workflow_engine import WorkflowStep
+from agentic_sdlc import SDLCTracker
 
-steps = [
-    WorkflowStep(name="init", action="initialize", parameters={}),
-    WorkflowStep(name="build", action="build", parameters={}, depends_on=["init"])
-]
-
-runner = WorkflowRunner()
-results = runner.run(steps)
+tracker = SDLCTracker(project_dir=".")
+print(tracker.get_board_markdown())
 ```
 
 ## CLI Commands
 
 ```bash
 # Initialize project
-python3 asdlc.py init --name MyProject
+asdlc init --name MyProject
 
-# Create agent
-python3 asdlc.py agent create --name dev --role developer
+# Run a natural language request
+asdlc run "Improve documentation"
 
-# Run workflow
-python3 asdlc.py run my-workflow
+# Check SDLC status
+asdlc status
 
-# Check status
-python3 asdlc.py status
+# Get next task to work on
+asdlc task next
 ```
 
 ## Integration with External Tools
