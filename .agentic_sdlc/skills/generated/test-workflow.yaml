@@ -1,0 +1,111 @@
+name: test-workflow
+description: test-workflow
+role: tester
+category: testing
+tags:
+- test
+prerequisites: []
+prompt_template: 'You are acting as a {{ skill.role.value }}.
+
+
+  ## Task
+
+
+  {{ skill.description }}
+
+
+  ## Context
+
+
+  {{ context }}
+
+
+  ## Instructions
+
+
+  {% for step in skill.workflow_steps %}
+
+  ### Step {{ loop.index }}: {{ step.name }}
+
+  {{ step.description }}
+
+
+  {% endfor %}
+
+  ## Validation
+
+
+  {% for rule in skill.validation_rules %}
+
+  - {{ rule }}
+
+  {% endfor %}
+
+  '
+workflow_steps:
+- name: plan-tests
+  action: plan_test_strategy
+  description: 'Plan testing strategy and identify test cases
+
+
+    Task: test-workflow'
+  expected_output: Completed plan_test_strategy step
+  depends_on: []
+  skill_ref: null
+  validation: null
+- name: write-tests
+  action: implement_tests
+  description: 'Write unit, integration, and e2e tests
+
+
+    Task: test-workflow'
+  expected_output: Completed implement_tests step
+  depends_on:
+  - plan-tests
+  skill_ref: null
+  validation: null
+- name: run-tests
+  action: execute_tests
+  description: 'Run tests and collect results
+
+
+    Task: test-workflow'
+  expected_output: Completed execute_tests step
+  depends_on:
+  - write-tests
+  skill_ref: null
+  validation: null
+- name: report
+  action: generate_test_report
+  description: 'Generate test coverage report
+
+
+    Task: test-workflow'
+  expected_output: Completed generate_test_report step
+  depends_on:
+  - run-tests
+  skill_ref: null
+  validation: null
+validation_rules:
+- Output must be non-empty
+- Must address the original task description
+- Tests must cover happy path and edge cases
+- Test names must be descriptive
+context_requirements:
+  required_files:
+  - test_*.py
+  - '*.test.ts'
+  - '*.spec.ts'
+  required_context:
+  - project_structure
+  - tech_stack
+  max_tokens: 4000
+  priority_keywords: []
+score_criteria:
+  correctness: 0.35
+  completeness: 0.25
+  code_quality: 0.2
+  documentation: 0.1
+  efficiency: 0.1
+version: 1.0.0
+source: generated

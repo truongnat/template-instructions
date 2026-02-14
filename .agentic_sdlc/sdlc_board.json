@@ -1,0 +1,63 @@
+{
+  "project_name": "",
+  "tasks": {
+    "71c38014": {
+      "id": "71c38014",
+      "title": "tester: test-workflow",
+      "description": "Execute skill 'test-workflow' for: test-workflow",
+      "status": "in_progress",
+      "skill_ref": "test-workflow",
+      "assigned_role": "tester",
+      "output_ref": "",
+      "review_score": null,
+      "parent_task": null,
+      "subtasks": [],
+      "created_at": "2026-02-14T11:05:07.360876",
+      "updated_at": "2026-02-14T11:05:07.361136",
+      "retry_count": 0,
+      "max_retries": 3,
+      "metadata": {}
+    },
+    "259caecd": {
+      "id": "259caecd",
+      "title": "tester: test-workflow",
+      "description": "Execute skill 'test-workflow' for: test-workflow",
+      "status": "in_progress",
+      "skill_ref": "test-workflow",
+      "assigned_role": "tester",
+      "output_ref": "",
+      "review_score": null,
+      "parent_task": null,
+      "subtasks": [],
+      "created_at": "2026-02-14T11:05:46.240445",
+      "updated_at": "2026-02-14T11:05:46.240734",
+      "retry_count": 0,
+      "max_retries": 3,
+      "metadata": {}
+    }
+  },
+  "issues": {},
+  "sprints": {
+    "179daa17": {
+      "id": "179daa17",
+      "name": "test-workflow",
+      "description": "test-workflow",
+      "task_ids": [
+        "71c38014"
+      ],
+      "created_at": "2026-02-14T11:05:07.360680",
+      "completed_at": null
+    },
+    "26c8a780": {
+      "id": "26c8a780",
+      "name": "test-workflow",
+      "description": "test-workflow",
+      "task_ids": [
+        "259caecd"
+      ],
+      "created_at": "2026-02-14T11:05:46.239982",
+      "completed_at": null
+    }
+  },
+  "storage_path": ".agentic_sdlc/sdlc_board.json"
+}
