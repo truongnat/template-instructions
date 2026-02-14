@@ -21,10 +21,9 @@ COPY requirements.txt requirements-dev.txt ./
 RUN python -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 
-# Install Python dependencies (exclude heavy optional deps to save space)
+# Install Python dependencies
 RUN pip install --no-cache-dir --upgrade pip setuptools wheel && \
-    pip install --no-cache-dir -r requirements.txt --no-deps && \
-    pip install --no-cache-dir $(grep -v '^\s*#' requirements.txt | grep -v '^\s*$' | cut -d'[' -f1)
+    pip install --no-cache-dir -r requirements.txt
 
 # Stage 2: Runtime - Create minimal production image
 FROM python:3.11-slim
