@@ -1,0 +1,16 @@
+{
+  "period": "all",
+  "total_executions": 2,
+  "success_rate": 1.0,
+  "metrics": {
+    "avg_score": 0.0,
+    "total_proposals": 0,
+    "applied_proposals": 0,
+    "domain_stats": {
+      "backend": {
+        "success_rate": 1.0
+      }
+    }
+  },
+  "generated_at": "2026-02-20T10:11:04.558856"
+}

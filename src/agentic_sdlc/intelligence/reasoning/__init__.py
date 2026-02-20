@@ -1,11 +1,7 @@
-"""Reasoning module for decision-making and task analysis."""
+"""Reasoning module for task analysis and domain detection."""
 
-from .reasoner import Reasoner, DecisionEngine, ExecutionMode, TaskComplexity, RouteResult
+from .reasoner import Reasoner
 
 __all__ = [
     "Reasoner",
-    "DecisionEngine",
-    "ExecutionMode",
-    "TaskComplexity",
-    "RouteResult",
 ]

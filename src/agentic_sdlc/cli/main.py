@@ -27,10 +27,10 @@ except ImportError:
 @click.option('--project-dir', default='.', type=click.Path(file_okay=False, dir_okay=True, path_type=Path), help='Project root directory')
 @click.pass_context
 def cli(ctx: "click.Context", project_dir: Path) -> None:
-    """Agentic SDLC - Skills-First AI Development Lifecycle Framework.
+    """Agentic SDLC - Multi-Domain Swarm Agent Framework.
     
-    This CLI provides a bridge for AI agents (Gemini, Antigravity, Cursor) 
-     to discover, execute, and review structured skills.
+    CLI tool that helps AI agents (Gemini CLI, Antigravity, Cursor) 
+    understand your project and work smarter.
     """
     ctx.ensure_object(dict)
     ctx.obj['project_dir'] = project_dir
@@ -47,18 +47,28 @@ def cli(ctx: "click.Context", project_dir: Path) -> None:
 @click.option('--name', default='.', help='Project name or path')
 @click.pass_context
 def init(ctx: "click.Context", name: str) -> None:
-    """Initialize a new Agentic SDLC project.
+    """Initialize a project for AI-assisted development.
     
-    Creates the skills-first project structure and configuration.
+    Scans the project to detect language/framework, then generates
+    GEMINI.md, CONTEXT.md, and .agent/workflows/ for Antigravity and Gemini CLI.
     """
-    import yaml
     import shutil
+    import yaml
     import agentic_sdlc
-    
-    click.echo(f"Initializing Skills-First project: {name}")
+    from agentic_sdlc.core.project_scanner import ProjectScanner, generate_gemini_md, generate_context_md
     
     project_path = Path(name).resolve()
     project_path.mkdir(exist_ok=True)
+    
+    click.echo(f"🔍 Scanning project: {project_path.name}")
+    
+    # Scan the project
+    scanner = ProjectScanner()
+    profile = scanner.scan(project_path)
+    
+    click.echo(f"   Detected: {profile.language}/{profile.framework}")
+    if profile.description:
+        click.echo(f"   Type: {profile.description}")
     
     # Create core data directory
     data_dir = project_path / ".agentic_sdlc"
@@ -70,35 +80,49 @@ def init(ctx: "click.Context", name: str) -> None:
     config_file = data_dir / "config.yaml"
     if not config_file.exists():
         default_config = {
-            "project_name": project_path.name,
+            "project_name": profile.name,
             "log_level": "INFO",
             "default_agent": "antigravity",
-            "skills": {"remote_sources": []}
+            "project_type": f"{profile.language}/{profile.framework}",
         }
         with open(config_file, 'w') as f:
             yaml.dump(default_config, f, default_flow_style=False)
-        click.echo(f"  ✓ Created config: {config_file}")
+        click.echo(f"  ✓ Created config: .agentic_sdlc/config.yaml")
 
-    # Copy context files from templates
+    # Generate dynamic GEMINI.md
+    gemini_dst = project_path / "GEMINI.md"
+    if not gemini_dst.exists():
+        gemini_dst.write_text(generate_gemini_md(profile), encoding="utf-8")
+        click.echo(f"  ✓ Generated GEMINI.md (tailored for {profile.framework})")
+    
+    # Generate dynamic CONTEXT.md
+    context_dst = project_path / "CONTEXT.md"
+    if not context_dst.exists():
+        context_dst.write_text(generate_context_md(profile), encoding="utf-8")
+        click.echo(f"  ✓ Generated CONTEXT.md")
+    
+    # Copy static templates (SETUP.md, .cursorrules, .env.template)
     package_dir = Path(agentic_sdlc.__file__).parent
     template_dir = package_dir / "resources" / "templates" / "project"
     
-    for filename in ["CONTEXT.md", "GEMINI.md", ".cursorrules", "SETUP.md", ".env.template"]:
+    for filename in [".cursorrules", "SETUP.md", ".env.template"]:
         src = template_dir / filename
         dst = project_path / filename
         if src.exists() and not dst.exists():
             shutil.copy2(src, dst)
             click.echo(f"  ✓ Created {filename}")
     
-    # Copy .agent directory if it exists
+    # Copy .agent directory (workflows for Antigravity)
     agent_src = template_dir / ".agent"
     agent_dst = project_path / ".agent"
     if agent_src.exists() and not agent_dst.exists():
         shutil.copytree(agent_src, agent_dst)
-        click.echo("  ✓ Created .agent/ workflows")
+        click.echo("  ✓ Created .agent/workflows/ (Antigravity)")
     
-    click.echo("\n✓ Project initialized successfully")
-    click.echo("Next steps: `asdlc run \"Describe your task here\"`")
+    click.echo(f"\n✅ Project initialized: {profile.name}")
+    click.echo(f"   Language: {profile.language} | Framework: {profile.framework}")
+    click.echo(f"\nNext: Open this project in Antigravity or run `asdlc run \"your task\"`")
+
 
 
 @cli.command()

@@ -1,0 +1,179 @@
+# Default Domain Configurations for Agentic SDLC
+# Domains scope skills, workflows, and tools by area of concern.
+# Custom domains can be added here or via the CLI.
+
+domains:
+  - name: frontend
+    description: Frontend web development (React, Vue, Angular, etc.)
+    keywords:
+      - react
+      - vue
+      - angular
+      - svelte
+      - css
+      - html
+      - ui
+      - ux
+      - webapp
+      - web
+      - frontend
+      - component
+      - page
+      - layout
+      - tailwind
+      - bootstrap
+      - responsive
+      - nextjs
+      - vite
+      - typescript
+      - javascript
+      - dom
+      - browser
+    skills_dir: skills/frontend
+    workflows_dir: workflows/frontend
+    tools:
+      - name: npm
+        command: npm
+        description: Node package manager
+      - name: vite
+        command: npx vite
+        description: Vite build tool
+    priority: 5
+
+  - name: backend
+    description: Backend server development (APIs, databases, microservices)
+    keywords:
+      - api
+      - rest
+      - graphql
+      - server
+      - backend
+      - endpoint
+      - database
+      - sql
+      - nosql
+      - orm
+      - migration
+      - auth
+      - express
+      - fastapi
+      - django
+      - flask
+      - nestjs
+      - microservice
+      - grpc
+      - websocket
+    skills_dir: skills/backend
+    workflows_dir: workflows/backend
+    tools:
+      - name: docker
+        command: docker
+        description: Container runtime
+    priority: 5
+
+  - name: devops
+    description: DevOps, CI/CD, and infrastructure
+    keywords:
+      - devops
+      - ci
+      - cd
+      - docker
+      - kubernetes
+      - k8s
+      - terraform
+      - ansible
+      - aws
+      - gcp
+      - azure
+      - cloud
+      - deploy
+      - pipeline
+      - infrastructure
+      - monitoring
+      - nginx
+      - helm
+    skills_dir: skills/devops
+    workflows_dir: workflows/devops
+    tools:
+      - name: docker
+        command: docker
+        description: Container runtime
+      - name: kubectl
+        command: kubectl
+        description: Kubernetes CLI
+    priority: 4
+
+  - name: mobile
+    description: Mobile app development (Flutter, React Native, iOS, Android)
+    keywords:
+      - mobile
+      - ios
+      - android
+      - flutter
+      - react-native
+      - swift
+      - kotlin
+      - dart
+      - xcode
+      - gradle
+    skills_dir: skills/mobile
+    workflows_dir: workflows/mobile
+    priority: 4
+
+  - name: data
+    description: Data engineering, analytics, and ML pipelines
+    keywords:
+      - data
+      - etl
+      - pipeline
+      - analytics
+      - warehouse
+      - spark
+      - airflow
+      - pandas
+      - numpy
+      - jupyter
+      - dbt
+      - bigquery
+    skills_dir: skills/data
+    workflows_dir: workflows/data
+    priority: 3
+
+  - name: testing
+    description: Testing and quality assurance
+    keywords:
+      - test
+      - testing
+      - unit-test
+      - integration-test
+      - e2e
+      - pytest
+      - jest
+      - cypress
+      - selenium
+      - coverage
+      - qa
+      - quality
+      - mock
+      - fixture
+    skills_dir: skills/testing
+    workflows_dir: workflows/testing
+    priority: 4
+
+  - name: documentation
+    description: Documentation and technical writing
+    keywords:
+      - document
+      - docs
+      - readme
+      - guide
+      - tutorial
+      - api-doc
+      - swagger
+      - openapi
+      - changelog
+      - wiki
+      - markdown
+    skills_dir: skills/documentation
+    workflows_dir: workflows/documentation
+    priority: 2

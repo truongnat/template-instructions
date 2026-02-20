@@ -1,0 +1,28 @@
+{
+  "test_id": "ebb19265db9e",
+  "query": "Upgrade the current internal session-based auth to a secure OAuth2/OIDC flow using FastAPI. Ensure compatibility with existing user database and follow OWASP Top 10 security guidelines.",
+  "timestamp": "2026-02-20T10:11:04.548613",
+  "improvement": 0.15000000000000002,
+  "winner_id": "chain_of_thought_b75e2123b8",
+  "winner_score": 0.8,
+  "variants": [
+    {
+      "id": "chain_of_thought_b75e2123b8",
+      "strategy": "chain_of_thought",
+      "score": 0.8,
+      "content_length": 682
+    },
+    {
+      "id": "structured_2a65e25319",
+      "strategy": "structured",
+      "score": 0.7500000000000001,
+      "content_length": 535
+    },
+    {
+      "id": "direct_bb66e706ae",
+      "strategy": "direct",
+      "score": 0.65,
+      "content_length": 224
+    }
+  ]
+}

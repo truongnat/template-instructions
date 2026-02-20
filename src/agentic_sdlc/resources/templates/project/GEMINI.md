@@ -1,72 +1,51 @@
 # Agentic SDLC Framework - AI Agent Configuration
 
 > [!IMPORTANT]
-> This file is the primary configuration for **Gemini CLI** and **Antigravity**. All AI agents reading this project MUST understand the framework structure defined below.
+> This file is the primary configuration for **Gemini CLI** and **Antigravity**. All AI agents reading this project MUST read this file first.
 
-## Framework Overview
+## What is Agentic SDLC?
 
-`agentic-sdlc` is an AI-powered Software Development Lifecycle framework providing:
--   **Agent Orchestration**: Multi-agent coordination (Developer, Reviewer, Tester)
--   **Workflow Automation**: Define and execute complex development workflows
--   **Intelligence Layer**: Learning, monitoring, and reasoning capabilities
-
-## Key APIs
-
-### Configuration
-```python
-from agentic_sdlc import Config
-
-config = Config()
-log_level = config.get("log_level", "INFO")
-```
-
-### Agent Creation
-```python
-from agentic_sdlc import create_agent
-
-developer = create_agent(
-    name="developer",
-    role="software_developer",
-    model_name="gpt-4"
-)
-```
-
-### Workflow Execution
-```python
-from agentic_sdlc import WorkflowRunner
-from agentic_sdlc.infrastructure.automation.workflow_engine import WorkflowStep
-
-steps = [
-    WorkflowStep(name="init", action="initialize", parameters={}),
-    WorkflowStep(name="build", action="build", parameters={}, depends_on=["init"])
-]
-
-runner = WorkflowRunner()
-results = runner.run(steps)
-```
+A CLI tool (`asdlc`) that helps AI agents understand your project better. It provides:
+-   **Domain Detection**: Automatically classifies tasks (Frontend, Backend, DevOps, etc.)
+-   **RAG Research**: Searches your codebase semantically before generating code
+-   **Swarm Agents**: Coordinates Developer, Reviewer, and Tester agents
+-   **Multi-LLM**: Works with Gemini, OpenAI, Anthropic, or local Ollama
 
 ## CLI Commands
 
 ```bash
-# Initialize project
-python3 -m agentic_sdlc.cli init --name MyProject
+# Process a task request
+asdlc run "Implement user authentication"
 
-# Create agent
-python3 -m agentic_sdlc.cli agent create --name dev --role developer
+# Check SDLC board status
+asdlc status
 
-# Run workflow
-python3 -m agentic_sdlc.cli run my-workflow
+# Get next task
+asdlc task next
 ```
 
-## Important Files for AI Agents
+## Quick API Usage
 
-1.  **CONTEXT.md** - Quick framework reference
-2.  **.cursorrules** - IDE agent rules (if using Cursor)
+```python
+from agentic_sdlc import AgentBridge
+from pathlib import Path
 
-## Mandatory Rules for AI Agents
+bridge = AgentBridge(project_dir=Path("."))
+response = bridge.process_request_enhanced("Add pagination to the API")
+```
+
+## Key Files
+
+| File | Purpose |
+|------|---------|
+| `CONTEXT.md` | Project architecture overview for AI agents |
+| `.agentic_sdlc/config.yaml` | Project configuration |
+| `.agent/workflows/` | Antigravity workflow definitions |
+
+## Mandatory Rules
 
 > [!CAUTION]
-> **ALWAYS** read `CONTEXT.md` before answering questions about this framework.
+> **ALWAYS** read `CONTEXT.md` before making changes to this project.
 
 > [!TIP]
-> When generating code, use the SDK's public API from `agentic_sdlc` package, not internal modules.
+> Use the public API: `from agentic_sdlc import AgentBridge, LLMRouter, KnowledgeBase`

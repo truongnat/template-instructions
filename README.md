@@ -1,232 +1,100 @@
-# 📦 Agentic SDLC - AI-Powered Software Development Kit
-![Version](https://img.shields.io/badge/version-3.0.0-blue.svg)
+# 📦 Agentic SDLC - Multi-Domain Swarm Agent SDK
+
+![Version](https://img.shields.io/badge/version-3.1.0-blue.svg)
 ![Build](https://img.shields.io/badge/build-passing-brightgreen.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
-> Professional SDK for AI-powered software development. Clean architecture, extensible design, and production-ready.
+> Next-generation AI Software Development Lifecycle framework with Swarm Intelligence, RAG-powered Research, and Multi-Provider LLM orchestration.
 
-**Agentic SDLC** is a Python SDK that provides a comprehensive framework for building AI-powered development tools. It features a clean public API, modular architecture, and support for custom extensions through plugins.
+**Agentic SDLC** is a modular Python SDK for building autonomous development agents. It moves beyond simple prompt generation into a full E2E pipeline: **Domain Detection → Research → Prompt Optimization → Swarm Execution → Self-Learning**.
 
 ---
 
-## 🚀 Quick Start
+## 🚀 Key Features
 
-### Installation
+- 🧠 **Swarm Intelligence**: Multi-agent coordination (Developer, Reviewer, Tester, Researcher) with async message bus.
+- 🔍 **RAG Research**: Integrated Knowledge Base using ChromaDB and web-research capabilities.
+- 🎯 **Domain Engine**: Automatic task classification into 7+ technical domains (Frontend, Backend, DevOps, etc.).
+- 🧪 **Prompt Lab**: A/B testing for prompts with structured strategies and AI-powered evaluation.
+- 🤖 **Multi-Provider LLM**: Unified support for **Gemini (primary)**, OpenAI, Anthropic, and **Ollama** (local).
+- 📈 **Self-Learning**: Continuous improvement engine that analyzes execution patterns and proposes enhancements.
 
-**Core SDK** (without CLI):
+---
+
+## 📦 quick start
+
+### installation
+
 ```bash
-pip install agentic-sdlc
+pip install agentic-sdlc[all]  # Includes ChromaDB and ML dependencies
 ```
 
-**With CLI tools**:
-```bash
-pip install agentic-sdlc[cli]
-```
-
-**Development**:
-```bash
-pip install -e ".[dev]"
-```
-
-### Basic Usage
+### Basic E2E Pipeline
 
 ```python
 from agentic_sdlc import AgentBridge
 from pathlib import Path
 
-# Create bridge (main entry point for agents)
-bridge = AgentBridge(project_dir=Path("."))
+# Initialize bridge with preferred LLM
+bridge = AgentBridge(
+    project_dir=Path("."),
+    llm_provider="gemini",
+    llm_model="gemini-2.0-flash"
+)
 
-# Process a natural language request
-response = bridge.process_request("Create a FastAPI hello world")
+# Run full E2E pipeline
+response = bridge.process_request_enhanced("Implement JWT auth in FastAPI")
 
-if response.success:
-    print(f"Task ID: {response.task_id}")
-    print(f"Instructions: {response.skill_instructions}")
-```
-
-### CLI Usage
-
-```bash
-# Initialize a Skills-First project
-asdlc init --name MyProject
-
-# Run a task request
-asdlc run "Add unit tests for the auth module"
-
-# View SDLC board status
-asdlc status
-
-# Manage skills
-asdlc skill list
-asdlc skill generate "A skill to deploy to AWS"
+print(f"Detected Domain: {response.metadata['domain']}")
+print(f"Optimized Prompt: {response.skill_instructions[:100]}...")
 ```
 
 ---
 
-## 📚 Architecture
-
-### Package Structure
+## 🏗 Architecture
 
 ```
 agentic_sdlc/
-├── core/              # Config, exceptions, logging, resources
-├── skills/            # Skill engine (Registry, Generator, Loader)
-├── prompts/           # Prompt generation and context optimization
-├── sdlc/              # SDLC tracking (Board, Task, Sprint)
-├── bridge/            # Agent integration (AgentBridge, Formatters)
-├── intelligence/      # Self-review, A/B testing, reasoning
-├── plugins/           # Plugin system and registry
-└── cli/               # asdlc command-line interface
-```
-
-### Public API
-
-The SDK exposes a clean public API through the top-level `agentic_sdlc` module:
-
-```python
-# Core
-from agentic_sdlc import (
-    Config, load_config, get_config,
-    AgenticSDLCError, ConfigurationError, ValidationError,
-    setup_logging, get_logger
-)
-
-# Skills & Prompts (New)
-from agentic_sdlc import (
-    Skill, SkillRegistry, SkillGenerator,
-    PromptGenerator, ContextOptimizer
-)
-
-# SDLC & Bridge (New)
-from agentic_sdlc import (
-    Board, SDLCTracker, Task, Sprint,
-    AgentBridge, AgentResponse
-)
-
-# Intelligence & Plugins
-from agentic_sdlc import (
-    SelfReviewEngine, ABScorer,
-    Plugin, PluginRegistry, get_plugin_registry
-)
+├── bridge/          # Primary E2E Pipeline (AgentBridge)
+├── swarm/           # Swarm Intelligence (Orchestrator, MessageBus, Agents)
+├── knowledge/       # RAG Layer (KnowledgeBase, VectorStore, Embeddings)
+├── core/            # Config, Domain Engine, LLM Routing, Artifacts
+├── prompts/         # Prompt Lab, Generator, Optimization
+├── intelligence/    # Self-Learning, Reasoner
+├── skills/          # Skill Registry & Generation
+└── sdlc/            # Board & Task Tracking
 ```
 
 ---
 
-## 🔧 Configuration
+## 📚 Documentation
 
-Configuration can be loaded from files, environment variables, or set programmatically:
-
-```python
-from agentic_sdlc import Config
-
-# Load from file
-config = Config("config.yaml")
-
-# Get values with dot notation
-log_level = config.get("log_level")
-model_name = config.get("models.openai.model_name")
-
-# Set values
-config.set("log_level", "DEBUG")
-
-# Validate configuration
-config.validate()
-```
+- **[Quick Start Guide](QUICKSTART.md)** - Get up and running in 5 minutes.
+- **[Architecture Deep-Dive](docs/architecture/README.md)** - How the swarm and RAG layers work.
+- **[LLM Setup](docs/LLM_PROVIDERS.md)** - Configuring Gemini, OpenAI, and local Ollama.
+- **[Context for Agents](CONTEXT.md)** - For AI agents like Cursor or Antigravity to understand this framework.
 
 ---
 
-## 🔌 Plugin System
+## 🔌 Supported LLM Providers
 
-Extend the SDK with custom plugins:
-
-```python
-from agentic_sdlc import Plugin, get_plugin_registry
-
-class MyPlugin(Plugin):
-    @property
-    def name(self) -> str:
-        return "my-plugin"
-    
-    @property
-    def version(self) -> str:
-        return "1.0.0"
-    
-    def initialize(self, config: dict) -> None:
-        print(f"Initializing {self.name}")
-    
-    def shutdown(self) -> None:
-        print(f"Shutting down {self.name}")
-
-# Register plugin
-registry = get_plugin_registry()
-registry.register(MyPlugin())
-```
-
----
-
-## 📖 Documentation
-
-- **[Getting Started](docs/GETTING_STARTED.md)** - Installation and basic usage
-- **[Migration Guide](docs/MIGRATION.md)** - Upgrading from v2.x to v3.x
-- **[Plugin Development](docs/PLUGIN_DEVELOPMENT.md)** - Creating custom plugins
-- **[API Reference](docs/api/)** - Complete API documentation
-- **[Architecture](docs/architecture/)** - Design and architecture decisions
-
----
-
-## 💡 Examples
-
-See the `examples/` directory for complete working examples:
-
-- **Programmatic SDK usage**: `examples/programmatic/`
-- **CLI usage**: `examples/cli/`
-- **Plugin development**: `examples/plugins/`
+| Provider | Model | Tier |
+|----------|-------|------|
+| **Google Gemini** | `gemini-2.0-flash` | Free/Paid |
+| **OpenAI** | `gpt-4o`, `gpt-4o-mini` | Paid |
+| **Anthropic** | `claude-3-5-sonnet` | Paid |
+| **Ollama** | `llama3.2`, `mistral` | **FREE / Local** |
 
 ---
 
 ## 🧪 Testing
 
-Run the test suite:
-
 ```bash
-# All tests
-pytest
-
-# Unit tests only
-pytest tests/unit/
-
-# Property-based tests
-pytest tests/property/
-
-# With coverage
-pytest --cov=agentic_sdlc --cov-report=html
+pytest tests/unit/swarm  # Test swarm multi-agent logic
+pytest tests/unit/knowledge # Test RAG retrieval
 ```
 
 ---
 
-## 🔄 What's New in v3.0.0
-
-### Breaking Changes
-- Reorganized package structure (moved to `src/` layout)
-- Removed vendored dependencies from `lib/` directory
-- CLI is now optional (install with `[cli]` extra)
-- Old import paths are deprecated (use new public API)
-
-### New Features
-- Clean public API with explicit exports
-- Plugin system for extensibility
-- Comprehensive configuration management
-- Type hints throughout the codebase
-- Property-based testing for correctness validation
-
-### Migration
-See [MIGRATION.md](docs/MIGRATION.md) for detailed migration instructions from v2.x.
-
----
-
 ## 📄 License
-MIT License. See [LICENSE](LICENSE) for details.
-
----
-Developed by **Dao Quang Truong** | [GitHub](https://github.com/truongnat/agentic-sdlc)
+MIT License. Developed by **Dao Quang Truong** | [GitHub](https://github.com/truongnat/agentic-sdlc)

@@ -1,8 +1,14 @@
-"""Reasoning engine for decision-making and task analysis."""
+"""Reasoning engine for decision-making and task analysis.
 
-from dataclasses import dataclass
+Provides task complexity analysis, execution mode recommendations,
+task routing, and domain detection for multi-domain agent systems.
+"""
+
+from dataclasses import dataclass, field
 from enum import Enum
 from typing import Dict, List, Optional, Any
+
+from ...core.domain import Domain, DomainRegistry
 
 
 class ExecutionMode(Enum):
@@ -29,12 +35,27 @@ class RouteResult:
     alternatives: List[str]
 
 
-class Reasoner:
-    """Reasoning engine for decision-making."""
+@dataclass
+class DomainDetectionResult:
+    """Result of domain detection."""
+    domain: Optional[Domain]
+    confidence: float
+    reasoning: str
+    alternatives: List[Domain] = field(default_factory=list)
 
-    def __init__(self):
-        """Initialize the reasoner."""
+
+class Reasoner:
+    """Reasoning engine for decision-making and domain detection."""
+
+    def __init__(self, domain_registry: Optional[DomainRegistry] = None):
+        """Initialize the reasoner.
+
+        Args:
+            domain_registry: Optional DomainRegistry for domain detection.
+                            Creates a default one if not provided.
+        """
         self.decision_history: List[Dict] = []
+        self.domain_registry = domain_registry or DomainRegistry()
 
     def analyze_task_complexity(self, task: str, context: Optional[Dict] = None) -> TaskComplexity:
         """Analyze the complexity of a task.
@@ -92,6 +113,68 @@ class Reasoner:
             return ExecutionMode.PARALLEL
         else:
             return ExecutionMode.HYBRID
+
+    def detect_domain(
+        self, task: str, context: Optional[Dict] = None
+    ) -> DomainDetectionResult:
+        """Detect the most appropriate domain for a task.
+
+        Uses the DomainRegistry keyword matching to classify the task
+        into a domain (e.g., frontend, backend, devops).
+
+        Args:
+            task: Task description.
+            context: Optional context (may contain domain hints).
+
+        Returns:
+            DomainDetectionResult with detected domain and confidence.
+        """
+        context = context or {}
+
+        # Check if domain is explicitly specified in context
+        explicit_domain = context.get("domain")
+        if explicit_domain:
+            domain = self.domain_registry.get(explicit_domain)
+            if domain:
+                return DomainDetectionResult(
+                    domain=domain,
+                    confidence=1.0,
+                    reasoning=f"Domain '{explicit_domain}' explicitly specified in context",
+                )
+
+        # Detect from task text using keyword matching
+        candidates = self.domain_registry.detect(task, top_k=3)
+
+        if not candidates:
+            return DomainDetectionResult(
+                domain=None,
+                confidence=0.0,
+                reasoning="No domain keywords matched in task description",
+            )
+
+        primary = candidates[0]
+        score = primary.matches_keywords(task)
+        max_possible = len(primary.keywords) * 2.0  # max score per keyword is 2.0
+        confidence = min(score / max(max_possible * 0.3, 1.0), 1.0)  # normalize
+
+        # Record decision
+        decision = {
+            "type": "domain_detection",
+            "task": task[:100],
+            "domain": primary.name,
+            "confidence": confidence,
+            "alternatives": [d.name for d in candidates[1:]],
+            "timestamp": __import__("datetime").datetime.now().isoformat(),
+        }
+        self.decision_history.append(decision)
+
+        return DomainDetectionResult(
+            domain=primary,
+            confidence=confidence,
+            reasoning=f"Detected domain '{primary.name}' with confidence {confidence:.2f} "
+                      f"based on keyword matching ({score:.1f} score)",
+            alternatives=candidates[1:],
+        )
 
     def route_task(self, task: str, available_workflows: List[str]) -> RouteResult:
         """Route a task to an appropriate workflow.

@@ -1,55 +1,38 @@
-# External Tools Integration Guide
+# External Integrations Guide
 
-This guide explains how to use `agentic-sdlc` with various AI tools and CLIs.
+The Agentic SDLC framework is designed to integrate seamlessly with modern AI development environments.
 
-## 1. Gemini CLI
+## 1. IDE Integrations
 
-To use Gemini CLI with this project, you should feed it the project context.
+### Cursor / VS Code
+The framework provides a `.cursorrules` file in the project root. This ensures that the AI assistant inside Cursor understands the multi-domain swarm architecture.
 
-### Setup
-Ensure you have the `scripts/utils/load_context.sh` script (created below).
+### Antigravity
+Antigravity automatically detects the `CONTEXT.md` and `.agentic_sdlc/` directory to facilitate E2E pipeline execution.
 
-### Usage
-Run Gemini with full project context:
+## 2. LLM Providers
 
-```bash
-./scripts/utils/load_context.sh | gemini "Explain the agent architecture in this project"
-```
+| Provider | Method | Recommendation |
+|----------|--------|----------------|
+| **Gemini** | `google-genai` | **Primary** — Use for domain detection and reasoning. |
+| **OpenAI** | `openai` | Use for complex code generation. |
+| **Anthropic** | `anthropic` | Use for detailed code reviews. |
+| **Ollama** | Local API | Use for sensitive code or model-free offline dev. |
 
-Or for specific tasks:
+## 3. Tool Integrations (MCP)
 
-```bash
-./scripts/utils/load_context.sh | gemini "Generate a new Workflow for database migration"
-```
+The framework supports the **Model Context Protocol (MCP)** for connecting to external tools like:
+- Supabase (Database management)
+- GitHub (PR management)
+- Slack (Team notifications)
 
-## 2. GitHub Copilot CLI
+## 4. Vector Stores
 
-Copilot CLI often needs help understanding the specific framework structure.
+### ChromaDB (Standard)
+Persistent, embedded vector store. No additional server required. Installed via `pip install chromadb`.
 
-### Usage
-When using `gh cp` (or `??`), explicitly reference the context file if possible, or rely on the open `CONTEXT.md`.
+### LanceDB (Performance)
+High-performance vector store for massive codebases.
 
-```bash
-# Best practice: Keep CONTEXT.md open in your editor
-gh copilot suggest "How do I create a new Agent using the SDK?"
-```
-
-## 3. Antigravity & AI IDEs (Cursor/Windsurf)
-
-These tools are configured to automatically detect `.cursorrules` and `CONTEXT.md`.
-
-*   **Antigravity**: Will automatically index `CONTEXT.md`.
-*   **Cursor**: Rules in `.cursorrules` force the agent to read `CONTEXT.md`.
-*   **Kiro**: The `.kiro` directory contains audit logs. Agents can read `.kiro/FINAL_SUMMARY.md` to understand the implementation status.
-
-## 4. Helper Scripts
-
-### `scripts/utils/load_context.sh`
-
-This script aggregates the most important context files into a single stream for LLM consumption.
-
-It typically includes:
--   `CONTEXT.md`
--   `QUICKSTART.md`
--   `src/agentic_sdlc/core/config.py` (Configuration definition)
--   `src/agentic_sdlc/orchestration/agents/base.py` (Agent definition)
+---
+**Last Updated:** February 20, 2026

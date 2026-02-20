@@ -7,9 +7,11 @@ token budgets and context relevance.
 
 from .generator import PromptGenerator
 from .context_optimizer import ContextOptimizer, ContextItem
+from .prompt_lab import PromptLab
 
 __all__ = [
     "PromptGenerator",
     "ContextOptimizer",
     "ContextItem",
+    "PromptLab",
 ]

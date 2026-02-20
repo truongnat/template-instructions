@@ -1,17 +1,9 @@
-"""AI/ML intelligence features including learning, monitoring, and reasoning."""
+"""AI/ML intelligence features including self-improvement and reasoning."""
 
-from .learning import Learner, LearningStrategy
-from .monitoring import Monitor, MetricsCollector
-from .reasoning import Reasoner, DecisionEngine
-from .collaboration import Collaborator, TeamCoordinator
+from .learning import SelfImprovementEngine
+from .reasoning import Reasoner
 
 __all__ = [
-    "Learner",
-    "LearningStrategy",
-    "Monitor",
-    "MetricsCollector",
+    "SelfImprovementEngine",
     "Reasoner",
-    "DecisionEngine",
-    "Collaborator",
-    "TeamCoordinator",
 ]

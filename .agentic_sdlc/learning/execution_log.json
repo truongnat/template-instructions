@@ -1,0 +1,22 @@
+[
+  {
+    "task": "Upgrade the current internal session-based auth to a secure OAuth2/OIDC flow using FastAPI. Ensure compatibility with existing user database and follow OWASP Top 10 security guidelines.",
+    "success": true,
+    "score": 0.0,
+    "domain": "backend",
+    "strategy": "chain_of_thought",
+    "error": null,
+    "metadata": {},
+    "timestamp": "2026-02-20T10:10:34.848548"
+  },
+  {
+    "task": "Upgrade the current internal session-based auth to a secure OAuth2/OIDC flow using FastAPI. Ensure compatibility with existing user database and follow OWASP Top 10 security guidelines.",
+    "success": true,
+    "score": 0.0,
+    "domain": "backend",
+    "strategy": "chain_of_thought",
+    "error": null,
+    "metadata": {},
+    "timestamp": "2026-02-20T10:11:04.558300"
+  }
+]

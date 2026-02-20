@@ -1,11 +1,7 @@
-"""Learning module for self-learning capabilities."""
+"""Learning module for self-improvement capabilities."""
 
-from .learner import Learner, LearningStrategy, Pattern, LearningEvent, PatternType
+from .self_improvement import SelfImprovementEngine
 
 __all__ = [
-    "Learner",
-    "LearningStrategy",
-    "Pattern",
-    "LearningEvent",
-    "PatternType",
+    "SelfImprovementEngine",
 ]

@@ -1,0 +1,249 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout
+    title="Agentic SDLC | Multi-Domain Swarm Agent Framework"
+    description="Production-ready AI subagents, workflows, and integrations for software development. Transform your IDE into a powerhouse."
+>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="#" class="logo">
+                <span class="logo-icon">🤖</span>
+                <span class="logo-text">Agentic SDLC</span>
+            </a>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#workflows">Workflows</a>
+                <a href="#docs">Docs</a>
+                <a
+                    href="https://github.com/truongnat/agentic-sdlc"
+                    target="_blank"
+                    class="btn btn-outline">GitHub</a
+                >
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg-glow"></div>
+        <div class="container hero-content">
+            <div class="badge">v2.0 Released • Multi-Domain Swarms</div>
+            <h1 class="hero-title">
+                Ship Faster With <br /><span class="gradient-text"
+                    >AI Dev Swarms</span>
+            </h1>
+            <p class="hero-subtitle">
+                Production-ready AI subagents, specialized workflows, and RAG
+                context that transform Antigravity & Gemini CLI into a
+                powerhouse.
+            </p>
+            <div class="hero-cta">
+                <a href="#get-started" class="btn btn-primary"
+                    >Get Started <span>→</span></a
+                >
+                <div class="terminal-mockup">
+                    <span class="prompt">$</span> pip install agentic-sdlc
+                </div>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <span class="stat-number">10x</span><span class="stat-label"
+                        >Faster Shipping</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">8+</span><span class="stat-label"
+                        >Frameworks Detected</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-number">∞</span><span class="stat-label"
+                        >RAG Context Limit</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem Section -->
+    <section class="problem-section" id="features">
+        <div class="container">
+            <h2 class="section-title">Tired of Wrestling With Generic AI?</h2>
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <div class="problem-icon">🌪️</div>
+                    <h3>Context Spirals</h3>
+                    <p>
+                        Token limits eating your budget while AI loses track of
+                        project context across sessions.
+                    </p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">🎲</div>
+                    <h3>Inconsistent Output</h3>
+                    <p>
+                        Every session feels like starting over — different code
+                        styles, missed requirements, quality variance.
+                    </p>
+                </div>
+                <div class="problem-card">
+                    <div class="problem-icon">⚙️</div>
+                    <h3>Manual Workflows</h3>
+                    <p>
+                        Copy-pasting prompts between projects, rebuilding the
+                        same patterns over and over.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section class="solution-section" id="workflows">
+        <div class="container">
+            <div class="solution-header">
+                <h2 class="section-title">The Agentic Kit: Your AI Dev Team</h2>
+                <p class="section-subtitle">
+                    Drop our framework into your project, and instantly get
+                    pre-built workflows covering the entire SDLC.
+                </p>
+            </div>
+
+            <div class="workflow-tabs">
+                <button class="tab-btn active" data-tab="review"
+                    >Code Review</button
+                >
+                <button class="tab-btn" data-tab="test">Testing</button>
+                <button class="tab-btn" data-tab="refactor">Refactoring</button>
+                <button class="tab-btn" data-tab="arch">Architecture</button>
+            </div>
+
+            <div class="workflow-content active" id="tab-review">
+                <div class="workflow-grid">
+                    <div class="workflow-text">
+                        <h3>Deep Semantic Code Review</h3>
+                        <ul class="benefit-list">
+                            <li>
+                                <span>✓</span> Detects security vulnerabilities &
+                                bugs
+                            </li>
+                            <li>
+                                <span>✓</span> Checks adherence to project architecture
+                                (via RAG)
+                            </li>
+                            <li>
+                                <span>✓</span> Suggests performance optimizations
+                            </li>
+                        </ul>
+                        <div class="command-box">/asdlc-review</div>
+                    </div>
+                    <div class="workflow-visual">
+                        <div class="code-window">
+                            <div class="code-header">
+                                <div class="dots">
+                                    <span class="red"></span><span
+                                        class="yellow"></span><span
+                                        class="green"></span>
+                                </div>
+                                <div class="title">ReviewerAgent</div>
+                            </div>
+                            <pre><code><span class="comment">// Analyzing PR #42 against CONTEXT.md...</span>
+<span class="keyword">Found 1 critical issue:</span>
+The authentication token validation does not follow 
+the project's standard JWT implementation pattern.
+Suggested fix generated. Apply? [y/N]</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Additional tabs content will be handled via JS/CSS -->
+        </div>
+    </section>
+
+    <!-- Swarm Section -->
+    <section class="swarm-section">
+        <div class="container">
+            <div class="swarm-grid">
+                <div class="swarm-visual">
+                    <div class="agent-node main">Orchestrator</div>
+                    <div class="agent-connections">
+                        <div class="agent-node dev">Developer</div>
+                        <div class="agent-node rev">Reviewer</div>
+                        <div class="agent-node test">Tester</div>
+                    </div>
+                </div>
+                <div class="swarm-text">
+                    <h2 class="section-title">
+                        Multi-Agent Swarm Intelligence
+                    </h2>
+                    <p>
+                        Why rely on one general language model when you can have
+                        a specialized team? Agentic SDLC routes your complex
+                        tasks through a swarm of specialized agents:
+                        Researchers, Developers, and Reviewers, all
+                        cross-checking each other.
+                    </p>
+                    <a
+                        href="https://github.com/truongnat/agentic-sdlc#swarm-architecture"
+                        class="link-btn">Learn about Swarm Architecture →</a
+                    >
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Smart Init Section -->
+    <section class="init-section" id="get-started">
+        <div class="container text-center">
+            <h2 class="section-title">Zero Configuration. Absolute Context.</h2>
+            <p class="section-subtitle">
+                Run one command. The framework auto-detects your stack (Flutter,
+                NestJS, Next.js, Python) and tailors the AI environment.
+            </p>
+
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h4>Install</h4>
+                    <code>pip install agentic-sdlc</code>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h4>Detect</h4>
+                    <code>asdlc init</code>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h4>Ship</h4>
+                    <code>asdlc run "Build X"</code>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-brand">
+                <span class="logo-icon">🤖</span>
+                <span class="logo-text">Agentic SDLC</span>
+                <p>Open-source framework bridging IDEs and AI Subagents.</p>
+            </div>
+            <div class="footer-links">
+                <div class="link-col">
+                    <h4>Resources</h4>
+                    <a href="#">Documentation</a>
+                    <a href="#">Examples</a>
+                    <a href="#">GitHub</a>
+                </div>
+                <div class="link-col">
+                    <h4>Legal</h4>
+                    <a href="#">MIT License</a>
+                </div>
+            </div>
+        </div>
+        <div class="container footer-bottom">
+            <p>&copy; 2026 Agentic SDLC Project. All rights reserved.</p>
+        </div>
+    </footer>
+</Layout>

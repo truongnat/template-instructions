@@ -84,6 +84,7 @@ class SkillRegistry:
         query: str,
         role: Optional[SkillRole] = None,
         category: Optional[str] = None,
+        domain: Optional[str] = None,
         limit: int = 10,
     ) -> List[Skill]:
         """Search skills by keyword relevance.
@@ -95,6 +96,7 @@ class SkillRegistry:
             query: Search query (space-separated keywords).
             role: Optional role filter.
             category: Optional category filter.
+            domain: Optional domain filter (matches against category).
             limit: Maximum results to return.
 
         Returns:
@@ -103,12 +105,15 @@ class SkillRegistry:
         query_tokens = set(query.lower().split())
         scored: List[tuple] = []
 
+        # Domain filter acts as a category filter if no explicit category given
+        effective_category = category or domain
+
         if not query_tokens:
             # If no query tokens, include all matching skills with base score
             for skill in self._skills.values():
                 if role and skill.role != role:
                     continue
-                if category and skill.category.lower() != category.lower():
+                if effective_category and skill.category.lower() != effective_category.lower():
                     continue
                 scored.append((1.0, skill))
         else:
@@ -116,7 +121,7 @@ class SkillRegistry:
                 # Apply filters
                 if role and skill.role != role:
                     continue
-                if category and skill.category.lower() != category.lower():
+                if effective_category and skill.category.lower() != effective_category.lower():
                     continue
 
                 # Calculate relevance score
@@ -133,6 +138,7 @@ class SkillRegistry:
         role: Optional[SkillRole] = None,
         category: Optional[str] = None,
         source: Optional[SkillSource] = None,
+        domain: Optional[str] = None,
     ) -> List[Skill]:
         """List all skills with optional filters.
 
@@ -140,15 +146,17 @@ class SkillRegistry:
             role: Optional role filter.
             category: Optional category filter.
             source: Optional source filter.
+            domain: Optional domain filter (matches against category).
 
         Returns:
             List of matching skills.
         """
+        effective_category = category or domain
         results = []
         for skill in self._skills.values():
             if role and skill.role != role:
                 continue
-            if category and skill.category.lower() != category.lower():
+            if effective_category and skill.category.lower() != effective_category.lower():
                 continue
             if source and skill.source != source:
                 continue

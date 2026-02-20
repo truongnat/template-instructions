@@ -1,0 +1,42 @@
+{
+  "requests_request-891c973d_20260220_101034": {
+    "id": "requests_request-891c973d_20260220_101034",
+    "type": "requests",
+    "name": "request-891c973d",
+    "content": "Upgrade the current internal session-based auth to a secure OAuth2/OIDC flow using FastAPI. Ensure compatibility with existing user database and follow OWASP Top 10 security guidelines.",
+    "metadata": {},
+    "created_at": "2026-02-20T10:10:34.846390",
+    "source_agent": "antigravity",
+    "task_id": "891c973d"
+  },
+  "prompts_prompt-891c973d_20260220_101034": {
+    "id": "prompts_prompt-891c973d_20260220_101034",
+    "type": "prompts",
+    "name": "prompt-891c973d",
+    "content": "# Task\nUpgrade the current internal session-based auth to a secure OAuth2/OIDC flow using FastAPI. Ensure compatibility with existing user database and follow OWASP Top 10 security guidelines.\n\n## Domain: backend\n\n## Approach \u2014 Think Step by Step\nBefore implementing, reason through the following:\n1. **Understand**: What exactly is being asked?\n2. **Research**: What existing patterns or solutions apply?\n3. **Design**: What architecture and components are needed?\n4. **Plan**: What is the implement",
+    "metadata": {},
+    "created_at": "2026-02-20T10:10:34.847464",
+    "source_agent": "prompt_lab",
+    "task_id": "891c973d"
+  },
+  "requests_request-073bf0fc_20260220_101104": {
+    "id": "requests_request-073bf0fc_20260220_101104",
+    "type": "requests",
+    "name": "request-073bf0fc",
+    "content": "Upgrade the current internal session-based auth to a secure OAuth2/OIDC flow using FastAPI. Ensure compatibility with existing user database and follow OWASP Top 10 security guidelines.",
+    "metadata": {},
+    "created_at": "2026-02-20T10:11:04.556878",
+    "source_agent": "antigravity",
+    "task_id": "073bf0fc"
+  },
+  "prompts_prompt-073bf0fc_20260220_101104": {
+    "id": "prompts_prompt-073bf0fc_20260220_101104",
+    "type": "prompts",
+    "name": "prompt-073bf0fc",
+    "content": "# Task\nUpgrade the current internal session-based auth to a secure OAuth2/OIDC flow using FastAPI. Ensure compatibility with existing user database and follow OWASP Top 10 security guidelines.\n\n## Domain: backend\n\n## Approach \u2014 Think Step by Step\nBefore implementing, reason through the following:\n1. **Understand**: What exactly is being asked?\n2. **Research**: What existing patterns or solutions apply?\n3. **Design**: What architecture and components are needed?\n4. **Plan**: What is the implement",
+    "metadata": {},
+    "created_at": "2026-02-20T10:11:04.557612",
+    "source_agent": "prompt_lab",
+    "task_id": "073bf0fc"
+  }
+}
