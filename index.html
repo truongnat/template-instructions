@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agentic SDLC | The Gold Standard of Autonomous Engineering</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        brand: '#0ea5e9',
+                        slate: {
+                            900: '#0f172a',
+                            950: '#020617',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        :root {
+            --brand-primary: #0ea5e9;
+            --brand-secondary: #6366f1;
+            --surface-low: #020617;
+            --surface-mid: #0f172a;
+            --surface-high: #1e293b;
+        }
+
+        body {
+            background-color: var(--surface-low);
+            color: #f1f5f9;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+
+        /* God-Tier Texturing: SVG Grain */
+        .noise-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            opacity: 0.025;
+            pointer-events: none;
+            mix-blend-mode: overlay;
+        }
+
+        .mesh-lights {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background:
+                radial-gradient(circle at 0% 0%, rgba(14, 165, 233, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 100% 0%, rgba(99, 102, 241, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 50% 100%, rgba(14, 165, 233, 0.05) 0%, transparent 50%);
+        }
+
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 4px 32px 0 rgba(0, 0, 0, 0.4);
+        }
+
+        .text-hero {
+            letter-spacing: -0.05em;
+            line-height: 0.85;
+            background: linear-gradient(180deg, #fff 0%, rgba(255, 255, 255, 0.6) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .bento-item {
+            position: relative;
+            background: rgba(15, 23, 42, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 32px;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .bento-item:hover {
+            background: rgba(15, 23, 42, 0.6);
+            border-color: rgba(14, 165, 233, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Vercel-style Accent Lines */
+        .accent-line-blue {
+            border-left: 2px solid #0ea5e9;
+        }
+
+        .accent-line-indigo {
+            border-left: 2px solid #6366f1;
+        }
+
+        .accent-line-slate {
+            border-left: 2px solid #475569;
+        }
+
+        .dot-matrix {
+            background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        .badge-pro {
+            background: rgba(14, 165, 233, 0.1);
+            border: 1px solid rgba(14, 165, 233, 0.2);
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-size: 10px;
+            font-weight: 800;
+            color: var(--brand-primary);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--surface-low);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body class="dot-matrix">
+
+    <!-- SVG Noise Filter -->
+    <svg style="display:none">
+        <filter id="noise">
+            <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="3" stitchTiles="stitch" />
+            <feColorMatrix type="saturate" values="0" />
+        </filter>
+    </svg>
+    <div class="noise-overlay" style="filter: url(#noise)"></div>
+    <div class="mesh-lights"></div>
+
+    <!-- Navigation -->
+    <nav
+        class="fixed top-8 left-1/2 -translate-x-1/2 w-[90%] max-w-6xl z-50 glass-panel rounded-full px-8 py-3 flex justify-between items-center">
+        <div class="flex items-center gap-3">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round" class="text-brand">
+                <path d="m8 3 4 8 5-5 5 15H2L8 3z" />
+            </svg>
+            <span class="font-black tracking-tighter text-xl">ASDLC</span>
+        </div>
+        <div class="hidden md:flex gap-10 text-[10px] font-black uppercase tracking-[0.2em] text-slate-400">
+            <a href="#suite" class="hover:text-white transition-colors">The Suite</a>
+            <a href="#nexus" class="hover:text-white transition-colors">Nexus Cycle</a>
+            <a href="#tech" class="hover:text-white transition-colors">Core API</a>
+        </div>
+        <button
+            class="bg-white text-slate-950 px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-widest hover:scale-105 active:scale-95 transition-all">
+            Access Alpha
+        </button>
+    </nav>
+
+    <!-- Hero -->
+    <main class="min-h-screen flex flex-col justify-center items-center px-6 pt-32 pb-20 overflow-hidden relative">
+        <div
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand/5 blur-[120px] rounded-full -z-10">
+        </div>
+
+        <div class="max-w-5xl w-full space-y-10 text-center relative">
+            <div id="badge-trigger" class="flex justify-center">
+                <div class="badge-pro animate-pulse flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-brand"></span>
+                    God-Tier Standalone [v4.0]
+                </div>
+            </div>
+
+            <h1 id="hero-title" class="text-7xl md:text-[130px] font-bold text-hero py-4">
+                AGENTIC<br>SDLC
+            </h1>
+
+            <div id="hero-content" class="space-y-8 max-w-2xl mx-auto">
+                <p class="text-lg md:text-xl text-slate-400 font-medium leading-relaxed">
+                    Engineering intelligence, orchestrated. The world's first autonomous multi-agent framework built for
+                    elite repository mastery.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center pt-8">
+                    <button
+                        class="bg-brand text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-xs shadow-2xl shadow-brand/20 hover:translate-y-[-2px] transition-all">
+                        Execute /asdlc-master
+                    </button>
+                    <button
+                        class="glass-panel px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-white/5 transition-all">
+                        Framework Docs
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hero Static Grid Decoration -->
+        <div
+            class="absolute bottom-0 left-0 w-full h-[300px] bg-gradient-to-t from-slate-950 to-transparent z-10 pointer-events-none">
+        </div>
+    </main>
+
+    <!-- The Suite (Bento) -->
+    <section id="suite" class="py-32 px-6 max-w-7xl mx-auto space-y-20">
+        <div class="flex flex-col md:flex-row items-end justify-between gap-8 border-b border-white/5 pb-10">
+            <div class="space-y-4">
+                <h2 class="text-4xl md:text-5xl font-bold tracking-tighter text-white">Personnel.</h2>
+                <p class="text-slate-500 font-medium max-w-lg">12 hyper-specialized expert agents. 0 compromised
+                    decisions.</p>
+            </div>
+            <div class="flex gap-12 font-mono text-[10px] uppercase tracking-widest text-slate-600">
+                <div><span class="text-brand font-bold">12</span> Experts</div>
+                <div><span class="text-brand font-bold">7</span> Gates</div>
+                <div><span class="text-brand font-bold">v4.0</span> Engine</div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6" id="personnel-grid">
+            <!-- Dynamic Grid Items -->
+        </div>
+    </section>
+
+    <!-- The Nexus (Workflow) -->
+    <section id="nexus" class="py-32 px-6 bg-slate-950/50 dot-matrix border-y border-white/5">
+        <div class="max-w-7xl mx-auto grid lg:grid-cols-2 gap-24 items-center">
+            <div class="space-y-12">
+                <div class="badge-pro w-fit">The Nexus Cycle</div>
+                <h2 class="text-5xl md:text-7xl font-black tracking-tighter leading-none text-white">7-Gate
+                    <br>Verification.
+                </h2>
+                <div class="space-y-6" id="nexus-gates">
+                    <!-- Gates -->
+                </div>
+            </div>
+            <div class="relative">
+                <div class="glass-panel p-2 rounded-[40px] shadow-2xl shadow-brand/10">
+                    <div
+                        class="bg-black/80 p-10 rounded-[32px] font-mono text-sm leading-relaxed border border-white/5">
+                        <div class="flex items-center gap-2 mb-8 border-b border-white/5 pb-4">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" class="text-brand">
+                                <polyline points="4 17 10 11 4 5"></polyline>
+                                <line x1="12" y1="19" x2="20" y2="19"></line>
+                            </svg>
+                            <span class="text-slate-500 text-[11px] font-bold uppercase tracking-widest">Master
+                                Orchestrator.sh</span>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="animate-pulse">
+                                <span class="text-brand">➜</span> <span class="text-emerald-400">~/engine</span> <span
+                                    class="text-white">asdlc master --fire</span>
+                            </div>
+                            <div class="text-slate-500">▶ Gate 1: Strategic Discovery ...... [OK]</div>
+                            <div class="text-slate-500">▶ Gate 2: High-Level Architecture ... [OK]</div>
+                            <div class="text-slate-500">▶ Gate 3: Implementation ........... [RUNNING]</div>
+                            <div class="flex gap-2 items-center mt-6 text-brand">
+                                <span class="w-1 h-3 bg-brand animate-bounce"></span>
+                                <span class="font-bold">Allocating Senior Backend...</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-20 px-6 border-t border-white/5 text-center">
+        <div
+            class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-10 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-500">
+            <div class="flex items-center gap-4">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    class="text-brand">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+                <span class="text-[11px] font-black tracking-[0.4em] uppercase">Built for 2026 Engineering</span>
+            </div>
+            <div class="flex gap-12 font-bold text-[10px] tracking-widest uppercase text-slate-400">
+                <a href="#">Github</a>
+                <a href="#">Discord</a>
+                <a href="#">Security</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const roles = [
+            { name: "Principal BA", tag: "CORE", accent: "accent-line-blue", icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12l4 6-10 12L2 9l4-6z"/><path d="M11 3 8 9l3 12"/><path d="m13 3 3 6-3 12"/><path d="M2 9h20"/></svg>`, span: "md:col-span-8", desc: "MECE decomposition of hyper-complex systems.", color: "white" },
+            { name: "Architect", tag: "DESIGN", accent: "accent-line-indigo", icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg>`, span: "md:col-span-4", desc: "ADR-driven boundaries.", color: "brand" },
+            { name: "Backend", tag: "LOGIC", accent: "accent-line-slate", icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>`, span: "md:col-span-4", desc: "Result-pattern logic.", color: "brand" },
+            { name: "Designer", tag: "INTERFACE", accent: "accent-line-blue", icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"/><path d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>`, span: "md:col-span-8", desc: "God-Tier UI orchestration.", color: "white" },
+            { name: "Elite Tester", tag: "QUALITY", accent: "accent-line-indigo", icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>`, span: "md:col-span-6", desc: "Testing pyramid mastery.", color: "white" },
+            { name: "DevOps", tag: "INFRA", accent: "accent-line-slate", icon: `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H7"/><path d="M15 19a3.5 3.5 0 1 1 0-7H9"/><path d="M11 5h1"/><path d="M15.5 19H17"/><path d="M7 5H5.5A3.5 3.5 0 0 0 2 8.5v0A3.5 3.5 0 0 0 5.5 12H13"/><path d="M16 19h.5a3.5 3.5 0 0 0 3.5-3.5v0a3.5 3.5 0 0 0-3.5-3.5H7"/></svg>`, span: "md:col-span-6", desc: "Cloud stability at scale.", color: "brand" }
+        ];
+
+        const gates = [
+            "Discovery: Strategic Deconstruction",
+            "Design: Formal Architectural Decisions",
+            "Implementation: Production-Grade Execution",
+            "Validation: Pyramid Verification",
+            "Audit: Deep Security Review",
+            "Infra: Observability & Scaling",
+            "Docs: Knowledge Synchronization"
+        ];
+
+        const grid = document.getElementById('personnel-grid');
+        roles.forEach(role => {
+            const el = document.createElement('div');
+            el.className = `bento-item p-10 min-h-[300px] flex flex-col justify-between ${role.span} group ${role.accent}`;
+            el.innerHTML = `
+                <div class="flex flex-col gap-10">
+                    <div class="text-brand w-12 h-12 flex items-center justify-center glass-panel rounded-xl group-hover:scale-110 group-hover:bg-brand group-hover:text-slate-950 transition-all duration-500">
+                        ${role.icon}
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-2">
+                             <div class="px-2 py-0.5 rounded-sm bg-white/5 border border-white/10 text-[9px] font-bold tracking-widest text-slate-500">${role.tag}</div>
+                             <div class="w-10 h-[1px] bg-white/5"></div>
+                        </div>
+                        <h3 class="text-3xl font-bold tracking-tighter text-white">${role.name}</h3>
+                        <p class="text-slate-500 text-sm font-medium leading-relaxed">${role.desc}</p>
+                    </div>
+                </div>
+                <div class="text-[10px] font-bold uppercase tracking-widest text-slate-700">Expertise 0${Math.floor(Math.random() * 9) + 1}</div>
+            `;
+            grid.appendChild(el);
+        });
+
+        const gatesList = document.getElementById('nexus-gates');
+        gates.forEach((gate, i) => {
+            const item = document.createElement('div');
+            item.className = "flex items-center gap-6 group cursor-default";
+            item.innerHTML = `
+                <div class="w-12 h-12 rounded-full glass-panel flex items-center justify-center font-bold text-slate-500 group-hover:text-brand transition-colors duration-500">${i + 1}</div>
+                <div class="text-xl font-bold text-slate-500 group-hover:text-white transition-colors duration-500">${gate}</div>
+            `;
+            gatesList.appendChild(item);
+        });
+
+        // GSAP God-Tier Orchestration
+        gsap.registerPlugin(ScrollTrigger);
+
+        gsap.from("#hero-title", { y: 100, opacity: 0, duration: 1.5, ease: "expo.out" });
+        gsap.from("#hero-content", { y: 40, opacity: 0, duration: 1.5, delay: 0.3, ease: "expo.out" });
+        gsap.from("#badge-trigger", { scale: 0.8, opacity: 0, duration: 1.2, delay: 0.6, ease: "back.out(1.7)" });
+
+        gsap.from(".bento-item", {
+            scrollTrigger: {
+                trigger: "#suite",
+                start: "top 80%",
+            },
+            y: 60,
+            opacity: 0,
+            duration: 1.4,
+            stagger: 0.1,
+            ease: "expo.out"
+        });
+
+        gsap.from("#nexus-gates > div", {
+            scrollTrigger: {
+                trigger: "#nexus",
+                start: "top 80%",
+            },
+            x: -40,
+            opacity: 0,
+            duration: 1.2,
+            stagger: 0.05,
+            ease: "expo.out"
+        });
+
+    </script>
+</body>
+
+</html>

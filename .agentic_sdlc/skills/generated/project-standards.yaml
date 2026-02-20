@@ -1,0 +1,53 @@
+# Skill: project-standards
+name: project-standards
+description: Establish and define global, project-agnostic coding rules, architectural constraints, and standards for a new or existing codebase.
+
+role: architect
+category: general
+tags:
+  - architecture
+  - standards
+  - guidelines
+  - adr
+
+steps:
+  - name: analyze-context
+    action: analyze_project_context
+    description: Scan the current repository to understand the primary language, framework, and existing patterns. Identify any existing `.cursorrules` or `CONTEXT.md`.
+    expected_output: Context summary report.
+
+  - name: define-tech-stack
+    action: define_technology_stack
+    description: Clearly define the technology stack, language versions, and allowed libraries based on the context. Set hard rules about what is NOT allowed.
+    expected_output: Tech stack rules.
+
+  - name: define-architecture-rules
+    action: define_architectural_rules
+    description: Establish the project structure (folder hierarchy), component design patterns (e.g., MVC, Clean Architecture, component scoped CSS), and data flow rules.
+    expected_output: Architectural guidelines.
+
+  - name: define-agent-rules
+    action: define_ai_agent_rules
+    description: Define specific rules that AI agents (Developer, Reviewer, Tester) must follow when modifying this codebase to prevent AI-generated technical debt.
+    expected_output: AI Swarm interaction rules.
+
+  - name: generate-standard-adr
+    action: write_architecture_decision_record
+    description: Compile all defined rules into a standard, formal Architectural Decision Record (ADR) and save it in the `docs/architecture/` directory.
+    expected_output: Complete ADR markdown file defining project standards.
+
+validation_rules:
+  - ADR must be saved to docs/architecture/
+  - Must explicitly state rules for AI agents modifying the code.
+  - Must clearly define allowed and forbidden technologies/patterns.
+
+scoring_criteria:
+  clarity:
+    weight: 0.3
+    description: Rules must be unambiguous and actionable.
+  comprehensiveness:
+    weight: 0.3
+    description: Covers tech stack, architecture, and AI interaction.
+  project_alignment:
+    weight: 0.4
+    description: Standards make logical sense for the detected framework/language.

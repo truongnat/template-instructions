@@ -474,24 +474,140 @@ class SkillGenerator:
             "{% endfor %}\n"
         )
 
+    def _generate_skill_md_content(self, skill: Skill) -> str:
+        """Generate rich SKILL.md content following the agentskills.io spec.
+
+        Produces a deep, actionable markdown document with frontmatter,
+        step-by-step instructions, validation checklists, and anti-patterns.
+
+        Args:
+            skill: Skill instance to render.
+
+        Returns:
+            Full SKILL.md content string.
+        """
+        # --- Frontmatter ---
+        lines = [
+            "---",
+            f"name: {skill.name}",
+            "description: >",
+            f"  {skill.description}",
+            f"compatibility: Framework-agnostic",
+            "metadata:",
+            "  author: agentic-sdlc",
+            '  version: "2.0"',
+            f"  category: {skill.category}",
+            "---",
+            "",
+            f"# Skill: {skill.name}",
+            "",
+            f"**Role**: {skill.role.value}",
+            f"**Category**: {skill.category}",
+            f"**Tags**: {', '.join(skill.tags)}",
+            "",
+            "## Description",
+            "",
+            skill.description,
+            "",
+        ]
+
+        # --- Steps ---
+        lines.append("## Steps")
+        lines.append("")
+        for i, step in enumerate(skill.workflow_steps, 1):
+            lines.append(f"### Step {i}: {step.name}")
+            lines.append("")
+            lines.append(f"**Action**: `{step.action}`")
+            lines.append("")
+            lines.append(step.description)
+            lines.append("")
+            lines.append(f"**Expected Output**: {step.expected_output}")
+            lines.append("")
+
+        # --- Validation Rules ---
+        lines.append("## Validation Checklist")
+        lines.append("")
+        for rule in skill.validation_rules:
+            lines.append(f"- [ ] {rule}")
+        lines.append("")
+
+        # --- Scoring ---
+        lines.append("## Scoring Criteria")
+        lines.append("")
+        lines.append("| Criterion | Weight |")
+        lines.append("|-----------|--------|")
+        for criterion, weight in skill.score_criteria.items():
+            lines.append(f"| **{criterion}** | {weight:.0%} |")
+        lines.append("")
+
+        # --- Anti-Patterns (role-specific) ---
+        role_anti_patterns = {
+            SkillRole.DEVELOPER: [
+                "Implementing without reading the requirements first",
+                "Skipping error handling for 'happy path only'",
+                "Using `any` or untyped variables in TypeScript",
+                "Hardcoding values that should be configurable",
+            ],
+            SkillRole.REVIEWER: [
+                "Blocking on style preferences not in the project conventions",
+                "Giving vague feedback without code examples",
+                "Missing security issues while focusing on formatting",
+            ],
+            SkillRole.TESTER: [
+                "Writing tests that depend on execution order",
+                "Testing implementation details instead of behavior",
+                "Using real network/database calls in unit tests",
+            ],
+            SkillRole.ARCHITECT: [
+                "Choosing technology because it's trendy, not because it fits",
+                "Designing for millions of users on day one",
+                "Creating a distributed monolith",
+            ],
+        }
+
+        if skill.role in role_anti_patterns:
+            lines.append("## Anti-Patterns to Avoid")
+            lines.append("")
+            for ap in role_anti_patterns[skill.role]:
+                lines.append(f"- ❌ {ap}")
+            lines.append("")
+
+        return "\n".join(lines)
+
     def _save_skill(self, skill: Skill) -> Path:
-        """Save a generated skill to YAML file.
+        """Save a generated skill as a SKILL.md directory (agentskills.io format).
+
+        Creates a directory named after the skill containing a SKILL.md file
+        with rich markdown content, plus optional references/ subdirectory.
 
         Args:
             skill: Skill to save.
 
         Returns:
-            Path to saved file.
+            Path to the saved SKILL.md file.
         """
         if not self._output_dir:
             raise ValueError("Output directory not set")
 
-        self._output_dir.mkdir(parents=True, exist_ok=True)
-        file_path = self._output_dir / f"{skill.name}.yaml"
+        # Create skill directory: output_dir/skill-name/SKILL.md
+        skill_dir = self._output_dir / skill.name
+        skill_dir.mkdir(parents=True, exist_ok=True)
 
+        # Generate and write SKILL.md
+        skill_md_path = skill_dir / "SKILL.md"
+        content = self._generate_skill_md_content(skill)
+        with open(skill_md_path, "w", encoding="utf-8") as f:
+            f.write(content)
+
+        # Also save the structured YAML for programmatic access
+        yaml_path = skill_dir / "skill.yaml"
         data = skill.to_yaml_dict()
-        with open(file_path, "w", encoding="utf-8") as f:
+        with open(yaml_path, "w", encoding="utf-8") as f:
             yaml.dump(data, f, default_flow_style=False, allow_unicode=True, sort_keys=False)
 
-        logger.info("Saved generated skill to %s", file_path)
-        return file_path
+        # Create references directory for future use
+        refs_dir = skill_dir / "references"
+        refs_dir.mkdir(exist_ok=True)
+
+        logger.info("Saved generated skill to %s (SKILL.md format)", skill_dir)
+        return skill_md_path

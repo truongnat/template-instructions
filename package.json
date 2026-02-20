@@ -1,101 +1,14 @@
 {
-  "name": "agentic-sdlc",
-  "version": "2.7.5",
-  "description": "Simulating a complete Software Development Lifecycle (SDLC) with specialized AI Agents.",
-  "type": "module",
-  "private": false,
-  "packageManager": "bun@1.2.2",
-  "workspaces": [
-    "agentic_sdlc/defaults/projects/todo-app/frontend",
-    "agentic_sdlc/defaults/projects/todo-app/backend",
-    "agentic_sdlc/defaults/projects/landing-page",
-    "agentic_sdlc/defaults/projects/ffmpeg-editor",
-    "agentic_sdlc/defaults/projects/telegram-file-manager"
-  ],
+  "name": "agentic-sdlc-showcase",
+  "version": "1.0.0",
+  "description": "Premium showcase landing page for the agentic-sdlc framework",
+  "main": "index.html",
   "scripts": {
-    "test": "pytest tests/ -v",
-    "test:cov": "pytest tests/ -v --cov=agentic_sdlc --cov-report=html",
-    "workflow:cycle": "python agentic_sdlc/infrastructure/automation/workflows/cycle.py",
-    "workflow:housekeeping": "python agentic_sdlc/infrastructure/automation/workflows/housekeeping.py",
-    "brain": "python agentic_sdlc/core/brain/brain_cli.py",
-    "brain:status": "python agentic_sdlc/core/brain/brain_cli.py status",
-    "dashboard": "streamlit run agentic_sdlc/intelligence/collaborating/dashboard/app.py",
-    "brain:sync": "python agentic_sdlc/intelligence/reasoning/knowledge_graph/brain_parallel.py --sync",
-    "brain:full": "python agentic_sdlc/intelligence/reasoning/knowledge_graph/brain_parallel.py --full",
-    "brain:stats": "python agentic_sdlc/intelligence/reasoning/knowledge_graph/brain_parallel.py --stats",
-    "brain:recommend": "python agentic_sdlc/intelligence/reasoning/knowledge_graph/brain_parallel.py --recommend",
-    "health": "python agentic_sdlc/infrastructure/automation/validation/health-check.py",
-    "agent": "python agentic_sdlc/core/run.py",
-    "agent:list": "python agentic_sdlc/infrastructure/automation/agent/manage.py list",
-    "agent:create": "python agentic_sdlc/infrastructure/automation/agent/manage.py create",
-    "agent:validate": "python agentic_sdlc/infrastructure/automation/agent/manage.py validate",
-    "agent:info": "python agentic_sdlc/infrastructure/automation/agent/manage.py info",
-    "setup": "python agentic_sdlc/infrastructure/lifecycle/setup/init.py",
-    "release:preview": "python agentic_sdlc/infrastructure/lifecycle/release/release.py preview",
-    "release:changelog": "python agentic_sdlc/infrastructure/lifecycle/release/release.py changelog",
-    "release:version": "python agentic_sdlc/infrastructure/lifecycle/release/release.py version --auto",
-    "release": "python agentic_sdlc/infrastructure/lifecycle/release/release.py release",
-    "dev:todo:fe": "turbo run dev --filter=todo-app-frontend",
-    "dev:todo:be": "turbo run dev --filter=todo-app-backend",
-    "dev:todo": "turbo run dev --filter=todo-app-*",
-    "dev:landing": "turbo run dev --filter=landing-page",
-    "dev:ffmpeg": "turbo run dev --filter=ffmpeg-editor",
-    "dev:telegram": "turbo run dev --filter=telegram-file-manager",
-    "dev:all": "turbo run dev",
-    "build:todo:fe": "turbo run build --filter=todo-app-frontend",
-    "build:todo:be": "turbo run build --filter=todo-app-backend",
-    "build:todo": "turbo run build --filter=todo-app-*",
-    "build:landing": "turbo run build --filter=landing-page",
-    "build:ffmpeg": "turbo run build --filter=ffmpeg-editor",
-    "build:telegram": "turbo run build --filter=telegram-file-manager",
-    "build:all": "turbo run build",
-    "test:todo:fe": "turbo run test --filter=todo-app-frontend",
-    "test:todo:be": "turbo run test --filter=todo-app-backend",
-    "test:todo": "turbo run test --filter=todo-app-*",
-    "test:projects": "turbo run test",
-    "lint": "turbo run lint",
-    "typecheck": "turbo run typecheck",
-    "clean": "turbo run clean",
-    "clean:all": "turbo run clean && python -c \"import shutil; shutil.rmtree('node_modules/.cache', ignore_errors=True); shutil.rmtree('.turbo', ignore_errors=True)\"",
-    "preview:todo:fe": "turbo run preview --filter=todo-app-frontend",
-    "preview:landing": "turbo run preview --filter=landing-page",
-    "preview:ffmpeg": "turbo run preview --filter=ffmpeg-editor",
-    "preview:telegram": "turbo run preview --filter=telegram-file-manager"
+    "dev": "bun x serve .",
+    "start": "bun x serve ."
   },
-  "keywords": [
-    "sdlc",
-    "ai",
-    "agent",
-    "automation",
-    "workflow",
-    "cursor",
-    "copilot",
-    "development",
-    "project-management"
-  ],
-  "author": "truongnat",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/truongnat/agentic-sdlc.git"
-  },
-  "bugs": {
-    "url": "https://github.com/truongnat/agentic-sdlc/issues"
-  },
-  "homepage": "https://github.com/truongnat/agentic-sdlc#readme",
-  "engines": {
-    "node": ">=16.0.0"
-  },
-  "files": [
-    "bin/",
-    "agentic_sdlc/",
-    "docs/",
-    "README.md",
-    "CHANGELOG.md",
-    "package.json"
-  ],
   "dependencies": {},
   "devDependencies": {
-    "turbo": "^2.7.2"
+    "bun-types": "latest"
   }
 }
