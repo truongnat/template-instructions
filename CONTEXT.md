@@ -8,7 +8,7 @@ This document is intended for AI Agents (Cursor, Copilot, Antigravity, etc.) to 
 -   **Domain Detection**: Classifies tasks (Frontend, Backend, DevOps, etc.).
 -   **RAG Research**: Semantic search using ChromaDB + web research.
 -   **Prompt Lab**: A/B optimization for tasks.
--   **Swarm Intelligence**: Multi-agent coordination (Developer, Reviewer, Tester).
+-   **Swarm Intelligence**: Multi-agent coordination (Explorer, Architect, Developer, Reviewer).
 -   **Self-Learning**: Analyzes outcomes to improve future runs.
 
 ## 2. Directory Structure
@@ -53,7 +53,11 @@ Manages specialized agent teams for complex tasks.
 from agentic_sdlc.swarm import SwarmOrchestrator, AgentRole
 
 swarm = SwarmOrchestrator()
-result = swarm.run_pipeline("Implement user login", roles=[AgentRole.DEVELOPER, AgentRole.REVIEWER])
+# Example: Architect -> Researcher -> Developer workflow
+result = swarm.run_pipeline(
+    "Implement user login", 
+    roles=[AgentRole.ARCHITECT, AgentRole.RESEARCHER, AgentRole.DEVELOPER]
+)
 ```
 
 ## 4. AI Agent Tips

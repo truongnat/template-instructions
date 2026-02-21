@@ -366,3 +366,73 @@ class ResearcherAgent(SwarmAgent):
         }
         self._results.append(result)
         return result
+
+
+class ArchitectAgent(SwarmAgent):
+    """Specialized agent for architectural design and decision making."""
+
+    def __init__(
+        self,
+        agent_id: str = "architect",
+        message_bus: Optional[MessageBus] = None,
+        llm: Optional["LLMRouter"] = None,
+    ):
+        super().__init__(
+            agent_id=agent_id,
+            role=AgentRole.ARCHITECT,
+            message_bus=message_bus,
+            llm=llm,
+            capabilities=[
+                AgentCapability("system_design", "Design system architecture"),
+                AgentCapability("decision_making", "Make high-level technical decisions"),
+                AgentCapability("pattern_recognition", "Identify architectural patterns"),
+            ],
+        )
+
+    def process_task(self, task: Dict[str, Any]) -> Dict[str, Any]:
+        """Process an architectural task."""
+        description = task.get("description", "")
+        output = f"[Architect] Design for: {description[:100]}"
+
+        # Use LLM if available
+        if self._llm:
+            try:
+                from ..core.llm import LLMMessage
+                
+                # Gather context from previous steps (e.g. research)
+                prev = task.get("previous_results", [])
+                research_output = next(
+                    (r.get("output", "") for r in prev if r.get("role") == "researcher"),
+                    "",
+                )
+                
+                response = self._llm.chat([
+                    LLMMessage(
+                        role="system",
+                        content="You are an expert software architect. Design scalable, maintainable, "
+                                "and secure systems. focus on high-level patterns and structure.",
+                    ),
+                    LLMMessage(
+                        role="user",
+                        content=f"Task: {description}\n\nResearch Context:\n{research_output[:3000]}",
+                    ),
+                ], temperature=0.1)  # Low temp for stable architecture
+                output = response.content
+            except Exception as e:
+                logger.debug(f"LLM unavailable for architect agent: {e}")
+
+        result = {
+            "agent": self.agent_id,
+            "role": "architect",
+            "task": description,
+            "status": "completed",
+            "output": output,
+            "decisions": [],
+        }
+        self._results.append(result)
+        return result
+
+
+# Aliases for compatibility with other frameworks (e.g. Claude Agentic)
+ExplorerAgent = ResearcherAgent
+BuilderAgent = DeveloperAgent

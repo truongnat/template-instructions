@@ -72,6 +72,34 @@ asdlc status
 asdlc task next
 ```
 
+## Agent Swarm Workflow (New)
+
+The framework now supports a "Swarm" workflow inspired by `claude-agentic-framework`. Agents should use this pattern for complex tasks.
+
+### 1. Swarm Roles
+
+-   **Explorer (Researcher)**: Maps the codebase, finds relevant files, and gathers context.
+-   **Architect**: Designs the solution, makes high-level decisions, and creates a plan.
+-   **Builder (Developer)**: Implements the solution based on the plan.
+-   **Reviewer**: Reviews code for quality, security, and performance.
+-   **Tester**: Writes and runs tests.
+
+### 2. Standard Swarm Process
+
+When handling a complex request:
+
+1.  **Research**: Activate `Explorer` to map dependencies.
+2.  **Plan**: Activate `Architect` to create a step-by-step implementation plan.
+    -   *Reference `TECH_STRATEGY.md` for architectural guidelines.*
+3.  **Execute**: Activate `Builder` to implement changes iteratively.
+4.  **Review**: Activate `Reviewer` to check changes before finalizing.
+
+### 3. Usage Strategy
+
+-   **Small Fixes**: Use standard `Builder` directly.
+-   **New Features**: Use `Architect -> Builder -> Reviewer`.
+-   **Refactoring**: Use `Explorer -> Architect -> Builder -> Tester`.
+
 ## Integration with External Tools
 
 ### Gemini CLI
